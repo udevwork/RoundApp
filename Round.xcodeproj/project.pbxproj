@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		347973FF8EEB4FF56BB26CDE /* Pods_Round.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243723AB06DB865B26E24073 /* Pods_Round.framework */; };
 		92C3559F239A9EF200339BDF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C3559E239A9EF200339BDF /* AppDelegate.swift */; };
 		92C355A1239A9EF200339BDF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C355A0239A9EF200339BDF /* SceneDelegate.swift */; };
 		92C355A3239A9EF200339BDF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C355A2239A9EF200339BDF /* ViewController.swift */; };
@@ -17,7 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		92C3559B239A9EF200339BDF /* Round.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Round.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		243723AB06DB865B26E24073 /* Pods_Round.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Round.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55884790C37BEABCB5F34BA4 /* Pods-Round.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Round.release.xcconfig"; path = "Target Support Files/Pods-Round/Pods-Round.release.xcconfig"; sourceTree = "<group>"; };
+		92C3559B239A9EF200339BDF /* RoundApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoundApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C3559E239A9EF200339BDF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92C355A0239A9EF200339BDF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		92C355A2239A9EF200339BDF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -25,7 +28,8 @@
 		92C355A7239A9EF600339BDF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92C355AA239A9EF600339BDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		92C355AC239A9EF600339BDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		92C355B2239AA69A00339BDF /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		92C355B2239AA69A00339BDF /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		96B76266225B9E63F630DCE7 /* Pods-Round.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Round.debug.xcconfig"; path = "Target Support Files/Pods-Round/Pods-Round.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,25 +37,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				347973FF8EEB4FF56BB26CDE /* Pods_Round.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9192D094C386275EDEDD5E5D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				243723AB06DB865B26E24073 /* Pods_Round.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		92C35592239A9EF200339BDF = {
 			isa = PBXGroup;
 			children = (
 				92C355B2239AA69A00339BDF /* Podfile */,
 				92C3559D239A9EF200339BDF /* Round */,
 				92C3559C239A9EF200339BDF /* Products */,
+				CB9757D9063EADF687BDEA29 /* Pods */,
+				9192D094C386275EDEDD5E5D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		92C3559C239A9EF200339BDF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				92C3559B239A9EF200339BDF /* Round.app */,
+				92C3559B239A9EF200339BDF /* RoundApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +85,15 @@
 			path = Round;
 			sourceTree = "<group>";
 		};
+		CB9757D9063EADF687BDEA29 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				96B76266225B9E63F630DCE7 /* Pods-Round.debug.xcconfig */,
+				55884790C37BEABCB5F34BA4 /* Pods-Round.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -77,9 +101,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 92C355AF239A9EF600339BDF /* Build configuration list for PBXNativeTarget "Round" */;
 			buildPhases = (
+				8E9C05350429CFF772996B41 /* [CP] Check Pods Manifest.lock */,
 				92C35597239A9EF200339BDF /* Sources */,
 				92C35598239A9EF200339BDF /* Frameworks */,
 				92C35599239A9EF200339BDF /* Resources */,
+				EAB435498A0FC72AC83FC859 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -87,7 +113,7 @@
 			);
 			name = Round;
 			productName = Round;
-			productReference = 92C3559B239A9EF200339BDF /* Round.app */;
+			productReference = 92C3559B239A9EF200339BDF /* RoundApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -136,6 +162,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8E9C05350429CFF772996B41 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Round-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EAB435498A0FC72AC83FC859 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Round/Pods-Round-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Round/Pods-Round-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Round/Pods-Round-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		92C35597239A9EF200339BDF /* Sources */ = {
@@ -286,17 +354,18 @@
 		};
 		92C355B0239A9EF600339BDF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96B76266225B9E63F630DCE7 /* Pods-Round.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 87XM268947;
+				DEVELOPMENT_TEAM = AV8JDKX7VK;
 				INFOPLIST_FILE = Round/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.denis.Round;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.denis.RoundApp;
+				PRODUCT_NAME = RoundApp;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -304,17 +373,18 @@
 		};
 		92C355B1239A9EF600339BDF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55884790C37BEABCB5F34BA4 /* Pods-Round.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 87XM268947;
+				DEVELOPMENT_TEAM = AV8JDKX7VK;
 				INFOPLIST_FILE = Round/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.denis.Round;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.denis.RoundApp;
+				PRODUCT_NAME = RoundApp;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
