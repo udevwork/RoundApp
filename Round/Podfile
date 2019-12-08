@@ -1,0 +1,4 @@
+target 'round' do
+  use_frameworks!
+pod "EasyPeasy"
+end
