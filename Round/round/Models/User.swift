@@ -15,7 +15,7 @@ class User {
     
     init(ID : Int? ,avatarImageURL : String?, userName : String?) {
         self.ID = ID ?? 0
-        self.avatarImageURL = avatarImageURL ?? "" // PLACEHOLDER IMAGE
+        self.avatarImageURL = avatarImageURL ?? "avatarPlaceholder" // PLACEHOLDER IMAGE
         self.userName = userName ?? ""
     }
 }

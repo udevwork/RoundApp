@@ -15,12 +15,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
-        // Create the SwiftUI view that provides the window contents.
-        let contentView = MainViewController()
+        let cards : [CardViewModel] = [
+            CardViewModel(mainImageURL: "1", title: "String", description: "String", viewsCount: 0, author: nil),
+            CardViewModel(mainImageURL: "2", title: "String", description: "String", viewsCount: 0, author: nil),
+            CardViewModel(mainImageURL: "3", title: "String", description: "String", viewsCount: 0, author: nil),
+            CardViewModel(mainImageURL: "4", title: "String", description: "String", viewsCount: 0, author: nil),
+            CardViewModel(mainImageURL: "5", title: "String", description: "String", viewsCount: 0, author: nil),
+            CardViewModel(mainImageURL: "6", title: "String", description: "String", viewsCount: 0, author: nil)
+        ]
+        let user = User(ID: 0, avatarImageURL: nil, userName: nil)
+        let model = MainViewModel(user: user, cards: cards)
+        let contentView = MainViewController(viewModel: model)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

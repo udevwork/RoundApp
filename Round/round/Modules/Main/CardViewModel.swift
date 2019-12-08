@@ -17,12 +17,10 @@ class CardViewModel {
     let author : User
     
     init(mainImageURL : String?, title : String?, description : String?, viewsCount : Int?, author : User?) {
-        self.mainImageURL = mainImageURL ?? "" // PLACEHOLDER IMAGE
+        self.mainImageURL = mainImageURL ?? "ImagePlaceholder"
         self.title = title ?? ""
         self.description = description ?? ""
         self.viewsCount = viewsCount ?? 0
         self.author = author ?? User(ID: 0, avatarImageURL: nil, userName: nil)// empty user
     }
-
-    
 }
