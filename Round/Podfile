@@ -1,4 +1,9 @@
 target 'round' do
   use_frameworks!
 pod "EasyPeasy"
+pod 'Firebase/Analytics'
+pod 'Firebase/Database'
+pod 'Firebase/Functions'
+pod 'Firebase/Core'
+pod 'Firebase/Firestore'
 end

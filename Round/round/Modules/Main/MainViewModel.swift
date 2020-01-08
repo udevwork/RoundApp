@@ -10,7 +10,7 @@ import Foundation
 
 class MainViewModel {
     let user : User
-    var cards : [CardViewModel]
+    private var cards : [CardViewModel]
     
     // Settings
     let cardsCountToLoad : Int8 = 40
@@ -22,8 +22,18 @@ class MainViewModel {
     
     // load cards at first loading and as adding to present cards, pagination not needed
     func loadCards()  {
-        
+        cards.append(contentsOf: FakeNetwork.GetPosts())
     }
     
+    func getNextCard() -> CardViewModel {
+        let card = cards.removeFirst()
+        if cards.count < 10 {
+            loadCards()
+        }
+        return card
+    }
+    func getCurrentCard() -> CardViewModel {
+        return cards.first!
+    }
     
 }
