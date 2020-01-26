@@ -38,7 +38,7 @@ class PostViewControllerHeader: UIView {
 
     init(frame: CGRect, viewModel: CardViewModel, card: CardView) {
         super.init(frame: frame)
-        backgroundImageView.image = UIImage(named: viewModel.mainImageURL)
+        backgroundImageView.image = card.backgroundImageView.image
         setupData(viewModel)
         setupDesign()
     }
@@ -97,7 +97,6 @@ class PostViewControllerHeader: UIView {
     }
 
     func setupData(_ viewModel : CardViewModel){
-        backgroundImageView.image = UIImage(named: viewModel.mainImageURL)
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description
         authorAvatar.setImage(viewModel.author.avatarImageURL)

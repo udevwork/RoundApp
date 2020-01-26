@@ -69,7 +69,8 @@ extension PostViewController : UIViewControllerTransitioningDelegate {
 
 extension PostViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.postBlocks.count-1
+      //  viewModel.postBlocks.count-1
+        1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

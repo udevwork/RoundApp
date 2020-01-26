@@ -18,12 +18,12 @@ class PostViewModel {
     }
     
     func loadPostBoady(complition : ()->()){
-        FakeNetwork().getPostBody(id: cardView.viewModel!.id) { result in
-            DispatchQueue.main.async {
-                self.postBlocks = result
-               // complition()
-            }
-        }
+//        Network().getPostBody(id: cardView.viewModel!.id) { result in
+//            DispatchQueue.main.async {
+//                self.postBlocks = result
+//               // complition()
+//            }
+//        }
     }
 }
 

@@ -14,7 +14,7 @@ class CardView: UIView {
 
     var viewModel : CardViewModel? = nil
     var onCardPress : ((CardView, CardViewModel)->())? = nil
-    fileprivate var backgroundImageView : UIImageView = UIImageView()
+    var backgroundImageView : UIImageView = UIImageView()
     fileprivate var backgroundImageViewMask : UIView = UIView()
     fileprivate var actionButton : UIButton = UIButton()
      var titleLabel : Text = Text(frame: .zero, fontName: .Bold, size: 31)
@@ -120,7 +120,8 @@ class CardView: UIView {
     
     func setupData(_ viewModel : CardViewModel){
         self.viewModel = viewModel
-        backgroundImageView.image = UIImage(named: viewModel.mainImageURL)
+      //  backgroundImageView.image = UIImage(named: viewModel.mainImageURL)
+        backgroundImageView.setImage(url: viewModel.mainImageURL, placeholder: "ImagePlaceholder")
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description
         authorAvatar.setImage(viewModel.author.avatarImageURL)

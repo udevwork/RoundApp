@@ -52,7 +52,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         let backImg : UIImageView =  UIImageView(frame: card.frame)
         backImg.layer.cornerRadius = 20
         backImg.layer.masksToBounds = true
-        backImg.image = UIImage(named: model.mainImageURL)
+        backImg.image = card.backgroundImageView.image
         backImg.contentMode = .scaleAspectFill
         /// title text
         let title : Text = Text(frame: card.titleLabel.frame, fontName: .Bold, size: 31)

@@ -6,4 +6,5 @@ pod 'Firebase/Database'
 pod 'Firebase/Functions'
 pod 'Firebase/Core'
 pod 'Firebase/Firestore'
+pod 'CodableFirebase'
 end

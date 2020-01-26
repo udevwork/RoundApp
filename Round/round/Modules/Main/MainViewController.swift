@@ -18,7 +18,12 @@ class MainViewController: BaseViewController<MainViewModel> {
         super.init(viewModel: viewModel)
         title = "Round"
         controllerIcon = Icons.location
-        setupCards()
+        viewModel.loadCards {
+            DispatchQueue.main.async {
+                self.setupCards()
+            }
+        }
+        
     }
     
     required init?(coder: NSCoder) {
@@ -26,8 +31,14 @@ class MainViewController: BaseViewController<MainViewModel> {
     }
     
     fileprivate func setupCards(){
+        
         for i in 0...cardsVisibleCount+4 {
-            let card : CardView = CardView(viewModel: viewModel.getNextCard(), frame: CGRect(x: 1000, y: view.frame.height/2, width: 250, height: 350))
+            guard let nextCard = viewModel.getNextCard() else {
+                print("nil, bro... nil")
+                return
+            }
+            let card : CardView = CardView(viewModel: nextCard, frame: CGRect(x: 1000, y: view.frame.height/2, width: 250, height: 350))
+            print(card.descriptionLabel.text ?? "fuck")
             cards.append(card)
             setupGestureRecognizer(card)
             view.addSubview(card)
@@ -126,8 +137,12 @@ class MainViewController: BaseViewController<MainViewModel> {
             card.transparent = 0
             card.alpha = 0
         }) { ok in
+            guard let nextCard = self.viewModel.getNextCard() else {
+                print("nil, bro... nil")
+                return
+            }
             card.isHidden = true
-            self.cards.last?.setupData(self.viewModel.getNextCard())
+            self.cards.last?.setupData(nextCard)
             self.cards.last?.center = CGPoint(x: self.view.frame.width + card.bounds.width, y: (self.cards.first?.center.y)!)
         }
     }

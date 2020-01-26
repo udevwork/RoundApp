@@ -7,11 +7,7 @@
 //
 
 import UIKit
-import SwiftUI
 import Firebase
-//import FirebaseDatabase
-//import FirebaseFunctions
-import FirebaseFirestore
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -20,10 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
-        
-        
-        let user = User(ID: 0, avatarImageURL: nil, userName: nil)
-        let model = MainViewModel(user: user, cards: FakeNetwork.GetPosts())
+        FirebaseApp.configure()
+        let model = MainViewModel()
         let contentView = MainViewController(viewModel: model)
         contentView.additionalSafeAreaInsets = UIEdgeInsets(top: 200, left: 0, bottom: 0, right: 0  )
 
@@ -36,61 +30,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
         }
-        FirebaseApp.configure()
         
-     //   ref.child("username").childByAutoId().setValue(["lol":"kek"])
-//
-//        ref.child("username").observeSingleEvent(of: .value) { snapshot in
-//            let value = snapshot.value as? NSDictionary
-//          let exp = snapshot.valueInExportFormat() as? String
-//            print(exp)
-//
-//        }
-        
-//        var fireFunction = Functions.functions()
-//        fireFunction.httpsCallable("myfunc").call(["text": "pizda"]) { (res, err) in
-//            print(err)
-//
-//
-//            guard let lol = (res?.data as? [String: String]) else { return }
-//
-//            let decoder = JSONDecoder()
-//            if let data = try? JSONSerialization.data(withJSONObject: lol, options: []) {
-//               let fk = try? decoder.decode(fireKek.self, from: data)
-//                if let fk = fk {
-//                    print(fk.text)
-//                }
-//            }
-//        }
-        
-        
-      //  let db = Database.database().reference()
-//        let db = Firestore.firestore()
-//
-//        let docRef = db.collection("posts").document("mn11cuej3CA9dykInQsE")
-//
-//        docRef.getDocument { (document, error) in
-//            if let document = document, document.exists {
-//                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-//                print("Document data: \(dataDescription)")
-//                document.data()?.forEach({ (key: String, value: Any) in
-//                    print(key)
-//                    if let res = value as? String {
-//                        print(res)
-//                    }
-//                    if let res = value as? [String : String] {
-//                        res.forEach { (key: String, value: String) in
-//                            print("\(key):\(value)")
-//                        }
-//                    }
-//
-//                })
-//            } else {
-//                print("Document does not exist")
-//            }
-//        }
-        
-        
+        FirebaseAPI.shared.setCard()
+     
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -122,11 +64,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
 
-}
-
-
-class fireKek : Codable {
-    var text : String?
-    var isOk : String?
-    var `operator` : String?
 }

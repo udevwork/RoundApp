@@ -22,7 +22,7 @@
 		9260B86923B6071500AB18A5 /* SimplePhotoPostCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9260B86823B6071500AB18A5 /* SimplePhotoPostCellViewModel.swift */; };
 		9260B86D23B6405D00AB18A5 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9260B86C23B6405D00AB18A5 /* PostViewModel.swift */; };
 		92B043AD23A8EA9600330D8A /* UserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B043AC23A8EA9600330D8A /* UserAvatarView.swift */; };
-		92B043AF23A9039600330D8A /* FakeNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B043AE23A9039600330D8A /* FakeNetwork.swift */; };
+		92B043AF23A9039600330D8A /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B043AE23A9039600330D8A /* Network.swift */; };
 		92B6800223ACE5F000FC29C5 /* RoundNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B6800123ACE5F000FC29C5 /* RoundNavigationController.swift */; };
 		92E62AC2239BF83E009A2CD2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E62AC1239BF83E009A2CD2 /* MainViewController.swift */; };
 		92E62AC4239BFB98009A2CD2 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 92E62AC3239BFB98009A2CD2 /* Podfile */; };
@@ -49,6 +49,9 @@
 		92ED214423AD259200819997 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92ED214323AD259200819997 /* Text.swift */; };
 		92ED214623AD46ED00819997 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92ED214523AD46ED00819997 /* Design.swift */; };
 		92ED214823AD7DB600819997 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92ED214723AD7DB600819997 /* Button.swift */; };
+		92F9C4EB23DC7E0D00AB9823 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9C4EA23DC7E0D00AB9823 /* API.swift */; };
+		92F9C4ED23DC802900AB9823 /* FirebaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9C4EC23DC802900AB9823 /* FirebaseAPI.swift */; };
+		92F9C4EF23DCCAEE00AB9823 /* AsyncImageDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9C4EE23DCCAEE00AB9823 /* AsyncImageDownload.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,7 +70,7 @@
 		9260B86823B6071500AB18A5 /* SimplePhotoPostCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePhotoPostCellViewModel.swift; sourceTree = "<group>"; };
 		9260B86C23B6405D00AB18A5 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		92B043AC23A8EA9600330D8A /* UserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarView.swift; sourceTree = "<group>"; };
-		92B043AE23A9039600330D8A /* FakeNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNetwork.swift; sourceTree = "<group>"; };
+		92B043AE23A9039600330D8A /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		92B6800123ACE5F000FC29C5 /* RoundNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundNavigationController.swift; sourceTree = "<group>"; };
 		92E62AC1239BF83E009A2CD2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		92E62AC3239BFB98009A2CD2 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -96,6 +99,9 @@
 		92ED214323AD259200819997 /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		92ED214523AD46ED00819997 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		92ED214723AD7DB600819997 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		92F9C4EA23DC7E0D00AB9823 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		92F9C4EC23DC802900AB9823 /* FirebaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPI.swift; sourceTree = "<group>"; };
+		92F9C4EE23DCCAEE00AB9823 /* AsyncImageDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageDownload.swift; sourceTree = "<group>"; };
 		F51D8B8D7C7EA57A4D12A05C /* Pods-round.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-round.release.xcconfig"; path = "Target Support Files/Pods-round/Pods-round.release.xcconfig"; sourceTree = "<group>"; };
 		F7B852BC606DDD68D0C317ED /* Pods_round.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_round.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -190,6 +196,7 @@
 		92B043AB23A8EA6300330D8A /* Design */ = {
 			isa = PBXGroup;
 			children = (
+				92ED212E23AD23C800819997 /* Font */,
 				92B043AC23A8EA9600330D8A /* UserAvatarView.swift */,
 				92ED214323AD259200819997 /* Text.swift */,
 				92ED214523AD46ED00819997 /* Design.swift */,
@@ -212,7 +219,10 @@
 		92E62ACC239CEBA5009A2CD2 /* Net */ = {
 			isa = PBXGroup;
 			children = (
-				92B043AE23A9039600330D8A /* FakeNetwork.swift */,
+				92B043AE23A9039600330D8A /* Network.swift */,
+				92F9C4EA23DC7E0D00AB9823 /* API.swift */,
+				92F9C4EC23DC802900AB9823 /* FirebaseAPI.swift */,
+				92F9C4EE23DCCAEE00AB9823 /* AsyncImageDownload.swift */,
 			);
 			path = Net;
 			sourceTree = "<group>";
@@ -229,8 +239,10 @@
 		92E62ACE239CEBC0009A2CD2 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				92EDA5A423DD67F80010AB8C /* Profile */,
+				92EDA5A323DD67E50010AB8C /* SignIn */,
+				92EDA5A223DD67CE0010AB8C /* GreetingScreen */,
 				9260B84B23B1102000AB18A5 /* Filter */,
-				92B043AB23A8EA6300330D8A /* Design */,
 				92914A8923AD8957009D4F50 /* NavigationBar */,
 				9260B84C23B12C8500AB18A5 /* Post */,
 				92E62AC5239CDBCE009A2CD2 /* Main */,
@@ -260,7 +272,7 @@
 		92E8C34D239BF681009F84EE /* round */ = {
 			isa = PBXGroup;
 			children = (
-				92ED212E23AD23C800819997 /* Font */,
+				92B043AB23A8EA6300330D8A /* Design */,
 				92E62ACE239CEBC0009A2CD2 /* Modules */,
 				92E62ACD239CEBB8009A2CD2 /* Models */,
 				92E62ACC239CEBA5009A2CD2 /* Net */,
@@ -298,6 +310,27 @@
 				92ED212F23AD23DB00819997 /* Gentleman-Thin.ttf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		92EDA5A223DD67CE0010AB8C /* GreetingScreen */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = GreetingScreen;
+			sourceTree = "<group>";
+		};
+		92EDA5A323DD67E50010AB8C /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		92EDA5A423DD67F80010AB8C /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		FC6AB66A88CC6884A1B80DB7 /* Frameworks */ = {
@@ -439,12 +472,14 @@
 				92E62AC7239CDBEB009A2CD2 /* MainViewModel.swift in Sources */,
 				9260B85023B131A100AB18A5 /* PostViewController.swift in Sources */,
 				92ED214623AD46ED00819997 /* Design.swift in Sources */,
-				92B043AF23A9039600330D8A /* FakeNetwork.swift in Sources */,
+				92B043AF23A9039600330D8A /* Network.swift in Sources */,
 				92ED214423AD259200819997 /* Text.swift in Sources */,
 				92E8C34F239BF681009F84EE /* AppDelegate.swift in Sources */,
+				92F9C4EB23DC7E0D00AB9823 /* API.swift in Sources */,
 				9260B85B23B5EDEC00AB18A5 /* TitlePostCellView.swift in Sources */,
 				9260B85D23B5EDF900AB18A5 /* TitlePostCellViewModel.swift in Sources */,
 				92E8C351239BF681009F84EE /* SceneDelegate.swift in Sources */,
+				92F9C4EF23DCCAEE00AB9823 /* AsyncImageDownload.swift in Sources */,
 				9260B85323B4C64700AB18A5 /* PostViewControllerHeader.swift in Sources */,
 				92E62AC2239BF83E009A2CD2 /* MainViewController.swift in Sources */,
 				92E62AD0239CEBD8009A2CD2 /* User.swift in Sources */,
@@ -461,6 +496,7 @@
 				9260B85823B4E45600AB18A5 /* PostCloseControllerAnimation.swift in Sources */,
 				92E62ACB239CE883009A2CD2 /* CardViewModel.swift in Sources */,
 				9260B85523B4CF9A00AB18A5 /* PostOpenControllerAnimation.swift in Sources */,
+				92F9C4ED23DC802900AB9823 /* FirebaseAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
