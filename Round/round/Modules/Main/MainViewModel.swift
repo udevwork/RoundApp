@@ -23,7 +23,9 @@ class MainViewModel {
     }
     
     func getNextCard() -> CardViewModel? {
-       if getLoadedCardsCount() == 0 { print("no cards"); return nil}
+       if getLoadedCardsCount() == 0 {
+        Debug.log("MainViewModel.getNextCard()", "no cards")
+        return nil}
         let card = cards.removeFirst()
         loadMoreIfNeeded()
         return card
@@ -32,7 +34,7 @@ class MainViewModel {
      func loadMoreIfNeeded(){
         if cards.count < 5 {
             loadCards {
-                print("loading additional posts")
+                Debug.log("MainViewModel.loadMoreIfNeeded()", "loading more posts")
                 self.loadMoreIfNeeded()
             }
         }

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 extension UIImageView {
-    func setImage(url:String, placeholder: String){
+    func setImage(url:String, placeholder: String, complition : (()->())? = nil){
         guard let url = URL(string: url) else {
             self.image = UIImage(named: placeholder)
             return

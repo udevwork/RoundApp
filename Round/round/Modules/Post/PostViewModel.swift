@@ -7,6 +7,12 @@
 //
 
 import Foundation
+import UIKit
+
+enum LoadedImageType {
+    case cashe
+    case url
+}
 
 class PostViewModel {
     
@@ -17,14 +23,19 @@ class PostViewModel {
         self.cardView = cardView
     }
     
-    func loadPostBoady(complition : ()->()){
-//        Network().getPostBody(id: cardView.viewModel!.id) { result in
-//            DispatchQueue.main.async {
-//                self.postBlocks = result
-//               // complition()
-//            }
-//        }
+    func loadPostBody(complition : @escaping ()->()){
+        Network().fetchPostBody(id: cardView.viewModel!.id) { viewModels in
+            Debug.log("PostViewModel.loadPostBody : ", viewModels)
+            complition()
+            self.postBlocks = viewModels
+            self.postBlocks = self.postBlocks.sorted { one, two in
+                one.order! < two.order!
+            }
+        }
     }
+    
+  
+    
 }
 
 

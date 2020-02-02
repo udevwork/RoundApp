@@ -23,11 +23,11 @@ class ArticlePostCellView: UITableViewCell, BasePostCellProtocol {
     }
     
     func setupDesign() {
+        backgroundColor = .white
         addSubview(article)
-        article.easy.layout(Leading(20),Trailing(20),Top(10),Bottom(10))
+        article.easy.layout(Leading(20),Trailing(20),Top(40),Bottom(40))
         article.numberOfLines = 0
-        article.sizeToFit()
-        
+        article.textColor = .black
         layoutSubviews()
     }
 }

@@ -9,10 +9,13 @@
 import Foundation
 
 class TitlePostCellViewModel : BasePostCellViewModelProtocol {
-    var postType : PostCellType
-    let text : String
-    init(postType : PostCellType, text : String) {
-        self.postType = postType
-        self.text = text
+    var order: Int?
+    var type : PostCellType?
+    let title : String?
+    
+    init(model : TitlePostResponse) {
+        self.type = model.type
+        self.title = model.title
+        self.order = model.order
     }
 }

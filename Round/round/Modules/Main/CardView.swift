@@ -102,10 +102,13 @@ class CardView: UIView {
             Top(),
             Bottom()
         )
+        // MARK: ENABLE SHADOW FOR CARDS
+        /// another font for comments
         
-        layer.shadowRadius = 8
-        layer.shadowOpacity = 0.3
-        layer.shadowOffset = .zero
+        // TODO: create shadow
+//        layer.shadowRadius = 8
+//        layer.shadowOpacity = 0.3
+//        layer.shadowOffset = .zero
         layer.masksToBounds = false
         clipsToBounds = false
         

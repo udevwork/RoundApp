@@ -135,12 +135,16 @@ class ButtonBuilder {
     }
     
     func build() -> Button{
-        if button.style == nil { print("You need to assign a style for button!") }
+        if button.style == nil { Debug.log("Button builder: ", "You need to assign a style for button!") }
         if button.style == Button.Style.text {
-            if button.btnText.text == "" { print("It looks like you forgot to add text for the button") }
+            if button.btnText.text == "" {
+                Debug.log("Button builder: ", "It looks like you forgot to add text for the button")
+            }
         }
         if button.style == Button.Style.icon {
-            if button.icon.image == nil { print("it looks like you forgot to add an icon for the button") }
+            if button.icon.image == nil {
+                Debug.log("Button builder: ", "it looks like you forgot to add an icon for the button")
+            }
         }
         if button.backColor == nil {
             button.backgroundColor = UIColor.button

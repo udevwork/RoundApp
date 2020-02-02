@@ -10,14 +10,14 @@ import Foundation
 
 
 class CardViewModel {
-    let id : Int
+    let id : String
     let mainImageURL : String
     let title : String
     let description : String
     let viewsCount : Int
     let author : User
     
-    init(id : Int, mainImageURL : String?, title : String?, description : String?, viewsCount : Int?, author : User?) {
+    init(id : String, mainImageURL : String?, title : String?, description : String?, viewsCount : Int?, author : User?) {
         self.id = id
         self.mainImageURL = mainImageURL ?? "ImagePlaceholder"
         self.title = title ?? ""

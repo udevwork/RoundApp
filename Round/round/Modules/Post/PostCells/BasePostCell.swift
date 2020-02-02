@@ -9,15 +9,15 @@
 import Foundation
 import UIKit
 
-enum PostCellType {
-    case Title
+enum PostCellType : Int, Codable {
+    case Title = 0
     case Article
     case SimplePhoto
-
 }
 
 protocol BasePostCellViewModelProtocol {
-    var postType : PostCellType { get set }
+    var type : PostCellType? { get set }
+    var order : Int? {get set}
 }
 
 protocol BasePostCellProtocol :  UITableViewCell {

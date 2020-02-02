@@ -15,18 +15,19 @@ class TitlePostCellView: UITableViewCell, BasePostCellProtocol {
     
     var title = Text(frame: .zero, fontName: .Bold, size: 21)
     
-    func setup(viewModel: BasePostCellViewModelProtocol) {
+   public func setup(viewModel: BasePostCellViewModelProtocol) {
         guard let model = viewModel as? TitlePostCellViewModel else {print("TitlePostCellView viewModel type error"); return}
-        title.text = model.text
+        title.text = model.title
         setupDesign()
     }
     
     func setupDesign() {
+        backgroundColor = .white
         addSubview(title)
-        title.easy.layout(Leading(20),Trailing(20),Top(10),Bottom(10))
+        title.easy.layout(Leading(20),Trailing(20),Top(40),Bottom(40))
         title.numberOfLines = 0
         title.sizeToFit()
-        
+        title.textColor = .black
         layoutSubviews()
     }
 }

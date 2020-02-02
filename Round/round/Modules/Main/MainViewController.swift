@@ -34,11 +34,11 @@ class MainViewController: BaseViewController<MainViewModel> {
         
         for i in 0...cardsVisibleCount+4 {
             guard let nextCard = viewModel.getNextCard() else {
-                print("nil, bro... nil")
+                
+                Debug.log("MainViewController.nextCard =", "nil")
                 return
             }
             let card : CardView = CardView(viewModel: nextCard, frame: CGRect(x: 1000, y: view.frame.height/2, width: 250, height: 350))
-            print(card.descriptionLabel.text ?? "fuck")
             cards.append(card)
             setupGestureRecognizer(card)
             view.addSubview(card)
@@ -138,7 +138,7 @@ class MainViewController: BaseViewController<MainViewModel> {
             card.alpha = 0
         }) { ok in
             guard let nextCard = self.viewModel.getNextCard() else {
-                print("nil, bro... nil")
+                Debug.log("MainViewController.nextCard =", "nil")
                 return
             }
             card.isHidden = true

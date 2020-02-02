@@ -32,7 +32,7 @@ class FirebaseAPI : API {
         var arrayToReturn : [CardViewModel] = []
         posts.getDocuments { (snap, error) in
             if error != nil {
-                print("you fucked-up, son")
+                Debug.log("FirebaseAPI.getPostCards(): getDocuments error: ", error ?? "nil")
                 complition(HTTPResult.error, nil)
                 return
             }
@@ -40,10 +40,11 @@ class FirebaseAPI : API {
                 do {
                     let result = try FirebaseDecoder().decode(post.self, from: doc.data())
                     
-                    let card : CardViewModel = CardViewModel(id: 0, mainImageURL: result.mainPicURL, title: result.title, description: result.description, viewsCount: 0, author: nil)
+                    let card : CardViewModel = CardViewModel(id: result.postBodyID ?? "", mainImageURL: result.mainPicURL, title: result.title, description: result.description, viewsCount: 0, author: nil)
+                    Debug.log(card)
                     arrayToReturn.append(card)
                 } catch let error {
-                    print(error)
+                    Debug.log("FirebaseAPI.getPostCards(): Decoder error: ", error)
                     complition(HTTPResult.error, nil)
 
                 }
@@ -53,16 +54,55 @@ class FirebaseAPI : API {
         }
     }
     
+    func getPostBody(id: String, complition: @escaping (HTTPResult, [BasePostCellViewModelProtocol]?) -> ()){
+      
+        postBodies.document(id).collection("content").getDocuments { (snap, error) in
+            if error != nil {
+                Debug.log("FirebaseAPI.getPostBody(): getDocument error: ", error ?? "nil")
+                complition(HTTPResult.error, nil)
+                return
+            }
+           guard let snap = snap else {
+                Debug.log("FirebaseAPI.getPostBody(): snap error: ", "snap == nil")
+                complition(HTTPResult.error, nil)
+                return
+            }
+            var models : [BasePostCellViewModelProtocol] = []
+            snap.documents.forEach { doc in
+                let type : PostCellType = PostCellType(rawValue: doc.get("type") as! Int)!
+                
+                 let data = doc.data()
+                 do {
+                    switch type {
+                    case .Title :
+                        let resp = try FirebaseDecoder().decode(TitlePostResponse.self, from: data)
+                        let vm = TitlePostCellViewModel(model : resp)
+                        models.append(vm)
+                        break
+                    case .Article:
+                         let resp = try FirebaseDecoder().decode(ArticlePostResponse.self, from: data)
+                         let vm = ArticlePostCellViewModel(model : resp)
+                        models.append(vm)
+                        break
+                    case .SimplePhoto:
+                         let resp = try FirebaseDecoder().decode(SimplePhotoResponse.self, from: data)
+                         let vm = SimplePhotoPostCellViewModel(model : resp)
+                        models.append(vm)
+                        break
+                    }
+                        
+                 } catch let error {
+                     Debug.log("FirebaseAPI.getPostBody(): Decoder error: \(data)", error)
+                     complition(HTTPResult.error, nil)
+                 }
+            }
+            
+            complition(HTTPResult.success, models)
+        }
+    }
+    
     func setCard(){
-//        let arr : [post] = [post(postBodyID: "0", description: "following", authorID: "0", title: "two"),
-//                            post(postBodyID: "0", description: "example", authorID: "0", title: "three"),
-//                            post(postBodyID: "0", description: "shows", authorID: "0", title: "four"),
-//                            post(postBodyID: "0", description: "how", authorID: "0", title: "five"),
-//                            post(postBodyID: "0", description: "to retrieve", authorID: "0", title: "six"),
-//                            post(postBodyID: "0", description: "the contents", authorID: "0", title: "seven"),
-//                            post(postBodyID: "0", description: "of a single", authorID: "0", title: "eight"),
-//                            post(postBodyID: "0", description: "document", authorID: "0", title: "nine"),
-//                            post(postBodyID: "0", description: "using get():", authorID: "0", title: "ten"),]
+//        let arr : [post] = [post(postBodyID: "0", description: "following", authorID: "0", title: "two")]
 //        arr.forEach { post in
 //          let data = try! FirebaseEncoder().encode(post)
 //

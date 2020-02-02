@@ -31,7 +31,7 @@ class BaseViewController<T> : UIViewController{
     init(viewModel : T) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.9176470588, blue: 0.9529411765, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
     
     required init?(coder: NSCoder) {

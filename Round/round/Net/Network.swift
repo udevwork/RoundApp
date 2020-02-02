@@ -10,7 +10,7 @@ import Foundation
 
 class Network {
     static func fetchPosts(complition : @escaping ([CardViewModel])->() ){
-      
+        
         FirebaseAPI.shared.getPostCards(count: 10) { (res, cards) in
             if res == .success {
                 complition(cards!)
@@ -20,25 +20,16 @@ class Network {
         }
     }
     
-    let postbody_1 : [BasePostCellViewModelProtocol] = [
-        TitlePostCellViewModel(postType: .Title, text: "lol"),
-        SimplePhotoPostCellViewModel(postType: .SimplePhoto, imageUrl: "8"),
-        SimplePhotoPostCellViewModel(postType: .SimplePhoto, imageUrl: "lol")]
-    
-    let postbody_2 : [BasePostCellViewModelProtocol] = [
-        TitlePostCellViewModel(postType: .Title, text: "lol 22222"),
-        SimplePhotoPostCellViewModel(postType: .SimplePhoto, imageUrl: "lol"),
-        SimplePhotoPostCellViewModel(postType: .SimplePhoto, imageUrl: "lol")]
-    
-    let postbody_3 : [BasePostCellViewModelProtocol] = [
-        TitlePostCellViewModel(postType: .Title, text: "lol3 234"),
-        SimplePhotoPostCellViewModel(postType: .SimplePhoto, imageUrl: "lol"),
-        SimplePhotoPostCellViewModel(postType: .SimplePhoto, imageUrl: "2")]
-    
-    
-    func fetchPostBody(id : Int, complition : ([BasePostCellViewModelProtocol])->()) {
-        let result : [[BasePostCellViewModelProtocol]] = [postbody_1,postbody_2,postbody_3]
-        complition(result[id])
+    func fetchPostBody(id : String, complition : @escaping ([BasePostCellViewModelProtocol])->()) {
+        FirebaseAPI.shared.getPostBody(id: id) { res, viewModels in
+            if res == .success {
+                guard let viewModels = viewModels else {
+                    Debug.log("Network.fetchPostBody() : ", "viewModels = nil")
+                    return
+                }
+                complition(viewModels)
+            }
+        }
     }
     func setCard(){
         FirebaseAPI.shared.setCard()
