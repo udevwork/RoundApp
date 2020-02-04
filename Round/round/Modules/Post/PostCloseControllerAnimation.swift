@@ -53,7 +53,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         fromViewController.view.isHidden = true
         /// main image
         let backImg : UIImageView =  UIImageView(frame: header.backgroundImageView.frame)
-        backImg.layer.cornerRadius = 10
+        backImg.layer.cornerRadius = 13
         backImg.layer.masksToBounds = true
         backImg.image = header.backgroundImageView.image
         backImg.contentMode = .scaleAspectFill
@@ -71,7 +71,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         description.attributedText = attributedString
         description.numberOfLines = 3
         /// gradient
-        let gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
+        let gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.cardGradient.cgColor, UIColor.clear.cgColor], type: .axial)
 
         /// avatar
         let authorAvatar : UserAvatarView = UserAvatarView(frame:header.authorAvatar.frame)
@@ -84,7 +84,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
             .setColor(.clear)
             .setIcon(Icons.back)
             .setIconSize(CGSize(width: 17, height: 17))
-            .setCornerRadius(22)
+            .setCornerRadius(13)
             .setShadow(.NavigationBar)
             .build()
         

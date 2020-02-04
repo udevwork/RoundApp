@@ -15,7 +15,7 @@ import Foundation
      `clear`
  */
 public struct EasyPeasy {
-    
+        
     /// Weak reference to the `Item` that owns this wrapper
     weak var item: Item?
     
@@ -37,6 +37,7 @@ public struct EasyPeasy {
         return self.item?.apply(attributes: attributes) ?? []
     }
     
+
     /**
          This method will trigger the recreation of the  created using
          *EasyPeasy* for the current view. `Condition` closures will

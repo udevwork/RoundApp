@@ -16,7 +16,6 @@ class SimplePhotoPostCellViewModel : BasePostCellViewModelProtocol{
     let cashe : NSCache<NSString, UIImage> =  NSCache()
 
     init(model : SimplePhotoResponse) {
-        print("INIT SimplePhotoPostCellViewModel")
         self.type = model.type
         self.imageUrl = model.imageUrl
         self.order = model.order
@@ -27,7 +26,6 @@ class SimplePhotoPostCellViewModel : BasePostCellViewModelProtocol{
            if let image = cashe.object(forKey: urlString as NSString) {
                  DispatchQueue.main.async {
                      complition(image, .cashe)
-                    print("IMAGE LOAD : CASHE")
                  }
             return
              }
@@ -46,13 +44,8 @@ class SimplePhotoPostCellViewModel : BasePostCellViewModelProtocol{
                self.cashe.setObject(image, forKey: urlString as NSString)
                  DispatchQueue.main.async() {
                      complition(UIImage(data: data)!, .url)
-                    print("IMAGE LOAD : URL")
                  }
              }.resume()
              
          }
-    
-    deinit {
-        print("DEINIT SimplePhotoPostCellViewModel")
-    }
 }

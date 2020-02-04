@@ -17,6 +17,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         FirebaseApp.configure()
+        Auth.auth().signInAnonymously { res, err in
+            if err == nil {
+                if let user = res?.user {
+                    print("USER: \(user.uid)")
+                }
+            }
+            
+        }
+        
         let model = MainViewModel()
         let contentView = MainViewController(viewModel: model)
         contentView.additionalSafeAreaInsets = UIEdgeInsets(top: 200, left: 0, bottom: 0, right: 0  )
@@ -31,7 +40,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.makeKeyAndVisible()
         }
         
-        FirebaseAPI.shared.setCard()
      
     }
 

@@ -26,7 +26,7 @@ class PostViewControllerHeader: UIView {
         .setShadow(.NavigationBar)
         .build()
 
-    var gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
+    var gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.cardGradient.cgColor, UIColor.clear.cgColor], type: .axial)
 
     var titleLabel : Text = Text(frame: .zero, fontName: .Bold, size: 31)
 

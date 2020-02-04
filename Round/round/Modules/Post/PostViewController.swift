@@ -112,7 +112,5 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
         
         return UITableView.automaticDimension
     }
-
-    
     
 }

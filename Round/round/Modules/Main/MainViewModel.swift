@@ -9,15 +9,14 @@
 import Foundation
 
 class MainViewModel {
-    let user : User = User(ID: 0, avatarImageURL: nil, userName: nil)
-    private var cards : [CardViewModel] = []
+    public let user : User = User(ID: 0, avatarImageURL: nil, userName: nil)
+    public var cards : [CardViewModel] = []
 
     
     // load cards at first loading and as adding to present cards, pagination not needed
     func loadCards(_ complition : (()->())?)  {
         Network.fetchPosts { cards in
             self.cards.append(contentsOf: cards)
-            
             complition?()
         }
     }

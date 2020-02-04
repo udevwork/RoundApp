@@ -11,17 +11,17 @@ import UIKit
 import EasyPeasy
 
 class CardView: UIView {
-
+    
     var viewModel : CardViewModel? = nil
     var onCardPress : ((CardView, CardViewModel)->())? = nil
     var backgroundImageView : UIImageView = UIImageView()
     fileprivate var backgroundImageViewMask : UIView = UIView()
     fileprivate var actionButton : UIButton = UIButton()
-     var titleLabel : Text = Text(frame: .zero, fontName: .Bold, size: 31)
-     var descriptionLabel : Text = Text(frame: .zero, fontName: .Regular, size: 16)
-     var authorAvatar : UserAvatarView = UserAvatarView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-     var authorNameLabel : Text = Text(frame: .zero, fontName: .Black, size: 10)
-     var gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
+    var titleLabel : Text = Text(frame: .zero, fontName: .Bold, size: 31)
+    var descriptionLabel : Text = Text(frame: .zero, fontName: .Regular, size: 16)
+    var authorAvatar : UserAvatarView = UserAvatarView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    var authorNameLabel : Text = Text(frame: .zero, fontName: .Black, size: 10)
+    var gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.cardGradient.cgColor, UIColor.clear.cgColor], type: .axial)
     fileprivate var whiteFade : UIView = UIView()
     var transparent : CGFloat { get{return 0} set{
         if newValue > 1 {return}
@@ -41,7 +41,7 @@ class CardView: UIView {
     
     fileprivate func setupDesign(){
         gradient.frame = bounds
-        gradient.cornerRadius = 20
+        gradient.cornerRadius = 13
         backgroundImageViewMask.addSubview(backgroundImageView)
         addSubview(backgroundImageViewMask)
         layer.addSublayer(gradient)
@@ -49,8 +49,8 @@ class CardView: UIView {
             addSubview($0)
         }
         whiteFade.backgroundColor = .white
-        whiteFade.layer.cornerRadius = 20
-        layer.cornerRadius = 20
+        whiteFade.layer.cornerRadius = 13
+        layer.cornerRadius = 13
         
         whiteFade.easy.layout(
             Leading(),Trailing(),Top(),Bottom()
@@ -59,7 +59,7 @@ class CardView: UIView {
         backgroundImageViewMask.easy.layout(
             Leading(),Trailing(),Top(),Bottom()
         )
-        backgroundImageViewMask.layer.cornerRadius = 20
+        backgroundImageViewMask.layer.cornerRadius = 13
         backgroundImageViewMask.layer.masksToBounds = true
         backgroundImageView.easy.layout(
             Leading(),Trailing(),Top(),Bottom()
@@ -83,7 +83,7 @@ class CardView: UIView {
             Leading(20),Trailing(20),Bottom(5).to(descriptionLabel)
         )
         titleLabel.sizeToFit()
-
+        
         authorNameLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5293771404)
         authorAvatar.easy.layout(
             Leading(20),Top(20),Height(40),Width(40)
@@ -106,14 +106,14 @@ class CardView: UIView {
         /// another font for comments
         
         // TODO: create shadow
-//        layer.shadowRadius = 8
-//        layer.shadowOpacity = 0.3
-//        layer.shadowOffset = .zero
+        //        layer.shadowRadius = 8
+        //        layer.shadowOpacity = 0.3
+        //        layer.shadowOffset = .zero
         layer.masksToBounds = false
         clipsToBounds = false
         
         actionButton.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
-
+        
         layoutSubviews()
     }
     
@@ -123,7 +123,7 @@ class CardView: UIView {
     
     func setupData(_ viewModel : CardViewModel){
         self.viewModel = viewModel
-      //  backgroundImageView.image = UIImage(named: viewModel.mainImageURL)
+        //  backgroundImageView.image = UIImage(named: viewModel.mainImageURL)
         backgroundImageView.setImage(url: viewModel.mainImageURL, placeholder: "ImagePlaceholder")
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description

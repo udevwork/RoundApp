@@ -50,7 +50,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         toViewController.view.isHidden = true
         /// main image
         let backImg : UIImageView =  UIImageView(frame: card.frame)
-        backImg.layer.cornerRadius = 20
+        backImg.layer.cornerRadius = 13
         backImg.layer.masksToBounds = true
         backImg.image = card.backgroundImageView.image
         backImg.contentMode = .scaleAspectFill
@@ -68,7 +68,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         description.attributedText = attributedString
         description.numberOfLines = 3
         /// gradient
-        let gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
+        let gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.cardGradient.cgColor, UIColor.clear.cgColor], type: .axial)
         /// avatar
         let authorAvatar : UserAvatarView = UserAvatarView(frame:card.authorAvatar.frame)
         authorAvatar.setImage(model.author.avatarImageURL)
@@ -80,7 +80,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
             .setColor(.clear)
             .setIcon(Icons.back)
             .setIconSize(CGSize(width: 17, height: 17))
-            .setCornerRadius(22)
+            .setCornerRadius(13)
             .setShadow(.NavigationBar)
             .build()
         
@@ -121,7 +121,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
             UIViewPropertyAnimator(duration: 0.6, dampingRatio: 10) {
                 backImg.frame = UIScreen.main.bounds
                 gradient.frame = backImg.bounds
-                backImg.layer.cornerRadius = 10
+                backImg.layer.cornerRadius = 13
                 backButton.icon.alpha = 1
                 containerView.layoutIfNeeded()
             }

@@ -49,6 +49,8 @@ extension UIColor {
     static let selected = #colorLiteral(red: 0.3450980392, green: 0.7058823529, blue: 1, alpha: 1)
     static let secondaryViews = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     static let button = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    static let cardGradient = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.65)
+
 }
 
 class Icons {
