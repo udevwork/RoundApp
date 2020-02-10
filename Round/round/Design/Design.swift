@@ -40,29 +40,42 @@ enum ShadowPresets  {
             return (10, .zero, 0.6, .black)
         }
     }
-    
 }
 
 extension UIColor {
     static let viewControllersBackgroung = #colorLiteral(red: 0.8745098039, green: 0.9176470588, blue: 0.9529411765, alpha: 1)
     static let text = #colorLiteral(red: 0.08235294118, green: 0.08235294118, blue: 0.08235294118, alpha: 1)
-    static let selected = #colorLiteral(red: 0.3450980392, green: 0.7058823529, blue: 1, alpha: 1)
-    static let secondaryViews = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-    static let button = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     static let cardGradient = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.65)
-
+    static let round = #colorLiteral(red: 0.4901960784, green: 0.5294117647, blue: 0.7882352941, alpha: 1)
+    static let button = #colorLiteral(red: 0.5529411765, green: 0.5764705882, blue: 0.9764705882, alpha: 1)
+    static let error = #colorLiteral(red: 1, green: 0.5882352941, blue: 0.5882352941, alpha: 1)
+    static let warning = #colorLiteral(red: 0.9843137255, green: 0.8980392157, blue: 0.8980392157, alpha: 1)
+    static let ok = #colorLiteral(red: 0.5843137255, green: 0.8980392157, blue: 0.568627451, alpha: 1)
+    static let success = #colorLiteral(red: 0.9137254902, green: 0.9843137255, blue: 0.8980392157, alpha: 1)
+    static let neutral = #colorLiteral(red: 0.662745098, green: 0.8, blue: 0.9254901961, alpha: 1)
+    static let common = #colorLiteral(red: 0.9490196078, green: 0.968627451, blue: 0.9843137255, alpha: 1)
 }
 
-class Icons {
-    static let back : UIImage = #imageLiteral(resourceName: "back")
-    static let menu : UIImage = #imageLiteral(resourceName: "MenuIcon")
-    static let account : UIImage = #imageLiteral(resourceName: "012-user")
-    static let location : UIImage = #imageLiteral(resourceName: "007-pin")
-    static let settings : UIImage = #imageLiteral(resourceName: "011-settings")
-    static let compas : UIImage = #imageLiteral(resourceName: "019-compass")
-    static let cloud : UIImage = #imageLiteral(resourceName: "016-ui")
-    static let search : UIImage = #imageLiteral(resourceName: "023-magnifying-glass")
+enum Icons : String {
+    case add = "005-add"
+    case bookmark = "006-bookmark"
+    case pin = "007-pin"
+    case user = "012-user"
+    case magnifying = "023-magnifying-glass"
+    case back = "001-back"
+    case menu = "MenuIcon"
+    case cross = "002-delete"
+    case filter = "003-filter"
+
     
+    func image() -> UIImage {
+        if let img = UIImage(named: self.rawValue) {
+        return img
+        } else {
+            Debug.log("Design.swift 63")
+            return UIImage(named: "empty")!
+        }
+    }
 }
 
 extension CAGradientLayer {

@@ -13,7 +13,7 @@ class TitlePostCellView: UITableViewCell, BasePostCellProtocol {
     var id: String = UUID().uuidString
     var postType: PostCellType = .Title
     
-    var title = Text(frame: .zero, fontName: .Bold, size: 21)
+    var title = Text(nil, .title, nil)
     
    public func setup(viewModel: BasePostCellViewModelProtocol) {
         guard let model = viewModel as? TitlePostCellViewModel else {print("TitlePostCellView viewModel type error"); return}
@@ -27,7 +27,6 @@ class TitlePostCellView: UITableViewCell, BasePostCellProtocol {
         title.easy.layout(Leading(20),Trailing(20),Top(40),Bottom(40))
         title.numberOfLines = 0
         title.sizeToFit()
-        title.textColor = .black
         layoutSubviews()
     }
 }

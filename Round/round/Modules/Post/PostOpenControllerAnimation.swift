@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 import EasyPeasy
 
+class PostAnimatorHelper {
+    static var cardOriginalFrame : CGRect = .zero
+}
+
 class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioning {
     
     var card : CardView? = nil
@@ -27,40 +31,43 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
         let containerView = transitionContext.containerView
-        guard let card = card else {
-            return
-        }
-        guard let model = card.viewModel else {
-            return
-        }
+        guard let card = card else { return }
+        guard let model = card.viewModel else { return }
         
-        guard /* let fromViewController = transitionContext.viewController(forKey: .from),*/
+        guard let fromViewController = transitionContext.viewController(forKey: .from),
             let toViewController = transitionContext.viewController(forKey: .to) else {
                 transitionContext.completeTransition(false)
                 return
         }
         
-        
-     //   let to = toViewController as! PostViewController
+        /// let to = toViewController as! PostViewController
         
         toViewController.view.frame = UIScreen.main.bounds
         toViewController.view.layer.masksToBounds = true
         toViewController.view.layer.isOpaque = false
         toViewController.view.layer.cornerRadius = 10
         toViewController.view.isHidden = true
+        
         /// main image
-        let backImg : UIImageView =  UIImageView(frame: card.frame)
+        
+        
+        
+        let backImg : UIImageView =  UIImageView()
+        let x = card.convert(backImg.frame, to: nil).origin.x
+        let y = card.convert(backImg.frame, to: nil).origin.y
+        let imgFrame = CGRect(origin: CGPoint(x: x, y: y), size: card.frame.size)
+        backImg.frame = imgFrame
+        PostAnimatorHelper.cardOriginalFrame = imgFrame
         backImg.layer.cornerRadius = 13
         backImg.layer.masksToBounds = true
         backImg.image = card.backgroundImageView.image
         backImg.contentMode = .scaleAspectFill
         /// title text
-        let title : Text = Text(frame: card.titleLabel.frame, fontName: .Bold, size: 31)
+        let title : Text = Text(card.titleLabel.frame, .title, .white)
         title.text = model.title
         title.numberOfLines = 1
         /// description text
-        let description : Text = Text(frame: card.descriptionLabel.frame, fontName: .Regular, size: 16)
-        description.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.7614779538)
+        let description : Text = Text(card.descriptionLabel.frame, .article, .white)
         let attributedString = NSMutableAttributedString(string: model.description)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
@@ -72,14 +79,15 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         /// avatar
         let authorAvatar : UserAvatarView = UserAvatarView(frame:card.authorAvatar.frame)
         authorAvatar.setImage(model.author.avatarImageURL)
-        let authorNameLabel : Text = Text(frame: card.authorNameLabel.frame, fontName: .Black, size: 10)
+        let authorNameLabel : Text = Text(card.authorNameLabel.frame, .article, .white)
         authorNameLabel.text = model.author.userName
         /// back btn
         let backButton : Button = ButtonBuilder()
             .setStyle(.icon)
             .setColor(.clear)
-            .setIcon(Icons.back)
-            .setIconSize(CGSize(width: 17, height: 17))
+            .setIcon(Icons.back.image())
+            .setIconColor(.white)
+            .setIconSize(CGSize(width: 17, height: 15))
             .setCornerRadius(13)
             .setShadow(.NavigationBar)
             .build()
@@ -102,7 +110,6 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         description.easy.layout(
             Leading(20),Trailing(20),Bottom(20)
         )
-        authorNameLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5293771404)
         authorAvatar.easy.layout(
             Leading(20).to(backButton),Top(20), Width(40), Height(40)
         )
@@ -118,7 +125,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         gradient.bounds = backImg.frame
         
         let animator1 = {
-            UIViewPropertyAnimator(duration: 0.6, dampingRatio: 10) {
+            UIViewPropertyAnimator(duration: 0.6, dampingRatio: 1) {
                 backImg.frame = UIScreen.main.bounds
                 gradient.frame = backImg.bounds
                 backImg.layer.cornerRadius = 13

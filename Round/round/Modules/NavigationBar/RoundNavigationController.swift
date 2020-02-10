@@ -12,32 +12,21 @@ import EasyPeasy
 
 
 class RoundNavigationBar : UINavigationBar {
-    let windowTitle : Text = Text(fontName: .Medium, size: 21)
+    let windowTitle : Text = Text(nil, .window, nil)
     let menuButton : Button = ButtonBuilder()
         .setStyle(.icon)
-        .setIcon(Icons.menu)
+        .setIcon(Icons.menu.image())
+        .setColor(.clear)
+        .setIconColor(.black)
         .setIconSize(CGSize(width: 17, height: 17))
-    //  .setCornerRadius([.layerMinXMaxYCorner,.layerMinXMinYCorner], 22)
-    //  .setShadow(.NavigationBar)
-        .setTarget { print("MENU PRESSED") }
+        .setTarget { print("open") }
         .build()
-    
-//    let windowIconButton : Button = ButtonBuilder()
-//        .setStyle(.icon)
-//        .setIcon(Icons.location)
-//        .setIconSize(CGSize(width: 17, height: 17))
-//        .setCornerRadius(22)
-//        .setShadow(.NavigationBar)
-//        .setTarget { print("ICON PRESSED") }
-//        .build()
-    
+
     let backButton : Button = ButtonBuilder()
         .setStyle(.icon)
         .setColor(.clear)
-        .setIcon(Icons.back)
+        .setIcon(Icons.back.image())
         .setIconSize(CGSize(width: 17, height: 17))
-   //   .setCornerRadius(22)
-   //   .setShadow(.NavigationBar)
         .setTarget { print("BACK PRESSED") }
         .build()
     
@@ -49,7 +38,6 @@ class RoundNavigationBar : UINavigationBar {
         addSubview(windowTitle)
         addSubview(backButton)
         addSubview(menuButton)
-        //addSubview(windowIconButton)
 
         backButton.setTarget {
             
@@ -59,11 +47,9 @@ class RoundNavigationBar : UINavigationBar {
         shadowImage = UIImage()
         isTranslucent = true
         backgroundColor = .clear
-        windowTitle.textColor = UIColor.text
         windowTitle.easy.layout(Top(),Bottom(),Leading(10).to(backButton,.trailing),Right())
         backButton.easy.layout(Left(0),CenterY(),Width(20),Height(20))
         menuButton.easy.layout(Trailing(20),CenterY(),Width(44),Height(44))
- //     windowIconButton.easy.layout(CenterY(),Leading(20).to(backButton,.trailing),Width(44),Height(44))
         windowTitle.easy.layout(Top(),Bottom(),Leading(20),Right())
         windowTitle.textAlignment = .left
         backButton.alpha = 0
@@ -123,7 +109,7 @@ class RoundNavigationController: UINavigationController {
         super.pushViewController(viewController, animated: animated)
         navBar.windowTitle.animatedTextChanging(time: 0.15, text: viewController.title ?? "")
         navBar.checkBackButton(isHidden: viewControllers.count == 1 ? true : false)
-   //   navBar.transition(vc: viewController as! BaseViewController<MainViewModel>)
+
     }
     
     override func popViewController(animated: Bool) -> UIViewController? {

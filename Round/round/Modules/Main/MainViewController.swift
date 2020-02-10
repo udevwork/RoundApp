@@ -11,14 +11,21 @@ import UIKit
 import EasyPeasy
 
 class MainViewController: BaseViewController<MainViewModel> {
-    
-    fileprivate var postViewer : CardsViewer = CardsViewer()
-    fileprivate var filterView : ScrollStack = ScrollStack()
+
+    fileprivate var filterView : FilterSlider = FilterSlider()
+    var postViewer : CardsViewer = CardsViewer()
+    let createButton : Button = ButtonBuilder()
+        .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 50)))
+        .setStyle(.text)
+        .setText("Create")
+        .setTextColor(.white)
+        .setCornerRadius(13)
+        .setTarget { print("open") }
+        .build()
     
     override init(viewModel: MainViewModel) {
         super.init(viewModel: viewModel)
         title = "Round"
-        controllerIcon = Icons.location
         setupViewe()
     }
     
@@ -29,6 +36,7 @@ class MainViewController: BaseViewController<MainViewModel> {
     fileprivate func setupViewe(){
         view.addSubview(postViewer)
         view.addSubview(filterView)
+        view.addSubview(createButton)
         filterView.easy.layout(
             Height(50), Top(80), Trailing(), Leading()
         )
@@ -36,7 +44,10 @@ class MainViewController: BaseViewController<MainViewModel> {
         
         postViewer.delegate = self
         postViewer.easy.layout(
-            CenterX(),CenterY(),Height(200),Width(200)
+            Leading(20),Trailing(50),Top(20).to(filterView),Bottom(30).to(createButton)
+        )
+        createButton.easy.layout(
+           Bottom(30),Trailing(50)
         )
         viewModel.loadCards {
             DispatchQueue.main.async {

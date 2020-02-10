@@ -14,7 +14,7 @@ class ArticlePostCellView: UITableViewCell, BasePostCellProtocol {
     var id: String = UUID().uuidString
     var postType: PostCellType = .Article
     
-    var article = Text(frame: .zero, fontName: .Regular, size: 16)
+    var article = Text(nil, .article, nil)
     
     func setup(viewModel: BasePostCellViewModelProtocol) {
         guard let model = viewModel as? ArticlePostCellViewModel else {print("ArticlePostCellView viewModel type error"); return}
@@ -27,7 +27,6 @@ class ArticlePostCellView: UITableViewCell, BasePostCellProtocol {
         addSubview(article)
         article.easy.layout(Leading(20),Trailing(20),Top(40),Bottom(40))
         article.numberOfLines = 0
-        article.textColor = .black
         layoutSubviews()
     }
 }

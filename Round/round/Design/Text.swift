@@ -12,9 +12,34 @@ import UIKit
 
 class Text: UILabel {
     
-    init(frame: CGRect = .zero, fontName: FontNames = .Regular, size : CGFloat = 12) {
-        super.init(frame: frame)
-        font = UIFont(name: fontName.rawValue, size: size)
+    enum Style {
+        case window
+        case title
+        case article
+        
+        func data() -> ( fontName: FontNames, size : CGFloat, color : UIColor) {
+            switch self {
+            case .window:
+                return (.Bold, 21, .black)
+            case .title:
+                return (.Bold, 31, .black)
+            case .article:
+                return (.Medium, 16, .black)
+            }
+        }
+    }
+    init(_ frame: CGRect?,_ style : Style,_ color : UIColor?) {
+        if frame == nil {
+            super.init(frame: .zero)
+        } else { super.init(frame: frame!) }
+        
+        font = UIFont(name: style.data().fontName.rawValue, size: style.data().size)
+        
+        if color == nil {
+            textColor = style.data().color
+        } else {
+            textColor = color
+        }
     }
     
     required init?(coder: NSCoder) {

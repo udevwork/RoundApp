@@ -52,18 +52,20 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
 
         fromViewController.view.isHidden = true
         /// main image
-        let backImg : UIImageView =  UIImageView(frame: header.backgroundImageView.frame)
+        let backImg : UIImageView =  UIImageView(frame: UIScreen.main.bounds)
         backImg.layer.cornerRadius = 13
         backImg.layer.masksToBounds = true
         backImg.image = header.backgroundImageView.image
         backImg.contentMode = .scaleAspectFill
         /// title text
-        let title : Text = Text(frame: header.titleLabel.frame, fontName: .Bold, size: 31)
+        let title : Text = Text(header.titleLabel.frame, .title, .white)
+        
         title.text = header.titleLabel.text
         title.numberOfLines = 1
         /// description text
-        let description : Text = Text(frame: header.descriptionLabel.frame, fontName: .Regular, size: 16)
-        description.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.7614779538)
+        let description : Text = Text(header.descriptionLabel.frame, .article, .white)
+
+                
         let attributedString = NSMutableAttributedString(string: model.description)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
@@ -76,14 +78,18 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         /// avatar
         let authorAvatar : UserAvatarView = UserAvatarView(frame:header.authorAvatar.frame)
         authorAvatar.setImage(model.author.avatarImageURL)
-        let authorNameLabel : Text = Text(frame: header.authorNameLabel.frame, fontName: .Black, size: 10)
+        let authorNameLabel : Text = Text(header.authorNameLabel.frame, .article, .white)
+
+        
+
         authorNameLabel.text = model.author.userName
         /// back btn
         let backButton : Button = ButtonBuilder()
             .setStyle(.icon)
             .setColor(.clear)
-            .setIcon(Icons.back)
-            .setIconSize(CGSize(width: 17, height: 17))
+            .setIcon(Icons.back.image())
+            .setIconColor(.white)
+            .setIconSize(CGSize(width: 17, height: 15))
             .setCornerRadius(13)
             .setShadow(.NavigationBar)
             .build()
@@ -108,7 +114,6 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         description.easy.layout(
             Leading(20),Trailing(20),Bottom(20)
         )
-        authorNameLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5293771404)
         authorAvatar.easy.layout(
             Leading(20),Top(20), Width(40), Height(40)
         )
@@ -124,10 +129,12 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         
         gradient.resizeAndMove(frame: card.gradient.bounds, animated: true, duration: 0.6)
         
+        
         let animator1 = {
-            UIViewPropertyAnimator(duration: 0.6, dampingRatio: 10) {
-                backImg.frame = card.frame
-                backImg.layer.cornerRadius = 20
+            UIViewPropertyAnimator(duration: 0.6, dampingRatio: 1) {
+                let imgFrame = PostAnimatorHelper.cardOriginalFrame
+                backImg.frame = imgFrame
+                backImg.layer.cornerRadius = 13
                 backButton.icon.alpha = 0
                 containerView.layoutIfNeeded()
             }

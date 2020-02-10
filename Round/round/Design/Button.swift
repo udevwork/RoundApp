@@ -24,7 +24,7 @@ class Button: UIButton {
     
     
      var icon : UIImageView = UIImageView()
-    fileprivate var btnText : Text = Text()
+    fileprivate var btnText : Text = Text(nil, .article, nil)
     
     init() {
         super.init(frame: .zero)
@@ -79,6 +79,13 @@ class ButtonBuilder {
     
     func setText(_ text : String) -> ButtonBuilder {
         button.btnText.text = text
+        button.btnText.easy.layout(Top(20),Bottom(20),Leading(35),Trailing(35))
+
+        return self
+    }
+    
+    func setTextColor(_ color : UIColor) -> ButtonBuilder {
+        button.btnText.textColor = color
         return self
     }
     
@@ -90,6 +97,11 @@ class ButtonBuilder {
     
     func setIcon(_ icon : UIImage) -> ButtonBuilder {
         button.icon.image = icon
+        return self
+    }
+    
+    func setIconColor(_ color : UIColor) -> ButtonBuilder {
+        button.icon.tintColor = color
         return self
     }
     
@@ -134,7 +146,7 @@ class ButtonBuilder {
         return self
     }
     
-    func build() -> Button{
+    func build() -> Button {
         if button.style == nil { Debug.log("Button builder: ", "You need to assign a style for button!") }
         if button.style == Button.Style.text {
             if button.btnText.text == "" {

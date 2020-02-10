@@ -20,21 +20,22 @@ class PostViewControllerHeader: UIView {
     let backButton : Button = ButtonBuilder()
         .setStyle(.icon)
         .setColor(.clear)
-        .setIcon(Icons.back)
-        .setIconSize(CGSize(width: 17, height: 17))
+        .setIcon(Icons.back.image())
+        .setIconColor(.white)
+        .setIconSize(CGSize(width: 17, height: 15))
         .setCornerRadius(22)
         .setShadow(.NavigationBar)
         .build()
 
     var gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.cardGradient.cgColor, UIColor.clear.cgColor], type: .axial)
 
-    var titleLabel : Text = Text(frame: .zero, fontName: .Bold, size: 31)
+    var titleLabel : Text = Text(nil, .title, .white)
 
-    var descriptionLabel : Text = Text(frame: .zero, fontName: .Regular, size: 16)
+    var descriptionLabel : Text = Text(nil, .article, .white)
 
     var authorAvatar : UserAvatarView = UserAvatarView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
 
-    var authorNameLabel : Text = Text(frame: .zero, fontName: .Black, size: 10)
+    var authorNameLabel : Text = Text(nil, .article, .white)
 
     init(frame: CGRect, viewModel: CardViewModel, card: CardView) {
         super.init(frame: frame)
@@ -63,7 +64,6 @@ class PostViewControllerHeader: UIView {
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.layer.masksToBounds = true
 
-        descriptionLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.7614779538)
         let attributedString = NSMutableAttributedString(string: descriptionLabel.text!)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
@@ -81,7 +81,6 @@ class PostViewControllerHeader: UIView {
         )
         titleLabel.sizeToFit()
 
-        authorNameLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5293771404)
         authorNameLabel.easy.layout(
             Leading(20).to(authorAvatar),
             Trailing(20),

@@ -11,28 +11,28 @@ import EasyPeasy
 
 class UserAvatarView: UIView {
     fileprivate var authorAvatarImageViewMask = UIView()
-    fileprivate var authorAvatarShadow = UIView()
+    //fileprivate var authorAvatarShadow = UIView()
     fileprivate var authorAvatarImageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(authorAvatarShadow)
+        //addSubview(authorAvatarShadow)
         addSubview(authorAvatarImageViewMask)
         authorAvatarImageViewMask.addSubview(authorAvatarImageView)
         // authorAvatarImageView.contentMode = .scaleAspectFill
-        [authorAvatarShadow, authorAvatarImageViewMask, authorAvatarImageView].forEach({
+        [/*authorAvatarShadow,*/ authorAvatarImageViewMask, authorAvatarImageView].forEach({
             $0.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
             $0.easy.layout(
                 Leading(),Trailing(),Top(),Bottom()
             )
         })
         authorAvatarImageViewMask.layer.cornerRadius = frame.width/2
-        authorAvatarImageViewMask.layer.borderWidth = 2
-        authorAvatarImageViewMask.layer.borderColor = UIColor.white.cgColor
+//        authorAvatarImageViewMask.layer.borderWidth = 2
+ //       authorAvatarImageViewMask.layer.borderColor = UIColor.white.cgColor
         authorAvatarImageViewMask.layer.masksToBounds = true
-        authorAvatarShadow.backgroundColor = .white
-        authorAvatarShadow.layer.cornerRadius =  frame.width/2
-        authorAvatarShadow.setupShadow(preset: .NavigationBar)
+//        authorAvatarShadow.backgroundColor = .white
+//        authorAvatarShadow.layer.cornerRadius =  frame.width/2
+//        authorAvatarShadow.setupShadow(preset: .NavigationBar)
         layoutSubviews()
     }
     
