@@ -10,8 +10,12 @@ import Foundation
 import UIKit
 import EasyPeasy
 
-class MainViewController: BaseViewController<MainViewModel> {
-
+class MainViewController: BaseViewController<MainViewModel>, NavigationDesignProtocol {
+    
+    var navTitle: String
+    var navDescription: String
+    var navIcon: UIImage
+   
     fileprivate var filterView : FilterSlider = FilterSlider()
     var postViewer : CardsViewer = CardsViewer()
     let createButton : Button = ButtonBuilder()
@@ -24,23 +28,41 @@ class MainViewController: BaseViewController<MainViewModel> {
         .build()
     
     override init(viewModel: MainViewModel) {
+        navTitle = "Round"
+        navDescription = ""
+        navIcon = Icons.menu.image()
         super.init(viewModel: viewModel)
-        title = "Round"
-        setupViewe()
+        setupView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func setupViewe(){
+    fileprivate func setupView(){
+        
         view.addSubview(postViewer)
         view.addSubview(filterView)
         view.addSubview(createButton)
+        
         filterView.easy.layout(
-            Height(50), Top(80), Trailing(), Leading()
+            Height(50), Top().to(view.safeAreaLayoutGuide,.top), Trailing(), Leading()
         )
         filterView.setup()
+        
+        filterView.onAddFilterPress = { [weak self] in
+            
+            let model : [SearchableModelProtocol] = [
+                UserModel(userName: "Alabama", useravatar: Icons.add.image()),
+                UserModel(userName: "Alaska", useravatar: Icons.back.image()),
+                UserModel(userName: "American Samoa", useravatar: Icons.bookmark.image()),
+                UserModel(userName: "California", useravatar: Icons.cross.image()),
+                UserModel(userName: "Colorado", useravatar: Icons.pin.image()),
+                UserModel(userName: "Connecticut", useravatar: Icons.user.image())]
+            
+            let filter = SearchViewController(viewModel: FilterViewModel(navigationTitle: "Users", searchableModel: model, searchCellType: UserCell.self))
+            self?.navigation.push(filter)
+        }
         
         postViewer.delegate = self
         postViewer.easy.layout(

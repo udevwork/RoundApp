@@ -14,7 +14,7 @@ class ArticlePostCellView: UITableViewCell, BasePostCellProtocol {
     var id: String = UUID().uuidString
     var postType: PostCellType = .Article
     
-    var article = Text(nil, .article, nil)
+    var article = Text(.article)
     
     func setup(viewModel: BasePostCellViewModelProtocol) {
         guard let model = viewModel as? ArticlePostCellViewModel else {print("ArticlePostCellView viewModel type error"); return}

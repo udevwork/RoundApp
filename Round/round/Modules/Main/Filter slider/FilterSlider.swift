@@ -12,6 +12,8 @@ import EasyPeasy
 
 class FilterSlider: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    var onAddFilterPress : ()->() = {}
+    
     fileprivate var collection : UICollectionView = {
         let flow = UICollectionViewFlowLayout()
         flow.scrollDirection = .horizontal
@@ -48,14 +50,21 @@ class FilterSlider: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         let cell : FilterItem?
+        
         if indexPath.row == 0 {
-        cell = collectionView.dequeueReusableCell(withReuseIdentifier: addfilterIdentifier, for: indexPath) as! AddFilterButton
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: addfilterIdentifier, for: indexPath) as? AddFilterButton
+            
+            cell?.onPress = { [weak self] in
+                self?.onAddFilterPress()
+            }
+            
         } else {
-        cell = collectionView.dequeueReusableCell(withReuseIdentifier: filterItemIdentifier, for: indexPath) as! FilterItem
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: filterItemIdentifier, for: indexPath) as? FilterItem
         }
-        guard let cellq = cell else {return FilterItem()}
-        cellq.setup(text: items[indexPath.row])
-        return cellq
+        
+        guard let finalcell = cell else { return UICollectionViewCell() }
+        finalcell.setup(text: items[indexPath.row])
+        return finalcell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

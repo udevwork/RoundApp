@@ -12,8 +12,8 @@ import EasyPeasy
 
 
 class RoundNavigationBar : UINavigationBar {
-    let windowTitle : Text = Text(nil, .window, nil)
-    let menuButton : Button = ButtonBuilder()
+    let windowTitle : Text = Text(.window)
+    let windowIcon : Button = ButtonBuilder()
         .setStyle(.icon)
         .setIcon(Icons.menu.image())
         .setColor(.clear)
@@ -26,32 +26,29 @@ class RoundNavigationBar : UINavigationBar {
         .setStyle(.icon)
         .setColor(.clear)
         .setIcon(Icons.back.image())
-        .setIconSize(CGSize(width: 17, height: 17))
-        .setTarget { print("BACK PRESSED") }
+        .setIconColor(.black)
+        .setIconSize(CGSize(width: 17, height: 15))
         .build()
     
     
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
         addSubview(windowTitle)
         addSubview(backButton)
-        addSubview(menuButton)
-
-        backButton.setTarget {
-            
-        }
+        addSubview(windowIcon)
+        
         
         setBackgroundImage(UIImage(), for: .default)
         shadowImage = UIImage()
         isTranslucent = true
         backgroundColor = .clear
-        windowTitle.easy.layout(Top(),Bottom(),Leading(10).to(backButton,.trailing),Right())
-        backButton.easy.layout(Left(0),CenterY(),Width(20),Height(20))
-        menuButton.easy.layout(Trailing(20),CenterY(),Width(44),Height(44))
+        windowTitle.easy.layout(Top(),Bottom(),Leading().to(backButton,.trailing))
+        backButton.easy.layout(Left(-10),CenterY(),Width(40),Height(40))
+        windowIcon.easy.layout(Trailing(20),CenterY(),Width(44),Height(44))
         windowTitle.easy.layout(Top(),Bottom(),Leading(20),Right())
         windowTitle.textAlignment = .left
+        windowTitle.sizeToFit()
         backButton.alpha = 0
         layoutSubviews()
     }
@@ -65,23 +62,27 @@ class RoundNavigationBar : UINavigationBar {
         if isBackButtonHidden == isHidden {return}
         isBackButtonHidden = isHidden
         if isHidden == true {
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.3, animations: { [weak self] in
+                guard let self = self else {return}
                 self.backButton.alpha = 0
-                self.backButton.easy.layout(Left(0))
+                self.backButton.easy.layout(Left(-10))
+                self.windowTitle.easy.layout(Leading().to(self.backButton,.trailing))
                 self.layoutIfNeeded()
             })
         } else {
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.3, animations: { [weak self] in
+                guard let self = self else {return}
                 self.backButton.alpha = 1
-                self.backButton.easy.layout(Left(20))
+                self.backButton.easy.layout(Left(10))
+                self.windowTitle.easy.layout(Leading().to(self.backButton,.trailing))
                 self.layoutIfNeeded()
             })
         }
     }
     
-    func transition(vc : BaseViewController<MainViewModel>) {
-        UIView.transition(with: self.menuButton.icon, duration: 1, options: .transitionFlipFromLeft, animations: {
-            self.menuButton.icon.image = vc.controllerIcon
+    func transition(vc : NavigationDesignProtocol) {
+        UIView.transition(with: self.windowIcon.icon, duration: 0.5, options: .transitionFlipFromLeft, animations: {
+            self.windowIcon.icon.image = vc.navIcon
         }, completion: nil)
     }
     
@@ -100,24 +101,28 @@ class RoundNavigationController: UINavigationController {
         navigationBar.backgroundColor = .clear
         setNavigationBarHidden(true, animated: false)
         view.addSubview(navBar)
-        navBar.backButton.setTarget {
-          _ = self.popViewController(animated: true)
+        navBar.backButton.setTarget { [weak self] in
+            self?.pop()
         }
+         guard let controller = viewControllers.last as? NavigationDesignProtocol else { return }
+        navBar.windowTitle.text = controller.navTitle
     }
     
-    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-        super.pushViewController(viewController, animated: animated)
-        navBar.windowTitle.animatedTextChanging(time: 0.15, text: viewController.title ?? "")
+    func push(_ viewController: UIViewController) {
+        super.pushViewController(viewController, animated: true)
         navBar.checkBackButton(isHidden: viewControllers.count == 1 ? true : false)
-
+        guard let controller = viewController as? NavigationDesignProtocol else { return }
+        navBar.transition(vc: controller )
+        navBar.windowTitle.animatedTextChanging(time: 0.15, text: controller.navTitle )
+        
     }
     
-    override func popViewController(animated: Bool) -> UIViewController? {
-        let vc = super.popViewController(animated: animated)
-        navBar.windowTitle.animatedTextChanging(time: 0.15, text: viewControllers.last!.title ?? "")
+    func pop() {
+        super.popViewController(animated: true)
         navBar.checkBackButton(isHidden: viewControllers.count == 1 ? true : false)
-        navBar.transition(vc: viewControllers.last! as! BaseViewController<MainViewModel>)
-        return vc
+        guard let controller = viewControllers.last as? NavigationDesignProtocol else { return }
+        navBar.transition(vc: controller )
+        navBar.windowTitle.animatedTextChanging(time: 0.15, text: controller.navTitle )
     }
     
     required init?(coder aDecoder: NSCoder) {

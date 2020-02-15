@@ -34,7 +34,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         guard let card = card else { return }
         guard let model = card.viewModel else { return }
         
-        guard let fromViewController = transitionContext.viewController(forKey: .from),
+        guard /*let fromViewController = transitionContext.viewController(forKey: .from),*/
             let toViewController = transitionContext.viewController(forKey: .to) else {
                 transitionContext.completeTransition(false)
                 return
@@ -63,11 +63,11 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         backImg.image = card.backgroundImageView.image
         backImg.contentMode = .scaleAspectFill
         /// title text
-        let title : Text = Text(card.titleLabel.frame, .title, .white)
+        let title : Text = Text(.title, .white, card.titleLabel.frame)
         title.text = model.title
         title.numberOfLines = 1
         /// description text
-        let description : Text = Text(card.descriptionLabel.frame, .article, .white)
+        let description : Text = Text(.article, .white, card.descriptionLabel.frame)
         let attributedString = NSMutableAttributedString(string: model.description)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
@@ -79,7 +79,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         /// avatar
         let authorAvatar : UserAvatarView = UserAvatarView(frame:card.authorAvatar.frame)
         authorAvatar.setImage(model.author.avatarImageURL)
-        let authorNameLabel : Text = Text(card.authorNameLabel.frame, .article, .white)
+        let authorNameLabel : Text = Text(.article, .white, card.authorNameLabel.frame)
         authorNameLabel.text = model.author.userName
         /// back btn
         let backButton : Button = ButtonBuilder()

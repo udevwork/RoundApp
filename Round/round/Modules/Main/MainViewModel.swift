@@ -15,8 +15,8 @@ class MainViewModel {
     
     // load cards at first loading and as adding to present cards, pagination not needed
     func loadCards(_ complition : (()->())?)  {
-        Network.fetchPosts { cards in
-            self.cards.append(contentsOf: cards)
+        Network.fetchPosts { [weak self] cards in
+            self?.cards.append(contentsOf: cards)
             complition?()
         }
     }

@@ -9,30 +9,39 @@
 import UIKit
 import EasyPeasy
 
-class AddFilterButton: FilterItem {
+class AddFilterButton: UICollectionViewCell, FilterItem {
+   
+    var onPress: () -> () = { }
     
-    let label : Text = Text(nil, .article, .white)
+    let label : Text = Text(.article, .white)
     
-    let icon : Button = ButtonBuilder()
-        .setStyle(.icon)
-        .setIcon(Icons.filter.image())
-        .setIconColor(.white)
-        .setColor(.clear)
-        .setIconSize(CGSize(width: 13, height: 13))
-        .setTarget { print("open") }
-        .build()
+    let icon : UIImageView = UIImageView(image: Icons.filter.image())
+    let transparentBtn : UIButton = UIButton(type: .custom)
     
-    override func setup(text : String){
+     func setup(text : String){
         addSubview(label)
         addSubview(icon)
+        addSubview(transparentBtn)
+        transparentBtn.backgroundColor = .clear
+        transparentBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
         
         backgroundColor = UIColor.button
         roundCorners(corners: [.layerMaxXMaxYCorner,.layerMaxXMinYCorner,.layerMinXMaxYCorner,.layerMinXMinYCorner], radius: 13)
         label.text = text
         
-        icon.easy.layout(CenterY(),Trailing(10),Height(30),Width(30))
+        icon.easy.layout(CenterY(),Trailing(10),Height(15),Width(15))
+        icon.isUserInteractionEnabled = false
+        icon.tintColor = .white
         
+        label.isUserInteractionEnabled = false
         label.easy.layout(Top(),Bottom(),Leading(15),Trailing().to(icon,.leading))
+        transparentBtn.easy.layout(Top(),Bottom(),Leading(),Trailing())
+
         sizeToFit()
     }
+    
+    @objc private func btnClicked(sender: UIButton) {
+        onPress()
+    }
+    
 }

@@ -19,22 +19,26 @@ class BaseViewController<T> : UIViewController{
         return self.navigationController as! RoundNavigationController
     }
     
-    var viewModel : T
+    var viewModel: T
     
-    var controllerIcon : UIImage?
-    
-    override func viewWillAppear(_ animated: Bool) {
-  
-    }
-
-    
-    init(viewModel : T) {
+    init(viewModel: T) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        self.additionalSafeAreaInsets = edgesForController()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    }
+    
+    public func edgesForController() -> UIEdgeInsets {
+        UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+protocol NavigationDesignProtocol {
+    var navTitle : String { get set }
+    var navDescription : String { get set }
+    var navIcon : UIImage { get set }
 }

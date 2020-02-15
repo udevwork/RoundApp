@@ -9,9 +9,11 @@
 import UIKit
 import EasyPeasy
 
-class FilterTag: FilterItem {
+class FilterTag: UICollectionViewCell, FilterItem {
+    var onPress: () -> () = { }
     
-    let label : Text = Text(nil, .article, #colorLiteral(red: 0.3294117647, green: 0.3294117647, blue: 0.3294117647, alpha: 1))
+    
+    let label : Text = Text(.article, #colorLiteral(red: 0.3294117647, green: 0.3294117647, blue: 0.3294117647, alpha: 1))
     
     let icon : Button = ButtonBuilder()
         .setStyle(.icon)
@@ -19,13 +21,14 @@ class FilterTag: FilterItem {
         .setIconColor(#colorLiteral(red: 0.3294117647, green: 0.3294117647, blue: 0.3294117647, alpha: 1))
         .setColor(.clear)
         .setIconSize(CGSize(width: 12, height: 12))
-        .setTarget { print("open") }
         .build()
     
-    override func setup(text : String){
+     func setup(text : String){
         addSubview(label)
         addSubview(icon)
-        
+        icon.onPress = { [weak self] in
+            self?.onPress()
+        }
         backgroundColor = UIColor.common
         
         roundCorners(corners: [.layerMaxXMaxYCorner,.layerMaxXMinYCorner,.layerMinXMaxYCorner,.layerMinXMinYCorner], radius: 13)
@@ -36,5 +39,6 @@ class FilterTag: FilterItem {
         label.easy.layout(Top(),Bottom(),Leading(15),Trailing().to(icon,.leading))
         sizeToFit()
     }
+    
 }
 

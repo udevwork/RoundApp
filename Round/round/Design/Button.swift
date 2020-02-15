@@ -20,11 +20,11 @@ class Button: UIButton {
     
     fileprivate var style : Style? = nil
     fileprivate var backColor : UIColor? = nil
-    fileprivate var onPress : (()->())? = nil
+    var onPress : (()->())? = nil
     
     
      var icon : UIImageView = UIImageView()
-    fileprivate var btnText : Text = Text(nil, .article, nil)
+    fileprivate var btnText : Text = Text(.article)
     
     init() {
         super.init(frame: .zero)

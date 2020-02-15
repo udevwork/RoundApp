@@ -17,10 +17,10 @@ class CardView: UIView {
     var backgroundImageView : UIImageView = UIImageView(image: UIImage(named: "ImagePlaceholder"))
     fileprivate var backgroundImageViewMask : UIView = UIView()
     fileprivate var actionButton : UIButton = UIButton()
-    var titleLabel : Text = Text(nil, .title, .white)
-    var descriptionLabel : Text = Text(nil, .article, .white)
+    var titleLabel : Text = Text(.title,  .white)
+    var descriptionLabel : Text = Text(.article, .white)
     var authorAvatar : UserAvatarView = UserAvatarView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-    var authorNameLabel : Text = Text(nil, .article, .white)
+    var authorNameLabel : Text = Text(.article, .white)
     var gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.cardGradient.cgColor, UIColor.clear.cgColor], type: .axial)
     fileprivate var whiteFade : UIView = UIView()
     var transparent : CGFloat { get{return 0} set{

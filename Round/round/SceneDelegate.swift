@@ -12,7 +12,7 @@ import Firebase
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    static var navigation : RoundNavigationController?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
@@ -28,9 +28,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let model = MainViewModel()
         let contentView = MainViewController(viewModel: model)
-        contentView.additionalSafeAreaInsets = UIEdgeInsets(top: 200, left: 0, bottom: 0, right: 0  )
 
         let rootNavigationController : RoundNavigationController = RoundNavigationController(rootViewController: contentView)
+        
+        SceneDelegate.navigation = rootNavigationController
         
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)

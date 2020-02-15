@@ -58,12 +58,12 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         backImg.image = header.backgroundImageView.image
         backImg.contentMode = .scaleAspectFill
         /// title text
-        let title : Text = Text(header.titleLabel.frame, .title, .white)
+        let title : Text = Text( .title, .white, header.titleLabel.frame)
         
         title.text = header.titleLabel.text
         title.numberOfLines = 1
         /// description text
-        let description : Text = Text(header.descriptionLabel.frame, .article, .white)
+        let description : Text = Text(.article, .white, header.descriptionLabel.frame)
 
                 
         let attributedString = NSMutableAttributedString(string: model.description)
@@ -78,7 +78,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         /// avatar
         let authorAvatar : UserAvatarView = UserAvatarView(frame:header.authorAvatar.frame)
         authorAvatar.setImage(model.author.avatarImageURL)
-        let authorNameLabel : Text = Text(header.authorNameLabel.frame, .article, .white)
+        let authorNameLabel : Text = Text(.article, .white, header.authorNameLabel.frame)
 
         
 

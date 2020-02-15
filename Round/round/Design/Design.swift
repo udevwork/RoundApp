@@ -61,7 +61,7 @@ enum Icons : String {
     case bookmark = "006-bookmark"
     case pin = "007-pin"
     case user = "012-user"
-    case magnifying = "023-magnifying-glass"
+    case search = "023-magnifying-glass"
     case back = "001-back"
     case menu = "MenuIcon"
     case cross = "002-delete"

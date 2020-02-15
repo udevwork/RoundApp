@@ -8,8 +8,7 @@
 
 import UIKit
 
-class FilterItem : UICollectionViewCell{
-    func setup(text : String) {
-        
-    }
+protocol FilterItem : UICollectionViewCell{
+    var onPress : ()->() { get set }
+    func setup(text : String)
 }

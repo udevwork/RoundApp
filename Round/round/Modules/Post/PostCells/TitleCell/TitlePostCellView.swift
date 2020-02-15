@@ -13,7 +13,7 @@ class TitlePostCellView: UITableViewCell, BasePostCellProtocol {
     var id: String = UUID().uuidString
     var postType: PostCellType = .Title
     
-    var title = Text(nil, .title, nil)
+    var title = Text(.title)
     
    public func setup(viewModel: BasePostCellViewModelProtocol) {
         guard let model = viewModel as? TitlePostCellViewModel else {print("TitlePostCellView viewModel type error"); return}

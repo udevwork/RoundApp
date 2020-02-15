@@ -19,6 +19,7 @@ class PostViewController: BaseViewController<PostViewModel> {
     
     override init(viewModel: PostViewModel) {
         super.init(viewModel: viewModel)
+        edgesForExtendedLayout = [.top,.bottom]
         modalPresentationCapturesStatusBarAppearance = true
         view.backgroundColor = .white
         transitioningDelegate = self
@@ -62,6 +63,9 @@ class PostViewController: BaseViewController<PostViewModel> {
         }
         table.easy.layout(Top(),Bottom(),Trailing(),Leading())
         
+    }
+    override func edgesForController() -> UIEdgeInsets {
+        UIEdgeInsets(top: 0,left: 0,bottom: 0,right: 0)
     }
 }
 

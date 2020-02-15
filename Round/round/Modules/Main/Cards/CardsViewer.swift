@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol PostViewerDelegate {
+protocol PostViewerDelegate : class {
     func postViewer (selectedCard : CardView)
     func postViewerGetNextCard () -> CardViewModel
     func postViewer (currentCard : CardViewModel)
@@ -18,7 +18,7 @@ protocol PostViewerDelegate {
 
 
 class CardsViewer: UIView {
-    public var delegate : PostViewerDelegate?
+    weak var delegate : PostViewerDelegate?
     fileprivate let cardsVisibleCount = 2
     fileprivate var cards : [CardView] = []
     fileprivate var templatesCards : [UIView] = []
@@ -68,12 +68,13 @@ class CardsViewer: UIView {
             cards.append(card)
             setupGestureRecognizer(card)
             addSubview(card)
-            if i > cardsVisibleCount-1 {card.isHidden = true}
+            
+            if i > cardsVisibleCount - 1 { card.isHidden = true }
             card.onCardPress = { [weak self] cv, vm in
                 self?.delegate?.postViewer(selectedCard: cv)
             }
         }
-        AppearanceTransition(startIndex: 0,lastIndex: cardsVisibleCount,offset: 90)
+        AppearanceTransition(startIndex: 0, lastIndex: cardsVisibleCount, offset: 90)
     }
     
     fileprivate func setupGestureRecognizer(_ card : CardView){
@@ -119,7 +120,7 @@ class CardsViewer: UIView {
                     card.transparent = 1
                     card.alpha = 1
                 })
-                backgroundCardsMovementTransition(startIndex: 1,lastIndex: cardsVisibleCount,offset: Int(location.x))
+                backgroundCardsMovementTransition(startIndex: 1, lastIndex: cardsVisibleCount, offset: Int(location.x))
             }
         case .ended :
             cardScaleTransition(card: card, scale: 1)
@@ -128,7 +129,7 @@ class CardsViewer: UIView {
                 cardRemoveTransition(card: card)
                 culculateCardsPositions(startIndex: 0,lastIndex: cardsVisibleCount,offset: 90)
             } else {
-                culculateCardsPositions(startIndex: 0,lastIndex: cardsVisibleCount-1,offset: 90)
+                culculateCardsPositions(startIndex: 0, lastIndex: cardsVisibleCount - 1, offset: 90)
             }
         case.began :
             cardScaleTransition(card: card, scale: 1.1)
@@ -182,11 +183,11 @@ class CardsViewer: UIView {
             let normalize = (CGFloat(offset) - 0.0) / (max - 0.0) * 1.0
             let mult : CGFloat = CGFloat( 1 - normalize + 0.2) / CGFloat(index+1)
             let pos : CGPoint = CGPoint(x: self.frame.width/2 + CGFloat(i * offset), y: self.frame.height/2)
-            UIView.animate(withDuration: 0.1, animations: { () -> Void in
-                self.cards[i].center = pos
-                self.cards[i].transform = CGAffineTransform(scaleX: mult, y: mult)
-                self.cards[i].transparent = mult
-                self.cards[i].alpha = mult
+            UIView.animate(withDuration: 0.1, animations: { [weak self] () -> Void in
+                self?.cards[i].center = pos
+                self?.cards[i].transform = CGAffineTransform(scaleX: mult, y: mult)
+                self?.cards[i].transparent = mult
+                self?.cards[i].alpha = mult
             })
         }
     }

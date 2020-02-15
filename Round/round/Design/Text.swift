@@ -28,7 +28,9 @@ class Text: UILabel {
             }
         }
     }
-    init(_ frame: CGRect?,_ style : Style,_ color : UIColor?) {
+    
+    
+    init(_ style : Style, _ color : UIColor? = nil, _ frame: CGRect? = nil) {
         if frame == nil {
             super.init(frame: .zero)
         } else { super.init(frame: frame!) }
