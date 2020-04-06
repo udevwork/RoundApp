@@ -12,7 +12,6 @@ import Firebase
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    static var navigation : RoundNavigationController?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
@@ -28,10 +27,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let model = MainViewModel()
         let contentView = MainViewController(viewModel: model)
-
-        let rootNavigationController : RoundNavigationController = RoundNavigationController(rootViewController: contentView)
         
-        SceneDelegate.navigation = rootNavigationController
+        let rootNavigationController : UINavigationController = UINavigationController(rootViewController: contentView)
+        
+        let navBar = rootNavigationController.navigationBar
+        
+        navBar.setBackgroundImage(UIImage(), for: .default)
+        navBar.shadowImage = UIImage()
+        //navBar.isTranslucent = true
+        navBar.backgroundColor = .clear
+        navBar.prefersLargeTitles = true
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.black]
+        navBar.titleTextAttributes = textAttributes
+        navBar.largeTitleTextAttributes = textAttributes
+        
         
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)

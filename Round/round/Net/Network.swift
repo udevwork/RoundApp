@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Network {
     static func fetchPosts(complition : @escaping ([CardViewModel])->() ){
@@ -31,6 +32,31 @@ class Network {
             }
         }
     }
+    
+    func createNewUser(email: String, password: String, complition : @escaping (HTTPResult, User?) -> ()) {
+        FirebaseAPI.shared.createUser(email: email, password: password, complition: complition)
+    }
+    
+    func signIn(email: String, password: String, complition : @escaping (HTTPResult, User?) -> ()) {
+        FirebaseAPI.shared.signIn(email: email, password: password, complition: complition)
+    }
+    
+    func signOut(complition : @escaping (HTTPResult)->()) {
+        FirebaseAPI.shared.signOut(complition: complition)
+    }
+    
+    func uploadImage(uiImage: UIImage, complition: @escaping (HTTPResult) -> ()){
+        FirebaseAPI.shared.uploadImage(uiImage: uiImage, complition: complition)
+    }
+    
+//    func getCountries() -> [String] {
+//        
+//    }
+//    
+//    func setCountries() -> [String] {
+//           
+//    }
+//    
     func setCard(){
         FirebaseAPI.shared.setCard()
     }

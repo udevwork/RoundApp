@@ -79,7 +79,7 @@ class ButtonBuilder {
     
     func setText(_ text : String) -> ButtonBuilder {
         button.btnText.text = text
-        button.btnText.easy.layout(Top(20),Bottom(20),Leading(35),Trailing(35))
+        button.btnText.easy.layout(Top(10),Bottom(10),Leading(20),Trailing(20))
 
         return self
     }

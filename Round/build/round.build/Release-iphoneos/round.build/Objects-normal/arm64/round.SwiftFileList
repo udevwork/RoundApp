@@ -1,0 +1,44 @@
+/Users/denis/XcodeProjects/Round/round/round/Modules/Post/PostViewModel.swift
+/Users/denis/XcodeProjects/Round/round/round/Debug.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Main/MainViewModel.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Post/PostViewController.swift
+/Users/denis/XcodeProjects/Round/round/round/Design/Design.swift
+/Users/denis/XcodeProjects/Round/round/round/Models/BaseControllerViewModel.swift
+/Users/denis/XcodeProjects/Round/round/round/Net/Network.swift
+/Users/denis/XcodeProjects/Round/round/round/Design/Text.swift
+/Users/denis/XcodeProjects/Round/round/round/AppDelegate.swift
+/Users/denis/XcodeProjects/Round/round/round/Net/API.swift
+/Users/denis/XcodeProjects/Round/round/round/Models/CountriesList.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Filter/SearchViewController.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Post/PostCells/TitleCell/TitlePostCellView.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Post/PostCells/TitleCell/TitlePostCellViewModel.swift
+/Users/denis/XcodeProjects/Round/round/round/SceneDelegate.swift
+/Users/denis/XcodeProjects/Round/round/round/Net/FireResponse/SimplePhotoResponse.swift
+/Users/denis/XcodeProjects/Round/round/round/Net/AsyncImageDownload.swift
+/Users/denis/XcodeProjects/Round/round/round/Net/FireResponse/ArticlePostResponse.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Main/Cards/CardsViewer.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Post/PostViewControllerHeader.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Main/MainViewController.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Main/Filter\ slider/FilterTag.swift
+/Users/denis/XcodeProjects/Round/round/round/Models/User.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Post/PostCells/ArticleCell/ArticlePostCellViewModel.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Post/PostCells/SimplePhotoCell/SimplePhotoPostCellView.swift
+/Users/denis/XcodeProjects/Round/round/round/Models/BaseViewController.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Main/Cards/CardViewTemplate.swift
+/Users/denis/XcodeProjects/Round/round/round/Net/FireResponse/TitlePostResponse.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/NavigationBar/RoundNavigationController.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Main/Filter\ slider/FilterItem.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Main/Cards/CardView.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Post/PostCells/SimplePhotoCell/SimplePhotoPostCellViewModel.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Main/Filter\ slider/FilterSlider.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Post/PostCells/ArticleCell/ArticlePostCellView.swift
+/Users/denis/XcodeProjects/Round/round/round/Design/Button.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Filter/FilterViewModel.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Post/PostCells/BasePostCell.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Main/Filter\ slider/AddFilterButton.swift
+/Users/denis/XcodeProjects/Round/round/round/Design/UserAvatarView.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Post/PostCloseControllerAnimation.swift
+/Users/denis/XcodeProjects/Round/round/round/Design/SearchInput.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Main/Cards/CardViewModel.swift
+/Users/denis/XcodeProjects/Round/round/round/Modules/Post/PostOpenControllerAnimation.swift
+/Users/denis/XcodeProjects/Round/round/round/Net/FirebaseAPI.swift

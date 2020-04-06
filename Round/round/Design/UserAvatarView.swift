@@ -13,7 +13,9 @@ class UserAvatarView: UIView {
     fileprivate var authorAvatarImageViewMask = UIView()
     //fileprivate var authorAvatarShadow = UIView()
     fileprivate var authorAvatarImageView = UIImageView()
-    
+    var image: UIImage? {
+        return authorAvatarImageView.image
+    }
     override init(frame: CGRect) {
         super.init(frame: frame)
         //addSubview(authorAvatarShadow)
@@ -48,6 +50,14 @@ class UserAvatarView: UIView {
     func setImage(_ image : UIImage){
         
         authorAvatarImageView.image = image
+        
+    }
+    func setImage(_ image : URL?){
+        guard let imgUrl = image else {
+            authorAvatarImageView.image = UIImage(named: "avatarPlaceholder")
+            return
+        }
+      // TODO: avatar lazy loading
         
     }
 }
