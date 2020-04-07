@@ -40,13 +40,13 @@ class Network {
     func signIn(email: String, password: String, complition : @escaping (HTTPResult, User?) -> ()) {
         FirebaseAPI.shared.signIn(email: email, password: password, complition: complition)
     }
-    
+        
     func signOut(complition : @escaping (HTTPResult)->()) {
         FirebaseAPI.shared.signOut(complition: complition)
     }
     
     func uploadImage(uiImage: UIImage, complition: @escaping (HTTPResult) -> ()){
-        FirebaseAPI.shared.uploadImage(uiImage: uiImage, complition: complition)
+        FirebaseAPI.shared.uploadImage(uiImage: uiImage, path: AccountManager.shared.getCurrentUser().ID, complition: complition)
     }
     
 //    func getCountries() -> [String] {

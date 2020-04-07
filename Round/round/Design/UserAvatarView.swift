@@ -43,21 +43,17 @@ class UserAvatarView: UIView {
     }
     
     func setImage(_ imageName : String){
-        
         authorAvatarImageView.image = UIImage(named: imageName)
-        
     }
+    
     func setImage(_ image : UIImage){
-        
         authorAvatarImageView.image = image
-        
     }
+    
     func setImage(_ image : URL?){
         guard let imgUrl = image else {
-            authorAvatarImageView.image = UIImage(named: "avatarPlaceholder")
             return
         }
-      // TODO: avatar lazy loading
-        
+        authorAvatarImageView.setImage(imageURL: imgUrl, placeholder: "avatarPlaceholder")
     }
 }

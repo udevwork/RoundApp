@@ -116,7 +116,7 @@ class CardView: UIView {
     func setupData(_ viewModel : CardViewModel){
         self.viewModel = viewModel
         //  backgroundImageView.image = UIImage(named: viewModel.mainImageURL)
-        backgroundImageView.setImage(url: viewModel.mainImageURL, placeholder: "ImagePlaceholder")
+        backgroundImageView.setImage(imageURL: URL(string: viewModel.mainImageURL), placeholder: "ImagePlaceholder")
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description
         authorAvatar.setImage(viewModel.author.avatarImageURL)

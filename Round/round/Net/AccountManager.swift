@@ -40,4 +40,11 @@ class AccountManager {
             debugPrint("Saved!")
         })
     }
+    func saveUserAvatar(imageURL: URL) {
+      let request = Auth.auth().currentUser?.createProfileChangeRequest()
+        request?.photoURL = imageURL
+        request?.commitChanges(completion: { error in
+            debugPrint("Saved new user avatar at: \(imageURL)")
+        })
+    }
 }

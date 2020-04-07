@@ -139,14 +139,12 @@ class FirebaseAPI : API {
         
         
         
-    }///CountriesList().Countries                                Countries
+    }
     
-    func uploadImage(uiImage: UIImage, complition: @escaping (HTTPResult) -> ()){
-        // 1 Media Data in memory
+    func uploadImage(uiImage: UIImage,path: String, complition: @escaping (HTTPResult) -> ()){
         let data = uiImage.jpegData(compressionQuality: 1)
         let storageRef = Storage.storage().reference()
-        // 2 Create a reference to the file you want to upload
-        let riversRef = storageRef.child("images/rivers.jpg")
+        let riversRef = storageRef.child("images/\(path).jpg")
         
         let uploadTask = riversRef.putData(data!, metadata: nil) { (metadata, error) in
             if let error = error {
@@ -155,7 +153,7 @@ class FirebaseAPI : API {
                 return
             }
             complition(.success)
-
+            
             riversRef.downloadURL(completion: { (url, error) in
                 if let error = error {
                     debugPrint(error)
@@ -163,6 +161,9 @@ class FirebaseAPI : API {
                     return
                 } else {
                     print(url?.absoluteURL)
+                    
+                    AccountManager.shared.saveUserAvatar(imageURL: (url?.absoluteURL)!)
+                    
                     complition(.success)
                 }
                 

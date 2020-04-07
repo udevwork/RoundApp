@@ -49,7 +49,11 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
             authorAvatar.setImage("avatarPlaceholder")
             titleLabel.text = "anonymous"
         } else {
+            if let url = viewModel.user.avatarImageURL {
+                authorAvatar.setImage(url)
+            } else {
             authorAvatar.setImage("avatarPlaceholder")
+        }
             titleLabel.text = viewModel.user.userName
         }
         setupView()
