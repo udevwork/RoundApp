@@ -17,20 +17,57 @@ class AccountManager {
     }()
     
     
-    private init (){
-        
-    }
+    private init (){ }
     
-    func getCurrentUser() -> User {
+    func getCurrentUser() -> User? {
         guard let fireUser = Auth.auth().currentUser else {
             debugPrint("NO USER")
-            return User(ID: nil, avatarImageURL: nil, userName: nil, isAnonymus: nil)
+            return nil
         }
+        
         let user = User(ID: fireUser.uid,
                         avatarImageURL: fireUser.photoURL,
                         userName: fireUser.displayName,
                         isAnonymus: fireUser.isAnonymous)
+       
         return user
+    }
+    
+    func createNewUser(email: String, password: String, complition : @escaping (HTTPResult, User?) -> ()) {
+        Network().createNewUser(email: email, password: password, complition: complition)
+    }
+
+    func signIn(email: String, password: String, complition : @escaping (HTTPResult, User?) -> ()) {
+        Network().signIn(email: email, password: password, complition: complition)
+    }
+        
+    func signOut(complition : @escaping (HTTPResult)->()) {
+        Network().signOut(complition: complition)
+    }
+    
+    func restoreLastUserSession(){
+        if getCurrentUser() != nil { return }
+        
+        guard let email = UserDefaults.standard.string(forKey: "email"),let password =  UserDefaults.standard.string(forKey: "password") else {
+            debugPrint("No saved data to login")
+            debugPrint("sign In Anonymously")
+            Auth.auth().signInAnonymously { res, err in
+                if err == nil {
+                    if let user = res?.user {
+                        debugPrint("USER ID: \(user.uid)")
+                    }
+                }
+            }
+            return
+        }
+        
+        signIn(email: email, password: password) { result, _ in
+            if result == .success {
+                debugPrint("Login success")
+            } else {
+                debugPrint("Login error. Need to autorize")
+            }
+        }
     }
     
     func saveUserName(newName: String) {

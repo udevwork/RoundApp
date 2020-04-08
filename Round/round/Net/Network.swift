@@ -36,7 +36,7 @@ class Network {
     func createNewUser(email: String, password: String, complition : @escaping (HTTPResult, User?) -> ()) {
         FirebaseAPI.shared.createUser(email: email, password: password, complition: complition)
     }
-    
+
     func signIn(email: String, password: String, complition : @escaping (HTTPResult, User?) -> ()) {
         FirebaseAPI.shared.signIn(email: email, password: password, complition: complition)
     }
@@ -46,7 +46,8 @@ class Network {
     }
     
     func uploadImage(uiImage: UIImage, complition: @escaping (HTTPResult) -> ()){
-        FirebaseAPI.shared.uploadImage(uiImage: uiImage, path: AccountManager.shared.getCurrentUser().ID, complition: complition)
+        guard let user = AccountManager.shared.getCurrentUser() else { return }
+        FirebaseAPI.shared.uploadImage(uiImage: uiImage, path: user.ID, complition: complition)
     }
     
 //    func getCountries() -> [String] {

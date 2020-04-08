@@ -11,8 +11,8 @@ import Foundation
 class ProfileViewModel : BaseViewModel{
     var router: ProfileRouter?
     typealias routerType = ProfileRouter
-    let user: User
-    init(user: User) {
+    let user: User?
+    init(user: User?) {
         self.user = user
     }
 }

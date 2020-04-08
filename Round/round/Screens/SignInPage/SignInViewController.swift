@@ -70,6 +70,9 @@ class SignInViewController: BaseViewController<SignInViewModel> {
         signinButton.setTarget {
             Network().signIn(email: self.emailInput.input.text!, password: self.passwordInput.input.text!) { (result, user) in
                 if result == .success {
+                    UserDefaults.standard.set(self.emailInput.input.text!, forKey: "email")
+                    UserDefaults.standard.set(self.passwordInput.input.text!, forKey: "password")
+
                     debugPrint("success")
                     debugPrint("USER: \(user?.userName), \(user?.ID)")
                 } else {

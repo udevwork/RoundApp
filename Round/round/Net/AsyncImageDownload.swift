@@ -6,22 +6,23 @@
 //  Copyright © 2020 Denis Kotelnikov. All rights reserved.
 //
 
-import Foundation
 import UIKit
+import Kingfisher
 
 extension UIImageView {
-    func setImage(imageURL: URL?, placeholder: String, complition : (()->())? = nil){
-        guard let url = imageURL else {
-            self.image = UIImage(named: placeholder)
-            return
-        }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if error != nil {return}
-            guard let data = data else { return }
-            DispatchQueue.main.async() {
-                self.image = UIImage(data: data)
+    func setImage(imageURL: URL?, placeholder: String, complition : ((HTTPResult)->())? = nil){
+        self.kf.indicatorType = .activity
+        self.kf.setImage(with: imageURL, placeholder: UIImage(named: placeholder)!, options: .none, progressBlock: { (progress, from) in
+            debugPrint("current: \(progress) / \(from)")
+        }) { downloadResult in
+            switch downloadResult {
+            case let .failure(err):
+                debugPrint("AsyncImageDownload.setImage() Job failed: \(err.localizedDescription)")
+                complition?(.error)
+            case let .success(imageResult):
+                debugPrint("AsyncImageDownload.setImage() Task done for: \(imageResult.source.url?.absoluteString ?? "")")
+                complition?(.success)
             }
-        }.resume()
-        
+        }
     }
 }

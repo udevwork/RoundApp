@@ -44,17 +44,20 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
         super.init(viewModel: viewModel)
         navigationItem.largeTitleDisplayMode = .never
         title = "Profile"
+        guard let user = viewModel.user else {
+            return
+        }
         
-        if viewModel.user.isAnonymus{
+        if user.isAnonymus{
             authorAvatar.setImage("avatarPlaceholder")
             titleLabel.text = "anonymous"
         } else {
-            if let url = viewModel.user.avatarImageURL {
+            if let url = user.avatarImageURL {
                 authorAvatar.setImage(url)
             } else {
             authorAvatar.setImage("avatarPlaceholder")
         }
-            titleLabel.text = viewModel.user.userName
+            titleLabel.text = user.userName
         }
         setupView()
     }
@@ -65,7 +68,14 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("CURRENT ID: ",AccountManager.shared.getCurrentUser().ID)
+         guard let user = AccountManager.shared.getCurrentUser() else { return }
+        print("CURRENT ID: ",user.ID)
+        if user.isAnonymus {
+        print("Anonymus")
+        } else {
+            print("USER NAME: ",user.userName)
+
+        }
     }
     
     private func setupView() {
@@ -102,7 +112,10 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
     
     var photoPicker: UIImagePickerController?
     @objc func photoLibrary(){
-        if viewModel.user.isAnonymus { return }
+        guard let user = viewModel.user else {
+            return
+        }
+        if user.isAnonymus { return }
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
             photoPicker = UIImagePickerController()
             photoPicker!.delegate = self

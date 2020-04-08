@@ -16,14 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         FirebaseApp.configure()
-        Auth.auth().signInAnonymously { res, err in
-            if err == nil {
-                if let user = res?.user {
-                    print("USER: \(user.uid)")
-                }
-            }
-            
-        }
+        AccountManager.shared.restoreLastUserSession()
+
         
         let model = MainViewModel()
         let contentView = MainViewController(viewModel: model)
@@ -34,7 +28,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         navBar.setBackgroundImage(UIImage(), for: .default)
         navBar.shadowImage = UIImage()
-        //navBar.isTranslucent = true
         navBar.backgroundColor = .clear
         navBar.prefersLargeTitles = true
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.black]
@@ -50,9 +43,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.makeKeyAndVisible()
         }
         
-     
+        
     }
-
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
