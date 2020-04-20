@@ -32,13 +32,14 @@ class SearchInput: UIView {
         addSubview(input)
         
         background.easy.layout(Top(), Bottom(), Leading(), Trailing())
-        icon.easy.layout(Leading(20), CenterY(), Width(15), Height(15))
+        icon.easy.layout(Leading(20), CenterY(), Width(22), Height(22))
         input.easy.layout(Leading(20).to(icon), Trailing(20), Top(), Bottom())
         
-        background.backgroundColor = .common
-        icon.tintColor = .black
+        background.backgroundColor = .systemGray4
+        icon.tintColor = .label
+        icon.contentMode = .scaleAspectFit
         input.backgroundColor = .clear
-        input.textColor = .darkGray
+        input.textColor = .label
         
         let placeholder = NSMutableAttributedString()
         placeholder.append(NSAttributedString(string: "Search", attributes: [.foregroundColor : UIColor.lightGray]))

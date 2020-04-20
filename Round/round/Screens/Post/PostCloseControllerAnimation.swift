@@ -29,6 +29,10 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         return 0.6
     }
     
+    func bitch() {
+        
+    }
+    
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
         let containerView = transitionContext.containerView
@@ -77,13 +81,16 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
 
         /// avatar
         let authorAvatar : UserAvatarView = UserAvatarView(frame:header.authorAvatar.frame)
-        authorAvatar.setImage(model.author.avatarImageURL)
+        
+        if let url = model.author?.photoUrl, let imageUrl = URL(string: url) {
+            authorAvatar.setImage(imageUrl)
+        }
         
         let authorNameLabel : Text = Text(.article, .white, header.authorNameLabel.frame)
 
         
 
-        authorNameLabel.text = model.author.userName
+        authorNameLabel.text = model.author?.userName
         /// back btn
         let backButton : Button = ButtonBuilder()
             .setStyle(.icon)

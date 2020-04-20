@@ -78,9 +78,12 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         let gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.cardGradient.cgColor, UIColor.clear.cgColor], type: .axial)
         /// avatar
         let authorAvatar : UserAvatarView = UserAvatarView(frame:card.authorAvatar.frame)
-        authorAvatar.setImage(model.author.avatarImageURL)
+        if let image = card.authorAvatar.image {
+            authorAvatar.setImage(image)
+        }
+        
         let authorNameLabel : Text = Text(.article, .white, card.authorNameLabel.frame)
-        authorNameLabel.text = model.author.userName
+        authorNameLabel.text = card.authorNameLabel.text
         /// back btn
         let backButton : Button = ButtonBuilder()
             .setStyle(.icon)

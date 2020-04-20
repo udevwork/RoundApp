@@ -16,7 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         FirebaseApp.configure()
-        AccountManager.shared.restoreLastUserSession()
+        AccountManager.shared.network.restoreLastUserSession()
+        AccountManager.shared.data.assemblyUser()
 
         
         let model = MainViewModel()
@@ -26,14 +27,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let navBar = rootNavigationController.navigationBar
         
-        navBar.setBackgroundImage(UIImage(), for: .default)
         navBar.shadowImage = UIImage()
-        navBar.backgroundColor = .clear
-        navBar.prefersLargeTitles = true
-        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.black]
+        navBar.barTintColor  = UIColor.systemGray6
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.label,NSAttributedString.Key.font: FontNames.Regular.uiFont(14)]
         navBar.titleTextAttributes = textAttributes
-        navBar.largeTitleTextAttributes = textAttributes
+
         
+        ///setup Back Button
+        let backImage = UIImage(systemName: "arrow.left")?.imageWithoutBaseline()
+        rootNavigationController.navigationBar.backIndicatorImage = backImage
+        rootNavigationController.navigationBar.backIndicatorTransitionMaskImage = backImage
+        rootNavigationController.navigationBar.tintColor = .label
+        
+        navBar.isTranslucent = false
         
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
@@ -42,9 +48,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
         }
-        
-        
     }
+    
     
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

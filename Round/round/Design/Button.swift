@@ -46,10 +46,15 @@ class Button: UIButton {
             addSubview(icon)
             icon.easy.layout(CenterX(),CenterY(),Width(20),Height(20))
         }
+        
     }
     
     func setTarget(_ target : @escaping ()->()) {
         onPress = target
+    }
+    
+    func setText(_ text : String) {
+        btnText.text = text
     }
     
     @objc func buttonClicked(sender:UIButton)
@@ -97,6 +102,7 @@ class ButtonBuilder {
     
     func setIcon(_ icon : UIImage) -> ButtonBuilder {
         button.icon.image = icon
+        button.icon.contentMode = .scaleAspectFit
         return self
     }
     
@@ -159,7 +165,7 @@ class ButtonBuilder {
             }
         }
         if button.backColor == nil {
-            button.backgroundColor = UIColor.button
+            button.backgroundColor = .systemIndigo
         }
         return button
     }

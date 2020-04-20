@@ -92,15 +92,24 @@ class PostViewControllerHeader: UIView {
             Leading(20).to(backButton),Top(20),Height(40),Width(40)
         )
 
+        let tap = UITapGestureRecognizer(target: self, action: #selector(routeToProfile))
+        authorAvatar.addGestureRecognizer(tap)
 
     }
 
     func setupData(_ viewModel : CardViewModel){
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description
-        authorAvatar.setImage(viewModel.author.avatarImageURL)
-        authorNameLabel.text = viewModel.author.userName
+        if let url = viewModel.author?.photoUrl, let imageUrl = URL(string: url) {
+            authorAvatar.setImage(imageUrl)
+        }
+        authorNameLabel.text = viewModel.author?.userName
         layoutSubviews()
-
+    }
+    
+    public var onAvatarPress : ()->() = { }
+    
+    @objc func routeToProfile(){
+        onAvatarPress()
     }
 }

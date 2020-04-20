@@ -12,32 +12,35 @@ import EasyPeasy
 
 class SignInViewController: BaseViewController<SignInViewModel> {
     
-    let emailInput: InputField = InputField(icon: Icons.bookmark, placeHolder: "email")
-    let passwordInput: InputField = InputField(icon: Icons.user, placeHolder: "password")
-
+    let emailInput: InputField = InputField(icon: Icons.email, placeHolder: "email")
+    let passwordInput: InputField = InputField(icon: Icons.password, placeHolder: "password")
+    
     let signinButton : Button = ButtonBuilder()
-           .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 40)))
-           .setStyle(.text)
-           .setText("sign in")
-           .setTextColor(.white)
-           .setCornerRadius(13)
-           .build()
+        .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 40)))
+        .setStyle(.iconText)
+        .setText("sign in")
+        .setTextColor(.white)
+        .setIcon(Icons.logIn.image())
+        .setCornerRadius(13)
+        .build()
     
     let createButton : Button = ButtonBuilder()
-    .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 40)))
-    .setStyle(.text)
-    .setText("create")
-    .setTextColor(.white)
-    .setCornerRadius(13)
-    .build()
+        .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 40)))
+        .setStyle(.iconText)
+        .setText("create")
+        .setTextColor(.white)
+        .setIcon(Icons.add.image())
+        .setCornerRadius(13)
+        .build()
     
     let signoutButton : Button = ButtonBuilder()
-    .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 40)))
-    .setStyle(.text)
-    .setText("SIGNOUT")
-    .setTextColor(.white)
-    .setCornerRadius(13)
-    .build()
+        .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 40)))
+        .setStyle(.iconText)
+        .setText("SIGNOUT")
+        .setTextColor(.white)
+        .setIcon(Icons.logOut.image())
+        .setCornerRadius(13)
+        .build()
     
     override init(viewModel: SignInViewModel) {
         super.init(viewModel: viewModel)
@@ -60,7 +63,8 @@ class SignInViewController: BaseViewController<SignInViewModel> {
             Network().createNewUser(email: self.emailInput.input.text!, password: self.passwordInput.input.text!) { (result, user) in
                 if result == .success {
                     debugPrint("success")
-                    debugPrint("USER: \(user?.userName), \(user?.ID)")
+                    debugPrint("USER: \(user?.userName ?? "no name"), \(user?.uid ?? "no id")")
+                    self.navigationController?.popViewController(animated: true)
                 } else {
                     debugPrint("error")
                 }
@@ -72,9 +76,10 @@ class SignInViewController: BaseViewController<SignInViewModel> {
                 if result == .success {
                     UserDefaults.standard.set(self.emailInput.input.text!, forKey: "email")
                     UserDefaults.standard.set(self.passwordInput.input.text!, forKey: "password")
-
+                    
                     debugPrint("success")
-                    debugPrint("USER: \(user?.userName), \(user?.ID)")
+                    debugPrint("USER: \(user?.userName ?? "no name"), \(user?.uid ?? "no id")")
+                    self.navigationController?.popViewController(animated: true)
                 } else {
                     debugPrint("error")
                 }
@@ -97,18 +102,18 @@ class SignInViewController: BaseViewController<SignInViewModel> {
         createButton.easy.layout(Top(20).to(passwordInput),Leading(20).to(signinButton))
         signoutButton.easy.layout(Top(20).to(passwordInput),Leading(20).to(createButton))
         
-//        loginInput.input.addTarget(self, action: #selector(loginFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-//        emailInput.input.addTarget(self, action: #selector(emailFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        //        loginInput.input.addTarget(self, action: #selector(loginFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        //        emailInput.input.addTarget(self, action: #selector(emailFieldDidChange(_:)), for: UIControl.Event.editingChanged)
         
     }
     
     
-//    @objc func emailFieldDidChange(_ textField: UITextField) {
-//        print(textField.text)
-//    }
-//    @objc func loginFieldDidChange(_ textField: UITextField) {
-//        print(textField.text)
-//    }
+    //    @objc func emailFieldDidChange(_ textField: UITextField) {
+    //        print(textField.text)
+    //    }
+    //    @objc func loginFieldDidChange(_ textField: UITextField) {
+    //        print(textField.text)
+    //    }
 }
 
 

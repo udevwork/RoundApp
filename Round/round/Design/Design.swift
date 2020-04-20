@@ -26,6 +26,9 @@ enum FontNames : String {
             Debug.log("FONTS: ", "Family: \(family) Font names: \(names)")
         }
     }
+    func uiFont(_ size: CGFloat) -> UIFont {
+        return UIFont(name: self.rawValue, size: size)!
+    }
 }
 
 enum ShadowPresets  {
@@ -47,7 +50,6 @@ extension UIColor {
     static let text = #colorLiteral(red: 0.08235294118, green: 0.08235294118, blue: 0.08235294118, alpha: 1)
     static let cardGradient = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.65)
     static let round = #colorLiteral(red: 0.4901960784, green: 0.5294117647, blue: 0.7882352941, alpha: 1)
-    static let button = #colorLiteral(red: 0.5529411765, green: 0.5764705882, blue: 0.9764705882, alpha: 1)
     static let error = #colorLiteral(red: 1, green: 0.5882352941, blue: 0.5882352941, alpha: 1)
     static let warning = #colorLiteral(red: 0.9843137255, green: 0.8980392157, blue: 0.8980392157, alpha: 1)
     static let ok = #colorLiteral(red: 0.5843137255, green: 0.8980392157, blue: 0.568627451, alpha: 1)
@@ -61,18 +63,24 @@ enum Icons : String {
     case bookmark = "006-bookmark"
     case pin = "007-pin"
     case user = "012-user"
-    case search = "023-magnifying-glass"
-    case back = "001-back"
+    case search = "magnifyingglass.circle.fill"
+    case back = "arrow.left"
     case menu = "MenuIcon"
-    case cross = "002-delete"
-    case filter = "003-filter"
-
+    case cross = "xmark"
+    case filter = "line.horizontal.3.decrease.circle.fill"
+    case gallery = "photo"
+    case email = "envelope.circle.fill"
+    case password = "lock.circle.fill"
+    case edit = "pencil.and.ellipsis.rectangle"
+    case logIn = "025-login"
+    case logOut = "024-logout"
+    case addPostBlock = "rectangle.stack.fill.badge.plus"
     
     func image() -> UIImage {
-        if let img = UIImage(named: self.rawValue) {
+        if let img = UIImage(systemName: self.rawValue) {
         return img
         } else {
-            Debug.log("Design.swift 63")
+            Debug.log("Design.swift ERROR")
             return UIImage(named: "empty")!
         }
     }

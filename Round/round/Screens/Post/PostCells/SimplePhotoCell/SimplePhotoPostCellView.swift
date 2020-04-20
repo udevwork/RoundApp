@@ -37,7 +37,7 @@ class SimplePhotoPostCellView: UITableViewCell, BasePostCellProtocol {
     }
     
     func setupDesign() {
-        backgroundColor = .white
+        backgroundColor = .systemGray5
         addSubview(photo)
         photo.contentMode = .scaleAspectFill
         photo.layer.masksToBounds = true

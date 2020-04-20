@@ -9,7 +9,7 @@
 import Foundation
 
 class MainViewModel {
-    public let user : User = User(ID: "", avatarImageURL: nil, userName: nil, isAnonymus: nil)
+    public let user : User = User()
     public var cards : [CardViewModel] = []
 
     

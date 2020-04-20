@@ -22,17 +22,18 @@ class CardView: UIView {
     var authorAvatar : UserAvatarView = UserAvatarView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     var authorNameLabel : Text = Text(.article, .white)
     var gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.cardGradient.cgColor, UIColor.clear.cgColor], type: .axial)
-    fileprivate var whiteFade : UIView = UIView()
+    fileprivate var fadeView : UIView = UIView()
     var transparent : CGFloat { get{return 0} set{
         if newValue > 1 {return}
-        whiteFade.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1 - newValue)
+        fadeView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1 - newValue)
         }}
     
-    init(viewModel : CardViewModel, frame: CGRect) {
+    init(viewModel : CardViewModel?, frame: CGRect) {
         super.init(frame: frame)
-        self.viewModel = viewModel
-        setupData(viewModel)
-        setupDesign()
+            self.viewModel = viewModel
+            setupData(viewModel)
+            setupDesign()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -40,19 +41,18 @@ class CardView: UIView {
     }
     
     fileprivate func setupDesign(){
-        gradient.frame = bounds
         gradient.cornerRadius = 13
         backgroundImageViewMask.addSubview(backgroundImageView)
         addSubview(backgroundImageViewMask)
         layer.addSublayer(gradient)
-        [authorAvatar, titleLabel, descriptionLabel, authorNameLabel,whiteFade,actionButton].forEach {
+        [authorAvatar, titleLabel, descriptionLabel, authorNameLabel,fadeView,actionButton].forEach {
             addSubview($0)
         }
-        whiteFade.backgroundColor = .white
-        whiteFade.layer.cornerRadius = 13
+        fadeView.backgroundColor = .systemGray6
+        fadeView.layer.cornerRadius = 13
         layer.cornerRadius = 13
         
-        whiteFade.easy.layout(
+        fadeView.easy.layout(
             Leading(),Trailing(),Top(),Bottom()
         )
         
@@ -66,7 +66,7 @@ class CardView: UIView {
         )
         backgroundImageView.contentMode = .scaleAspectFill
         
-        let attributedString = NSMutableAttributedString(string: descriptionLabel.text!)
+        let attributedString = NSMutableAttributedString(string: descriptionLabel.text ?? "")
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
         attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
@@ -113,13 +113,28 @@ class CardView: UIView {
         layoutSubviews()
     }
     
-    func setupData(_ viewModel : CardViewModel){
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradient.frame = bounds
+    }
+    
+    func setupData(_ viewModel : CardViewModel?){
         self.viewModel = viewModel
-        backgroundImageView.setImage(imageURL: URL(string: viewModel.mainImageURL), placeholder: "ImagePlaceholder")
-        titleLabel.text = viewModel.title
-        descriptionLabel.text = viewModel.description
-        authorAvatar.setImage(viewModel.author.avatarImageURL)
-        authorNameLabel.text = viewModel.author.userName
+        guard let model = self.viewModel else {
+            return
+        }
+        backgroundImageView.setImage(imageURL: URL(string: model.mainImageURL), placeholder: "ImagePlaceholder")
+        
+        viewModel?.loadAuthor { [weak self] user in
+            if let url = user?.photoUrl, let imageUrl = URL(string: url) {
+                self?.authorAvatar.setImage(imageUrl)
+                self?.authorNameLabel.text = user?.userName
+            }
+        }
+        
+        titleLabel.text = model.title
+        descriptionLabel.text = model.description
+        
         layoutSubviews()
         
     }

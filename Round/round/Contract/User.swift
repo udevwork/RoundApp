@@ -8,17 +8,23 @@
 
 import Foundation
 
-class User {
-    let ID : String
-    let avatarImageURL : URL?
-    let userName : String
-    let isAnonymus: Bool
+class User : Decodable {
+    let uid : String?
+    let photoUrl : String?
+    let userName : String?
+    let posts : [String]?
     
-    init(ID : String? ,avatarImageURL : URL?, userName : String?, isAnonymus: Bool?) {
-        self.ID = ID ?? "empty id"
-        self.avatarImageURL = avatarImageURL // PLACEHOLDER IMAGE
+    init(uid : String?, photoUrl : String?, userName : String?,posts : [String]?) {
+        self.uid = uid
+        self.photoUrl = photoUrl
         self.userName = userName ?? "empty user name"
-        self.isAnonymus = isAnonymus ?? false
+        self.posts = posts ?? []
+    }
+    init() {
+        self.uid = nil
+        self.photoUrl = nil
+        self.userName = nil
+        self.posts = nil
     }
     
 }

@@ -19,8 +19,6 @@ class PostViewController: BaseViewController<PostViewModel> {
     
     override init(viewModel: PostViewModel) {
         super.init(viewModel: viewModel)
-        edgesForExtendedLayout = [.top,.bottom]
-
         modalPresentationCapturesStatusBarAppearance = true
         view.backgroundColor = .white
         transitioningDelegate = self
@@ -31,6 +29,11 @@ class PostViewController: BaseViewController<PostViewModel> {
         table.sectionFooterHeight = 0
         table.tableFooterView = nil
         table.rowHeight = UITableView.automaticDimension
+        if #available(iOS 11.0, *) {
+            table.insetsContentViewsToSafeArea = true;
+            table.contentInsetAdjustmentBehavior = .never
+        }
+        
         table.register(TitlePostCellView.self, forCellReuseIdentifier: "TitlePostCellView")
         table.register(ArticlePostCellView.self, forCellReuseIdentifier: "ArticlePostCellView")
         table.register(SimplePhotoPostCellView.self, forCellReuseIdentifier: "SimplePhotoPostCellView")
@@ -49,6 +52,12 @@ class PostViewController: BaseViewController<PostViewModel> {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+      //  edgesForExtendedLayout = .all
+      //  view.insetsLayoutMarginsFromSafeArea = true
+    }
+    
     func setupData(_ viewModel : CardViewModel){
         guard let header = header else { return }
         header.setupData(viewModel)
@@ -58,14 +67,22 @@ class PostViewController: BaseViewController<PostViewModel> {
         guard let header = header else { return }
         view.addSubview(table)
         header.backButton.setTarget {
-            // self.table.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
             self.dismiss(animated: true) {
             }
+        }
+        header.onAvatarPress = { [weak self] in
+            self?.routeToProfile()
         }
         table.easy.layout(Top(),Bottom(),Trailing(),Leading())
         
     }
 
+    private func routeToProfile(){
+        let model = ProfileViewModel(userId: (viewModel.cardView.viewModel?.authorID)!)
+        let vc = ProfileRouter.assembly(model: model)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
 }
 
 extension PostViewController : UIViewControllerTransitioningDelegate {
@@ -75,6 +92,7 @@ extension PostViewController : UIViewControllerTransitioningDelegate {
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return PostCloseControllerAnimation(header: header!, card: card!)
     }
+    
 }
 
 extension PostViewController : UITableViewDelegate, UITableViewDataSource {
@@ -115,5 +133,12 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
         
         return UITableView.automaticDimension
     }
-    
+        
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < -120 {
+            table.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            self.dismiss(animated: true)
+        }
+    }
 }
+

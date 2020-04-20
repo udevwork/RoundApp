@@ -24,7 +24,6 @@ class SearchViewController: BaseViewController<FilterViewModel> {
         title = viewModel.navigationTitle
         table.delegate = self
         table.dataSource = self
-        table.easy.layout(Top(),Bottom(),Leading(),Trailing())
         table.separatorStyle = .none
         table.backgroundColor = .clear
         table.keyboardDismissMode = .onDrag
@@ -32,8 +31,8 @@ class SearchViewController: BaseViewController<FilterViewModel> {
         
         view.addSubview(search)
         view.addSubview(table)
-        search.easy.layout(Top(100),Leading(20),Trailing(20), Height(50))
-        table.easy.layout(Top().to(search),Leading(20),Trailing(20), Bottom())
+        search.easy.layout(Top(5),Leading(20),Trailing(20), Height(50))
+        table.easy.layout(Top(5).to(search),Leading(20),Trailing(20), Bottom())
         
         
         search.input.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
@@ -80,7 +79,7 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 50
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -100,7 +99,7 @@ class CityCell : UITableViewCell, SearchableCell {
     static var identifier: String = "searchCell"
     
     let bg: UIView = UIView()
-    let cityName: Text = Text(.article, .black, nil)
+    let cityName: Text = Text(.article, .label, nil)
     
     func setup(_ model: SearchableModelProtocol) {
         guard let model = model as? CityViewModel else { return }
@@ -109,11 +108,11 @@ class CityCell : UITableViewCell, SearchableCell {
         
         cityName.text = model.cityName
         backgroundColor = .clear
-        bg.backgroundColor = .common
+        bg.backgroundColor = .systemGray5
         bg.layer.masksToBounds = true
         bg.layer.cornerRadius = 13
         
-        bg.easy.layout(Top(20),Bottom(20),Leading(20),Trailing(20))
+        bg.easy.layout(Top(5),Bottom(5),Leading(20),Trailing(20))
         cityName.easy.layout(Top(),Bottom(),Leading(20),Trailing(20))
         
     }

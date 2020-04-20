@@ -25,7 +25,7 @@ class AddFilterButton: UICollectionViewCell, FilterItem {
         transparentBtn.backgroundColor = .clear
         transparentBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
         
-        backgroundColor = UIColor.button
+        backgroundColor = .systemIndigo
         roundCorners(corners: [.layerMaxXMaxYCorner,.layerMaxXMinYCorner,.layerMinXMaxYCorner,.layerMinXMinYCorner], radius: 13)
         label.text = text
         

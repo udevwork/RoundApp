@@ -16,72 +16,88 @@ class AccountManager {
         return singletone
     }()
     
+    public var data: UserDataManager = UserDataManager()
+    public var network: UserRequestManager = UserRequestManager()
     
     private init (){ }
-    
-    func getCurrentUser() -> User? {
-        guard let fireUser = Auth.auth().currentUser else {
-            debugPrint("NO USER")
-            return nil
+
+}
+
+class UserDataManager {
+    var uid: String {
+        guard let user = Auth.auth().currentUser else {
+            print("UserManager:uid: NO USER")
+            return ""
         }
-        
-        let user = User(ID: fireUser.uid,
-                        avatarImageURL: fireUser.photoURL,
-                        userName: fireUser.displayName,
-                        isAnonymus: fireUser.isAnonymous)
-       
-        return user
+       return user.uid
     }
+    var anonymous: Bool {
+        guard let user = Auth.auth().currentUser else {
+             print("UserManager:uid: NO USER")
+             return false
+         }
+        return user.isAnonymous
+    }
+    
+    var user: User? = nil
+    func assemblyUser() {
+        guard let fireUser = Auth.auth().currentUser else {
+            print("UserManager:uid: NO USER")
+            return
+        }
+        Network().getUserWith(id: fireUser.uid) { user in
+            self.user = user
+        }
+    }
+}
+
+class UserRequestManager {
     
     func createNewUser(email: String, password: String, complition : @escaping (HTTPResult, User?) -> ()) {
         Network().createNewUser(email: email, password: password, complition: complition)
     }
-
+    
     func signIn(email: String, password: String, complition : @escaping (HTTPResult, User?) -> ()) {
         Network().signIn(email: email, password: password, complition: complition)
     }
-        
+    
     func signOut(complition : @escaping (HTTPResult)->()) {
         Network().signOut(complition: complition)
     }
     
     func restoreLastUserSession(){
-        if getCurrentUser() != nil { return }
-        
-        guard let email = UserDefaults.standard.string(forKey: "email"),let password =  UserDefaults.standard.string(forKey: "password") else {
-            debugPrint("No saved data to login")
-            debugPrint("sign In Anonymously")
-            Auth.auth().signInAnonymously { res, err in
-                if err == nil {
-                    if let user = res?.user {
-                        debugPrint("USER ID: \(user.uid)")
-                    }
-                }
-            }
-            return
+        if Auth.auth().currentUser == nil {
+            signInAnonymously()
         }
-        
-        signIn(email: email, password: password) { result, _ in
-            if result == .success {
-                debugPrint("Login success")
-            } else {
-                debugPrint("Login error. Need to autorize")
+    }
+    
+    private func signInAnonymously(){
+        Auth.auth().signInAnonymously { res, err in
+            if err == nil {
+                if let user = res?.user {
+                    debugPrint("USER ID: \(user.uid)")
+                }
             }
         }
     }
     
     func saveUserName(newName: String) {
-      let request = Auth.auth().currentUser?.createProfileChangeRequest()
-        request?.displayName = newName
-        request?.commitChanges(completion: { error in
-            debugPrint("Saved!")
-        })
+        Network().setUserName(name: newName) { result in
+            if result == .success {
+                
+            } else {
+                print("ERROR")
+            }
+        }
     }
-    func saveUserAvatar(imageURL: URL) {
-      let request = Auth.auth().currentUser?.createProfileChangeRequest()
-        request?.photoURL = imageURL
-        request?.commitChanges(completion: { error in
-            debugPrint("Saved new user avatar at: \(imageURL)")
-        })
+    
+    func saveUserPhoto(imageUrl: String) {
+        Network().setUserPhoto(imageUrl: imageUrl) { result in
+           if result == .success {
+                
+            } else {
+                print("ERROR")
+            }
+        }
     }
 }

@@ -45,20 +45,20 @@ class Network {
         FirebaseAPI.shared.signOut(complition: complition)
     }
     
-    func uploadImage(uiImage: UIImage, complition: @escaping (HTTPResult) -> ()){
-        guard let user = AccountManager.shared.getCurrentUser() else { return }
-        FirebaseAPI.shared.uploadImage(uiImage: uiImage, path: user.ID, complition: complition)
+    func setUserName(name: String, complition : @escaping (HTTPResult) -> ()) {
+        FirebaseAPI.shared.setUserName(name: name, complition: complition)
     }
     
-//    func getCountries() -> [String] {
-//        
-//    }
-//    
-//    func setCountries() -> [String] {
-//           
-//    }
-//    
-    func setCard(){
-        FirebaseAPI.shared.setCard()
+    func setUserPhoto(imageUrl: String, complition : @escaping (HTTPResult) -> ()) {
+        FirebaseAPI.shared.setUserPhoto(imageUrl: imageUrl, complition: complition)
     }
+    
+    func getUserWith(id: String, complition : @escaping (User?) -> ()) {
+        FirebaseAPI.shared.getUserWith(id: id, complition: complition)
+    }
+    
+    func uploadImage(uiImage: UIImage, complition: @escaping (HTTPResult) -> ()){
+        FirebaseAPI.shared.uploadImage(uiImage: uiImage, path: AccountManager.shared.data.uid, complition: complition)
+    }
+   
 }

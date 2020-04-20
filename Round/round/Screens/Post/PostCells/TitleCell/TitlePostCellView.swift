@@ -13,16 +13,16 @@ class TitlePostCellView: UITableViewCell, BasePostCellProtocol {
     var id: String = UUID().uuidString
     var postType: PostCellType = .Title
     
-    var title = Text(.title)
+    var title = Text(.title, .label, .zero)
     
    public func setup(viewModel: BasePostCellViewModelProtocol) {
         guard let model = viewModel as? TitlePostCellViewModel else {print("TitlePostCellView viewModel type error"); return}
-        title.text = model.title
+        title.text = model.text
         setupDesign()
     }
     
     func setupDesign() {
-        backgroundColor = .white
+        backgroundColor = .systemGray6
         addSubview(title)
         title.easy.layout(Leading(20),Trailing(20),Top(40),Bottom(40))
         title.numberOfLines = 0

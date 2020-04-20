@@ -20,6 +20,7 @@ class UserAvatarView: UIView {
         super.init(frame: frame)
         //addSubview(authorAvatarShadow)
         addSubview(authorAvatarImageViewMask)
+        authorAvatarImageView.contentMode = .scaleAspectFill
         authorAvatarImageViewMask.addSubview(authorAvatarImageView)
         // authorAvatarImageView.contentMode = .scaleAspectFill
         [/*authorAvatarShadow,*/ authorAvatarImageViewMask, authorAvatarImageView].forEach({

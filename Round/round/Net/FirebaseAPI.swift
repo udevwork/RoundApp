@@ -20,23 +20,38 @@ class FirebaseAPI : API {
     }()
     
     private let posts = Firestore.firestore().collection("posts")
-    private let postBodies = Firestore.firestore().collection("postBodies")
     private let constants = Firestore.firestore().collection("Constants")
     private let users = Firestore.firestore().collection("users")
-    
+    private let counters = Firestore.firestore().collection("Counters")
     
     private init (){
-        
+      
     }
     
     func createUser(email: String, password: String, complition : @escaping (HTTPResult, User?) -> ()) {
         Auth.auth().createUser(withEmail: email, password: password) { user, error in
-            if error == nil && user != nil {
-                debugPrint("User created!")
-                complition(HTTPResult.success, User(ID: user?.user.uid, avatarImageURL: user?.user.photoURL, userName: user?.user.displayName, isAnonymus: user?.user.isAnonymous))
+            if error == nil {
+                guard let user = user?.user else {return}
+                
+                self.users.document(user.uid).setData(
+                    ["uid": user.uid,
+                     "photoUrl" : user.photoURL ?? "",
+                     "userName" : user.displayName ?? ""]) { error in
+                        if error != nil {
+                            debugPrint(error ?? "error")
+                            complition(HTTPResult.error, nil)
+                        } else {
+                            AccountManager.shared.data.assemblyUser()
+                            complition(HTTPResult.success, AccountManager.shared.data.user)
+                            debugPrint("User created!")
+                        }
+                }
+                
+                
             } else {
                 debugPrint("error: ", error ?? "FirebaseAPI.createNewUser(...)")
                 complition(HTTPResult.error, nil)
+                
             }
         }
     }
@@ -45,7 +60,8 @@ class FirebaseAPI : API {
         Auth.auth().signIn(withEmail: email, password: password) { user, error in
             if error == nil && user != nil {
                 debugPrint("sign in OK!")
-                complition(HTTPResult.success, User(ID: user?.user.uid, avatarImageURL: user?.user.photoURL, userName: user?.user.displayName, isAnonymus: user?.user.isAnonymous))
+                AccountManager.shared.data.assemblyUser()
+                complition(HTTPResult.success, AccountManager.shared.data.user)
             } else {
                 debugPrint("error: ", error ?? "FirebaseAPI.signIn(...)")
                 complition(HTTPResult.error, nil)
@@ -56,11 +72,49 @@ class FirebaseAPI : API {
     func signOut(complition : @escaping (HTTPResult) -> ()) {
         do {
             try Auth.auth().signOut()
+            AccountManager.shared.data.assemblyUser()
             complition(.success)
             debugPrint("sign out OK!")
         } catch let signOutError as NSError {
             complition(.error)
             debugPrint("Error signing out: %@", signOutError)
+        }
+    }
+    
+    func setUserName(name: String, complition : @escaping (HTTPResult) -> ()) {
+        let id = AccountManager.shared.data.uid
+        users.document(id).setData(["userName" : name], merge: true)
+    }
+    
+    func setUserPhoto(imageUrl: String, complition : @escaping (HTTPResult) -> ()) {
+        let id = AccountManager.shared.data.uid
+        users.document(id).setData(["photoUrl" : imageUrl], merge: true)
+    }
+    
+    func getUserWith(id: String, complition : @escaping (User?) -> ()) {
+        let docRef = users.document(id)
+
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                
+                do {
+                    guard let data = document.data() else {
+                        Debug.log("FirebaseAPI.getUserWith(): NO DATA")
+                        complition(nil)
+                        return
+                    }
+                    let result = try FirebaseDecoder().decode(User.self, from: data)
+                    complition(result)
+                    
+                } catch let error {
+                    Debug.log("FirebaseAPI.getUserWith(): Decoder error: ", error)
+                    complition(nil)
+                    
+                }
+                
+            } else {
+                print("Document does not exist")
+            }
         }
     }
     
@@ -72,11 +126,13 @@ class FirebaseAPI : API {
                 complition(HTTPResult.error, nil)
                 return
             }
+            
             snap?.documents.forEach({ doc in
                 do {
+                    
                     let result = try FirebaseDecoder().decode(post.self, from: doc.data())
                     
-                    let card : CardViewModel = CardViewModel(id: result.postBodyID ?? "", mainImageURL: result.mainPicURL, title: result.title, description: result.description, viewsCount: 0, author: nil)
+                    let card : CardViewModel = CardViewModel(id: doc.documentID, mainImageURL: result.mainPicURL, title: result.title, description: result.description, viewsCount: 0, authorID: result.authorID)
                     Debug.log(card)
                     arrayToReturn.append(card)
                 } catch let error {
@@ -90,9 +146,68 @@ class FirebaseAPI : API {
         }
     }
     
-    func getPostBody(id: String, complition: @escaping (HTTPResult, [BasePostCellViewModelProtocol]?) -> ()){
+  func getPostCards(userID: String, complition : @escaping (HTTPResult, [CardViewModel]?) -> ()) {
+      var arrayToReturn : [CardViewModel] = []
+    posts.whereField("authorID", isEqualTo: userID).getDocuments { (snap, error) in
+          if error != nil {
+              Debug.log("FirebaseAPI.getPostCards(): getDocuments error: ", error ?? "nil")
+              complition(HTTPResult.error, nil)
+              return
+          }
+          
+          snap?.documents.forEach({ doc in
+              do {
+                  
+                  let result = try FirebaseDecoder().decode(post.self, from: doc.data())
+                  
+                  let card : CardViewModel = CardViewModel(id: doc.documentID, mainImageURL: result.mainPicURL, title: result.title, description: result.description, viewsCount: 0, authorID: result.authorID)
+                  Debug.log(card)
+                  arrayToReturn.append(card)
+              } catch let error {
+                  Debug.log("FirebaseAPI.getPostCards(): Decoder error: ", error)
+                  complition(HTTPResult.error, nil)
+                  
+              }
+          })
+          complition(HTTPResult.success, arrayToReturn)
+          
+      }
+  }
+    
+    func getPostCard(id: String, complition : @escaping (HTTPResult, CardViewModel?) -> ()) {
         
-        postBodies.document(id).collection("content").getDocuments { (snap, error) in
+        posts.document(id).getDocument { doc, err in
+            if err != nil {
+                Debug.log("FirebaseAPI.getPostCards(): getDocuments error: ", err ?? "error")
+                complition(HTTPResult.error, nil)
+                return
+            }
+            if doc == nil {
+                Debug.log("FirebaseAPI.getPostCards(): getDocuments NO DOC: ", err ?? "error")
+                complition(HTTPResult.error, nil)
+                return
+            }
+            
+            do {
+                let result = try FirebaseDecoder().decode(post.self, from: doc!.data())
+                
+                let card : CardViewModel = CardViewModel(id: doc!.documentID, mainImageURL: result.mainPicURL, title: result.title, description: result.description, viewsCount: 0, authorID: result.authorID)
+                Debug.log(card)
+                complition(HTTPResult.error, card)
+            } catch let error {
+                Debug.log("FirebaseAPI.getPostCards(): Decoder error: ", error)
+                complition(HTTPResult.error, nil)
+                
+            }
+            
+            complition(.success,nil)
+        }
+        
+    }
+    
+    func getPostBody(id: String, complition: @escaping (HTTPResult, [BasePostCellViewModelProtocol]?) -> ()){
+        incrementPostView(post: id)
+        posts.document(id).collection("content").getDocuments { (snap, error) in
             if error != nil {
                 Debug.log("FirebaseAPI.getPostBody(): getDocument error: ", error ?? "nil")
                 complition(HTTPResult.error, nil)
@@ -135,10 +250,88 @@ class FirebaseAPI : API {
             
             complition(HTTPResult.success, models)
         }
-        
-        
-        
-        
+    }
+    
+    func savePost(cellData : [EditorBlockCellTypes], complition: @escaping ()->()) {
+       // print(String.randomString(length: 18))
+       // return
+        let saveProgress : Int = cellData.count
+        var currentProgress: Int = 0
+        let doc = posts.document()
+        incrementPostCount()
+
+        for i in 0...cellData.count-1 {
+            if case let .simpleText(model) = cellData[i] {
+                saveSimpleText(doc, model, order: i) {
+                    currentProgress += 1
+                    print("FUCK ", currentProgress)
+                    if currentProgress == saveProgress {
+                        complition()
+                    }
+                }
+            }
+            if case let .header(model) = cellData[i] {
+                saveHeader(doc, model){
+                    currentProgress += 1
+                    print("FUCK ", currentProgress)
+
+                    if currentProgress == saveProgress {
+                        complition()
+                    }
+                }
+            }
+            if case let .title(model) = cellData[i] {
+                saveTitleText(doc, model, order: i){
+                    currentProgress += 1
+                    print("FUCK ", currentProgress)
+
+                    if currentProgress == saveProgress {
+                        complition()
+                    }
+                }
+            }
+            if case let .photo(model) = cellData[i] {
+                savePhoto(doc, model, order: i){
+                    currentProgress += 1
+                    print("FUCK ", currentProgress)
+
+                    if currentProgress == saveProgress {
+                        complition()
+                    }
+                }
+            }
+
+        }
+
+        /// Save new post id to user profile
+        users.document(AccountManager.shared.data.uid).getDocument { (s, _) in
+            let _posts = s?.data()!["posts"] as? [String]
+            guard var posts = _posts else {
+                self.users.document(AccountManager.shared.data.uid).setData(["posts" : _posts], merge: true) { _ in
+                    currentProgress += 1
+                    if currentProgress == saveProgress {
+                        print("FUCK ", currentProgress)
+
+                        if currentProgress == saveProgress {
+                            complition()
+                        }
+                    }
+                }
+                return
+            }
+            posts.append(doc.documentID)
+            self.users.document(AccountManager.shared.data.uid).setData(["posts" : posts], merge: true) { _ in
+                currentProgress += 1
+                if currentProgress == saveProgress {
+                    print("FUCK ", currentProgress)
+
+                    if currentProgress == saveProgress {
+                        complition()
+                    }
+                }
+            }
+        }
+
     }
     
     func uploadImage(uiImage: UIImage,path: String, complition: @escaping (HTTPResult) -> ()){
@@ -160,9 +353,10 @@ class FirebaseAPI : API {
                     complition(.error)
                     return
                 } else {
-                    print(url?.absoluteURL)
+                    print(url?.absoluteURL as Any)
                     
-                    AccountManager.shared.saveUserAvatar(imageURL: (url?.absoluteURL)!)
+                    AccountManager.shared.network.saveUserPhoto(imageUrl: (url?.absoluteURL.absoluteString)!)
+                    
                     
                     complition(.success)
                 }
@@ -170,7 +364,36 @@ class FirebaseAPI : API {
             })
         }
         uploadTask.observe(.progress) { snap in
-            debugPrint(snap.progress?.fractionCompleted)
+            debugPrint(snap.progress?.fractionCompleted as Any)
+        }
+    }
+    
+    func uploadCardImage(uiImage: UIImage,path: String, complition: @escaping (HTTPResult, String?) -> ()){
+        let data = uiImage.jpegData(compressionQuality: 1)
+        let storageRef = Storage.storage().reference()
+        let riversRef = storageRef.child("postCards/\(path).jpg")
+        
+        let uploadTask = riversRef.putData(data!, metadata: nil) { (metadata, error) in
+            if let error = error {
+                debugPrint("error: ", error)
+                complition(.error, nil)
+                return
+            }
+            
+            riversRef.downloadURL(completion: { (url, error) in
+                if let error = error {
+                    debugPrint(error)
+                    complition(.error, nil)
+                    return
+                } else {
+                    print(url?.absoluteURL as Any)
+                    complition(.success, url?.absoluteURL.absoluteString)
+                }
+                
+            })
+        }
+        uploadTask.observe(.progress) { snap in
+            debugPrint(snap.progress?.fractionCompleted as Any)
         }
     }
     
@@ -188,22 +411,92 @@ class FirebaseAPI : API {
             }
         }
     }
-    func setCard(){
-        //        let arr : [post] = [post(postBodyID: "0", description: "following", authorID: "0", title: "two")]
-        //        arr.forEach { post in
-        //          let data = try! FirebaseEncoder().encode(post)
-        //
-        //            posts.addDocument(data: data as! [String : Any])
-        //        }
+
+    
+    private func saveHeader(_ doc: DocumentReference, _ data: PostEditorHeaderCellModel, complition: @escaping ()->()){
+        FirebaseAPI.shared.uploadCardImage(uiImage: data.image!, path: data.title!) { (result, imageURL) in
+            doc.setData(["mainPicURL" : imageURL ?? "",
+                         "authorID" : AccountManager.shared.data.uid,
+                         "description": data.subtitle!,
+                         "title": data.title!]) { error in
+                            if error == nil {
+                                complition()
+                            }
+            }
+        }
     }
+    
+   private func saveSimpleText(_ doc: DocumentReference, _ data: PostEditorSimpleTextCellModel, order: Int, complition: @escaping ()->()){
+        let content = doc.collection("content")
+        var dataToSend: [String : Any] = [:]
+        dataToSend["order"] = order
+        dataToSend["text"] = data.text
+        dataToSend["type"] = 1
+        content.addDocument(data: dataToSend) { error in
+            if error != nil {
+                print("SAVE POST ERROR: ",error as Any)
+            } else {
+                print("TEXT OK")
+                complition()
+            }
+        }
+    }
+    
+    private func saveTitleText(_ doc: DocumentReference, _ data: PostEditorTitleTextCellModel, order: Int, complition: @escaping ()->()){
+        let content = doc.collection("content")
+        var dataToSend: [String : Any] = [:]
+        dataToSend["order"] = order
+        dataToSend["text"] = data.text
+        dataToSend["type"] = 0
+        content.addDocument(data: dataToSend) { error in
+            if error != nil {
+                print("SAVE POST ERROR: ",error as Any)
+            } else {
+                print("TITLE OK")
+                complition()
+            }
+        }
+    }
+    
+    private func savePhoto(_ doc: DocumentReference, _ data: PostEditorPhotoBlockCellModel, order: Int, complition:  @escaping ()->()){
+        let content = doc.collection("content")
+        FirebaseAPI.shared.uploadCardImage(uiImage: data.image!, path: String.randomString(length: 8)) { (result, imageURL) in
+            var dataToSend: [String : Any] = [:]
+            dataToSend["order"] = order
+            dataToSend["imageUrl"] = imageURL
+            dataToSend["type"] = 2
+            content.addDocument(data: dataToSend) { error in
+                if error != nil {
+                    print("SAVE POST ERROR: ",error as Any)
+                } else {
+                    print("PHOTO OK")
+                    complition()
+                }
+            }
+        }
+    }
+    
+    public func incrementPostCount(){
+        counters.document("Posts").updateData(["postCount" : FieldValue.increment(Int64(1))])
+    }
+    
+    public func incrementPostView(post id: String){
+        posts.document(id).updateData(["viewsCount" : FieldValue.increment(Int64(1))])
+    }
+    public func incrementUserCount(){
+        counters.document("Users").updateData(["userCount" : FieldValue.increment(Int64(1))])
+    }
+    
+//    func setCountry(){
+//        constants.document("Filter").setData(["Countries":CountriesList().Countries])
+//    }
     
 }
 
-
 struct post : Codable {
-    var postBodyID : String?
     var description: String?
     var authorID: String?
     var title: String?
     var mainPicURL: String?
+    var viewsCount: Int?
 }

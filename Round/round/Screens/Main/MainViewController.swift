@@ -40,8 +40,8 @@ class MainViewController: BaseViewController<MainViewModel> {
         let b : Button = ButtonBuilder()
             .setFrame(CGRect(origin: .zero, size: .zero))
             .setStyle(.icon)
-            .setIcon(Icons.user.rawValue)
-            .setIconColor(.black)
+            .setIcon(UIImage(systemName: "person.fill")!)
+            .setIconColor(.label)
             .setColor(.clear)
             .setTarget {
                 self.user()
@@ -54,9 +54,13 @@ class MainViewController: BaseViewController<MainViewModel> {
     }
     
      func user() {
-        
-        let model = ProfileViewModel(user: AccountManager.shared.getCurrentUser())
+        let model = ProfileViewModel(userId: AccountManager.shared.data.uid)
         let vc = ProfileRouter.assembly(model: model)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func createPost() {
+        let vc = PostEditorRouter.assembly()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -66,7 +70,7 @@ class MainViewController: BaseViewController<MainViewModel> {
         view.addSubview(createButton)
             
         filterView.easy.layout (
-            Height(30), Top(50), Trailing(), Leading()
+            Height(30), Top(5), Trailing(), Leading()
         )
         filterView.setup()
         
@@ -98,12 +102,14 @@ class MainViewController: BaseViewController<MainViewModel> {
         createButton.easy.layout(
            Bottom(15),Trailing(50)
         )
-        
-        
+    
         viewModel.loadCards {
             DispatchQueue.main.async {
                 self.postViewer.reloadCards()
             }
+        }
+        createButton.setTarget {
+            self.createPost()
         }
     }
     
@@ -116,7 +122,7 @@ extension MainViewController : PostViewerDelegate {
     }
     
     func postViewerGetNextCard() -> CardViewModel {
-        guard let card = viewModel.getNextCard() else {return CardViewModel(id: "no id", mainImageURL: nil, title: nil, description: nil, viewsCount: nil, author: nil) }
+        guard let card = viewModel.getNextCard() else {return CardViewModel() }
         return card
     }
     

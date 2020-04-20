@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import EasyPeasy
 
 class BaseViewController<T> : UIViewController{
     
@@ -20,7 +21,7 @@ class BaseViewController<T> : UIViewController{
     init(viewModel: T) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        view.backgroundColor = .systemGray6
         dismissKey()
     }
     
@@ -38,5 +39,50 @@ class BaseViewController<T> : UIViewController{
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+}
+
+class LoadingIndicator : UIView {
+    var indic : UIView?
+    init() {
+        super.init(frame: .zero)
+        isUserInteractionEnabled = false
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    func showActivityIndicatory() {
+        isUserInteractionEnabled = true
+        let container: UIView = UIView()
+        
+        let back: UIView = UIView()
+        container.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.8388270548)
+        
+        let blur = UIBlurEffect(style: .prominent)
+        let effect = UIVisualEffectView(effect: blur)
+        
+        let loadingView: UIView = UIView()
+        loadingView.backgroundColor = .black
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+
+        let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
+        actInd.style = UIActivityIndicatorView.Style.large
+        container.addSubview(back)
+        container.addSubview(effect)
+        loadingView.addSubview(actInd)
+        container.addSubview(loadingView)
+        addSubview(container)
+        actInd.startAnimating()
+        indic = container
+        container.easy.layout(Edges())
+        loadingView.easy.layout(CenterX(),CenterY(),Width(100),Height(100))
+        actInd.easy.layout(CenterX(),CenterY(),Width(80),Height(80))
+        effect.easy.layout(Edges())
+    }
+    func hideActivityIndicatory(){
+        isUserInteractionEnabled = false
+        indic?.removeFromSuperview()
     }
 }

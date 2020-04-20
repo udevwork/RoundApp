@@ -11,5 +11,5 @@ import Foundation
 struct TitlePostResponse : Codable {
     var type : PostCellType?
     var order : Int?
-    var title : String?
+    var text : String?
 }

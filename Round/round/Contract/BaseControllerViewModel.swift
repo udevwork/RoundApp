@@ -17,5 +17,4 @@ protocol RouterProtocol {
     associatedtype viewControllerModel
     associatedtype viewController
     var controller: viewController? { get }
-    static func assembly(model: viewControllerModel) -> viewController
 }
