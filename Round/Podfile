@@ -10,4 +10,5 @@ pod 'Firebase/Firestore'
 pod 'Firebase/Auth'
 pod 'Firebase/Storage'
 pod 'CodableFirebase'
+pod 'Gemini'
 end

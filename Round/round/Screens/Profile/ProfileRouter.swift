@@ -9,13 +9,36 @@
 import Foundation
 
 class ProfileRouter: RouterProtocol {
+    
     typealias viewControllerModel = ProfileViewModel
     typealias viewController = ProfileViewController
-    var controller: ProfileViewController?
-
-    static func assembly(model: ProfileViewModel) -> ProfileViewController {
+    
+    weak var controller: ProfileViewController?
+    
+    static func assembly(userId: String) -> ProfileViewController {
+        let model : ProfileViewModel = ProfileViewModel(userId: userId)
         model.router = ProfileRouter()
         let vc : ProfileViewController = ProfileViewController(viewModel: model)
+        model.router?.controller = vc
         return vc
+    }
+    
+    func showBookmarks() {
+        let vc = BookmarksViewController(viewModel: BookmarksViewModel())
+        controller?.navigationController?.pushViewController(vc, animated: true)
+    }
+    func showProfileEditor(delegate: ProfileEditorDelegate) {
+        let model: ProfileEditorViewModel = ProfileEditorViewModel(userName: controller!.viewModel.userName, userAvatar: controller!.header.userAvatar.image!)
+        let vc = ProfileEditorRouter.assembly(model: model)
+        vc.delegate = delegate
+        controller?.navigationController?.pushViewController(vc, animated: true)
+    }
+    func showPostEditor() {
+        let vc = PostEditorRouter.assembly()
+        controller?.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    deinit {
+        print("ProfileRouter DEINIT")
     }
 }

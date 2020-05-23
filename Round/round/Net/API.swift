@@ -14,5 +14,5 @@ enum HTTPResult {
 }
 
 protocol API {
-    func getPostCards(count: Int, complition : @escaping (HTTPResult, [CardViewModel]?) -> ())
+
 }

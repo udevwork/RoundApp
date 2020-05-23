@@ -11,34 +11,23 @@ import UIKit
 import EasyPeasy
 
 class ProfileViewController: BaseViewController<ProfileViewModel> {
-    let userAvatar : UserAvatarView = UserAvatarView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-    let userNameLabel : Text = Text(.article,  .label)
-//    let nameeInput: InputField = InputField(icon: Icons.edit, placeHolder: "username")
+    let emptyPostlabel: Text = Text(.article, .systemGray3, .zero)
+    var animation: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: 0.15, curve: .easeInOut, animations: nil)
+    var isSelfProfile: Bool = false
+    enum State {
+        case Collapsed
+        case Expanded
+    }
     
-    let stack : UIStackView = {
-        let s = UIStackView()
-        s.alignment = .center
-        s.axis = .horizontal
-        s.distribution = .equalCentering
-        s.spacing = 20
-        return s
-    }()
+    var state: State = .Expanded
     
-    let postCount: Text = Text(.article, .tertiaryLabel, .zero)
-    let subsCount: Text = Text(.article, .tertiaryLabel, .zero)
-    
-    
-//    let saveUserInfoButton : Button = ButtonBuilder()
-//    .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 40)))
-//    .setStyle(.text)
-//    .setText("save info")
-//    .setTextColor(.white)
-//    .setCornerRadius(13)
-//    .build()
+    let header: ProfileViewControllerHeader = ProfileViewControllerHeader()
     
     let postCollection : UICollectionView = {
-        let flow = UICollectionViewFlowLayout()
-        flow.scrollDirection = .horizontal
+        let flow = ProfileCollectionLayout()
+        flow.scrollDirection = .vertical
+        flow.minimumLineSpacing = 20
+        flow.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
         let c = UICollectionView(frame: .zero, collectionViewLayout: flow)
         return c
     }()
@@ -46,12 +35,19 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
     override init(viewModel: ProfileViewModel) {
         super.init(viewModel: viewModel)
         navigationItem.largeTitleDisplayMode = .never
-        title = "Profile"
+        title = "Author" // Profile
     
         viewModel.loadUserInfo()
-        viewModel.loadUserPostsList()
         setupView()
         setupObserver()
+        setUpLogoutButton()
+        if viewModel.userId == AccountManager.shared.data.uid {
+            isSelfProfile = true
+        }
+    }
+    
+    deinit {
+        print("ProfileViewController DEINIT")
     }
     
     required init?(coder: NSCoder) {
@@ -61,114 +57,135 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         guard let user = AccountManager.shared.data.user else { return }
-        print("CURRENT ID: ",AccountManager.shared.data.uid)
+        Debug.log("CURRENT ID: ",AccountManager.shared.data.uid)
         if AccountManager.shared.data.anonymous {
-            print("Anonymus")
+            Debug.log("Anonymus")
         } else {
-            print("USER NAME: ",user.userName as Any)
+            Debug.log("USER NAME: ",user.userName as Any)
         }
     }
     
-    private func setupView() {
-        setUpMenuButton()
-        [userAvatar,userNameLabel,stack, postCollection].forEach {
-            view.addSubview($0)
-        }
-        userAvatar.easy.layout(Top(40),CenterX(),Width(100),Height(100))
-        userNameLabel.easy.layout(Leading(10).to(userAvatar,.trailing),CenterY().to(userAvatar))
-        userNameLabel.sizeToFit()
-        stack.easy.layout(Leading(30),Trailing(30),Height(21), Top(20).to(userAvatar,.bottom))
-        postCount.text = "posts createed 12"
-        subsCount.text = "subscriders 2"
-
-        stack.addArrangedSubview(postCount)
-        stack.addArrangedSubview(subsCount)
-        
-        
-        postCollection.easy.layout(Leading(10), Trailing(10),Bottom(20),Top(20).to(stack))
-        postCollection.register(ProfilePostCell.self, forCellWithReuseIdentifier: "ProfilePostCell")
-        postCollection.delegate = self
-        postCollection.dataSource = self
-        postCollection.backgroundColor = .systemGray6
-
-
-//        saveUserInfoButton.setTarget {
-//            print("saveUserInfoButton")
-//            AccountManager.shared.network.saveUserName(newName: self.nameeInput.input.text!)
-//        }
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(photoLibrary))
-        userAvatar.addGestureRecognizer(tap)
-    }
     
-    private func setupUserinfoView(){
-        guard let user = viewModel.user else {
-            return
-        }
-        
-        if user.uid == AccountManager.shared.data.uid { // SELF ACCOUNT
-            
-        }
-        
-        if AccountManager.shared.data.anonymous {
-            userAvatar.setImage("avatarPlaceholder")
-            userNameLabel.text = "anonymous"
-        } else {
-            if let url = user.photoUrl, let imageUrl = URL(string: url) {
-                userAvatar.setImage(imageUrl)
-            } else {
-                userAvatar.setImage("avatarPlaceholder")
-            }
-            userNameLabel.text = user.userName
-        }
-        
-    }
-    
-    func setUpMenuButton(){
+    func setUpLogoutButton() {
         
         let b : Button = ButtonBuilder()
             .setFrame(CGRect(origin: .zero, size: .zero))
             .setStyle(.icon)
-            .setIcon(Icons.edit.image())
-            .setIconColor(.systemRed)
+            .setIcon(UIImage(named: "logout")!)
+            .setIconColor(.label)
             .setColor(.clear)
-            .setTarget {
-                print("SignInButton")
-                let vc = SignInRouter.assembly(model: SignInViewModel())
-                self.navigationController?.pushViewController(vc, animated: true)
+            .setTarget { [weak self] in
+                self?.viewModel.logout {
+                    self?.navigationController?.popViewController(animated: true)
+                }
         }
         .build()
-        
         
         let menuBarItem = UIBarButtonItem(customView: b)
         self.navigationItem.rightBarButtonItem = menuBarItem
     }
     
+    private func setupView() {
+        view.addSubview(postCollection)
+        view.addSubview(header)
+
+        header.easy.layout(Leading(), Trailing(),Height(300),Top())
+        postCollection.register(ProfileViewControllerHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "ProfilePostHeader")
+        postCollection.easy.layout(Leading(10), Trailing(10),Bottom(),Top().to(header))
+        postCollection.register(ProfilePostCell.self, forCellWithReuseIdentifier: "ProfilePostCell")
+        postCollection.delegate = self
+        postCollection.dataSource = self
+        postCollection.backgroundColor = .systemGray6
+        postCollection.showsVerticalScrollIndicator = false
+        postCollection.showsHorizontalScrollIndicator = false
+        postCollection.layer.masksToBounds = false
+       
+        animation.isUserInteractionEnabled = true
+        animation.isManualHitTestingEnabled = true
+        
+        header.bookmarks.setTarget { [weak self] in
+            self?.viewModel.navigateToBookmarks()
+        }
+        header.editProfile.setTarget { [weak self] in
+            self?.viewModel.navigateToProfileEditor()
+        }
+        header.addPost.setTarget { [weak self] in
+            self?.viewModel.navigatePostEditor()
+        }
+    }
+
+    
     private func setupObserver(){
-        viewModel.postDataUpdated.observe(self) { [weak self] _, _ in
-            self?.postCollection.reloadData()
+        viewModel.postDataUpdated.observe(self) { [weak self] in
+            self?.setupUserPosts()
         }
-        viewModel.userInfoUpdated.observe(self) { [weak self] _,_ in
-            self?.setupUserinfoView()
+        
+        viewModel.userInfoUpdated.observe(self) { [weak self] in
+            self?.setupAvatar()
+        }
+    }    
+    
+   private func setupAvatar() {
+        header.userNameLabel.text = viewModel.userName
+        if viewModel.userAvatar == nil {
+            if let url = viewModel.userAvaratURL {
+                header.userAvatar.setImage(url)
+                viewModel.userAvatar = header.userAvatar.image
+            } else {
+                header.userAvatar.setImage(UIImage(named: "avatarPlaceholder")!)
+            }
+        } else {
+            header.userAvatar.setImage(viewModel.userAvatar!)
+        }
+        
+        if isSelfProfile {
+            header.setupStackMenu()
         }
     }
     
-    var photoPicker: UIImagePickerController?
-    @objc func photoLibrary(){
-       let vc = ImagePicker { [weak self] image in
-        self?.userAvatar.setImage(image)
-        self?.saveImage()
+   private func setupUserPosts(){
+        postCollection.reloadData()
+        if let count =  viewModel.postsData?.count {
+            header.postCount.text = "post created \(count)"
+            if count == 0 {
+                postCollection.addSubview(emptyPostlabel)
+                emptyPostlabel.easy.layout(CenterY(),CenterX())
+                emptyPostlabel.text = "no posts created"
+            } else {
+                emptyPostlabel.removeFromSuperview()
+            }
         }
-        self.present(vc, animated: true, completion: nil)
     }
     
-    func saveImage(){
-        guard let imageToUpload = userAvatar.image else {return}
-        Network().uploadImage(uiImage: imageToUpload) { result in
-            print("OK")
+   private func expandAnimation() {
+        animation.addAnimations { [weak self] in
+            self?.header.easy.layout(Height(300))
+            self?.view.layoutSubviews()
         }
+        animation.addCompletion { s in
+            if s == .end {
+                self.state = .Expanded
+            }
+        }
+        animation.startAnimation()
+    }
+    
+   private func collapseAnimation() {
+        animation.addAnimations { [weak self] in
+            self?.header.easy.layout(Height(70))
+            self?.view.layoutSubviews()
+        }
+        animation.addCompletion { s in
+            if s == .end {
+                self.state = .Collapsed
+            }
+        }
+        animation.startAnimation()
     }
 }
+
+
+
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -180,35 +197,33 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             return UICollectionViewCell()
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfilePostCell", for: indexPath) as! ProfilePostCell
-        cell.setup(model: data[indexPath.row])
+        cell.setup(model: data[indexPath.row],showAuthor: false)
         cell.card.onCardPress = { [weak self] view, model in
             let vc = PostViewController(viewModel: PostViewModel(cardView: view))
+            vc.modalPresentationStyle = .pageSheet
             self?.present(vc, animated: true, completion: nil)
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.frame.height - 30, height: collectionView.frame.height - 5)
+        CGSize(width: collectionView.frame.width, height: 150)
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if self.state == .Expanded {
+            if scrollView.contentOffset.y > 20 {
+                collapseAnimation()
+                header.collapseAnimation()
+            }
+        } else {
+            if scrollView.contentOffset.y < 20 {
+                expandAnimation()
+                header.expandAnimation()
+            }
+        }
+    }
+    
+    
 }
 
-
-class ProfilePostCell: UICollectionViewCell {
-    let card = CardView(viewModel: nil, frame: .zero )
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        addSubview(card)
-        card.easy.layout(Edges(5))
-        card.transparent = 1
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
-    public func setup(model: CardViewModel){
-        card.setupData(model)
-    }
-}

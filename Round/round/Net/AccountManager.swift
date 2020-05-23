@@ -39,6 +39,7 @@ class UserDataManager {
         return user.isAnonymous
     }
     
+    var onUserChange : Observable<User?> = .init(nil)
     var user: User? = nil
     func assemblyUser() {
         guard let fireUser = Auth.auth().currentUser else {
@@ -47,6 +48,7 @@ class UserDataManager {
         }
         Network().getUserWith(id: fireUser.uid) { user in
             self.user = user
+            self.onUserChange.value = user
         }
     }
 }
@@ -94,7 +96,7 @@ class UserRequestManager {
     func saveUserPhoto(imageUrl: String) {
         Network().setUserPhoto(imageUrl: imageUrl) { result in
            if result == .success {
-                
+            AccountManager.shared.data.assemblyUser()
             } else {
                 print("ERROR")
             }

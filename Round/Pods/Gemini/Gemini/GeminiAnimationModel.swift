@@ -198,6 +198,8 @@ final class GeminiAnimationModel {
             case .horizontal:
                 degree = easingRatio * -toDegree
                 return CATransform3DRotate(transform3DIdentity, degree * .pi / 180, 0, 1, 0)
+            default:
+                return transform3DIdentity
             }
 
         case .circleRotation:
@@ -220,8 +222,10 @@ final class GeminiAnimationModel {
                 let y  = rotateDirection == .clockwise ? -_y : _y
                 rotateTransform    = CATransform3DRotate(transform3DIdentity, radian, 0, 0, 1)
                 translateTransform = CATransform3DTranslate(transform3DIdentity, 0, y, 0)
+            default:
+                return transform3DIdentity
             }
-
+            
             let scale = self.calculatedScale(withRatio: easingRatio)
             let scaleTransform = CATransform3DScale(transform3DIdentity, scale, scale, 1)
             let circleTransform = isItemRotationEnabled ? CATransform3DConcat(rotateTransform, translateTransform) : translateTransform
@@ -369,7 +373,7 @@ final class GeminiAnimationModel {
             default:
                 return CGPoint(x: 0.5, y: 0.5)
             }
-
+            
         case .circleRotation:
             switch (rotateDirection, scrollDirection) {
             case (.clockwise, .horizontal):
@@ -380,6 +384,8 @@ final class GeminiAnimationModel {
                 return CGPoint(x: 1, y: 0.5)
             case (.anticlockwise, .vertical):
                 return CGPoint(x: 0, y: 0.5)
+            default:
+                return .zero
             }
 
         case .custom:
@@ -398,9 +404,11 @@ final class GeminiAnimationModel {
         switch scrollDirection {
         case .vertical:   return cellFrame.midY - parentFrame.midY
         case .horizontal: return cellFrame.midX - parentFrame.midX
+        default:
+        return 1
         }
     }
-
+    
     func distanceRatio(withParentFrame parentFrame: CGRect, cellFrame: CGRect) -> CGFloat {
         let distance = distanceFromCenter(withParentFrame: parentFrame, cellFrame: cellFrame)
         switch scrollDirection {
@@ -408,15 +416,19 @@ final class GeminiAnimationModel {
             return distance / (parentFrame.height / 2 + cellFrame.height / 2)
         case .horizontal:
             return distance / (parentFrame.width / 2 + cellFrame.width / 2)
+        default:
+            return 1
         }
     }
-
+    
     func visibleMaxDistance(withParentFrame parentFrame: CGRect, cellFrame: CGRect) -> CGFloat {
         switch scrollDirection {
         case .vertical:
             return parentFrame.midY + cellFrame.height / 2
         case .horizontal:
             return parentFrame.midX + cellFrame.width / 2
+        default:
+            return 1
         }
     }
 

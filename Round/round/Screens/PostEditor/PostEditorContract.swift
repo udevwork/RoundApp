@@ -17,6 +17,11 @@ enum EditorBlockCellTypes {
 
 }
 
+
+protocol EditorBlockValidate {
+    func validation() -> [String]
+}
+
 protocol PostEditorViewModelProtocol: BaseViewModel {
     var dataSource: [EditorBlockCellTypes] { get set }
 }

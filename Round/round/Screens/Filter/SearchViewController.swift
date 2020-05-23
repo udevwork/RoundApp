@@ -33,7 +33,7 @@ class SearchViewController: BaseViewController<FilterViewModel> {
         view.addSubview(table)
         search.easy.layout(Top(5),Leading(20),Trailing(20), Height(50))
         table.easy.layout(Top(5).to(search),Leading(20),Trailing(20), Bottom())
-        
+        search.input.autocorrectionType = .no
         
         search.input.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
     }
@@ -99,7 +99,7 @@ class CityCell : UITableViewCell, SearchableCell {
     static var identifier: String = "searchCell"
     
     let bg: UIView = UIView()
-    let cityName: Text = Text(.article, .label, nil)
+    let cityName: Text = Text(.article, .label)
     
     func setup(_ model: SearchableModelProtocol) {
         guard let model = model as? CityViewModel else { return }
@@ -124,7 +124,7 @@ class UserCell : UITableViewCell, SearchableCell {
     static var identifier: String = "UserCell"
     
     let bg: UIView = UIView()
-    let userName: Text = Text(.article, .error, nil)
+    let userName: Text = Text(.article, .systemRed)
     let avatar: UIImageView = UIImageView()
     
     func setup(_ model: SearchableModelProtocol) {
@@ -138,7 +138,7 @@ class UserCell : UITableViewCell, SearchableCell {
         
         userName.text = model.userName
         backgroundColor = .clear
-        bg.backgroundColor = .warning
+        bg.backgroundColor = .systemGray3
         bg.layer.masksToBounds = true
         bg.layer.cornerRadius = 13
         

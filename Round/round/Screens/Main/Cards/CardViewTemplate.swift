@@ -20,7 +20,7 @@ class CardViewTemplate: UIView {
     }
     
     fileprivate func setupView(){
-        backgroundColor = UIColor.common
+        backgroundColor = .systemFill
         layer.masksToBounds = true
         layer.cornerRadius = 13
         

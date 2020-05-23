@@ -16,32 +16,30 @@ class Text: UILabel {
         case window
         case title
         case article
+        case regular
+        case light
         
-        func data() -> ( fontName: FontNames, size : CGFloat, color : UIColor) {
+        func data() -> ( fontName: FontNames, size : CGFloat) {
             switch self {
             case .window:
-                return (.Bold, 21, .black)
+                return (.Bold, 21)
             case .title:
-                return (.Bold, 31, .black)
+                return (.Bold, 31)
             case .article:
-                return (.Medium, 16, .black)
+                return (.Medium, 16)
+            case .regular:
+                return (.Regular, 13)
+            case .light:
+                return (.Light, 10)
             }
         }
     }
     
     
-    init(_ style : Style, _ color : UIColor? = nil, _ frame: CGRect? = nil) {
-        if frame == nil {
-            super.init(frame: .zero)
-        } else { super.init(frame: frame!) }
-        
+    init(_ style : Style, _ color : UIColor? = .label, _ frame: CGRect = .zero) {
+        super.init(frame: frame)
         font = UIFont(name: style.data().fontName.rawValue, size: style.data().size)
-        
-        if color == nil {
-            textColor = style.data().color
-        } else {
-            textColor = color
-        }
+        textColor = color
     }
     
     required init?(coder: NSCoder) {

@@ -10,7 +10,7 @@ import UIKit
 import EasyPeasy
 
 class UserAvatarView: UIView {
-    fileprivate var authorAvatarImageViewMask = UIView()
+    var authorAvatarImageViewMask = UIView()
     //fileprivate var authorAvatarShadow = UIView()
     fileprivate var authorAvatarImageView = UIImageView()
     var image: UIImage? {

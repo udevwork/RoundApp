@@ -17,6 +17,7 @@ class FilterSlider: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     fileprivate var collection : UICollectionView = {
         let flow = UICollectionViewFlowLayout()
         flow.scrollDirection = .horizontal
+        flow.sectionInset = UIEdgeInsets(top: 0, left: (UIScreen.main.bounds.width - 250)/2, bottom: 0, right: 0)
         let collect = UICollectionView(frame: .zero, collectionViewLayout: flow)
         return collect
     }()
@@ -36,7 +37,7 @@ class FilterSlider: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         collection.register(FilterTag.self, forCellWithReuseIdentifier: filterItemIdentifier)
         addSubview(collection)
         
-        collection.easy.layout(Top(),Bottom(),Leading(),Trailing())
+        collection.easy.layout(Edges())
         collection.backgroundColor = .clear
         
         
@@ -89,11 +90,5 @@ class FilterSlider: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         text.sizeToFit()
         let w : CGFloat = text.bounds.width + 60
         return CGSize(width: w, height: 30)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
-    {
-        
-        return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     }
 }

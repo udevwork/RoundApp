@@ -10,16 +10,7 @@ import Foundation
 import UIKit
 
 class Network {
-    static func fetchPosts(complition : @escaping ([CardViewModel])->() ){
-        
-        FirebaseAPI.shared.getPostCards(count: 10) { (res, cards) in
-            if res == .success {
-                complition(cards!)
-            } else {
-                complition([])
-            }
-        }
-    }
+
     
     func fetchPostBody(id : String, complition : @escaping ([BasePostCellViewModelProtocol])->()) {
         FirebaseAPI.shared.getPostBody(id: id) { res, viewModels in

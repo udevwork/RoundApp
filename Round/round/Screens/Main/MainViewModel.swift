@@ -12,37 +12,27 @@ class MainViewModel {
     public let user : User = User()
     public var cards : [CardViewModel] = []
 
+
     
-    // load cards at first loading and as adding to present cards, pagination not needed
-    func loadCards(_ complition : (()->())?)  {
-        Network.fetchPosts { [weak self] cards in
-            self?.cards.append(contentsOf: cards)
-            complition?()
-        }
-    }
-    
-    func getNextCard() -> CardViewModel? {
-       if getLoadedCardsCount() == 0 {
-        Debug.log("MainViewModel.getNextCard()", "no cards")
-        return nil}
-        let card = cards.removeFirst()
-        loadMoreIfNeeded()
-        return card
-    }
-    
-     func loadMoreIfNeeded(){
-        if cards.count < 5 {
-            loadCards {
-                Debug.log("MainViewModel.loadMoreIfNeeded()", "loading more posts")
-                self.loadMoreIfNeeded()
+    func loadNewPost(complition : @escaping (Int)->()) {
+        
+        FirebaseAPI.shared.getRandomPost { [weak self] res, models  in
+            
+            if let m = models {
+                Debug.log("COUNT: ", m.count)
+                if m.count == 0 {
+                    self?.loadNewPost { r in
+                        self?.cards.append(contentsOf: m)
+                        complition(r)
+                    }
+                    return
+                }
+                self?.cards.append(contentsOf: m)
+                complition(m.count)
+            } else {
+                Debug.log("nil")
             }
         }
     }
-    
-    func getCurrentCard() -> CardViewModel {
-        return cards.first!
-    }
-    func getLoadedCardsCount() -> Int {
-        return cards.count
-    }
+
 }

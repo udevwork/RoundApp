@@ -13,12 +13,12 @@ class FilterTag: UICollectionViewCell, FilterItem {
     var onIconPress: (String) -> () = {_ in }
     
     
-    let label : Text = Text(.article, #colorLiteral(red: 0.3294117647, green: 0.3294117647, blue: 0.3294117647, alpha: 1))
+    let label : Text = Text(.article, .label)
     
     let icon : Button = ButtonBuilder()
         .setStyle(.icon)
-        .setIcon(Icons.cross.image())
-        .setIconColor(#colorLiteral(red: 0.3294117647, green: 0.3294117647, blue: 0.3294117647, alpha: 1))
+        .setIcon(.cross)
+        .setIconColor(.label)
         .setColor(.clear)
         .setIconSize(CGSize(width: 12, height: 12))
         .build()
@@ -29,7 +29,7 @@ class FilterTag: UICollectionViewCell, FilterItem {
         icon.onPress = { [weak self] in
             self?.onIconPress(self?.label.text ?? "")
         }
-        backgroundColor = UIColor.common
+        backgroundColor = .systemGray
         
         roundCorners(corners: [.layerMaxXMaxYCorner,.layerMaxXMinYCorner,.layerMinXMaxYCorner,.layerMinXMinYCorner], radius: 13)
         label.text = text

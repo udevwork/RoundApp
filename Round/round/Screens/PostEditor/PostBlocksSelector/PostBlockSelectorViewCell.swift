@@ -26,8 +26,8 @@ class PostBlockSelectorViewCellModel{
 
 class PostBlockSelectorViewCell: UITableViewCell {
     let background : UIView = UIView()
-    let blockName: Text = Text(.window, .label, .zero)
-    let blockDescription: Text = Text(.article, .label, .zero)
+    let blockName: Text = Text(.article, .label, .zero)
+    let blockDescription: Text = Text(.regular, .label, .zero)
     let blockIcon: UIImageView = UIImageView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -53,16 +53,16 @@ class PostBlockSelectorViewCell: UITableViewCell {
         background.easy.layout(Edges(10))
         
         blockIcon.tintColor = .label
-        blockIcon.easy.layout(Width(35),Height(35), CenterY(), Leading(35))
+        blockIcon.easy.layout(Width(25),Height(25), CenterY(), Leading(30))
         blockIcon.contentMode = .scaleAspectFit
         
         blockName.sizeToFit()
         blockName.tintColor = .label
-        blockName.easy.layout(Leading(25).to(blockIcon),Top(13),Trailing(25))
+        blockName.easy.layout(Leading(20).to(blockIcon),Top(19),Trailing(10))
         
         blockDescription.sizeToFit()
         blockDescription.tintColor = .tertiaryLabel
-        blockDescription.easy.layout(Leading(25).to(blockIcon),Top(-15).to(blockName),Trailing(25),Bottom(25))
+        blockDescription.easy.layout(Leading(20).to(blockIcon),Top(-5).to(blockName),Trailing(25),Bottom(25))
     }
     
     func setupWith(model: PostBlockSelectorViewCellModel) {

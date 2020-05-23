@@ -45,36 +45,46 @@ enum ShadowPresets  {
     }
 }
 
-extension UIColor {
-    static let viewControllersBackgroung = #colorLiteral(red: 0.8745098039, green: 0.9176470588, blue: 0.9529411765, alpha: 1)
-    static let text = #colorLiteral(red: 0.08235294118, green: 0.08235294118, blue: 0.08235294118, alpha: 1)
-    static let cardGradient = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.65)
-    static let round = #colorLiteral(red: 0.4901960784, green: 0.5294117647, blue: 0.7882352941, alpha: 1)
-    static let error = #colorLiteral(red: 1, green: 0.5882352941, blue: 0.5882352941, alpha: 1)
-    static let warning = #colorLiteral(red: 0.9843137255, green: 0.8980392157, blue: 0.8980392157, alpha: 1)
-    static let ok = #colorLiteral(red: 0.5843137255, green: 0.8980392157, blue: 0.568627451, alpha: 1)
-    static let success = #colorLiteral(red: 0.9137254902, green: 0.9843137255, blue: 0.8980392157, alpha: 1)
-    static let neutral = #colorLiteral(red: 0.662745098, green: 0.8, blue: 0.9254901961, alpha: 1)
-    static let common = #colorLiteral(red: 0.9490196078, green: 0.968627451, blue: 0.9843137255, alpha: 1)
-}
-
 enum Icons : String {
-    case add = "005-add"
-    case bookmark = "006-bookmark"
-    case pin = "007-pin"
-    case user = "012-user"
-    case search = "magnifyingglass.circle.fill"
-    case back = "arrow.left"
-    case menu = "MenuIcon"
-    case cross = "xmark"
-    case filter = "line.horizontal.3.decrease.circle.fill"
-    case gallery = "photo"
-    case email = "envelope.circle.fill"
-    case password = "lock.circle.fill"
-    case edit = "pencil.and.ellipsis.rectangle"
-    case logIn = "025-login"
-    case logOut = "024-logout"
-    case addPostBlock = "rectangle.stack.fill.badge.plus"
+    case add             = "plus.circle.fill"
+    case bookmarkfill    = "bookmark.fill"
+    case bookmark        = "bookmark"
+    case pin             = "mappin.and.ellipse"
+    case user            = "person.crop.circle.fill"
+    case noUser          = "person.crop.circle.badge.xmark"
+    case wifiError       = "wifi.exclamationmark"
+    case search          = "magnifyingglass.circle.fill"
+    case back            = "arrow.left"
+    case menu            = "MenuIcon"
+    case cross           = "xmark"
+    case crossCircle     = "xmark.circle.fill"
+    case filter          = "line.horizontal.3.decrease.circle.fill"
+    case gallery         = "photo"
+    case email           = "envelope.circle.fill"
+    case emailCircle     = "envelope.circle"
+    case password        = "lock.circle.fill"
+    case edit            = "pencil"
+    case fieldEdit       = "pencil.and.ellipsis.rectangle"
+    case editInCircle    = "pencil.circle.fill"
+    case editorAddPhoto  = "photo.fill.on.rectangle.fill"
+    case logIn           = "025-login"
+    case logOut          = "024-logout"
+    case addPostBlock    = "rectangle.stack.fill.badge.plus"
+    case trash           = "trash.fill"
+    case trashCross      = "trash.slash.fill"
+
+    case checkmark       = "checkmark.circle.fill"
+    case xmarkOctagon    = "xmark.octagon.fill"
+    case cloudError      = "xmark.icloud.fill"
+    case eye             = "eye.fill"
+    case tableEdit       = "table.badge.more.fill"
+    case numberList      = "list.number"
+    case arrowShare      = "arrowshape.turn.up.right.fill"
+    
+    case alignleft       = "text.alignleft"
+    case aligncenter     = "text.aligncenter"
+    case alignright      = "text.alignright"
+    case bold            = "bold"
     
     func image() -> UIImage {
         if let img = UIImage(systemName: self.rawValue) {

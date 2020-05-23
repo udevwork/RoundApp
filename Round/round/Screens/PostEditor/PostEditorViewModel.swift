@@ -14,48 +14,96 @@ class PostEditorViewModel: PostEditorViewModelProtocol {
     var needToUpdateTable: Observable<Bool> = .init(false)
     var cellSizeChange: Observable<Bool> = .init(false)
     var router: PostEditorRouter?
+    var locationManager: LocationManager = LocationManager()
+    private let headerModel: PostEditorHeaderCellModel
     typealias routerType = PostEditorRouter
 
     init() {
-        
-        let headerCellModel = PostEditorHeaderCellModel { [weak self] imageView in
-            self?.router?.ShowPhotoPicker(onImageSelect: { img in
-                imageView(img)
-                
-            })
+        headerModel = PostEditorHeaderCellModel()
+        headerModel.onAddPhotoAddButtonPress = { [weak self] imageView in
+            self?.router?.ShowPhotoPicker(onImageSelect: { img in imageView(img) })
         }
         
-        let addBlockButtonModel = PostEditorAddNewBlockCellModel { [weak self] in
-            self?.router?.ShowBlockPicker { type in
-                switch type {
-                case .simpleText:
-                    let textModel = PostEditorSimpleTextCellModel(text: "") { text in
-                        print(text)
-                        self?.cellSizeChange.value = true
-                    }
-                    self?.dataSource.insert(.simpleText(model: textModel), at: (self?.dataSource.count)!-1)
-                case .TitleText:
-                    let textModel = PostEditorTitleTextCellModel(text: "") { text in
-                        print(text)
-                        self?.cellSizeChange.value = true
-                    }
-                    self?.dataSource.insert(.title(model: textModel), at: (self?.dataSource.count)!-1)
-                case .Photo:
-                    let photModel = PostEditorPhotoBlockCellModel { imageView in
-                        self?.router?.ShowPhotoPicker(onImageSelect: { img in
-                            imageView(img)
-                        })
-                    }
-                    self?.dataSource.insert(.photo(model: photModel), at: (self?.dataSource.count)!-1)
-                }
-                
-                self?.needToUpdateTable.value = true
-            }
+        dataSource.append(.header(model: headerModel))
+        locationManager.update()
+
+    }
+    
+    func getLocation(complition: @escaping ()->()) {
+        locationManager.getLocation() { [weak self] l in
+            self?.router?.showLocationUseAlert(l: l, onUse: {  [weak self] in
+                self?.headerModel.location = l
+                Notifications.shared.Show(RNSimpleView(text: "Applied", icon: Icons.pin.image(),iconColor: .systemTeal))
+                complition()
+            })
             
         }
+    }
+    
+    func showBlockPicker(){
+        self.router?.ShowBlockPicker { [weak self] type in
+            switch type {
+            case .simpleText:
+                let textModel = PostEditorSimpleTextCellModel(text: "") { text in
+                    Debug.log(text)
+                    self?.cellSizeChange.value = true
+                }
+                self?.dataSource.insert(.simpleText(model: textModel), at: (self?.dataSource.count)!)
+            case .TitleText:
+                let textModel = PostEditorTitleTextCellModel(text: "") { text in
+                    Debug.log(text)
+                    self?.cellSizeChange.value = true
+                }
+                self?.dataSource.insert(.title(model: textModel), at: (self?.dataSource.count)!)
+            case .Photo:
+                let photModel = PostEditorPhotoBlockCellModel { imageView in
+                    self?.router?.ShowPhotoPicker(onImageSelect: { img in
+                        imageView(img)
+                    })
+                }
+                self?.dataSource.insert(.photo(model: photModel), at: (self?.dataSource.count)!)
+            default: break
+            }
+            
+            self?.needToUpdateTable.value = true
+        }
+    }
+    
+    func save(){
+        if validation() == false {
+            return
+        }
+        router?.showPostSaveAlert(onSave: { [weak self] in
+            Notifications.shared.Show(RNSimpleView(text: "Ok", icon: Icons.checkmark.image()))
+            FirebaseAPI.shared.savePost(cellData: self!.dataSource) { [weak self] in
+                self!.router?.controller?.navigationController?.popViewController(animated: true)
+            }
+        })
+    }
+    
+    private func validation() -> Bool{
+        var requirements : [String] = []
+        for item in dataSource {
+            switch item {
+            case let .header(model):
+                requirements.append(contentsOf: model.validation())
+            case let .simpleText(model):
+                requirements.append(contentsOf: model.validation())
+            case let .title(model):
+                requirements.append(contentsOf: model.validation())
+            case let .photo(model):
+                requirements.append(contentsOf: model.validation())
+            default:
+                break
+            }
+        }
+        if requirements.count == 0 {
+            return true
+        } else {
+            router?.showValidationAlert(requirements: requirements)
+            return false
+        }
         
-        dataSource.append(.header(model: headerCellModel))
-        dataSource.append(.addButton(model: addBlockButtonModel))
     }
     
 }

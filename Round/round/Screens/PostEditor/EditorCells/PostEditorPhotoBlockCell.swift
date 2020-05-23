@@ -12,7 +12,7 @@ import UIKit
 import EasyPeasy
 
 // MARK: MODEL ***********
-class PostEditorPhotoBlockCellModel {
+class PostEditorPhotoBlockCellModel: EditorBlockValidate {
 
     var image: UIImage?
     
@@ -20,23 +20,40 @@ class PostEditorPhotoBlockCellModel {
     init(onAddPhotoAddButtonPress: @escaping ( @escaping (UIImage)->() )->()){
         self.onAddPhotoAddButtonPress = onAddPhotoAddButtonPress
     }
+    func validation() -> [String] {
+        var requirements : [String] = []
+        if image == nil {
+            requirements.append("Image block")
+        }
+        return requirements
+    }
 }
 
 // MARK: CELL ***********
 class PostEditorPhotoBlockCell: UITableViewCell {
     
     var modelLink: PostEditorPhotoBlockCellModel?
- 
+    
+    let backGround: UIView = UIView()
     let mainImage: UIImageView = UIImageView()
     let addMainImageButton : Button = ButtonBuilder()
-        .setFrame(CGRect(origin: .zero, size: CGSize(width: 150, height: 150)))
+        .setFrame(CGRect(origin: .zero, size: .zero))
         .setStyle(.icon)
         .setIconSize(CGSize(width: 50, height: 50))
         .setIconColor(.label)
         .setColor(.clear)
-        .setIcon(Icons.gallery.image())
+        .setIcon(.gallery)
         .build()
      
+    let deleteButton : Button = ButtonBuilder()
+        .setFrame(CGRect(origin: .zero, size: CGSize(width: 40, height: 40)))
+        .setStyle(.icon)
+        .setIconSize(CGSize(width: 25, height: 25))
+        .setIconColor(.systemRed)
+        .setColor(.clear)
+        .setIcon(.crossCircle)
+        .build()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -50,12 +67,19 @@ class PostEditorPhotoBlockCell: UITableViewCell {
         backgroundColor = .systemGray6
         layer.masksToBounds = true
         clipsToBounds = true
+        addSubview(backGround)
+        backGround.backgroundColor = .systemGray5
+        backGround.easy.layout(Edges(10))
+        backGround.layer.cornerRadius = 4
         addSubview(mainImage)
         addSubview(addMainImageButton)
         
+        addSubview(deleteButton)
+        deleteButton.easy.layout(Trailing(40),CenterY())
+        
         mainImage.contentMode = .scaleAspectFill
         mainImage.easy.layout(Edges(),Width(UIScreen.main.bounds.width),Height(UIScreen.main.bounds.width))
-        addMainImageButton.easy.layout(CenterX(),CenterY())
+        addMainImageButton.easy.layout(CenterX(),CenterY(),Width(200),Height(200))
         
     }
     
@@ -75,6 +99,14 @@ class PostEditorPhotoBlockCell: UITableViewCell {
                 self?.modelLink?.onAddPhotoAddButtonPress(f)
             }
         }
+    }
+    
+    override func willTransition(to state: UITableViewCell.StateMask) {
+
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        deleteButton.isHidden = !editing
     }
 }
 

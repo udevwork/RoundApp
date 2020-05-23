@@ -11,36 +11,50 @@ import UIKit
 import EasyPeasy
 
 // MARK: MODEL ***********
-class PostEditorHeaderCellModel {
-    var title: String?
-    var subtitle: String?
-    var image: UIImage?
-    
-    let onAddPhotoAddButtonPress: ( @escaping (UIImage)->() )->()
-    init(onAddPhotoAddButtonPress: @escaping ( @escaping (UIImage)->() )->()){
-        self.onAddPhotoAddButtonPress = onAddPhotoAddButtonPress
+class PostEditorHeaderCellModel: EditorBlockValidate {
+    func validation() -> [String] {
+        var requirements : [String] = []
+        if image == nil{
+            requirements.append("Header image")
+        }
+        if title == nil || title == "" || title == " "  {
+            requirements.append("Header title")
+        }
+        if subtitle == nil || title == "" || title == " "  {
+            requirements.append("Header subtitle")
+        }
+        return requirements
     }
+    
+    var title       : String?
+    var subtitle    : String?
+    var image       : UIImage?
+    
+    var location    : Location?
+    var onAddPhotoAddButtonPress: (( @escaping (UIImage)->() )->())? = nil
+
+    init(){}
+
 }
 
 // MARK: CELL ***********
 class PostEditorHeaderCell: UITableViewCell {
     
     var modelLink: PostEditorHeaderCellModel?
- 
+    let backGround: UIView = UIView()
     let mainImage: UIImageView = UIImageView()
     let addMainImageButton : Button = ButtonBuilder()
-        .setFrame(CGRect(origin: .zero, size: CGSize(width: 150, height: 150)))
+        .setFrame(CGRect(origin: .zero, size: .zero))
         .setStyle(.icon)
         .setIconSize(CGSize(width: 50, height: 50))
         .setIconColor(.label)
         .setColor(.clear)
-        .setIcon(UIImage(systemName: "photo.fill.on.rectangle.fill")!)
+        .setIcon(.gallery)
         .build()
     
     let titleInputField: UITextField = UITextField()
     let subtitleTitleInputField: UITextField = UITextField()
 
- 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         titleInputField.delegate = self
@@ -58,19 +72,25 @@ class PostEditorHeaderCell: UITableViewCell {
         backgroundColor = .systemGray6
         layer.masksToBounds = true
         clipsToBounds = true
+        addSubview(backGround)
         addSubview(mainImage)
         addSubview(addMainImageButton)
         addSubview(titleInputField)
         addSubview(subtitleTitleInputField)
+        backGround.backgroundColor = .systemGray5
+        backGround.easy.layout(Edges(10))
+        backGround.layer.cornerRadius = 4
         mainImage.contentMode = .scaleAspectFill
+        mainImage.easy.layout(Edges(),Width(UIScreen.main.bounds.width),Height(300))
         subtitleTitleInputField.placeholder = "subtitle"
         subtitleTitleInputField.font = FontNames.Bold.uiFont(18)
+        subtitleTitleInputField.easy.layout(Bottom(29),Leading(20),Trailing(20),Height(20))
         titleInputField.placeholder = "title"
         titleInputField.font = FontNames.Bold.uiFont(23)
-        mainImage.easy.layout(Edges(),Width(UIScreen.main.bounds.width),Height(300))
-        addMainImageButton.easy.layout(CenterX(),CenterY())
-        subtitleTitleInputField.easy.layout(Bottom(29),Leading(20),Trailing(20),Height(20))
         titleInputField.easy.layout(Bottom(20).to(subtitleTitleInputField),Leading(20),Trailing(20),Height(25))
+        addMainImageButton.easy.layout(CenterX(),CenterY(),Width(200),Height(200))
+        titleInputField.autocorrectionType = .no
+        subtitleTitleInputField.autocorrectionType = .no
     }
     
     public func setupWith(model: PostEditorHeaderCellModel) {
@@ -83,8 +103,16 @@ class PostEditorHeaderCell: UITableViewCell {
                 self?.mainImage.image = i
                 self?.modelLink?.image = i
             }
-            self?.modelLink?.onAddPhotoAddButtonPress(f)
+            self?.modelLink?.onAddPhotoAddButtonPress?(f)
         }
+    }
+    
+    override func willTransition(to state: UITableViewCell.StateMask) {
+        
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(false, animated: false)
     }
 }
 

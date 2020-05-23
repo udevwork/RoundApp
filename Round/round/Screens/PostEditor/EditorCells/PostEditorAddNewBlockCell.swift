@@ -28,8 +28,8 @@ class PostEditorAddNewBlockCell: UITableViewCell {
         .setStyle(.icon)
         .setIconSize(CGSize(width: 45, height: 38))
         .setColor(.clear)
-        .setIcon(Icons.addPostBlock.image())
-        .setIconColor(.label)
+        .setIcon(.addPostBlock)
+        .setIconColor(.systemIndigo)
         .build()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -58,7 +58,7 @@ class PostEditorAddNewBlockCell: UITableViewCell {
         self.onAddButtonPress = model.onAddButtonPress
         
         addButton.setTarget { [weak self] in
-            print("button press ok")
+            Debug.log("button press ok")
             
             self?.onAddButtonPress!()
         }

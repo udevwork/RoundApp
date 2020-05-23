@@ -12,6 +12,7 @@ import Photos
 import EasyPeasy
 
 class ImagePicker: UIViewController {
+    var selectedImage: UIImage? = nil
     let onImageSelect: (UIImage)->()
     var photoPicker: UIImagePickerController?
     let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -110,10 +111,15 @@ extension ImagePicker: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         PHImageManager.default().requestImage(for: cellModels[indexPath.row].asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: .none) { [weak self] (img, tab) in
             if img != nil {
-                self?.onImageSelect(img!)
-                self?.dismiss(animated: true, completion: nil)
+                // TODO: complition called 2 times
+                // FIXME: fix it in future
+                if self?.selectedImage == nil {
+                    self?.selectedImage = img
+                    self?.onImageSelect((self?.selectedImage)!)
+                    self?.dismiss(animated: true, completion: nil)
+                }
             } else {
-                print("NO IMAGE")
+                Debug.log("NO IMAGE")
             }
         }
     }

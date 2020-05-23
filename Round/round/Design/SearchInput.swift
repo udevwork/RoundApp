@@ -45,7 +45,6 @@ class SearchInput: UIView {
         placeholder.append(NSAttributedString(string: "Search", attributes: [.foregroundColor : UIColor.lightGray]))
         input.attributedPlaceholder = placeholder
         
-        
         background.layer.masksToBounds = true
         background.layer.cornerRadius = 13
         

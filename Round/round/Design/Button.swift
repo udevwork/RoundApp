@@ -29,6 +29,10 @@ class Button: UIButton {
     init() {
         super.init(frame: .zero)
         addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
+        addTarget(self, action: #selector(buttonDown), for: .touchDown)
+        addTarget(self, action: #selector(buttonRelese), for: .touchUpInside)
+        addTarget(self, action: #selector(buttonRelese), for: .touchUpOutside)
+
     }
     
     fileprivate func setStyle(style : Style){
@@ -57,11 +61,40 @@ class Button: UIButton {
         btnText.text = text
     }
     
+    func setIcon(_ icon : UIImage) {
+        self.icon.image = icon
+        self.icon.contentMode = .scaleAspectFit
+    }
+    
+    func setIcon(_ icon : Icons) {
+        self.icon.image = icon.image()
+        self.icon.contentMode = .scaleAspectFit
+    }
+    
+    private var saveTintColor: UIColor? = nil
+    func setIconColor(_ color : UIColor) {
+        self.icon.tintColor = color
+        saveTintColor = color
+    }
+    
     @objc func buttonClicked(sender:UIButton)
     {
         onPress?()
+        
     }
     
+    @objc func buttonRelese(sender:UIButton)
+    {
+        if saveTintColor != nil{
+            icon.tintColor = saveTintColor
+        } else {
+            icon.tintColor = .label
+        }
+    }
+    @objc func buttonDown(sender:UIButton)
+    {
+        icon.tintColor = .systemIndigo
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -95,7 +128,7 @@ class ButtonBuilder {
     }
     
     func setIcon(_ imageName : String) -> ButtonBuilder {
-        button.icon.isUserInteractionEnabled = true
+        button.icon.isUserInteractionEnabled = false
         button.icon.image = UIImage(named: imageName)
         return self
     }
@@ -106,8 +139,14 @@ class ButtonBuilder {
         return self
     }
     
+    func setIcon(_ icon : Icons) -> ButtonBuilder {
+        button.icon.image = icon.image()
+        button.icon.contentMode = .scaleAspectFit
+        return self
+    }
+    
     func setIconColor(_ color : UIColor) -> ButtonBuilder {
-        button.icon.tintColor = color
+        button.setIconColor(color)
         return self
     }
     

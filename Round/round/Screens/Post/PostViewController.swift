@@ -23,20 +23,7 @@ class PostViewController: BaseViewController<PostViewModel> {
         view.backgroundColor = .white
         transitioningDelegate = self
         self.card = viewModel.cardView
-        table.delegate = self
-        table.dataSource = self
-        table.separatorStyle = .none
-        table.sectionFooterHeight = 0
-        table.tableFooterView = nil
-        table.rowHeight = UITableView.automaticDimension
-        if #available(iOS 11.0, *) {
-            table.insetsContentViewsToSafeArea = true;
-            table.contentInsetAdjustmentBehavior = .never
-        }
-        
-        table.register(TitlePostCellView.self, forCellReuseIdentifier: "TitlePostCellView")
-        table.register(ArticlePostCellView.self, forCellReuseIdentifier: "ArticlePostCellView")
-        table.register(SimplePhotoPostCellView.self, forCellReuseIdentifier: "SimplePhotoPostCellView")
+        setupTableView()
         header = PostViewControllerHeader(frame: view.bounds, viewModel: viewModel.cardView.viewModel!, card: card!)
         viewModel.loadPostBody {
             DispatchQueue.main.async {
@@ -52,15 +39,9 @@ class PostViewController: BaseViewController<PostViewModel> {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      //  edgesForExtendedLayout = .all
-      //  view.insetsLayoutMarginsFromSafeArea = true
-    }
-    
     func setupData(_ viewModel : CardViewModel){
         guard let header = header else { return }
-        header.setupData(viewModel)
+        header.setupDesign(viewModel)
     }
     
     fileprivate func setupDesign(){
@@ -73,14 +54,36 @@ class PostViewController: BaseViewController<PostViewModel> {
         header.onAvatarPress = { [weak self] in
             self?.routeToProfile()
         }
-        table.easy.layout(Top(),Bottom(),Trailing(),Leading())
+        header.saveToBookmark.setTarget { [weak self] in
+            self?.onBookmarkPress()
+        }
+        table.easy.layout(Edges())
         
     }
 
+    private func setupTableView(){
+         table.delegate = self
+         table.dataSource = self
+         table.separatorStyle = .none
+         table.sectionFooterHeight = 0
+         table.tableFooterView = nil
+         table.rowHeight = UITableView.automaticDimension
+         if #available(iOS 11.0, *) {
+             table.insetsContentViewsToSafeArea = true;
+             table.contentInsetAdjustmentBehavior = .never
+         }
+         table.register(TitlePostCellView.self, forCellReuseIdentifier: "TitlePostCellView")
+         table.register(ArticlePostCellView.self, forCellReuseIdentifier: "ArticlePostCellView")
+         table.register(SimplePhotoPostCellView.self, forCellReuseIdentifier: "SimplePhotoPostCellView")
+     }
+    
     private func routeToProfile(){
-        let model = ProfileViewModel(userId: (viewModel.cardView.viewModel?.authorID)!)
-        let vc = ProfileRouter.assembly(model: model)
+        let vc = ProfileRouter.assembly(userId: (viewModel.cardView.viewModel?.authorID)!)
         self.present(vc, animated: true, completion: nil)
+    }
+ 
+    private func onBookmarkPress(){
+        FirebaseAPI.shared.saveBookmark(post: viewModel.cardView.viewModel!.id)
     }
     
 }
