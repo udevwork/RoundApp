@@ -8,23 +8,28 @@
 
 import Foundation
 
-class User : Decodable {
+class User : Codable {
     let uid : String?
     let photoUrl : String?
     let userName : String?
-    let posts : [String]?
+    let bookmarks : [String]? = nil
     
-    init(uid : String?, photoUrl : String?, userName : String?,posts : [String]?) {
+    init(uid: String?, photoUrl: String?, userName: String?) {
         self.uid = uid
         self.photoUrl = photoUrl
         self.userName = userName ?? "empty user name"
-        self.posts = posts ?? []
     }
+    
     init() {
         self.uid = nil
         self.photoUrl = nil
         self.userName = nil
-        self.posts = nil
     }
-    
+}
+
+
+extension User {
+    static func == (lhs: User, rhs: User) -> Bool {
+        return lhs.uid == rhs.uid
+    }
 }

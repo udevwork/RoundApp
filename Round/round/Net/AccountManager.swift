@@ -24,6 +24,7 @@ class AccountManager {
 }
 
 class UserDataManager {
+    
     var uid: String {
         guard let user = Auth.auth().currentUser else {
             print("UserManager:uid: NO USER")
@@ -31,6 +32,7 @@ class UserDataManager {
         }
        return user.uid
     }
+    
     var anonymous: Bool {
         guard let user = Auth.auth().currentUser else {
              print("UserManager:uid: NO USER")
@@ -39,8 +41,10 @@ class UserDataManager {
         return user.isAnonymous
     }
     
+    var bookmarks: [String] = []
     var onUserChange : Observable<User?> = .init(nil)
     var user: User? = nil
+    
     func assemblyUser() {
         guard let fireUser = Auth.auth().currentUser else {
             print("UserManager:uid: NO USER")
@@ -49,7 +53,16 @@ class UserDataManager {
         Network().getUserWith(id: fireUser.uid) { user in
             self.user = user
             self.onUserChange.value = user
+            FirebaseAPI.shared.getBookmarkCollection { (res, bookmarks) in
+                if res == .success {
+                    if bookmarks != nil {
+                        self.bookmarks = bookmarks!
+                        self.onUserChange.value = user
+                    }
+                }
+            }
         }
+        
     }
 }
 

@@ -134,7 +134,7 @@ final class FirebaseAPI : API {
     
     func getPostCards(userID: String, complition : @escaping (HTTPResult, [CardViewModel]?) -> ()) {
         var arrayToReturn : [CardViewModel] = []
-        posts.whereField("authorID", isEqualTo: userID).getDocuments { (snap, error) in
+        posts.whereField("filterAuthorID", isEqualTo: userID).getDocuments { (snap, error) in
             if error != nil {
                 Debug.log("FirebaseAPI.getPostCards(): getDocuments error: ", error ?? "nil")
                 complition(HTTPResult.error, nil)
@@ -144,9 +144,10 @@ final class FirebaseAPI : API {
             snap?.documents.forEach({ doc in
                 do {
                     
-                    let result = try FirestoreDecoder().decode(Post.self, from: doc.data())
+                    let result = try FirestoreDecoder().decode(PostResponse.self, from: doc.data())
                     
-                    let card : CardViewModel = CardViewModel(id: doc.documentID, mainImageURL: result.mainPicURL, title: result.title, description: result.description, viewsCount: result.viewsCount, authorID: result.authorID, creationDate: result.creationDate)
+                    let card : CardViewModel = CardViewModel(id: doc.documentID, response: result)
+                    
                     Debug.log(card)
                     arrayToReturn.append(card)
                 } catch let error {
@@ -160,32 +161,49 @@ final class FirebaseAPI : API {
         }
     }
     
+    func getBookmarkCollection(userID: String = AccountManager.shared.data.uid, complition : @escaping (HTTPResult, [String]?) -> ()) {
+            var ids : [String] = []
+          posts.whereField("subscribers", arrayContains: userID).getDocuments { (snap, error) in
+              if error != nil {
+                  Debug.log("FirebaseAPI.getBookmarkCollection(): getDocuments error: ", error ?? "nil")
+                  complition(HTTPResult.error, nil)
+                  return
+              }
+              snap?.documents.forEach({ doc in
+                      ids.append(doc.documentID)
+                      complition(HTTPResult.error, nil)
+              })
+              complition(HTTPResult.success, ids)
+              
+          }
+    }
+    
     func getBookmarkedPostCards(userID: String, complition : @escaping (HTTPResult, [CardViewModel]?) -> ()) {
-        var arrayToReturn : [CardViewModel] = []
-        posts.whereField("subscribers", arrayContains: userID).getDocuments { (snap, error) in
-            if error != nil {
-                Debug.log("FirebaseAPI.getPostCards(): getDocuments error: ", error ?? "nil")
-                complition(HTTPResult.error, nil)
-                return
-            }
-            
-            snap?.documents.forEach({ doc in
-                do {
-                    
-                    let result = try FirebaseDecoder().decode(Post.self, from: doc.data())
-                    
-                    let card : CardViewModel = CardViewModel(id: doc.documentID, mainImageURL: result.mainPicURL, title: result.title, description: result.description, viewsCount: 0, authorID: result.authorID, creationDate: result.creationDate)
-                    Debug.log(card)
-                    arrayToReturn.append(card)
-                } catch let error {
-                    Debug.log("FirebaseAPI.getPostCards(): Decoder error: ", error)
-                    complition(HTTPResult.error, nil)
-                    
-                }
-            })
-            complition(HTTPResult.success, arrayToReturn)
-            
-        }
+ 
+           var models: [CardViewModel]? = []
+           posts.whereField("subscribers", arrayContains: userID).getDocuments { (snap, err) in
+               if err != nil {
+                   Debug.log(err as Any)
+                   complition(.error, nil)
+                   return
+               }
+               snap?.documents.forEach({ doc in
+                   do {
+                       let result = try FirestoreDecoder().decode(PostResponse.self, from: doc.data())
+                       let card : CardViewModel = CardViewModel(id: doc.documentID, response: result )
+                       models?.append(card)
+                       Debug.log(result.title ?? "", result.creationDate)
+                   } catch let error {
+                       Debug.log("FirebaseAPI.getBookmarkedPostCards(): Decoder error: ", error)
+                       complition(.error, nil)
+                   }
+               })
+               complition(.success, models)
+           }
+        
+        
+        
+        
     }
     
     func getPostCard(id: String, complition : @escaping (HTTPResult, CardViewModel?) -> ()) {
@@ -203,9 +221,10 @@ final class FirebaseAPI : API {
             }
             
             do {
-                let result = try FirestoreDecoder().decode(Post.self, from: doc!.data()!)
+                let result = try FirestoreDecoder().decode(PostResponse.self, from: doc!.data()!)
+        
+                let card : CardViewModel = CardViewModel(id: doc!.documentID, response: result)
                 
-                let card : CardViewModel = CardViewModel(id: doc!.documentID, mainImageURL: result.mainPicURL, title: result.title, description: result.description, viewsCount: result.viewsCount, authorID: result.authorID, creationDate: result.creationDate)
                 Debug.log(card)
                 complition(HTTPResult.error, card)
             } catch let error {
@@ -361,23 +380,30 @@ final class FirebaseAPI : API {
         posts.document(id).updateData(["viewsCount" : FieldValue.increment(Int64(1))])
     }
     
-    public func saveBookmark(post id: String){
+    public func saveBookmark(postId id: String, complition : @escaping (HTTPResult) -> () ){
         let uid = AccountManager.shared.data.uid
         posts.document(id).setData(["subscribers" : FieldValue.arrayUnion([uid])], merge: true) { error in
             if error != nil {
                 Debug.log(error as Any)
+                complition(.error)
                 return
             }
-            Notifications.shared.Show(text: "Bookmarked", icon: Icons.bookmarkfill.image(), iconColor: .systemGreen)
+            complition(.success)
+            //BookmarksRealmManager().save(postId: id)
+         //   Notifications.shared.Show(text: "Bookmarked", icon: Icons.bookmarkfill.image(), iconColor: .systemGreen)
         }
     }
     
-    public func removeBookmark(post id: String) {
+    public func removeBookmark(postId id: String, complition : @escaping (HTTPResult) -> ()) {
         let uid = AccountManager.shared.data.uid
         posts.document(id).setData(["subscribers" : FieldValue.arrayRemove([uid])], merge: true) { error in
             if error != nil {
                 Debug.log(error as Any)
+                complition(.error)
+                return
             }
+            complition(.success)
+            //BookmarksRealmManager().remove(postId: id)
         }
     }
     
@@ -395,12 +421,12 @@ final class FirebaseAPI : API {
                 do {
                     self.posts.document(doc.documentID).setData(["xIndex"     : Int32.random(in: 1...Int32.max),
                                                                  "showsCount" : FieldValue.increment(Int64(1))], merge: true)
-                    let result = try FirestoreDecoder().decode(Post.self, from: doc.data())
-                    let card : CardViewModel = CardViewModel(id: doc.documentID, mainImageURL: result.mainPicURL, title: result.title, description: result.description, viewsCount: result.viewsCount, authorID: result.authorID, creationDate: result.creationDate)
+                    let result = try FirestoreDecoder().decode(PostResponse.self, from: doc.data())
+                    let card : CardViewModel = CardViewModel(id: doc.documentID, response: result )
                     models?.append(card)
-                    Debug.log(result.title ?? "")
+                    Debug.log(result.title ?? "", result.creationDate)
                 } catch let error {
-                    Debug.log("FirebaseAPI.getPostCards(): Decoder error: ", error)
+                    Debug.log("FirebaseAPI.getRandomPost(): Decoder error: ", error)
                     complition(.error, nil)
                 }
             })

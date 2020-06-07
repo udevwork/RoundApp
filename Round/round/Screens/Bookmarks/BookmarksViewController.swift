@@ -95,7 +95,9 @@ extension BookmarksViewController : UITableViewDelegate, UITableViewDataSource {
 
             Debug.log(indexPath.row-1)
             viewModel.postsData.remove(at: indexPath.row-1)
-            FirebaseAPI.shared.removeBookmark(post: viewModel.postsData[indexPath.row-1].id)
+            FirebaseAPI.shared.removeBookmark(postId: viewModel.postsData[indexPath.row-1].id) {_ in 
+                
+            }
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

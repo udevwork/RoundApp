@@ -78,14 +78,47 @@ class PostViewController: BaseViewController<PostViewModel> {
      }
     
     private func routeToProfile(){
-        let vc = ProfileRouter.assembly(userId: (viewModel.cardView.viewModel?.authorID)!)
+        let vc = ProfileRouter.assembly(userId: (viewModel.cardView.viewModel?.author?.uid)!)
         self.present(vc, animated: true, completion: nil)
     }
- 
-    private func onBookmarkPress(){
-        FirebaseAPI.shared.saveBookmark(post: viewModel.cardView.viewModel!.id)
-    }
     
+    private func onBookmarkPress(){
+        print("bookmark", "press")
+        
+        if header!.isSubscribed { // remoove
+            print("bookmark 1", header!.isSubscribed)
+            FirebaseAPI.shared.removeBookmark(postId: viewModel.cardView.viewModel!.id) { [weak self] result in
+                guard let self = self else {return}
+                if result == .success {
+                    self.header!.saveToBookmark.setIcon(Icons.bookmark)
+                    self.header!.isSubscribed = false
+                    AccountManager.shared.data.bookmarks.removeAll { bid -> Bool in
+                        if bid == self.viewModel.cardView.viewModel!.id {
+                            print("bookmark", "remove, ",bid)
+                            return true
+                        } else {
+                            return false
+                        }
+                    }
+                    
+                }
+            }
+            
+        } else { // add
+            print("bookmark 2", header!.isSubscribed)
+            FirebaseAPI.shared.saveBookmark(postId: viewModel.cardView.viewModel!.id) { [weak self] result in
+                guard let self = self else {return}
+                if result == .success {
+                    self.header!.saveToBookmark.setIcon(Icons.bookmarkfill)
+                    self.header!.isSubscribed = true
+                    AccountManager.shared.data.bookmarks.append(self.viewModel.cardView.viewModel!.id)
+                    print("bookmark", "add, ",self.viewModel.cardView.viewModel!.id)
+
+                }
+            }
+        }
+        
+    }
 }
 
 extension PostViewController : UIViewControllerTransitioningDelegate {

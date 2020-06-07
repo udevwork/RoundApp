@@ -10,43 +10,54 @@ import Foundation
 import Firebase
 
 class CardViewModel {
-    let id : String
+    let id : String /// in firebase it is doc id
     let mainImageURL : String
     let title : String
     let description : String
     let viewsCount : Int
     var author : User?
-    let authorID : String?
     let creationDate: Timestamp?
+    var isSubscribed: Bool {
+        var res: Bool = false
+        AccountManager.shared.data.bookmarks.forEach { id in
+            if self.id == id {
+                res = true
+                print(id, self.id , res)
+
+            }
+        }
+        return res
+    }
     
-    init(id : String, mainImageURL : String?, title : String?, description : String?, viewsCount : Int?, authorID : String?, creationDate: Timestamp?) {
+    init(id : String, mainImageURL : String?, title : String?, description : String?, viewsCount : Int?, author : User?, creationDate: Timestamp?) {
         self.id = id
-        self.mainImageURL = mainImageURL ?? "ImagePlaceholder"
+        self.mainImageURL = mainImageURL ?? ""
         self.title = title ?? ""
         self.description = description ?? ""
         self.viewsCount = viewsCount ?? 0
-        self.authorID = authorID
+        self.author = author
         self.creationDate = creationDate
     }
+    
+    init(id : String, response: PostResponse) {
+        self.id = id
+        self.mainImageURL = response.mainPicURL ?? ""
+        self.title = response.title ?? ""
+        self.description = response.description ?? ""
+        self.viewsCount = response.viewsCount ?? 0
+        self.author = response.author
+        self.creationDate = response.creationDate
+    
+    }
+    
     init() {
         self.id = ""
-        self.mainImageURL = "ImagePlaceholder"
+        self.mainImageURL = ""
         self.title = "nil"
         self.description = "nil"
         self.viewsCount = 0
         self.author = nil
-        self.authorID = nil
+        self.author = nil
         self.creationDate = nil
-    }
-    
-    func loadAuthor(complition: @escaping (User?)->()){
-        /// load author data
-        print(self.title, self.authorID)
-        if let id = authorID {
-            FirebaseAPI.shared.getUserWith(id: id) { [weak self] user in
-                self?.author = user
-                complition(self?.author)
-            }
-        }
     }
 }

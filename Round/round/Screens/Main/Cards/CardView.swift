@@ -14,13 +14,13 @@ class CardView: UIView {
     
     var viewModel : CardViewModel? = nil
     var onCardPress : ((CardView, CardViewModel)->())? = nil
-    var backgroundImageView : UIImageView = UIImageView(image: UIImage(named: "ImagePlaceholder"))
+    var backgroundImageView : UIImageView = UIImageView(image: Images.imagePlaceholder.uiimage())
     fileprivate var backgroundImageViewMask : UIView = UIView()
     fileprivate var actionButton : UIButton = UIButton()
     var titleLabel : Text = Text(.title,  .white)
     var descriptionLabel : Text = Text(.article, .white)
-    var authorAvatar : UserAvatarView? = nil
-    var authorNameLabel : Text? = nil
+    var authorAvatar : UserAvatarView = UserAvatarView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    var authorNameLabel : Text = Text(.article, .white)
     var gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
     
     let viewCountIcon: UIImageView = UIImageView(image: Icons.eye.image())
@@ -30,43 +30,12 @@ class CardView: UIView {
     init(viewModel : CardViewModel?, frame: CGRect, showAuthor: Bool) {
         super.init(frame: frame)
         self.viewModel = viewModel
-        setupData(viewModel,showAuthor: showAuthor)
         setupDesign()
+        setupData(viewModel,showAuthor: showAuthor)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupAuthorAvatar(_ viewModel : CardViewModel){
-
-        authorAvatar = UserAvatarView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        authorNameLabel = Text(.article, .white)
-        
-        guard let avatar = authorAvatar, let name = authorNameLabel else {
-            return
-        }
-        addSubview(avatar)
-        addSubview(name)
-        avatar.easy.layout(
-            Leading(20),Top(20),Height(40),Width(40)
-        )
-        
-        name.easy.layout(
-            Leading(20).to(avatar),
-            Trailing(20),
-            CenterY().to(avatar),
-            Height(40)
-        )
-        viewModel.loadAuthor { user in
-            if let url = user?.photoUrl, let imageUrl = URL(string: url) {
-                avatar.setImage(imageUrl)
-            } else {
-                avatar.setImage(UIImage(named: "avatarPlaceholder")!)
-            }
-            
-            name.text = user?.userName ?? ""
-        }
     }
     
     fileprivate func setupDesign(){
@@ -105,6 +74,22 @@ class CardView: UIView {
             Leading(20),Trailing(20),Bottom(5).to(descriptionLabel)
         )
         titleLabel.sizeToFit()
+        
+        addSubview(authorAvatar)
+        addSubview(authorNameLabel)
+        
+        authorAvatar.easy.layout(
+            Leading(20),Top(20),Height(40),Width(40)
+        )
+        
+        authorNameLabel.easy.layout(
+            Leading(20).to(authorAvatar),
+            Trailing(20),
+            CenterY().to(authorAvatar),
+            Height(40)
+        )
+        
+        
         viewCountIcon.contentMode = .scaleAspectFit
         viewCountIcon.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42)
         viewCountIcon.easy.layout(Width(17),Height(17),Leading(20),Bottom(9).to(titleLabel))
@@ -127,12 +112,20 @@ class CardView: UIView {
         guard let model = self.viewModel else {
             return
         }
-        backgroundImageView.setImage(imageURL: URL(string: model.mainImageURL), placeholder: "ImagePlaceholder")
+        backgroundImageView.setImage(imageURL: URL(string: model.mainImageURL), placeholder: Images.imagePlaceholder.uiimage())
         
         titleLabel.text = model.title
         descriptionLabel.text = model.description
+        
+        
         if showAuthor {
-            setupAuthorAvatar(model)
+            if let strongString = viewModel?.author?.photoUrl, let url = URL(string: strongString) {
+                authorAvatar.setImage(url)
+            } else {
+                authorAvatar.setImage(Images.avatarPlaceholder.uiimage())
+            }
+            authorNameLabel.text = viewModel?.author?.userName
+
         }
         viewCountLabel.text = "\(model.viewsCount)"
         if let timeResult = model.creationDate?.dateValue().timeIntervalSince1970 {

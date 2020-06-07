@@ -132,7 +132,7 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
                 header.userAvatar.setImage(url)
                 viewModel.userAvatar = header.userAvatar.image
             } else {
-                header.userAvatar.setImage(UIImage(named: "avatarPlaceholder")!)
+                header.userAvatar.setImage(Images.avatarPlaceholder.uiimage())
             }
         } else {
             header.userAvatar.setImage(viewModel.userAvatar!)
