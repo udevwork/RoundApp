@@ -86,9 +86,23 @@ enum Icons : String {
     case alignright      = "text.alignright"
     case bold            = "bold"
     
-    func image() -> UIImage {
-        if let img = UIImage(systemName: self.rawValue) {
+    func image(weight: UIImage.SymbolWeight = .black) -> UIImage {
+        if let img = UIImage(systemName: self.rawValue, withConfiguration: UIImage.SymbolConfiguration(weight: weight)){
         return img
+        } else {
+            Debug.log("Design.swift ERROR")
+            return UIImage(named: "empty")!
+        }
+    }
+}
+
+enum Images : String {
+    case avatarPlaceholder   = "avatarPlaceholder"
+    case imagePlaceholder    = "ImagePlaceholder"
+    
+    func uiimage() -> UIImage {
+        if let img = UIImage(named: self.rawValue){
+            return img
         } else {
             Debug.log("Design.swift ERROR")
             return UIImage(named: "empty")!

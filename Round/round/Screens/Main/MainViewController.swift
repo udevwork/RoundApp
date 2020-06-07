@@ -208,9 +208,4 @@ class CustomCell: GeminiCell {
         card.setupData(model,showAuthor: true)
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        card.authorAvatar?.removeFromSuperview()
-        card.authorNameLabel?.removeFromSuperview()
-    }
 }

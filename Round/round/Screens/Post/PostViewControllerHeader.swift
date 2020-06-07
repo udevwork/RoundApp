@@ -16,7 +16,8 @@ import EasyPeasy
 class PostViewControllerHeader: UIView {
 
     var backgroundImageView : UIImageView = UIImageView()
-
+    var isSubscribed: Bool = false
+    
     let backButton : Button = ButtonBuilder()
         .setStyle(.icon)
         .setColor(.clear)
@@ -26,12 +27,12 @@ class PostViewControllerHeader: UIView {
         .build()
     
     let saveToBookmark : Button = ButtonBuilder()
-    .setStyle(.icon)
-    .setColor(.clear)
-    .setIcon(.bookmarkfill)
-    .setIconColor(.white)
-    .setIconSize(CGSize(width: 20, height: 20))
-    .build()
+        .setStyle(.icon)
+        .setColor(.clear)
+        .setIconColor(.white)
+        .setIconSize(CGSize(width: 20, height: 20))
+        .setPressBlockingTimer(0.5)
+        .build()
 
     var gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
 
@@ -46,6 +47,7 @@ class PostViewControllerHeader: UIView {
         super.init(frame: frame)
         backgroundImageView.image = card.backgroundImageView.image
         setupDesign(viewModel)
+        print("lol")
     }
 
     required init?(coder: NSCoder) {
@@ -77,7 +79,7 @@ class PostViewControllerHeader: UIView {
         if let url = viewModel.author?.photoUrl, let imageUrl = URL(string: url) {
             avatar.setImage(imageUrl)
         } else {
-            avatar.setImage(UIImage(named: "avatarPlaceholder")!)
+            avatar.setImage(Images.avatarPlaceholder.uiimage())
         }
         name.text = viewModel.author?.userName
     }
@@ -92,6 +94,16 @@ class PostViewControllerHeader: UIView {
         }
         backButton.easy.layout(Leading(20),Top(20),Width(40),Height(40))
         saveToBookmark.easy.layout(Trailing(20),Top(20),Width(40),Height(40))
+
+        /// if BookmarksRealmManager().get(postId: viewModel.id) != nil {
+
+        self.isSubscribed = viewModel.isSubscribed
+        if viewModel.isSubscribed {
+            saveToBookmark.setIcon(Icons.bookmarkfill)
+        } else {
+            saveToBookmark.setIcon(Icons.bookmark)
+        }
+        
         gradient.frame = bounds
         backgroundImageView.easy.layout(
             Top(),Leading(),Trailing(),Bottom()
@@ -116,13 +128,26 @@ class PostViewControllerHeader: UIView {
             Leading(20),Trailing(20),Bottom(5).to(descriptionLabel)
         )
         titleLabel.sizeToFit()
-        if viewModel.authorID != AccountManager.shared.data.uid {
-            setupAuthorAvatar(viewModel)
-        }
+
+        setupAuthorAvatar(viewModel)
+        
 
         layoutSubviews()
     }
-
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+         let bigCheck = backButton.frame.insetBy(dx: -20, dy: -20)
+         if bigCheck.contains(point) {
+             return backButton
+         }
+        
+        let bigMark = saveToBookmark.frame.insetBy(dx: -20, dy: -20)
+        if bigMark.contains(point) {
+            return saveToBookmark
+        }
+        
+         return super.hitTest(point, with: event)
+     }
     
     public var onAvatarPress : ()->() = { }
     

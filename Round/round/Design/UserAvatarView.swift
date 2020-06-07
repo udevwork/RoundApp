@@ -55,6 +55,6 @@ class UserAvatarView: UIView {
         guard let imgUrl = image else {
             return
         }
-        authorAvatarImageView.setImage(imageURL: imgUrl, placeholder: "avatarPlaceholder")
+        authorAvatarImageView.setImage(imageURL: imgUrl, placeholder: Images.avatarPlaceholder.uiimage())
     }
 }

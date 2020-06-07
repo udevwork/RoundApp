@@ -19,10 +19,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         AccountManager.shared.network.restoreLastUserSession()
         AccountManager.shared.data.assemblyUser()
 
-        
+
         let model = MainViewModel()
         let contentView = MainViewController(viewModel: model)
-        
+       // let contentView = RealmTest()
+
         let rootNavigationController : UINavigationController = UINavigationController(rootViewController: contentView)
         
         let navBar = rootNavigationController.navigationBar

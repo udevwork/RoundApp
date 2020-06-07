@@ -19,7 +19,7 @@ class SimplePhotoPostCellView: UITableViewCell, BasePostCellProtocol {
     
     func setup(viewModel: BasePostCellViewModelProtocol) {
         guard let model = viewModel as? SimplePhotoPostCellViewModel else {print("SimplePhotoPostCellView viewModel type error"); return}
-        model.lazyImageLoading(model.imageUrl!, "ImagePlaceholder", { [weak self] img, type in
+        model.lazyImageLoading(model.imageUrl!, Images.imagePlaceholder.rawValue, { [weak self] img, type in
             if type == .url {
                 self?.photo.image = img
                 UIView.animate(withDuration: 0.5) {

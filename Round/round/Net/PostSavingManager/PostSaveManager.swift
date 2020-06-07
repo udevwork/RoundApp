@@ -214,15 +214,22 @@ final class RSavePostHeader: RPostBlockProtocol {
                 return
             }
             
-            let headerBody: [String : Any] = ["mainPicURL"   : imageURL ?? "",
-                                              "authorID"     : AccountManager.shared.data.uid,
-                                              "description"  : model.subtitle ?? "",
-                                              "title"        : model.title ?? "",
-                                              "xIndex"       : Int32.random(in: 1...Int32.max),
-                                              "showsCount"   : 0,
-                                              "viewsCount"   : 0,
-                                              "creationDate" : FieldValue.serverTimestamp(),
-                                              "location"     : location ?? ""]
+            let user: [String : Any] = [
+                "uid"           : AccountManager.shared.data.user?.uid as Any,
+                "photoUrl"           : AccountManager.shared.data.user?.photoUrl as Any,
+                "userName"           : AccountManager.shared.data.user?.userName as Any,
+            ]
+            
+            let headerBody: [String : Any] = ["mainPicURL"       : imageURL ?? "",
+                                              "author"           : user,
+                                              "filterAuthorID"   : AccountManager.shared.data.user?.uid ?? "",
+                                              "description"      : model.subtitle ?? "",
+                                              "title"            : model.title ?? "",
+                                              "xIndex"           : Int32.random(in: 1...Int32.max),
+                                              "showsCount"       : 0,
+                                              "viewsCount"       : 0,
+                                              "creationDate"     : FieldValue.serverTimestamp(),
+                                              "location"         : location ?? ""]
             
             documentReference.setData(headerBody) { error in
                 if error != nil {

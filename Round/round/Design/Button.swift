@@ -77,10 +77,22 @@ class Button: UIButton {
         saveTintColor = color
     }
     
+    private var pressBlocked: Bool = false
+    fileprivate var pressBlockingTime: TimeInterval = 0
+    
     @objc func buttonClicked(sender:UIButton)
     {
-        onPress?()
-        
+        if pressBlockingTime != 0 {
+            if pressBlocked == false {
+                onPress?()
+                pressBlocked = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + pressBlockingTime) { [weak self] in
+                    self?.pressBlocked = false
+                }
+            }
+        } else {
+            onPress?()
+        }
     }
     
     @objc func buttonRelese(sender:UIButton)
@@ -118,7 +130,6 @@ class ButtonBuilder {
     func setText(_ text : String) -> ButtonBuilder {
         button.btnText.text = text
         button.btnText.easy.layout(Top(10),Bottom(10),Leading(20),Trailing(20))
-
         return self
     }
     
@@ -188,6 +199,11 @@ class ButtonBuilder {
     
     func setTarget(_ target : @escaping ()->()) -> ButtonBuilder {
         button.setTarget(target)
+        return self
+    }
+    
+    func setPressBlockingTimer(_ time : TimeInterval) -> ButtonBuilder {
+        button.pressBlockingTime = time
         return self
     }
     

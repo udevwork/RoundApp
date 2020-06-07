@@ -12,7 +12,7 @@ import CodableFirebase
 
 extension Timestamp: TimestampType {}
 
-struct Post : Codable {
+struct PostResponse : Codable {
     var description: String?
     var authorID: String?
     var title: String?

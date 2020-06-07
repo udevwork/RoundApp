@@ -82,16 +82,14 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         /// gradient
         let gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
         /// avatar
-        if let cardAvatar = card.authorAvatar {
-            authorAvatar = UserAvatarView(frame: cardAvatar.frame)
-            if let image = cardAvatar.image {
-                authorAvatar!.setImage(image)
-            }
+        authorAvatar = UserAvatarView(frame: card.authorAvatar.frame)
+        if let image = card.authorAvatar.image {
+            authorAvatar!.setImage(image)
         }
-        if let cardName = card.authorNameLabel {
-            authorNameLabel = Text(.article, .white, cardName.frame)
-            authorNameLabel!.text = cardName.text
-        }
+        
+        authorNameLabel = Text(.article, .white, card.authorNameLabel.frame)
+        authorNameLabel!.text = card.authorNameLabel.text
+        
         /// back btn
         let backButton : Button = ButtonBuilder()
             .setFrame(CGRect(origin: CGPoint(x: 0, y: 0), size: .zero))
@@ -106,7 +104,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
             .setFrame(CGRect(origin: CGPoint(x: UIScreen.main.bounds.width, y: 0), size: .zero))
             .setStyle(.icon)
             .setColor(.clear)
-            .setIcon(.bookmarkfill)
+            .setIcon(model.isSubscribed ? Icons.bookmarkfill : Icons.bookmark)
             .setIconColor(.white)
             .setIconSize(CGSize(width: 20, height: 20))
             .build()

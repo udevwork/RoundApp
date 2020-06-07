@@ -86,7 +86,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
             if let url = model.author?.photoUrl, let imageUrl = URL(string: url) {
                 authorAvatar!.setImage(imageUrl)
             } else {
-                authorAvatar!.setImage(UIImage(named: "avatarPlaceholder")!)
+                authorAvatar!.setImage(Images.avatarPlaceholder.uiimage())
             }
             
         }
@@ -113,7 +113,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
             .setFrame(CGRect(origin: CGPoint(x: UIScreen.main.bounds.width-20, y: 20), size: .zero))
             .setStyle(.icon)
             .setColor(.clear)
-            .setIcon(.bookmarkfill)
+            .setIcon(model.isSubscribed ? Icons.bookmarkfill : Icons.bookmark)
             .setIconColor(.white)
             .setIconSize(CGSize(width: 20, height: 20))
             .build()
