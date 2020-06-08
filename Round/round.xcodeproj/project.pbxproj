@@ -30,6 +30,8 @@
 		9256DF512468009200DB9777 /* PostBlockSelectorTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256DF502468009200DB9777 /* PostBlockSelectorTableViewHeaderView.swift */; };
 		9256DF53246871CF00DB9777 /* RNFullscreenActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256DF52246871CF00DB9777 /* RNFullscreenActivityIndicator.swift */; };
 		9256DF552468985600DB9777 /* ProfileEditorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256DF542468985600DB9777 /* ProfileEditorDelegate.swift */; };
+		925865F8248E12B50027C345 /* CardViewSimple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925865F7248E12B50027C345 /* CardViewSimple.swift */; };
+		925865FA248EB14C0027C345 /* CardViewProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925865F9248EB14C0027C345 /* CardViewProfile.swift */; };
 		925A5A3C24434C68009C7A42 /* PostEditorAddNewBlockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A5A3B24434C68009C7A42 /* PostEditorAddNewBlockCell.swift */; };
 		925A5A3E2443556B009C7A42 /* PostBlockSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A5A3D2443556B009C7A42 /* PostBlockSelectorViewController.swift */; };
 		925A5A4024436257009C7A42 /* PostEditorSimpleTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A5A3F24436257009C7A42 /* PostEditorSimpleTextCell.swift */; };
@@ -147,6 +149,8 @@
 		9256DF502468009200DB9777 /* PostBlockSelectorTableViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBlockSelectorTableViewHeaderView.swift; sourceTree = "<group>"; };
 		9256DF52246871CF00DB9777 /* RNFullscreenActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNFullscreenActivityIndicator.swift; sourceTree = "<group>"; };
 		9256DF542468985600DB9777 /* ProfileEditorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditorDelegate.swift; sourceTree = "<group>"; };
+		925865F7248E12B50027C345 /* CardViewSimple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewSimple.swift; sourceTree = "<group>"; };
+		925865F9248EB14C0027C345 /* CardViewProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewProfile.swift; sourceTree = "<group>"; };
 		925A5A3B24434C68009C7A42 /* PostEditorAddNewBlockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEditorAddNewBlockCell.swift; sourceTree = "<group>"; };
 		925A5A3D2443556B009C7A42 /* PostBlockSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBlockSelectorViewController.swift; sourceTree = "<group>"; };
 		925A5A3F24436257009C7A42 /* PostEditorSimpleTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEditorSimpleTextCell.swift; sourceTree = "<group>"; };
@@ -322,6 +326,16 @@
 			path = EditorCells;
 			sourceTree = "<group>";
 		};
+		925865F6248E10DD0027C345 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				92E62AC8239CE6DE009A2CD2 /* CardView.swift */,
+				925865F7248E12B50027C345 /* CardViewSimple.swift */,
+				925865F9248EB14C0027C345 /* CardViewProfile.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		9260B84B23B1102000AB18A5 /* Filter */ = {
 			isa = PBXGroup;
 			children = (
@@ -430,7 +444,7 @@
 		9298E25023F137A300952F28 /* Cards */ = {
 			isa = PBXGroup;
 			children = (
-				92E62AC8239CE6DE009A2CD2 /* CardView.swift */,
+				925865F6248E10DD0027C345 /* Views */,
 				92E62ACA239CE883009A2CD2 /* CardViewModel.swift */,
 				9298E25123F13A2600952F28 /* CardViewTemplate.swift */,
 			);
@@ -864,6 +878,7 @@
 				923E0949243FA73E0010DF5A /* PostEditorViewModel.swift in Sources */,
 				9260B86223B605C900AB18A5 /* ArticlePostCellView.swift in Sources */,
 				9256DF552468985600DB9777 /* ProfileEditorDelegate.swift in Sources */,
+				925865F8248E12B50027C345 /* CardViewSimple.swift in Sources */,
 				92ED214823AD7DB600819997 /* Button.swift in Sources */,
 				9228541E245472C20033E549 /* ProfileCollectionLayout.swift in Sources */,
 				9228541B2454421D0033E549 /* ProfilePostCell.swift in Sources */,
@@ -880,6 +895,7 @@
 				9260B85823B4E45600AB18A5 /* PostCloseControllerAnimation.swift in Sources */,
 				927EBEAE2440FACF003DA3ED /* ImagePickerViewController.swift in Sources */,
 				9298E25D23F1DA8900952F28 /* SearchInput.swift in Sources */,
+				925865FA248EB14C0027C345 /* CardViewProfile.swift in Sources */,
 				9209EBED2455709200520513 /* ProfileEditorViewModel.swift in Sources */,
 				923E094F243FA76F0010DF5A /* PostEditorContract.swift in Sources */,
 				92E62ACB239CE883009A2CD2 /* CardViewModel.swift in Sources */,

@@ -14,13 +14,7 @@ class BookmarksViewController: BaseViewController<BookmarksViewModel> {
     
     
     let table : UITableView = UITableView()
-    let editButton : Button = ButtonBuilder()
-        .setFrame(CGRect(origin: .zero, size: .zero))
-        .setStyle(.icon)
-        .setIcon(.trash)
-        .setIconColor(.systemRed)
-        .setColor(.clear)
-        .build()
+    private let refreshControl = UIRefreshControl()
     
     override init(viewModel: BookmarksViewModel) {
         super.init(viewModel: viewModel)
@@ -34,37 +28,27 @@ class BookmarksViewController: BaseViewController<BookmarksViewModel> {
         table.register(bookmarkCell.self, forCellReuseIdentifier: "bookmarkCell")
         table.showsVerticalScrollIndicator = false
         table.showsHorizontalScrollIndicator = false
+        table.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshWeatherData(_:)), for: .valueChanged)
+        
         view.addSubview(table)
         table.easy.layout(Top(5),Leading(20),Trailing(20), Bottom())
         viewModel.postDataUpdated.observe(self) {[weak self] _, _ in
+            self?.refreshControl.endRefreshing()
             self?.table.reloadData()
+            
         }
+        refreshControl.beginRefreshing()
         viewModel.loadPosts()
-        setUpMenuButton()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    func setUpMenuButton(){
-        editButton.setTarget {
-            self.edit(!self.table.isEditing)
-        }
-        let menuBarItem = UIBarButtonItem(customView: editButton)
-        self.navigationItem.rightBarButtonItem = menuBarItem
-    }
     
-    func edit(_ isEditing: Bool) {
-        if isEditing == true {
-            table.isEditing = true
-            editButton.setIcon(Icons.checkmark)
-            editButton.setIconColor(.systemBlue)
-        } else {
-            table.isEditing = false
-            editButton.setIcon(.trash)
-            editButton.setIconColor(.systemRed)
-        }
+    
+    @objc private func refreshWeatherData(_ sender: Any) {
+        viewModel.loadPosts()
     }
     
 }
@@ -87,12 +71,12 @@ extension BookmarksViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        return 110
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-
+            
             Debug.log(indexPath.row-1)
             viewModel.postsData.remove(at: indexPath.row-1)
             FirebaseAPI.shared.removeBookmark(postId: viewModel.postsData[indexPath.row-1].id) {_ in 
@@ -106,14 +90,14 @@ extension BookmarksViewController : UITableViewDelegate, UITableViewDataSource {
 
 class bookmarkCell : UITableViewCell {
     
-    var card: CardView = CardView(viewModel: nil, frame: .zero, showAuthor: true)
+    var card: CardViewSimple = CardViewSimple(viewModel: nil, frame: .zero)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         backgroundColor = .systemGray6
         addSubview(card)
-        card.easy.layout(Top(20),Bottom(20),Leading(20),Trailing(20))
+        card.easy.layout(Top(10),Bottom(10),Leading(5),Trailing(5))
     }
     
     required init?(coder: NSCoder) {
@@ -121,7 +105,7 @@ class bookmarkCell : UITableViewCell {
     }
     
     func setup(_ model: CardViewModel) {
-        card.setupData(model,showAuthor: true)
+        card.setupData(model)
     }
 }
 

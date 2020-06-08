@@ -35,9 +35,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         
         ///setup Back Button
-        let backImage = UIImage(systemName: "arrow.left")?.imageWithoutBaseline()
+        let backImage = Icons.chevronDown.image()
         rootNavigationController.navigationBar.backIndicatorImage = backImage
-        rootNavigationController.navigationBar.backIndicatorTransitionMaskImage = backImage
         rootNavigationController.navigationBar.tintColor = .label
         
         navBar.isTranslucent = false

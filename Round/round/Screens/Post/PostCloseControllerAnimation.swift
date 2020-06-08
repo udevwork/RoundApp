@@ -51,10 +51,10 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
                 transitionContext.completeTransition(false)
                 return
         }
-
+        
         
         toViewController.view.isHidden = false
-
+        
         fromViewController.view.isHidden = true
         /// main image
         let backImg : UIImageView =  UIImageView(frame: UIScreen.main.bounds)
@@ -69,8 +69,8 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         title.numberOfLines = 1
         /// description text
         let description : Text = Text(.article, .white, header.descriptionLabel.frame)
-
-                
+        
+        
         let attributedString = NSMutableAttributedString(string: model.description)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
@@ -96,7 +96,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
             authorNameLabel!.text = headerName.text
         }
         
-
+        
         /// back btn
         let backButton : Button = ButtonBuilder()
             .setFrame(CGRect(origin: CGPoint(x: 0, y: 0), size: .zero))
@@ -129,7 +129,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         
         /// add Subview
         containerView.addSubview(fromViewController.view)
-
+        
         containerView.addSubview(backImg)
         backImg.layer.addSublayer(gradient)
         backImg.addSubview(title)
@@ -146,7 +146,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         backImg.addSubview(creationDateLabel)
         
         gradient.frame = UIScreen.main.bounds
-
+        
         
         /// constraints
         title.easy.layout(
@@ -172,16 +172,16 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         saveToBookmark.easy.layout(Trailing(20),Top(20),Width(40),Height(40))
         saveToBookmark.icon.alpha = 1
         
-        viewCountIcon.easy.layout(Width(17),Height(17),Leading(20),Bottom(9).to(title))
-        viewCountLabel.easy.layout(Leading(5).to(viewCountIcon),CenterY(1).to(viewCountIcon))
-        creationDateLabel.easy.layout(Trailing(20),CenterY(1).to(viewCountIcon))
+        
+        viewCountIcon.bounds = card.viewCountLabel.bounds
+        viewCountLabel.bounds = card.viewCountLabel.bounds
+        creationDateLabel.bounds = card.creationDateLabel.bounds
         
         viewCountIcon.alpha = 0
         viewCountLabel.alpha = 0
         creationDateLabel.alpha = 0
         
         gradient.resizeAndMove(frame: card.gradient.bounds, animated: true, duration: 0.6)
-        
         
         let animator1 = {
             UIViewPropertyAnimator(duration: 0.6, dampingRatio: 1) {
@@ -190,9 +190,25 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
                 backImg.layer.cornerRadius = 13
                 backButton.icon.alpha = 0
                 saveToBookmark.icon.alpha = 0
-                viewCountIcon.alpha = 1
-                viewCountLabel.alpha = 1
-                creationDateLabel.alpha = 1
+                
+                if card.viewCountLabel.superview != nil {
+                    viewCountIcon.alpha = 1
+                    viewCountLabel.alpha = 1
+                }
+                
+                if card.creationDateLabel.superview != nil {
+                    creationDateLabel.alpha = 1
+                    
+                }
+                
+                if card.authorAvatar.superview == nil {
+                    self.authorAvatar?.alpha = 0
+                }
+                
+                if card.authorNameLabel.superview == nil {
+                    self.authorNameLabel?.alpha = 0
+                }
+                
                 containerView.layoutIfNeeded()
             }
         }()
@@ -207,60 +223,60 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
 
 
 extension CALayer {
-func moveTo(point: CGPoint, animated: Bool) {
-    if animated {
-        let animation = CABasicAnimation(keyPath: "position")
-        animation.fromValue = value(forKey: "position")
-        animation.toValue = NSValue(cgPoint: point)
-        animation.fillMode = .forwards
-        self.position = point
-        add(animation, forKey: "position")
-    } else {
-        self.position = point
+    func moveTo(point: CGPoint, animated: Bool) {
+        if animated {
+            let animation = CABasicAnimation(keyPath: "position")
+            animation.fromValue = value(forKey: "position")
+            animation.toValue = NSValue(cgPoint: point)
+            animation.fillMode = .forwards
+            self.position = point
+            add(animation, forKey: "position")
+        } else {
+            self.position = point
+        }
     }
-}
-
-func resize(to size: CGSize, animated: Bool) {
-    let oldBounds = bounds
-    var newBounds = oldBounds
-    newBounds.size = size
-
-    if animated {
-        let animation = CABasicAnimation(keyPath: "bounds")
-        animation.fromValue = NSValue(cgRect: oldBounds)
-        animation.toValue = NSValue(cgRect: newBounds)
-        animation.fillMode = .forwards
-        self.bounds = newBounds
-        add(animation, forKey: "bounds")
-    } else {
-        self.bounds = newBounds
-    }
-}
-
-func resizeAndMove(frame: CGRect, animated: Bool, duration: TimeInterval = 0) {
-    if animated {
-        let positionAnimation = CABasicAnimation(keyPath: "position")
-        positionAnimation.fromValue = value(forKey: "position")
-        positionAnimation.toValue = NSValue(cgPoint: CGPoint(x: frame.midX, y: frame.midY))
-
+    
+    func resize(to size: CGSize, animated: Bool) {
         let oldBounds = bounds
         var newBounds = oldBounds
-        newBounds.size = frame.size
-
-        let boundsAnimation = CABasicAnimation(keyPath: "bounds")
-        boundsAnimation.fromValue = NSValue(cgRect: oldBounds)
-        boundsAnimation.toValue = NSValue(cgRect: newBounds)
-
-        let groupAnimation = CAAnimationGroup()
-        groupAnimation.animations = [positionAnimation, boundsAnimation]
-        groupAnimation.fillMode = .forwards
-        groupAnimation.duration = duration
-        groupAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        self.frame = frame
-        add(groupAnimation, forKey: "frame")
-
-    } else {
-        self.frame = frame
+        newBounds.size = size
+        
+        if animated {
+            let animation = CABasicAnimation(keyPath: "bounds")
+            animation.fromValue = NSValue(cgRect: oldBounds)
+            animation.toValue = NSValue(cgRect: newBounds)
+            animation.fillMode = .forwards
+            self.bounds = newBounds
+            add(animation, forKey: "bounds")
+        } else {
+            self.bounds = newBounds
+        }
     }
+    
+    func resizeAndMove(frame: CGRect, animated: Bool, duration: TimeInterval = 0) {
+        if animated {
+            let positionAnimation = CABasicAnimation(keyPath: "position")
+            positionAnimation.fromValue = value(forKey: "position")
+            positionAnimation.toValue = NSValue(cgPoint: CGPoint(x: frame.midX, y: frame.midY))
+            
+            let oldBounds = bounds
+            var newBounds = oldBounds
+            newBounds.size = frame.size
+            
+            let boundsAnimation = CABasicAnimation(keyPath: "bounds")
+            boundsAnimation.fromValue = NSValue(cgRect: oldBounds)
+            boundsAnimation.toValue = NSValue(cgRect: newBounds)
+            
+            let groupAnimation = CAAnimationGroup()
+            groupAnimation.animations = [positionAnimation, boundsAnimation]
+            groupAnimation.fillMode = .forwards
+            groupAnimation.duration = duration
+            groupAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+            self.frame = frame
+            add(groupAnimation, forKey: "frame")
+            
+        } else {
+            self.frame = frame
+        }
     }
 }

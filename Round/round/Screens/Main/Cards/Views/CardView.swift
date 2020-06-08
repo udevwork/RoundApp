@@ -15,8 +15,8 @@ class CardView: UIView {
     var viewModel : CardViewModel? = nil
     var onCardPress : ((CardView, CardViewModel)->())? = nil
     var backgroundImageView : UIImageView = UIImageView(image: Images.imagePlaceholder.uiimage())
-    fileprivate var backgroundImageViewMask : UIView = UIView()
-    fileprivate var actionButton : UIButton = UIButton()
+    var backgroundImageViewMask : UIView = UIView()
+    var actionButton : UIButton = UIButton()
     var titleLabel : Text = Text(.title,  .white)
     var descriptionLabel : Text = Text(.article, .white)
     var authorAvatar : UserAvatarView = UserAvatarView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
@@ -27,26 +27,27 @@ class CardView: UIView {
     let viewCountLabel: Text = Text(.regular, #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42))
     let creationDateLabel: Text = Text(.regular, #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42))
     
-    init(viewModel : CardViewModel?, frame: CGRect, showAuthor: Bool) {
+    init(viewModel : CardViewModel?, frame: CGRect) {
         super.init(frame: frame)
         self.viewModel = viewModel
         setupDesign()
-        setupData(viewModel,showAuthor: showAuthor)
+        setupData(viewModel)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func setupDesign(){
+    func setupDesign(){
         gradient.cornerRadius = 13
         backgroundImageViewMask.addSubview(backgroundImageView)
         addSubview(backgroundImageViewMask)
-        layer.addSublayer(gradient)
+        backgroundImageViewMask.layer.addSublayer(gradient)
+        
         [titleLabel,descriptionLabel,actionButton,viewCountIcon,viewCountLabel,creationDateLabel].forEach {
             addSubview($0)
         }
-    
+        
         layer.cornerRadius = 13
         clipsToBounds = false
         
@@ -89,7 +90,6 @@ class CardView: UIView {
             Height(40)
         )
         
-        
         viewCountIcon.contentMode = .scaleAspectFit
         viewCountIcon.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42)
         viewCountIcon.easy.layout(Width(17),Height(17),Leading(20),Bottom(9).to(titleLabel))
@@ -104,10 +104,10 @@ class CardView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        gradient.frame = bounds
+        gradient.frame = CGRect(origin: .zero, size: CGSize(width: bounds.width+3, height: bounds.height+3))
     }
     
-    func setupData(_ viewModel : CardViewModel?, showAuthor: Bool){
+    func setupData(_ viewModel : CardViewModel?){
         self.viewModel = viewModel
         guard let model = self.viewModel else {
             return
@@ -118,7 +118,7 @@ class CardView: UIView {
         descriptionLabel.text = model.description
         
         
-        if showAuthor {
+
             if let strongString = viewModel?.author?.photoUrl, let url = URL(string: strongString) {
                 authorAvatar.setImage(url)
             } else {
@@ -126,7 +126,7 @@ class CardView: UIView {
             }
             authorNameLabel.text = viewModel?.author?.userName
 
-        }
+        
         viewCountLabel.text = "\(model.viewsCount)"
         if let timeResult = model.creationDate?.dateValue().timeIntervalSince1970 {
             let date = Date(timeIntervalSince1970: timeResult)

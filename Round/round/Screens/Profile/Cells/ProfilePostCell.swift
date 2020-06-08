@@ -11,7 +11,7 @@ import UIKit
 import EasyPeasy
 
 class ProfilePostCell: UICollectionViewCell {
-    let card = CardView(viewModel: nil, frame: .zero, showAuthor: true )
+    let card = CardViewProfile(viewModel: nil, frame: .zero)
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(card)
@@ -23,7 +23,7 @@ class ProfilePostCell: UICollectionViewCell {
     }
     
     
-    public func setup(model: CardViewModel,showAuthor: Bool){
-        card.setupData(model, showAuthor: showAuthor)
+    public func setup(model: CardViewModel){
+        card.setupData(model)
     }
 }

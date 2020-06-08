@@ -19,7 +19,7 @@ class MainViewController: BaseViewController<MainViewModel> {
         let layout = PagingCollectionViewLayout()
         layout.minimumLineSpacing = 15
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 250, height: UIScreen.main.bounds.height - 210)
+        layout.itemSize = CGSize(width: 250, height: UIScreen.main.bounds.height - 180)
         layout.numberOfItemsPerPage = 1
         layout.velocityThresholdPerPage = 10
         let collection = GeminiCollectionView(frame: .zero, collectionViewLayout: layout)
@@ -53,22 +53,12 @@ class MainViewController: BaseViewController<MainViewModel> {
     
     func setUpMenuButton(){
         
-        let b : Button = ButtonBuilder()
-            .setFrame(CGRect(origin: .zero, size: .zero))
-            .setStyle(.icon)
-            .setIcon(.user)
-            .setIconColor(.label)
-            .setColor(.clear)
-            .setTarget {
-                self.user()
-        }
-        .build()
-        
-        let menuBarItem = UIBarButtonItem(customView: b)
-        self.navigationItem.rightBarButtonItem = menuBarItem
+      
+        let item = UIBarButtonItem(image: Icons.user.image(), landscapeImagePhone: Icons.user.image(), style: .plain, target: self, action: #selector(user))
+        self.navigationItem.rightBarButtonItem = item
     }
     
-    func user() {
+    @objc func user() {
         if AccountManager.shared.data.anonymous {
             let model = SignInViewModel()
             let vc = SignInRouter.assembly(model: model)
@@ -193,7 +183,7 @@ extension MainViewController : UICollectionViewDelegate, UICollectionViewDataSou
 }
 
 class CustomCell: GeminiCell {
-    let card : CardView = CardView(viewModel: nil, frame: .zero, showAuthor: true)
+    let card : CardView = CardView(viewModel: nil, frame: .zero)
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(card)
@@ -205,7 +195,7 @@ class CustomCell: GeminiCell {
     }
     
     public func setup(_ model: CardViewModel){
-        card.setupData(model,showAuthor: true)
+        card.setupData(model)
     }
     
 }

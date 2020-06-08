@@ -82,7 +82,15 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         /// gradient
         let gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
         /// avatar
+                
         authorAvatar = UserAvatarView(frame: card.authorAvatar.frame)
+        if card.authorAvatar.superview == nil {
+            authorAvatar?.alpha = 0
+        }
+        
+        if card.authorNameLabel.superview == nil {
+            authorNameLabel?.alpha = 0
+        }
         if let image = card.authorAvatar.image {
             authorAvatar!.setImage(image)
         }
@@ -178,6 +186,15 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
                 viewCountLabel.alpha = 0
                 creationDateLabel.alpha = 0
                 containerView.layoutIfNeeded()
+                
+                if card.authorAvatar.superview == nil {
+                    self.authorAvatar?.alpha = 1
+                }
+                if card.authorNameLabel.superview == nil {
+                    self.authorNameLabel?.alpha = 1
+                }
+                
+                
             }
         }()
         
