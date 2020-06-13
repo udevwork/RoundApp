@@ -44,33 +44,26 @@ class ImagePicker: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-   
-   
+    
+    
     func fetchPhotos() {
-             
- 
         let fetchOptions = PHFetchOptions()
         fetchOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
         fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: false)]
-         guard let photosCollection = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil).firstObject else { return }
+        guard let photosCollection = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil).firstObject else { return }
         
         let photosAssets = PHAsset.fetchAssets(in: photosCollection, options: fetchOptions)
         
-        let options = PHImageRequestOptions()
-        options.isNetworkAccessAllowed = true
-        options.isSynchronous = true
-        
-        photosAssets.enumerateObjects(options: []) { (asset, i, pont) in
-            PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 100, height: 100), contentMode: .aspectFit, options: options) { (img, tab) in
-                self.cellModels.append(IPPhotoCellModel(img: img!, asset: asset))
+        DispatchQueue.global(qos: .background).async {
+            photosAssets.enumerateObjects(options: []) { (asset, i, pont) in
+                self.cellModels.append(IPPhotoCellModel(asset: asset))
+            }
+            DispatchQueue.main.async {
+                self.collection.reloadData()
             }
         }
-        
-        DispatchQueue.main.async {
-            self.collection.reloadData()
-        }
     }
-
+    
     private func showPermisionAlert(){
         let alert = UIAlertController(title: "Gallery", message: "permision", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "close", style: .destructive) { _ in
@@ -108,35 +101,70 @@ extension ImagePicker: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        PHImageManager.default().requestImage(for: cellModels[indexPath.row].asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: .none) { [weak self] (img, tab) in
-            if img != nil {
-                // TODO: complition called 2 times
-                // FIXME: fix it in future
-                if self?.selectedImage == nil {
-                    self?.selectedImage = img
-                    self?.onImageSelect((self?.selectedImage)!)
-                    self?.dismiss(animated: true, completion: nil)
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let photoCell = cell as? ImagePickerPhotoCell else {
+            return
+        }
+        DispatchQueue.global(qos: .background).async {
+            let options = PHImageRequestOptions()
+            options.isSynchronous = true
+            options.isNetworkAccessAllowed = true
+            options.version = .current
+            options.deliveryMode = .opportunistic
+            options.resizeMode = .fast
+            
+            
+            PHImageManager.default().requestImage(for: photoCell.model!.asset, targetSize: CGSize(width: 128, height: 128), contentMode: .aspectFit, options: options) { (img, tab) in
+                DispatchQueue.main.async {
+                    if let img = img {
+                        photoCell.setImage(img)
+                    }
                 }
-            } else {
-                Debug.log("NO IMAGE")
+            }
+            
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        DispatchQueue.global(qos: .userInteractive).async {  [weak self] in
+            guard let sSelf = self else { return }
+            let options = PHImageRequestOptions()
+            options.isNetworkAccessAllowed = true
+            options.version = .current
+            options.deliveryMode = .opportunistic
+            options.resizeMode = .fast
+            options.isSynchronous = true
+            PHImageManager.default().requestImage(for: sSelf.cellModels[indexPath.row].asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: options) { [weak self] (img, tab) in
+                guard let sSelf = self else { return }
+                
+                if img != nil {
+                    // TODO: complition called 2 times
+                    // FIXME: fix it in future
+                    if sSelf.selectedImage == nil {
+                        sSelf.selectedImage = img
+                        DispatchQueue.main.async {
+                            sSelf.onImageSelect((self?.selectedImage)!)
+                            sSelf.dismiss(animated: true, completion: nil)
+                        }
+                    }
+                } else {
+                    Debug.log("NO IMAGE")
+                }
             }
         }
     }
 }
 
 class IPPhotoCellModel {
-    let img: UIImage
     let asset: PHAsset
-    init(img: UIImage, asset: PHAsset) {
-        self.img = img
+    init(asset: PHAsset) {
         self.asset = asset
     }
 }
 
 class ImagePickerPhotoCell: UICollectionViewCell {
-    let imgView: UIImageView = UIImageView()
-    var asset: PHAsset? = nil
+    private let imgView: UIImageView = UIImageView()
+    public var model: IPPhotoCellModel? = nil
     
     override init(frame: CGRect) {
         super.init(frame:frame)
@@ -147,15 +175,16 @@ class ImagePickerPhotoCell: UICollectionViewCell {
         layer.cornerRadius = frame.width/2
     }
     
-    
-    
     func setupWith(model: IPPhotoCellModel) {
         imgView.alpha = 0
-        imgView.image = model.img
-        self.asset = model.asset
-        UIView.animate(withDuration: 0.5) { [weak self] in
-            self?.imgView.alpha = 1
-        }
+        self.model = model
+    }
+    
+    public func setImage(_ image: UIImage){
+            imgView.image = image
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.imgView.alpha = 1
+            }
     }
     
     required init?(coder: NSCoder) {

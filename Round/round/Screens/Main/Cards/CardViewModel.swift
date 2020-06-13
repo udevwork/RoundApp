@@ -29,6 +29,10 @@ class CardViewModel {
         return res
     }
     
+    var isSelfPost: Bool {
+        return self.author?.uid == AccountManager.shared.data.uid
+    }
+    
     init(id : String, mainImageURL : String?, title : String?, description : String?, viewsCount : Int?, author : User?, creationDate: Timestamp?) {
         self.id = id
         self.mainImageURL = mainImageURL ?? ""

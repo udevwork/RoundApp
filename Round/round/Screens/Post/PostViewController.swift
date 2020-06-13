@@ -60,8 +60,15 @@ class PostViewController: BaseViewController<PostViewModel> {
         header.onAvatarPress = { [weak self] in
             self?.routeToProfile()
         }
-        header.saveToBookmark.setTarget { [weak self] in
-            self?.onBookmarkPress()
+        header.actionButton.setTarget { [weak self] in
+            guard let sSelf = self else {
+                return
+            }
+            if sSelf.viewModel.cardView.viewModel!.isSelfPost {
+                sSelf.showAlertMenu()
+            } else {
+                sSelf.onBookmarkPress()
+            }
         }
         table.easy.layout(Edges())
         
@@ -92,6 +99,42 @@ class PostViewController: BaseViewController<PostViewModel> {
         self.present(vc, animated: true, completion: nil)
     }
     
+    private func showAlertMenu(){
+        let action = UIAlertController(title: "Available actions", message: viewModel.cardView.titleLabel.text ?? nil, preferredStyle: .actionSheet)
+        
+        action.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+            FirebaseAPI.shared.deletePost(postId: self.viewModel.cardView.viewModel!.id) {
+                self.showDeleteSuccsessAlert()
+            }
+        }))
+        
+        action.addAction(UIAlertAction(title: "Statistics", style: .default, handler: { action in
+            
+        }))
+        
+        action.addAction(UIAlertAction(title: "Add to bookmark", style: .default, handler: { action in
+            
+        }))
+        
+        action.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(action, animated: true) {
+            
+        }
+    }
+    
+    private func showDeleteSuccsessAlert(){
+        let action = UIAlertController(title: "Delete cemplete", message: nil, preferredStyle: .alert)
+        
+        action.addAction(UIAlertAction(title: "Ok", style: .destructive, handler: { action in
+            
+        }))
+        
+        self.present(action, animated: true) {
+            
+        }
+    }
+    
     private func onBookmarkPress(){
         print("bookmark", "press")
         
@@ -100,7 +143,7 @@ class PostViewController: BaseViewController<PostViewModel> {
             FirebaseAPI.shared.removeBookmark(postId: viewModel.cardView.viewModel!.id) { [weak self] result in
                 guard let self = self else {return}
                 if result == .success {
-                    self.header!.saveToBookmark.setIcon(Icons.bookmark)
+                    self.header!.actionButton.setIcon(Icons.bookmark)
                     self.header!.isSubscribed = false
                     AccountManager.shared.data.bookmarks.removeAll { bid -> Bool in
                         if bid == self.viewModel.cardView.viewModel!.id {
@@ -119,7 +162,7 @@ class PostViewController: BaseViewController<PostViewModel> {
             FirebaseAPI.shared.saveBookmark(postId: viewModel.cardView.viewModel!.id) { [weak self] result in
                 guard let self = self else {return}
                 if result == .success {
-                    self.header!.saveToBookmark.setIcon(Icons.bookmarkfill)
+                    self.header!.actionButton.setIcon(Icons.bookmarkfill)
                     self.header!.isSubscribed = true
                     AccountManager.shared.data.bookmarks.append(self.viewModel.cardView.viewModel!.id)
                     print("bookmark", "add, ",self.viewModel.cardView.viewModel!.id)

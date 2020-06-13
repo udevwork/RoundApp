@@ -295,7 +295,7 @@ final class FirebaseAPI : API {
     }
     
     func uploadImage(uiImage: UIImage,path: String, complition: @escaping (HTTPResult) -> ()){
-        let data = uiImage.jpegData(compressionQuality: 0.0)
+        let data = uiImage.jpegData(compressionQuality: 1)
         let storageRef = Storage.storage().reference()
         let riversRef = storageRef.child("images/\(path).jpg")
         let uploadTask = riversRef.putData(data!, metadata: nil) { (metadata, error) in
@@ -432,6 +432,11 @@ final class FirebaseAPI : API {
             })
             complition(.success, models)
         }
+    }
+    
+    public func deletePost(postId id: String, complition : @escaping () -> ()){
+        posts.document(id).delete()
+        complition()
     }
 }
 

@@ -87,6 +87,7 @@ enum Icons : String {
     case bold            = "bold"
     case chevronDown     = "chevron.down"
     case chevronLeft     = "chevron.left"
+    case settings        = "slider.horizontal.3"
 
 
     func image(weight: UIImage.SymbolWeight = .black) -> UIImage {
