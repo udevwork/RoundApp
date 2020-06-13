@@ -26,7 +26,7 @@ class PostViewControllerHeader: UIView {
         .setIconSize(CGSize(width: 20, height: 20))
         .build()
     
-    let saveToBookmark : Button = ButtonBuilder()
+    let actionButton : Button = ButtonBuilder()
         .setStyle(.icon)
         .setColor(.clear)
         .setIconColor(.white)
@@ -89,20 +89,22 @@ class PostViewControllerHeader: UIView {
         descriptionLabel.text = viewModel.description
         addSubview(backgroundImageView)
         layer.addSublayer(gradient)
-        [titleLabel,descriptionLabel,backButton,saveToBookmark].forEach {
+        [titleLabel,descriptionLabel,backButton,actionButton].forEach {
             addSubview($0)
         }
         backButton.easy.layout(Leading(20),Top(20),Width(40),Height(40))
-        saveToBookmark.easy.layout(Trailing(20),Top(20),Width(40),Height(40))
+        actionButton.easy.layout(Trailing(20),Top(20),Width(40),Height(40))
 
         /// if BookmarksRealmManager().get(postId: viewModel.id) != nil {
 
         self.isSubscribed = viewModel.isSubscribed
-        if viewModel.isSubscribed {
-            saveToBookmark.setIcon(Icons.bookmarkfill)
-        } else {
-            saveToBookmark.setIcon(Icons.bookmark)
-        }
+        
+        if viewModel.author?.uid == AccountManager.shared.data.uid {
+              actionButton.setIcon(.settings)
+          } else {
+              actionButton.setIcon(viewModel.isSubscribed ? Icons.bookmarkfill : Icons.bookmark)
+          }
+
         
         gradient.frame = bounds
         backgroundImageView.easy.layout(
@@ -141,9 +143,9 @@ class PostViewControllerHeader: UIView {
              return backButton
          }
         
-        let bigMark = saveToBookmark.frame.insetBy(dx: -20, dy: -20)
+        let bigMark = actionButton.frame.insetBy(dx: -20, dy: -20)
         if bigMark.contains(point) {
-            return saveToBookmark
+            return actionButton
         }
         
          return super.hitTest(point, with: event)

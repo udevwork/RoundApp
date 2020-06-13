@@ -85,7 +85,11 @@ enum Icons : String {
     case aligncenter     = "text.aligncenter"
     case alignright      = "text.alignright"
     case bold            = "bold"
-    
+    case chevronDown     = "chevron.down"
+    case chevronLeft     = "chevron.left"
+    case settings        = "slider.horizontal.3"
+
+
     func image(weight: UIImage.SymbolWeight = .black) -> UIImage {
         if let img = UIImage(systemName: self.rawValue, withConfiguration: UIImage.SymbolConfiguration(weight: weight)){
         return img

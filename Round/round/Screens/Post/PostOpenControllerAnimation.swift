@@ -82,7 +82,15 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         /// gradient
         let gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
         /// avatar
+                
         authorAvatar = UserAvatarView(frame: card.authorAvatar.frame)
+        if card.authorAvatar.superview == nil {
+            authorAvatar?.alpha = 0
+        }
+        
+        if card.authorNameLabel.superview == nil {
+            authorNameLabel?.alpha = 0
+        }
         if let image = card.authorAvatar.image {
             authorAvatar!.setImage(image)
         }
@@ -100,14 +108,19 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
             .setIconSize(CGSize(width: 20, height: 20))
             .build()
         
-        let saveToBookmark : Button = ButtonBuilder()
+        let actionButton : Button = ButtonBuilder()
             .setFrame(CGRect(origin: CGPoint(x: UIScreen.main.bounds.width, y: 0), size: .zero))
             .setStyle(.icon)
             .setColor(.clear)
-            .setIcon(model.isSubscribed ? Icons.bookmarkfill : Icons.bookmark)
             .setIconColor(.white)
             .setIconSize(CGSize(width: 20, height: 20))
             .build()
+        
+        if model.isSelfPost {
+            actionButton.setIcon(.settings)
+        } else {
+            actionButton.setIcon(model.isSubscribed ? Icons.bookmarkfill : Icons.bookmark)
+        }
         
         let viewCountIcon: UIImageView = UIImageView(frame: card.viewCountIcon.frame)
         viewCountIcon.image = Icons.eye.image()
@@ -128,7 +141,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
             backImg.addSubview(authorNameLabel!)
         }
         backImg.addSubview(backButton)
-        backImg.addSubview(saveToBookmark)
+        backImg.addSubview(actionButton)
 
         backImg.addSubview(viewCountIcon)
         backImg.addSubview(viewCountLabel)
@@ -159,12 +172,12 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
             )
         }
         backButton.easy.layout(Left(20),Top(20),Width(40),Height(40))
-        saveToBookmark.easy.layout(Trailing(20),Top(20),Width(40),Height(40))
+        actionButton.easy.layout(Trailing(20),Top(20),Width(40),Height(40))
         viewCountIcon.easy.layout(Width(17),Height(17),Leading(20),Bottom(9).to(title))
         viewCountLabel.easy.layout(Leading(5).to(viewCountIcon),CenterY(1).to(viewCountIcon))
         creationDateLabel.easy.layout(Trailing(20),CenterY(1).to(viewCountIcon))
         backButton.icon.alpha = 0
-        saveToBookmark.icon.alpha = 0
+        actionButton.icon.alpha = 0
         gradient.bounds = backImg.frame
         
         let animator1 = {
@@ -173,11 +186,20 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
                 gradient.frame = backImg.bounds
                 backImg.layer.cornerRadius = 13
                 backButton.icon.alpha = 1
-                saveToBookmark.icon.alpha = 1
+                actionButton.icon.alpha = 1
                 viewCountIcon.alpha = 0
                 viewCountLabel.alpha = 0
                 creationDateLabel.alpha = 0
                 containerView.layoutIfNeeded()
+                
+                if card.authorAvatar.superview == nil {
+                    self.authorAvatar?.alpha = 1
+                }
+                if card.authorNameLabel.superview == nil {
+                    self.authorNameLabel?.alpha = 1
+                }
+                
+                
             }
         }()
         

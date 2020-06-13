@@ -42,7 +42,8 @@ class PostEditorHeaderCell: UITableViewCell {
     
     var modelLink: PostEditorHeaderCellModel?
     let backGround: UIView = UIView()
-    let mainImage: UIImageView = UIImageView()
+    private let mainImage: UIImageView = UIImageView()
+     var gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.systemGray5.cgColor, UIColor.clear.cgColor], type: .axial)
     let addMainImageButton : Button = ButtonBuilder()
         .setFrame(CGRect(origin: .zero, size: .zero))
         .setStyle(.icon)
@@ -74,6 +75,7 @@ class PostEditorHeaderCell: UITableViewCell {
         clipsToBounds = true
         addSubview(backGround)
         addSubview(mainImage)
+        layer.addSublayer(gradient)
         addSubview(addMainImageButton)
         addSubview(titleInputField)
         addSubview(subtitleTitleInputField)
@@ -93,15 +95,28 @@ class PostEditorHeaderCell: UITableViewCell {
         subtitleTitleInputField.autocorrectionType = .no
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradient.frame = bounds
+    }
+    
     public func setupWith(model: PostEditorHeaderCellModel) {
         modelLink = model
         mainImage.image = modelLink?.image
+        if mainImage.image != nil {
+            gradient.isHidden = false
+        } else {
+            gradient.isHidden = true
+        }
+        // TODO: fix every time layout
+        layoutSubviews()
         titleInputField.text = modelLink?.title
         subtitleTitleInputField.text = modelLink?.subtitle
         addMainImageButton.setTarget { [weak self] in
             let f :  (UIImage) -> () = {[weak self] i in
                 self?.mainImage.image = i
                 self?.modelLink?.image = i
+                self?.gradient.isHidden = false
             }
             self?.modelLink?.onAddPhotoAddButtonPress?(f)
         }

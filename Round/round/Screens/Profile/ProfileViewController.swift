@@ -31,12 +31,15 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
         let c = UICollectionView(frame: .zero, collectionViewLayout: flow)
         return c
     }()
+    private let refreshControl = UIRefreshControl()
     
     override init(viewModel: ProfileViewModel) {
         super.init(viewModel: viewModel)
         navigationItem.largeTitleDisplayMode = .never
         title = "Author" // Profile
-    
+        postCollection.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshWeatherData(_:)), for: .valueChanged)
+        refreshControl.beginRefreshing()
         viewModel.loadUserInfo()
         setupView()
         setupObserver()
@@ -88,7 +91,7 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
     private func setupView() {
         view.addSubview(postCollection)
         view.addSubview(header)
-
+        
         header.easy.layout(Leading(), Trailing(),Height(300),Top())
         postCollection.register(ProfileViewControllerHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "ProfilePostHeader")
         postCollection.easy.layout(Leading(10), Trailing(10),Bottom(),Top().to(header))
@@ -99,7 +102,7 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
         postCollection.showsVerticalScrollIndicator = false
         postCollection.showsHorizontalScrollIndicator = false
         postCollection.layer.masksToBounds = false
-       
+        
         animation.isUserInteractionEnabled = true
         animation.isManualHitTestingEnabled = true
         
@@ -113,11 +116,12 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
             self?.viewModel.navigatePostEditor()
         }
     }
-
+    
     
     private func setupObserver(){
         viewModel.postDataUpdated.observe(self) { [weak self] in
             self?.setupUserPosts()
+            self?.refreshControl.endRefreshing()
         }
         
         viewModel.userInfoUpdated.observe(self) { [weak self] in
@@ -125,7 +129,7 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
         }
     }    
     
-   private func setupAvatar() {
+    private func setupAvatar() {
         header.userNameLabel.text = viewModel.userName
         if viewModel.userAvatar == nil {
             if let url = viewModel.userAvaratURL {
@@ -143,7 +147,7 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
         }
     }
     
-   private func setupUserPosts(){
+    private func setupUserPosts(){
         postCollection.reloadData()
         if let count =  viewModel.postsData?.count {
             header.postCount.text = "post created \(count)"
@@ -157,7 +161,7 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
         }
     }
     
-   private func expandAnimation() {
+    private func expandAnimation() {
         animation.addAnimations { [weak self] in
             self?.header.easy.layout(Height(300))
             self?.view.layoutSubviews()
@@ -170,7 +174,7 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
         animation.startAnimation()
     }
     
-   private func collapseAnimation() {
+    private func collapseAnimation() {
         animation.addAnimations { [weak self] in
             self?.header.easy.layout(Height(70))
             self?.view.layoutSubviews()
@@ -181,6 +185,11 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
             }
         }
         animation.startAnimation()
+    }
+    
+    @objc private func refreshWeatherData(_ sender: Any) {
+        viewModel.loadUserInfo()
+        viewModel.loadPostsData()
     }
 }
 
@@ -197,7 +206,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             return UICollectionViewCell()
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfilePostCell", for: indexPath) as! ProfilePostCell
-        cell.setup(model: data[indexPath.row],showAuthor: false)
+        cell.setup(model: data[indexPath.row])
         cell.card.onCardPress = { [weak self] view, model in
             let vc = PostViewController(viewModel: PostViewModel(cardView: view))
             vc.modalPresentationStyle = .pageSheet
