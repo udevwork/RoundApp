@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         navBar.shadowImage = UIImage()
         navBar.barTintColor  = UIColor.systemGray6
-        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.label,NSAttributedString.Key.font: FontNames.Regular.uiFont(14)]
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.label,NSAttributedString.Key.font: FontNames.BellotaRegular.uiFont(14)]
         navBar.titleTextAttributes = textAttributes
 
         

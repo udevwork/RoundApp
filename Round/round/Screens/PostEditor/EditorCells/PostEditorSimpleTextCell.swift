@@ -72,7 +72,7 @@ class PostEditorSimpleTextCell: UITableViewCell, UITextViewDelegate {
         placeholderLabel.text = "Yout article here"
         placeholderLabel.textColor = .systemGray3
         placeholderLabel.isUserInteractionEnabled = false
-        placeholderLabel.font = FontNames.Bold.uiFont(18)
+        placeholderLabel.font = FontNames.BellotaBold.uiFont(18)
         addSubview(placeholderLabel)
         placeholderLabel.easy.layout(Edges(20))
         
@@ -94,9 +94,9 @@ class PostEditorSimpleTextCell: UITableViewCell, UITextViewDelegate {
         textEditor.textBold.setTarget { [weak self] in
             self?.modelLink?.isBold = !(self?.modelLink?.isBold)!
             if (self?.modelLink!.isBold)! {
-                self?.textInputField.font = FontNames.Bold.uiFont(18)
+                self?.textInputField.font = FontNames.BellotaBold.uiFont(18)
             } else {
-                self?.textInputField.font = FontNames.Regular.uiFont(18)
+                self?.textInputField.font = FontNames.BellotaRegular.uiFont(18)
             }
         }
         
@@ -111,9 +111,9 @@ class PostEditorSimpleTextCell: UITableViewCell, UITextViewDelegate {
             placeholderLabel.isHidden = true
         }
         if modelLink!.isBold {
-            textInputField.font = FontNames.Bold.uiFont(18)
+            textInputField.font = FontNames.BellotaBold.uiFont(18)
         } else {
-            textInputField.font = FontNames.Regular.uiFont(18)
+            textInputField.font = FontNames.BellotaRegular.uiFont(18)
         }
         textInputField.textAlignment = modelLink!.textAligment
     }

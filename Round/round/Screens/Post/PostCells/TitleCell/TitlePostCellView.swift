@@ -10,6 +10,7 @@ import UIKit
 import EasyPeasy
 
 class TitlePostCellView: UITableViewCell, BasePostCellProtocol {
+    
     var id: String = UUID().uuidString
     var postType: PostCellType = .Title
     
@@ -27,6 +28,11 @@ class TitlePostCellView: UITableViewCell, BasePostCellProtocol {
         title.easy.layout(Leading(20),Trailing(20),Top(40),Bottom(40))
         title.numberOfLines = 0
         title.sizeToFit()
+        layoutSubviews()
+    }
+    
+    func setPadding(padding: UIEdgeInsets) {
+        title.easy.layout(Leading(padding.left),Trailing(padding.right),Top(padding.top),Bottom(padding.bottom))
         layoutSubviews()
     }
 }

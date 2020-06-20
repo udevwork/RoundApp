@@ -51,4 +51,9 @@ class SimplePhotoPostCellView: UITableViewCell, BasePostCellProtocol {
         photo.alpha = 0
         layoutSubviews()
     }
+    
+    func setPadding(padding: UIEdgeInsets) {
+        photo.easy.layout(Leading(padding.left),Trailing(padding.right),Top(padding.top),Bottom(padding.bottom))
+        layoutSubviews()
+    }
 }

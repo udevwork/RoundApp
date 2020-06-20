@@ -25,5 +25,6 @@ protocol BasePostCellProtocol :  UITableViewCell {
     var postType : PostCellType { get }
     func setup(viewModel : BasePostCellViewModelProtocol)
     func setupDesign()
+    func setPadding(padding: UIEdgeInsets)
 }
 

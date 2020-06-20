@@ -29,13 +29,10 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         return 0.6
     }
     
-    func bitch() {
-        
-    }
-    
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
         let containerView = transitionContext.containerView
+        containerView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         guard let header = header else {
             return
         }
@@ -56,6 +53,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         toViewController.view.isHidden = false
         
         fromViewController.view.isHidden = true
+
         /// main image
         let backImg : UIImageView =  UIImageView(frame: UIScreen.main.bounds)
         backImg.layer.cornerRadius = 13
@@ -66,7 +64,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         let title : Text = Text( .title, .white, header.titleLabel.frame)
         
         title.text = header.titleLabel.text
-        title.numberOfLines = 1
+        title.numberOfLines = 3
         /// description text
         let description : Text = Text(.article, .white, header.descriptionLabel.frame)
         
@@ -173,8 +171,11 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         saveToBookmark.icon.alpha = 1
         
         
-        viewCountIcon.bounds = card.viewCountLabel.bounds
-        viewCountLabel.bounds = card.viewCountLabel.bounds
+        viewCountIcon.bounds.origin = card.viewCountLabel.frame.origin
+        print(card.viewCountLabel.bounds)
+        print(card.viewCountLabel.frame)
+        viewCountIcon.easy.layout(Width(17), Height(17))
+        viewCountLabel.bounds.origin = card.viewCountLabel.bounds.origin
         creationDateLabel.bounds = card.creationDateLabel.bounds
         
         viewCountIcon.alpha = 0
@@ -186,6 +187,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         let animator1 = {
             UIViewPropertyAnimator(duration: 0.6, dampingRatio: 1) {
                 let imgFrame = PostAnimatorHelper.pop()
+                containerView.transform = CGAffineTransform(scaleX: 1, y: 1)
                 backImg.frame = imgFrame
                 backImg.layer.cornerRadius = 13
                 backButton.icon.alpha = 0

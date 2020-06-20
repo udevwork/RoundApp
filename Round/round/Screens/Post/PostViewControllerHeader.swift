@@ -125,7 +125,7 @@ class PostViewControllerHeader: UIView {
         )
         descriptionLabel.sizeToFit()
 
-        titleLabel.numberOfLines = 1
+        titleLabel.numberOfLines = 3
         titleLabel.easy.layout(
             Leading(20),Trailing(20),Bottom(5).to(descriptionLabel)
         )

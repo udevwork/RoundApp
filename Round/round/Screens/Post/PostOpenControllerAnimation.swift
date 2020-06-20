@@ -52,7 +52,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         toViewController.view.frame = UIScreen.main.bounds
         toViewController.view.layer.masksToBounds = true
         toViewController.view.layer.isOpaque = false
-        toViewController.view.layer.cornerRadius = 13
+        toViewController.view.layer.cornerRadius = 0
         toViewController.view.isHidden = true
         
         /// main image
@@ -70,7 +70,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         /// title text
         let title : Text = Text(.title, .white, card.titleLabel.frame)
         title.text = model.title
-        title.numberOfLines = 1
+        title.numberOfLines = 3
         /// description text
         let description : Text = Text(.article, .white, card.descriptionLabel.frame)
         let attributedString = NSMutableAttributedString(string: model.description)
@@ -184,7 +184,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
             UIViewPropertyAnimator(duration: 0.6, dampingRatio: 1) {
                 backImg.frame = UIScreen.main.bounds
                 gradient.frame = backImg.bounds
-                backImg.layer.cornerRadius = 13
+                backImg.layer.cornerRadius = 0
                 backButton.icon.alpha = 1
                 actionButton.icon.alpha = 1
                 viewCountIcon.alpha = 0

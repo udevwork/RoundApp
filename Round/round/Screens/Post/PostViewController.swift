@@ -14,9 +14,11 @@ class PostViewController: BaseViewController<PostViewModel> {
     
     
     var header : PostViewControllerHeader? = nil
+    var animatableHeader : PostViewControllerHeader? = nil
+
     var table : UITableView = UITableView(frame: .zero, style: .grouped)
     private let refreshControl = UIRefreshControl()
-    
+    let animation = UIViewPropertyAnimator(duration: 0.3, curve: .linear, animations: nil)
     var card : CardView? = nil
     
     
@@ -30,6 +32,7 @@ class PostViewController: BaseViewController<PostViewModel> {
         
         setupTableView()
         header = PostViewControllerHeader(frame: view.bounds, viewModel: viewModel.cardView.viewModel!, card: card!)
+        animatableHeader = PostViewControllerHeader(frame: view.bounds, viewModel: viewModel.cardView.viewModel!, card: card!)
         viewModel.loadPostBody {
             DispatchQueue.main.async {
                 if self.viewModel.postBlocks.count > 0 {
@@ -38,6 +41,7 @@ class PostViewController: BaseViewController<PostViewModel> {
             }
         }
         setupDesign()
+        setupHeaderAnimation()
     }
     
     required init?(coder: NSCoder) {
@@ -74,6 +78,76 @@ class PostViewController: BaseViewController<PostViewModel> {
         
     }
     
+    func setupHeaderAnimation() {
+        let gesture: UIScreenEdgePanGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(closeGesture))
+        gesture.edges = UIRectEdge.left
+        view.addGestureRecognizer(gesture)
+        animation.addAnimations { [weak self] in
+            self?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            self?.view.layer.cornerRadius = 13
+            if self!.useAnimatableHeader == true{
+                self?.animatableHeader?.frame.origin = .zero
+            }
+        }
+        animation.addCompletion { [weak self] position in
+            self?.dismiss(animated: true)
+        }
+    }
+    
+    var contentOffset: CGPoint = .zero
+    var useAnimatableHeader: Bool = false
+    @objc func closeGesture(sender : UIScreenEdgePanGestureRecognizer){
+        switch sender.state {
+        case .began:
+            contentOffset = table.contentOffset
+            if contentOffset.y >= header!.frame.height {
+                view.addSubview(animatableHeader!)
+                animatableHeader?.frame.origin = CGPoint(x: 0, y: -animatableHeader!.frame.height)
+                useAnimatableHeader = true
+            }
+            animation.startAnimation()
+            animation.pauseAnimation()
+            
+            break
+        case .changed:
+            closeAnimation(x: sender.location(in: self.view).x)
+            break
+        default:
+            animation.startAnimation()
+            break
+        }
+    }
+    
+    func closeAnimation(x: CGFloat) {
+        let val = x/100
+        animation.fractionComplete = val
+        if useAnimatableHeader == false {
+            table.contentOffset = CGPoint(x: 0, y: (contentOffset.y * normalizeInvert(val: x)))
+        }
+    }
+    
+    
+    private func normalize(val : CGFloat) -> CGFloat{
+        if val < 0 {
+            return 0
+        }
+        if val > 100 {
+            return 1
+        }
+        return (val - 0) / (100 - 0)
+    }
+    
+    private func normalizeInvert(val : CGFloat) -> CGFloat{
+        if val < 0 {
+            return 1
+        }
+        if val > 100 {
+            return 0
+        }
+        return (val - 100) / (0 - 100)
+    }
+    
+    
     private func setupTableView(){
         table.delegate = self
         table.dataSource = self
@@ -82,6 +156,7 @@ class PostViewController: BaseViewController<PostViewModel> {
         table.tableFooterView = nil
         table.rowHeight = UITableView.automaticDimension
         table.refreshControl = refreshControl
+        table.allowsSelection = false
         refreshControl.addTarget(self, action: #selector(refreshWeatherData(_:)), for: .valueChanged)
         refreshControl.tintColor = .clear
         refreshControl.attributedTitle = NSAttributedString(string: "close", attributes: nil)
@@ -189,6 +264,10 @@ extension PostViewController : UIViewControllerTransitioningDelegate {
 }
 
 extension PostViewController : UITableViewDelegate, UITableViewDataSource {
+    enum cellTypeSeqence {
+        case next, previous
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.postBlocks.count
         
@@ -198,21 +277,56 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
         
         var cell : BasePostCellProtocol?
         let model = viewModel.postBlocks[indexPath.row]
+        var padding = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         
         switch model.type {
         case .Title:
             cell = TitlePostCellView()
+
+            if let t = cellType(of: .previous, currentIndexPathRow: indexPath.row), t == .Article {
+                padding.top = 5
+            }
+            if let t = cellType(of: .next, currentIndexPathRow: indexPath.row), t == .Article {
+                padding.bottom = 5
+            }
+            if let t = cellType(of: .previous, currentIndexPathRow: indexPath.row), t == .Title {
+                padding.top = 10
+            }
+            if let t = cellType(of: .next, currentIndexPathRow: indexPath.row), t == .Title {
+                padding.bottom = 10
+            }
+            
         case .Article:
             cell = ArticlePostCellView()
+            
+            if let t = cellType(of: .previous, currentIndexPathRow: indexPath.row), t == .Article {
+                padding.top = 1.5
+            }
+            if let t = cellType(of: .next, currentIndexPathRow: indexPath.row), t == .Article {
+                padding.bottom = 1.5
+            }
         case .SimplePhoto:
             cell = SimplePhotoPostCellView()
+            padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            
         case .none:
             break
         }
         cell?.setup(viewModel: model)
+        cell?.setPadding(padding: padding)
         
         return cell ?? UITableViewCell()
     }
+    
+    func cellType(of seqence: cellTypeSeqence, currentIndexPathRow: Int) -> PostCellType? {
+        let row: Int = seqence == .next ? currentIndexPathRow + 1 : currentIndexPathRow - 1
+        if row > viewModel.postBlocks.count-1 || row < 0 {
+            return nil
+        } else {
+           return viewModel.postBlocks[row].type
+        }
+    }
+    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {return header!} else { return nil }

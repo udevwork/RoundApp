@@ -11,7 +11,7 @@ import Foundation
 class ArticlePostCellViewModel : BasePostCellViewModelProtocol{
     var order: Int?
     var type: PostCellType?
-    let text : String?
+    var text : String?
     
     init(model : ArticlePostResponse) {
         self.type = model.type

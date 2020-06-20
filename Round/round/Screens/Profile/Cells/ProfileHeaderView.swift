@@ -52,7 +52,7 @@ class ProfileViewControllerHeader : UIView {
         .setColor(.clear)
         .build()
     
-    let postCount: Text = Text(.article, .tertiaryLabel, .zero)
+    let postCount: Text = Text(.regular, .tertiaryLabel, .zero)
     
     
     override init(frame: CGRect) {
@@ -77,7 +77,7 @@ class ProfileViewControllerHeader : UIView {
         userAvatar.easy.layout(Top(40),CenterX(),Width(150),Height(150))
         userNameLabel.easy.layout(Top(20).to(userAvatar,.bottom),CenterX())
         userNameLabel.sizeToFit()
-        postCount.easy.layout(Top(2).to(userNameLabel,.bottom),CenterX())
+        postCount.easy.layout(Top(5).to(userNameLabel,.bottom),CenterX())
         
         menuStack.easy.layout(CenterX(),Width(150),Height(21), Top(20).to(postCount,.bottom))
         

@@ -85,10 +85,10 @@ class PostEditorHeaderCell: UITableViewCell {
         mainImage.contentMode = .scaleAspectFill
         mainImage.easy.layout(Edges(),Width(UIScreen.main.bounds.width),Height(300))
         subtitleTitleInputField.placeholder = "subtitle"
-        subtitleTitleInputField.font = FontNames.Bold.uiFont(18)
+        subtitleTitleInputField.font = FontNames.BellotaBold.uiFont(18)
         subtitleTitleInputField.easy.layout(Bottom(29),Leading(20),Trailing(20),Height(20))
         titleInputField.placeholder = "title"
-        titleInputField.font = FontNames.Bold.uiFont(23)
+        titleInputField.font = FontNames.BellotaBold.uiFont(23)
         titleInputField.easy.layout(Bottom(20).to(subtitleTitleInputField),Leading(20),Trailing(20),Height(25))
         addMainImageButton.easy.layout(CenterX(),CenterY(),Width(200),Height(200))
         titleInputField.autocorrectionType = .no

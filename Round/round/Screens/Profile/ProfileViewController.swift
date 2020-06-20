@@ -31,6 +31,7 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
         let c = UICollectionView(frame: .zero, collectionViewLayout: flow)
         return c
     }()
+    
     private let refreshControl = UIRefreshControl()
     
     override init(viewModel: ProfileViewModel) {

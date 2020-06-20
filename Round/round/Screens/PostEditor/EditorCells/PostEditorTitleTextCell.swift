@@ -65,7 +65,7 @@ class PostEditorTitleTextCell: UITableViewCell, UITextViewDelegate {
         backGround.easy.layout(Edges(10))
         backGround.layer.cornerRadius = 4
         textInputField.backgroundColor = .clear
-        textInputField.font = FontNames.Bold.uiFont(25)
+        textInputField.font = FontNames.BellotaBold.uiFont(25)
         textInputField.easy.layout(Edges(19))
         textInputField.delegate = self
         textInputField.isScrollEnabled = false
@@ -76,7 +76,7 @@ class PostEditorTitleTextCell: UITableViewCell, UITextViewDelegate {
         placeholderLabel.text = "Your title"
         placeholderLabel.textColor = .systemGray3
         placeholderLabel.isUserInteractionEnabled = false
-        placeholderLabel.font = FontNames.Bold.uiFont(24)
+        placeholderLabel.font = FontNames.BellotaBold.uiFont(24)
         addSubview(placeholderLabel)
         placeholderLabel.easy.layout(Edges(20))
         
@@ -98,9 +98,9 @@ class PostEditorTitleTextCell: UITableViewCell, UITextViewDelegate {
         textEditor.textBold.setTarget { [weak self] in
             self?.modelLink?.isBold = !(self?.modelLink?.isBold)!
             if (self?.modelLink!.isBold)! {
-                self?.textInputField.font = FontNames.Bold.uiFont(25)
+                self?.textInputField.font = FontNames.BellotaBold.uiFont(25)
             } else {
-                self?.textInputField.font = FontNames.Regular.uiFont(25)
+                self?.textInputField.font = FontNames.BellotaRegular.uiFont(25)
             }
         }
         
@@ -115,9 +115,9 @@ class PostEditorTitleTextCell: UITableViewCell, UITextViewDelegate {
             placeholderLabel.isHidden = true
         }
         if modelLink!.isBold {
-            textInputField.font = FontNames.Bold.uiFont(25)
+            textInputField.font = FontNames.BellotaBold.uiFont(25)
         } else {
-            textInputField.font = FontNames.Regular.uiFont(25)
+            textInputField.font = FontNames.BellotaRegular.uiFont(25)
         }
         textInputField.textAlignment = modelLink!.textAligment
     }

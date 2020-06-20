@@ -18,7 +18,21 @@ class ArticlePostCellView: UITableViewCell, BasePostCellProtocol {
     
     func setup(viewModel: BasePostCellViewModelProtocol) {
         guard let model = viewModel as? ArticlePostCellViewModel else {print("ArticlePostCellView viewModel type error"); return}
-        article.text = model.text
+        let firstChar = model.text?.first
+        let lastText = model.text?.suffix(from: model.text!.index(after: model.text!.startIndex))
+        let atributedString = NSMutableAttributedString()
+        let firstCharFont = FontNames.PlayBold.uiFont(19)
+        
+        let paragraph = NSAttributedString(string: "   ")
+        let firstAtributedText = NSAttributedString(string: String.init(firstChar!), attributes: [NSAttributedString.Key.font : firstCharFont])
+        let lastAtributedText = NSAttributedString(string: String.init(lastText!), attributes: [NSAttributedString.Key.font : article.font!])
+        
+        atributedString.append(paragraph)
+        atributedString.append(firstAtributedText)
+        atributedString.append(lastAtributedText)
+
+        
+        article.attributedText = atributedString
         setupDesign()
     }
     
@@ -27,6 +41,10 @@ class ArticlePostCellView: UITableViewCell, BasePostCellProtocol {
         addSubview(article)
         article.easy.layout(Leading(20),Trailing(20),Top(40),Bottom(40))
         article.numberOfLines = 0
+        layoutSubviews()
+    }
+    func setPadding(padding: UIEdgeInsets) {
+        article.easy.layout(Leading(padding.left),Trailing(padding.right),Top(padding.top),Bottom(padding.bottom))
         layoutSubviews()
     }
 }

@@ -22,15 +22,15 @@ class Text: UILabel {
         func data() -> ( fontName: FontNames, size : CGFloat) {
             switch self {
             case .window:
-                return (.Bold, 21)
+                return (.BellotaRegular, 21)
             case .title:
-                return (.Bold, 31)
+                return (.PlayBold, 21)
             case .article:
-                return (.Medium, 16)
+                return (.BellotaBold, 17)
             case .regular:
-                return (.Regular, 13)
+                return (.BellotaRegular, 13)
             case .light:
-                return (.Light, 10)
+                return (.BellotaLight, 10)
             }
         }
     }

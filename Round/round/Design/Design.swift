@@ -10,15 +10,15 @@ import Foundation
 import UIKit
 
 enum FontNames : String {
-    case ExtraLight = "Gentleman-ExtraLight"
-    case Regular = "Gentleman-Regular"
-    case Light =  "Gentleman-Light"
-    case Bold = "Gentleman-Bold"
-    case Thin =  "Gentleman-Thin"
-    case Book =  "Gentleman-Book"
-    case Medium =  "Gentleman-Medium"
-    case Heavy =  "Gentleman-Heavy"
-    case Black =  "Gentleman-Black"
+    case BellotaRegular = "BellotaText-Regular"
+    case BellotaLight =  "BellotaText-Light"
+    case BellotaBold = "BellotaText-Bold"
+    
+    case PlaySemiBold =  "PlayfairDisplay-SemiBold"
+    case PlayRegular =  "PlayfairDisplay-Regular"
+    case PlayMedium =  "PlayfairDisplay-Medium"
+    case PlayBold =  "PlayfairDisplay-Bold"
+    case PlayBlack =  "PlayfairDisplay-Black"
     
     func printAllAvalableFontFamilys() {
         for family in UIFont.familyNames.sorted() {
