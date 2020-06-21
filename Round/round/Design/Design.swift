@@ -88,7 +88,9 @@ enum Icons : String {
     case chevronDown     = "chevron.down"
     case chevronLeft     = "chevron.left"
     case settings        = "slider.horizontal.3"
+    case settingsGear    = "gear"
 
+    
 
     func image(weight: UIImage.SymbolWeight = .black) -> UIImage {
         if let img = UIImage(systemName: self.rawValue, withConfiguration: UIImage.SymbolConfiguration(weight: weight)){

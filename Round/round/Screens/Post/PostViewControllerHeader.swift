@@ -33,12 +33,12 @@ class PostViewControllerHeader: UIView {
         .setIconSize(CGSize(width: 20, height: 20))
         .setPressBlockingTimer(0.5)
         .build()
-
-    var gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
-
-    var titleLabel : Text = Text(.title, .white)
-    var descriptionLabel : Text = Text(.article, .lightGray)
-
+    
+    let blurredEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
+    
+    var titleLabel : Text = Text(.title, .label)
+    var descriptionLabel : Text = Text(.regular, .secondaryLabel)
+    
     /// Author
     var authorAvatar : UserAvatarView? = nil
     var authorNameLabel : Text? = nil
@@ -87,7 +87,7 @@ class PostViewControllerHeader: UIView {
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description
         addSubview(backgroundImageView)
-        layer.addSublayer(gradient)
+        addSubview(blurredEffectView)
         [titleLabel,descriptionLabel,backButton,actionButton].forEach {
             addSubview($0)
         }
@@ -101,11 +101,12 @@ class PostViewControllerHeader: UIView {
         if viewModel.author?.uid == AccountManager.shared.data.uid {
               actionButton.setIcon(.settings)
           } else {
-              actionButton.setIcon(viewModel.isSubscribed ? Icons.bookmarkfill : Icons.bookmark)
-          }
-
+            actionButton.setIcon(viewModel.isSubscribed ? Icons.bookmarkfill : Icons.bookmark)
+        }
         
-        gradient.frame = bounds
+        blurredEffectView.layer.cornerRadius = 13
+        blurredEffectView.layer.masksToBounds = true
+        blurredEffectView.easy.layout(Leading(10), Trailing(10), Bottom(10), Top(-8).to(titleLabel,.top))
         backgroundImageView.easy.layout(
             Top(),Leading(),Trailing(),Bottom()
         )
@@ -114,17 +115,17 @@ class PostViewControllerHeader: UIView {
         backgroundImageView.layer.masksToBounds = true
         
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
+        paragraphStyle.lineSpacing = 0
         let attributedString = NSMutableAttributedString(string:  viewModel.description, attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle])
         
         descriptionLabel.attributedText = attributedString
-        descriptionLabel.numberOfLines = 3
+        descriptionLabel.numberOfLines = 2
         descriptionLabel.easy.layout(
             Leading(20),Trailing(20),Bottom(20)
         )
         descriptionLabel.sizeToFit()
 
-        titleLabel.numberOfLines = 3
+        titleLabel.numberOfLines = 2
         titleLabel.easy.layout(
             Leading(20),Trailing(20),Bottom(5).to(descriptionLabel)
         )

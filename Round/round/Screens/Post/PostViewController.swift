@@ -18,7 +18,8 @@ class PostViewController: BaseViewController<PostViewModel> {
 
     var table : UITableView = UITableView(frame: .zero, style: .grouped)
     private let refreshControl = UIRefreshControl()
-    let animation = UIViewPropertyAnimator(duration: 0.3, curve: .linear, animations: nil)
+    let animation = UIViewPropertyAnimator(duration: 0.3, dampingRatio: 0.8, animations: nil)
+
     var card : CardView? = nil
     
     
@@ -41,7 +42,6 @@ class PostViewController: BaseViewController<PostViewModel> {
             }
         }
         setupDesign()
-        setupHeaderAnimation()
     }
     
     required init?(coder: NSCoder) {
@@ -75,22 +75,18 @@ class PostViewController: BaseViewController<PostViewModel> {
             }
         }
         table.easy.layout(Edges())
-        
-    }
-    
-    func setupHeaderAnimation() {
         let gesture: UIScreenEdgePanGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(closeGesture))
         gesture.edges = UIRectEdge.left
         view.addGestureRecognizer(gesture)
+    }
+    
+    func setupHeaderAnimation() {
         animation.addAnimations { [weak self] in
             self?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
             self?.view.layer.cornerRadius = 13
-            if self!.useAnimatableHeader == true{
+            if self!.useAnimatableHeader == true {
                 self?.animatableHeader?.frame.origin = .zero
             }
-        }
-        animation.addCompletion { [weak self] position in
-            self?.dismiss(animated: true)
         }
     }
     
@@ -99,34 +95,53 @@ class PostViewController: BaseViewController<PostViewModel> {
     @objc func closeGesture(sender : UIScreenEdgePanGestureRecognizer){
         switch sender.state {
         case .began:
-            contentOffset = table.contentOffset
-            if contentOffset.y >= header!.frame.height {
-                view.addSubview(animatableHeader!)
-                animatableHeader?.frame.origin = CGPoint(x: 0, y: -animatableHeader!.frame.height)
-                useAnimatableHeader = true
-            }
-            animation.startAnimation()
-            animation.pauseAnimation()
-            
+            beganCloseAnimation()
             break
         case .changed:
             closeAnimation(x: sender.location(in: self.view).x)
             break
         default:
-            animation.startAnimation()
-            table.setContentOffset(.zero, animated: true)
+            endCloseAnimation(x: sender.location(in: self.view).x)
             break
         }
+    }
+    //act inac stop
+    func beganCloseAnimation() {
+        setupHeaderAnimation()
+        contentOffset = table.contentOffset
+        if contentOffset.y >= header!.frame.height {
+            view.addSubview(animatableHeader!)
+            animatableHeader?.frame.origin = CGPoint(x: 0, y: -animatableHeader!.frame.height)
+            useAnimatableHeader = true
+        }
+        animation.startAnimation()
+        animation.pauseAnimation()
     }
     
     func closeAnimation(x: CGFloat) {
         let val = x/100
+        if val >= 1 {
+            animation.addCompletion { [weak self] position in
+                self?.dismiss(animated: true)
+            }
+            animation.startAnimation()
+            table.setContentOffset(.zero, animated: true)
+            
+        }
         animation.fractionComplete = val
         if useAnimatableHeader == false {
             table.contentOffset = CGPoint(x: 0, y: (contentOffset.y * normalizeInvert(val: x)))
         }
     }
     
+    func endCloseAnimation(x: CGFloat){
+        let val = x/100
+        if val < 1 {
+            animation.isReversed = true
+        }
+        animation.startAnimation()
+        table.setContentOffset(.zero, animated: true)
+    }
     
     private func normalize(val : CGFloat) -> CGFloat{
         if val < 0 {
@@ -250,7 +265,7 @@ class PostViewController: BaseViewController<PostViewModel> {
     }
     
     @objc private func refreshWeatherData(_ sender: Any) {
-        self.dismiss(animated: true)
+        animation.startAnimation()
     }
 }
 

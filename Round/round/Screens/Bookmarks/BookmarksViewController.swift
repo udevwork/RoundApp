@@ -71,7 +71,7 @@ extension BookmarksViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 110
+        return 180
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -90,7 +90,7 @@ extension BookmarksViewController : UITableViewDelegate, UITableViewDataSource {
 
 class bookmarkCell : UITableViewCell {
     
-    var card: CardViewSimple = CardViewSimple(viewModel: nil, frame: .zero)
+    var card: CardViewProfile = CardViewProfile(viewModel: nil, frame: .zero)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

@@ -39,7 +39,7 @@ class ProfileViewControllerHeader : UIView {
     let editProfile : Button = ButtonBuilder()
         .setFrame(CGRect(origin: .zero, size: .zero))
         .setStyle(.icon)
-        .setIcon(.edit)
+        .setIcon(.settingsGear)
         .setIconColor(.label)
         .setColor(.clear)
         .build()

@@ -30,6 +30,13 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         return i
     }()
     
+    let blurredEffectView: UIVisualEffectView = {
+        let b = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
+        b.layer.cornerRadius = 13
+        b.layer.masksToBounds = true
+        return b
+    }()
+    
     /// back btn
     let backButton : Button = ButtonBuilder()
         .setFrame(CGRect(origin: CGPoint(x: 0, y: 0), size: .zero))
@@ -53,34 +60,32 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
     let viewCountIcon: UIImageView = {
         let i: UIImageView = UIImageView(image: Icons.eye.image())
         i.contentMode = .scaleAspectFit
-        i.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42)
+        i.tintColor = #colorLiteral(red: 0.7657949328, green: 0.761243999, blue: 0.7692939639, alpha: 1)
         return i
     }()
     
     let title: Text = {
-        let t: Text = Text( .title, .white)
-        t.numberOfLines = 3
+        let t: Text = Text( .title, .label)
+        t.numberOfLines = 2
         return t
     }()
     
     let descriptionLabel: Text = {
-        let t: Text = Text(.article, .lightGray)
-        t.numberOfLines = 3
+        let t: Text = Text(.regular, .secondaryLabel)
+        t.numberOfLines = 2
         return t
     }()
     
     let viewCountLabel: Text = {
-        let t: Text = Text(.regular, #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42))
+        let t: Text = Text(.regular, #colorLiteral(red: 0.7657949328, green: 0.761243999, blue: 0.7692939639, alpha: 1))
         return t
     }()
     
     let creationDateLabel: Text = {
-        let t: Text = Text(.regular, #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42))
+        let t: Text = Text(.regular, #colorLiteral(red: 0.7657949328, green: 0.761243999, blue: 0.7692939639, alpha: 1))
         return t
     }()
-    
-     let gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
-    
+        
     init(header : PostViewControllerHeader, card : CardView) {
         super.init()
         self.header = header
@@ -109,13 +114,10 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
 
         toViewController.view.isHidden = false
         fromViewController.view.isHidden = true
-
         /// main image
        
         backgroundImageView.image = header.backgroundImageView.image
-        
-        gradient.frame = UIScreen.main.bounds
-
+    
         /// title text
         
         title.frame = header.titleLabel.frame
@@ -142,7 +144,8 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         }
         
         bookmarkButton.setIcon(model.isSubscribed ? Icons.bookmarkfill : Icons.bookmark)
-                
+        blurredEffectView.frame = header.blurredEffectView.frame
+        
         viewCountLabel.frame = card.viewCountLabel.frame
         viewCountIcon.frame = card.viewCountIcon.frame
         viewCountLabel.text = card.viewCountLabel.text
@@ -155,7 +158,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         containerView.addSubview(fromViewController.view)
         
         containerView.addSubview(backgroundImageView)
-        backgroundImageView.layer.addSublayer(gradient)
+        backgroundImageView.addSubview(blurredEffectView)
         backgroundImageView.addSubview(title)
         backgroundImageView.addSubview(descriptionLabel)
         if authorAvatar != nil && authorNameLabel != nil {
@@ -176,6 +179,8 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         descriptionLabel.easy.layout(
             Leading(20),Trailing(20),Bottom(20)
         )
+        blurredEffectView.easy.layout(Leading(10), Trailing(10), Bottom(10), Top(-8).to(title,.top))
+
         if authorAvatar != nil && authorNameLabel != nil {
             authorAvatar!.easy.layout(
                 Leading(20),Top(20), Width(40), Height(40)
@@ -202,9 +207,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         viewCountIcon.alpha = 0
         viewCountLabel.alpha = 0
         creationDateLabel.alpha = 0
-        
-        gradient.resizeAndMove(frame: card.gradient.bounds, animated: true, duration: 0.6)
-        
+                
         animator.addAnimations { [weak self] in
             let imgFrame = PostAnimatorHelper.pop()
             containerView.transform = CGAffineTransform(scaleX: 1, y: 1)
@@ -237,68 +240,9 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         
         animator.startAnimation()
         animator.addCompletion {_ in
+            toViewController.viewWillAppear(true)
             fromViewController.view.isHidden = true
             transitionContext.completeTransition(true)
-        }
-    }
-}
-
-
-extension CALayer {
-    func moveTo(point: CGPoint, animated: Bool) {
-        if animated {
-            let animation = CABasicAnimation(keyPath: "position")
-            animation.fromValue = value(forKey: "position")
-            animation.toValue = NSValue(cgPoint: point)
-            animation.fillMode = .forwards
-            self.position = point
-            add(animation, forKey: "position")
-        } else {
-            self.position = point
-        }
-    }
-    
-    func resize(to size: CGSize, animated: Bool) {
-        let oldBounds = bounds
-        var newBounds = oldBounds
-        newBounds.size = size
-        
-        if animated {
-            let animation = CABasicAnimation(keyPath: "bounds")
-            animation.fromValue = NSValue(cgRect: oldBounds)
-            animation.toValue = NSValue(cgRect: newBounds)
-            animation.fillMode = .forwards
-            self.bounds = newBounds
-            add(animation, forKey: "bounds")
-        } else {
-            self.bounds = newBounds
-        }
-    }
-    
-    func resizeAndMove(frame: CGRect, animated: Bool, duration: TimeInterval = 0) {
-        if animated {
-            let positionAnimation = CABasicAnimation(keyPath: "position")
-            positionAnimation.fromValue = value(forKey: "position")
-            positionAnimation.toValue = NSValue(cgPoint: CGPoint(x: frame.midX, y: frame.midY))
-            
-            let oldBounds = bounds
-            var newBounds = oldBounds
-            newBounds.size = frame.size
-            
-            let boundsAnimation = CABasicAnimation(keyPath: "bounds")
-            boundsAnimation.fromValue = NSValue(cgRect: oldBounds)
-            boundsAnimation.toValue = NSValue(cgRect: newBounds)
-            
-            let groupAnimation = CAAnimationGroup()
-            groupAnimation.animations = [positionAnimation, boundsAnimation]
-            groupAnimation.fillMode = .forwards
-            groupAnimation.duration = duration
-            groupAnimation.timingFunction = CAMediaTimingFunction(name: .linear)
-            self.frame = frame
-            add(groupAnimation, forKey: "frame")
-            
-        } else {
-            self.frame = frame
         }
     }
 }

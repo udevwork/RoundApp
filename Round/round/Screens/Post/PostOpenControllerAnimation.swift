@@ -59,18 +59,22 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         backImg.image = card.backgroundImageView.image
         backImg.contentMode = .scaleAspectFill
         /// title text
-        let title : Text = Text(.title, .white, card.titleLabel.frame)
+        let title : Text = Text(.title, .label, card.titleLabel.frame)
         title.text = model.title
-        title.numberOfLines = 3
+        title.numberOfLines = 2
         /// description text
-        let description : Text = Text(.article, .lightGray, card.descriptionLabel.frame)
+        let description : Text = Text(.regular, .secondaryLabel, card.descriptionLabel.frame)
         
         description.attributedText = card.descriptionLabel.attributedText
-        description.numberOfLines = 3
-        /// gradient
-        let gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
+        description.numberOfLines = 2
+        
+        /// blurredEffectView
+        let blurredEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
+        blurredEffectView.frame = card.blurredEffectView.frame
+        blurredEffectView.layer.cornerRadius = 13
+        blurredEffectView.layer.masksToBounds = true
+        
         /// avatar
-                
         authorAvatar = UserAvatarView(frame: card.authorAvatar.frame)
         if card.authorAvatar.superview == nil {
             authorAvatar?.alpha = 0
@@ -112,16 +116,16 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         
         let viewCountIcon: UIImageView = UIImageView(frame: card.viewCountIcon.frame)
         viewCountIcon.image = Icons.eye.image()
-        let viewCountLabel: Text = Text(.regular, #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42),card.viewCountLabel.frame)
+        let viewCountLabel: Text = Text(.regular, #colorLiteral(red: 0.7657949328, green: 0.761243999, blue: 0.7692939639, alpha: 1),card.viewCountLabel.frame)
         viewCountLabel.text = card.viewCountLabel.text
-        let creationDateLabel: Text = Text(.regular, #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42),card.creationDateLabel.frame)
+        let creationDateLabel: Text = Text(.regular, #colorLiteral(red: 0.7657949328, green: 0.761243999, blue: 0.7692939639, alpha: 1),card.creationDateLabel.frame)
         creationDateLabel.text = card.creationDateLabel.text
         viewCountIcon.contentMode = .scaleAspectFit
-        viewCountIcon.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42)
+        viewCountIcon.tintColor = #colorLiteral(red: 0.7657949328, green: 0.761243999, blue: 0.7692939639, alpha: 1)
         
         /// add Subview
         containerView.addSubview(backImg)
-        backImg.layer.addSublayer(gradient)
+        backImg.addSubview(blurredEffectView)
         backImg.addSubview(title)
         backImg.addSubview(description)
         if authorAvatar != nil && authorNameLabel != nil {
@@ -164,14 +168,13 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         viewCountIcon.easy.layout(Width(17),Height(17),Leading(20),Bottom(9).to(title))
         viewCountLabel.easy.layout(Leading(5).to(viewCountIcon),CenterY(1).to(viewCountIcon))
         creationDateLabel.easy.layout(Trailing(20),CenterY(1).to(viewCountIcon))
+         blurredEffectView.easy.layout(Leading(10), Trailing(10), Bottom(10), Top(-8).to(title,.top))
         backButton.icon.alpha = 0
         actionButton.icon.alpha = 0
-        gradient.bounds = backImg.frame
         
         let animator1 = {
             UIViewPropertyAnimator(duration: 0.6, dampingRatio: 0.7) {
                 backImg.frame = UIScreen.main.bounds
-                gradient.frame = backImg.bounds
                 backImg.layer.cornerRadius = 0
                 backButton.icon.alpha = 1
                 actionButton.icon.alpha = 1

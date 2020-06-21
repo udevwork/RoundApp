@@ -17,15 +17,16 @@ class CardView: UIView {
     var backgroundImageView : UIImageView = UIImageView(image: Images.imagePlaceholder.uiimage())
     var backgroundImageViewMask : UIView = UIView()
     var actionButton : UIButton = UIButton()
-    var titleLabel : Text = Text(.title,  .white)
-    var descriptionLabel : Text = Text(.article, .lightGray)
+    var titleLabel : Text = Text(.title,  .label)
+    var descriptionLabel : Text = Text(.regular, .secondaryLabel)
     var authorAvatar : UserAvatarView = UserAvatarView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     var authorNameLabel : Text = Text(.article, .white)
-    var gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
+
+    let blurredEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
     
     let viewCountIcon: UIImageView = UIImageView(image: Icons.eye.image())
-    let viewCountLabel: Text = Text(.regular, #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42))
-    let creationDateLabel: Text = Text(.regular, #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42))
+    let viewCountLabel: Text = Text(.regular, #colorLiteral(red: 0.7657949328, green: 0.761243999, blue: 0.7692939639, alpha: 1))
+    let creationDateLabel: Text = Text(.regular, #colorLiteral(red: 0.7657949328, green: 0.761243999, blue: 0.7692939639, alpha: 1))
     
     init(viewModel : CardViewModel?, frame: CGRect) {
         super.init(frame: frame)
@@ -39,10 +40,11 @@ class CardView: UIView {
     }
     
     func setupDesign(){
-        gradient.cornerRadius = 13
+        blurredEffectView.layer.cornerRadius = 13
+        blurredEffectView.layer.masksToBounds = true
         backgroundImageViewMask.addSubview(backgroundImageView)
         addSubview(backgroundImageViewMask)
-        backgroundImageViewMask.layer.addSublayer(gradient)
+        backgroundImageViewMask.addSubview(blurredEffectView)
         
         [titleLabel,descriptionLabel,actionButton,viewCountIcon,viewCountLabel,creationDateLabel].forEach {
             addSubview($0)
@@ -59,13 +61,13 @@ class CardView: UIView {
         backgroundImageView.easy.layout(Edges())
         backgroundImageView.contentMode = .scaleAspectFill
         
-        descriptionLabel.numberOfLines = 3
+        descriptionLabel.numberOfLines = 2
         descriptionLabel.easy.layout(
             Leading(20),Trailing(20),Bottom(20)
         )
         descriptionLabel.sizeToFit()
         
-        titleLabel.numberOfLines = 3
+        titleLabel.numberOfLines = 2
         titleLabel.easy.layout(
             Leading(20),Trailing(20),Bottom(5).to(descriptionLabel)
         )
@@ -85,21 +87,18 @@ class CardView: UIView {
             Height(40)
         )
         
-        viewCountIcon.contentMode = .scaleAspectFit
-        viewCountIcon.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42)
-        viewCountIcon.easy.layout(Width(17),Height(17),Leading(20),Bottom(9).to(titleLabel))
-        viewCountLabel.easy.layout(Leading(5).to(viewCountIcon),CenterY(1).to(viewCountIcon))
+        blurredEffectView.easy.layout(Leading(10), Trailing(10), Bottom(10), Top(-8).to(titleLabel,.top))
         
-        creationDateLabel.easy.layout(Leading(3).to(viewCountLabel),Trailing(20),CenterY(1).to(viewCountIcon))
+        viewCountIcon.contentMode = .scaleAspectFit
+        viewCountIcon.tintColor = #colorLiteral(red: 0.7657949328, green: 0.761243999, blue: 0.7692939639, alpha: 1)
+        viewCountIcon.easy.layout(Width(17),Height(17),Leading(20),Bottom(11).to(titleLabel))
+        viewCountLabel.easy.layout(Leading(5).to(viewCountIcon),CenterY().to(viewCountIcon))
+        
+        creationDateLabel.easy.layout(Leading(3).to(viewCountLabel),Trailing(20),CenterY(0).to(viewCountIcon))
         actionButton.easy.layout(Edges())
 
         actionButton.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         layoutSubviews()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        gradient.frame = CGRect(origin: .zero, size: CGSize(width: bounds.width+3, height: bounds.height+3))
     }
     
     func setupData(_ viewModel : CardViewModel?){
@@ -111,7 +110,7 @@ class CardView: UIView {
         
         titleLabel.text = model.title
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
+        paragraphStyle.lineSpacing = 0
         let attributedString = NSMutableAttributedString(string:  viewModel?.description ?? "", attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle])
         
         descriptionLabel.attributedText = attributedString

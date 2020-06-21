@@ -15,11 +15,11 @@ class CardViewSimple: CardView {
         [backgroundImageViewMask,actionButton].forEach {
             addSubview($0)
         }
-        backgroundImageViewMask.layer.addSublayer(gradient)
+       // backgroundImageViewMask.layer.addSublayer(gradient)
         addSubview(titleLabel)
         addSubview(descriptionLabel)
         
-        gradient.cornerRadius = 13
+      //  gradient.cornerRadius = 13
         backgroundImageViewMask.layer.cornerRadius = 13
         layer.cornerRadius = 13
         
@@ -33,7 +33,7 @@ class CardViewSimple: CardView {
         backgroundImageView.contentMode = .scaleAspectFill
         
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
+        paragraphStyle.lineSpacing = 0
         let attributedString = NSMutableAttributedString(string:  descriptionLabel.text ?? "", attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle])
         
         descriptionLabel.attributedText = attributedString

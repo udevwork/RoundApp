@@ -19,9 +19,10 @@ class MainViewController: BaseViewController<MainViewModel> {
         let layout = PagingCollectionViewLayout()
         layout.minimumLineSpacing = 15
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 250, height: UIScreen.main.bounds.height - 180)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 70, height: UIScreen.main.bounds.height - 180)
         layout.numberOfItemsPerPage = 1
         layout.velocityThresholdPerPage = 10
+        
         let collection = GeminiCollectionView(frame: .zero, collectionViewLayout: layout)
         collection.layer.masksToBounds = false
         collection.backgroundColor = .systemGray6
@@ -46,7 +47,7 @@ class MainViewController: BaseViewController<MainViewModel> {
         setUpMenuButton()
         setupView()
     }
-    
+        
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -118,9 +119,9 @@ class MainViewController: BaseViewController<MainViewModel> {
         
 //        postCollectionView.gemini
 //            .customAnimation()
-////            .rotationAngle(x: 0, y: 20, z: 0)
-////            .scaleEffect(.scaleUp)
-////            .scale(x: 0.6, y: 0.6, z: 0.6)
+//            .rotationAngle(x: 0, y: 20, z: 0)
+//            .scaleEffect(.scaleUp)
+//            .scale(x: 0.6, y: 0.6, z: 0.6)
 //            .alpha(0.5)
         
         createButton.easy.layout(
@@ -140,7 +141,6 @@ class MainViewController: BaseViewController<MainViewModel> {
         
     }
     
-    
 }
 
 extension MainViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -151,10 +151,10 @@ extension MainViewController : UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
         cell.setup(viewModel.cards[indexPath.row])
-        cell.card.onCardPress = { view, model in
+        cell.card.onCardPress = { [weak self] view, model in
             let postVC = PostViewController(viewModel: PostViewModel(cardView: view))
             postVC.modalPresentationStyle = .overCurrentContext
-            self.present(postVC, animated: true, completion: nil)
+            self?.present(postVC, animated: true, completion: nil)
         }
         return cell
     }
