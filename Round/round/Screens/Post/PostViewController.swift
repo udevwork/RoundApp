@@ -114,6 +114,7 @@ class PostViewController: BaseViewController<PostViewModel> {
             break
         default:
             animation.startAnimation()
+            table.setContentOffset(.zero, animated: true)
             break
         }
     }

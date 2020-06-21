@@ -37,7 +37,7 @@ class PostViewControllerHeader: UIView {
     var gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
 
     var titleLabel : Text = Text(.title, .white)
-    var descriptionLabel : Text = Text(.article, .white)
+    var descriptionLabel : Text = Text(.article, .lightGray)
 
     /// Author
     var authorAvatar : UserAvatarView? = nil
@@ -47,7 +47,6 @@ class PostViewControllerHeader: UIView {
         super.init(frame: frame)
         backgroundImageView.image = card.backgroundImageView.image
         setupDesign(viewModel)
-        print("lol")
     }
 
     required init?(coder: NSCoder) {
@@ -113,11 +112,11 @@ class PostViewControllerHeader: UIView {
 
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.layer.masksToBounds = true
-
-        let attributedString = NSMutableAttributedString(string: descriptionLabel.text!)
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        let attributedString = NSMutableAttributedString(string:  viewModel.description, attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle])
+        
         descriptionLabel.attributedText = attributedString
         descriptionLabel.numberOfLines = 3
         descriptionLabel.easy.layout(

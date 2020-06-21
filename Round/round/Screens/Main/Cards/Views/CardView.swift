@@ -18,7 +18,7 @@ class CardView: UIView {
     var backgroundImageViewMask : UIView = UIView()
     var actionButton : UIButton = UIButton()
     var titleLabel : Text = Text(.title,  .white)
-    var descriptionLabel : Text = Text(.article, .white)
+    var descriptionLabel : Text = Text(.article, .lightGray)
     var authorAvatar : UserAvatarView = UserAvatarView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     var authorNameLabel : Text = Text(.article, .white)
     var gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
@@ -59,11 +59,6 @@ class CardView: UIView {
         backgroundImageView.easy.layout(Edges())
         backgroundImageView.contentMode = .scaleAspectFill
         
-        let attributedString = NSMutableAttributedString(string: descriptionLabel.text ?? "")
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
-        descriptionLabel.attributedText = attributedString
         descriptionLabel.numberOfLines = 3
         descriptionLabel.easy.layout(
             Leading(20),Trailing(20),Bottom(20)
@@ -115,7 +110,11 @@ class CardView: UIView {
         backgroundImageView.setImage(imageURL: URL(string: model.mainImageURL), placeholder: Images.imagePlaceholder.uiimage())
         
         titleLabel.text = model.title
-        descriptionLabel.text = model.description
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 6
+        let attributedString = NSMutableAttributedString(string:  viewModel?.description ?? "", attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle])
+        
+        descriptionLabel.attributedText = attributedString
         
         
 

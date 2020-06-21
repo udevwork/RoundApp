@@ -10,29 +10,20 @@ import Foundation
 import UIKit
 import EasyPeasy
 
-class PostAnimatorHelper {
-   private static var cardOriginalFrame : [CGRect] = []
-    
-    static func pop() -> CGRect{
-       return cardOriginalFrame.removeLast()
-    }
-    static func push(cardFrame: CGRect){
-        cardOriginalFrame.append(cardFrame)
-    }
-}
-
 class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioning {
     
+    let transitionDuration: TimeInterval = 0.6
     var card : CardView? = nil
     var authorAvatar : UserAvatarView? = nil
     var authorNameLabel : Text? = nil
+    
     init(card : CardView) {
         super.init()
         self.card = card
     }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.6
+        return transitionDuration
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -72,12 +63,9 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         title.text = model.title
         title.numberOfLines = 3
         /// description text
-        let description : Text = Text(.article, .white, card.descriptionLabel.frame)
-        let attributedString = NSMutableAttributedString(string: model.description)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
-        description.attributedText = attributedString
+        let description : Text = Text(.article, .lightGray, card.descriptionLabel.frame)
+        
+        description.attributedText = card.descriptionLabel.attributedText
         description.numberOfLines = 3
         /// gradient
         let gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
@@ -181,7 +169,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         gradient.bounds = backImg.frame
         
         let animator1 = {
-            UIViewPropertyAnimator(duration: 0.6, dampingRatio: 1) {
+            UIViewPropertyAnimator(duration: 0.6, dampingRatio: 0.7) {
                 backImg.frame = UIScreen.main.bounds
                 gradient.frame = backImg.bounds
                 backImg.layer.cornerRadius = 0

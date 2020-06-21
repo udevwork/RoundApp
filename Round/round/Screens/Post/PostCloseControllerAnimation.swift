@@ -15,10 +15,72 @@ import EasyPeasy
 
 class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransitioning {
     
+    let transitionDuration: TimeInterval = 0.6
+    let animator = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 0.7, animations: nil)
     var header : PostViewControllerHeader? = nil
     var card : CardView? = nil
     var authorAvatar : UserAvatarView? = nil
     var authorNameLabel : Text? = nil
+    
+    let backgroundImageView : UIImageView = {
+        let i : UIImageView =  UIImageView(frame: UIScreen.main.bounds)
+        i.layer.cornerRadius = 13
+        i.layer.masksToBounds = true
+        i.contentMode = .scaleAspectFill
+        return i
+    }()
+    
+    /// back btn
+    let backButton : Button = ButtonBuilder()
+        .setFrame(CGRect(origin: CGPoint(x: 0, y: 0), size: .zero))
+        .setStyle(.icon)
+        .setColor(.clear)
+        .setIcon(.back)
+        .setIconColor(.white)
+        .setIconSize(CGSize(width: 17, height: 15))
+        .setCornerRadius(13)
+        .setShadow(.NavigationBar)
+        .build()
+    
+    let bookmarkButton : Button = ButtonBuilder()
+        .setFrame(CGRect(origin: CGPoint(x: UIScreen.main.bounds.width-20, y: 20), size: .zero))
+        .setStyle(.icon)
+        .setColor(.clear)
+        .setIconColor(.white)
+        .setIconSize(CGSize(width: 20, height: 20))
+        .build()
+    
+    let viewCountIcon: UIImageView = {
+        let i: UIImageView = UIImageView(image: Icons.eye.image())
+        i.contentMode = .scaleAspectFit
+        i.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42)
+        return i
+    }()
+    
+    let title: Text = {
+        let t: Text = Text( .title, .white)
+        t.numberOfLines = 3
+        return t
+    }()
+    
+    let descriptionLabel: Text = {
+        let t: Text = Text(.article, .lightGray)
+        t.numberOfLines = 3
+        return t
+    }()
+    
+    let viewCountLabel: Text = {
+        let t: Text = Text(.regular, #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42))
+        return t
+    }()
+    
+    let creationDateLabel: Text = {
+        let t: Text = Text(.regular, #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42))
+        return t
+    }()
+    
+     let gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
+    
     init(header : PostViewControllerHeader, card : CardView) {
         super.init()
         self.header = header
@@ -26,20 +88,14 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
     }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.6
+        return transitionDuration
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
         let containerView = transitionContext.containerView
-        containerView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-        guard let header = header else {
-            return
-        }
-        guard let card = card else {
-            return
-        }
-        guard let model = card.viewModel else {
+        
+        guard let header = header, let card = card, let model = card.viewModel else {
             return
         }
         
@@ -49,38 +105,29 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
                 return
         }
         
-        
+        containerView.transform = CGAffineTransform(scaleX: fromViewController.view.transform.a, y: fromViewController.view.transform.d)
+
         toViewController.view.isHidden = false
-        
         fromViewController.view.isHidden = true
 
         /// main image
-        let backImg : UIImageView =  UIImageView(frame: UIScreen.main.bounds)
-        backImg.layer.cornerRadius = 13
-        backImg.layer.masksToBounds = true
-        backImg.image = header.backgroundImageView.image
-        backImg.contentMode = .scaleAspectFill
+       
+        backgroundImageView.image = header.backgroundImageView.image
+        
+        gradient.frame = UIScreen.main.bounds
+
         /// title text
-        let title : Text = Text( .title, .white, header.titleLabel.frame)
         
+        title.frame = header.titleLabel.frame
         title.text = header.titleLabel.text
-        title.numberOfLines = 3
-        /// description text
-        let description : Text = Text(.article, .white, header.descriptionLabel.frame)
+        /// descriptionLabel text
+        descriptionLabel.frame = header.descriptionLabel.frame
         
-        
-        let attributedString = NSMutableAttributedString(string: model.description)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
-        description.attributedText = attributedString
-        description.numberOfLines = 3
-        /// gradient
-        let gradient : CAGradientLayer = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: [UIColor.black.cgColor, UIColor.clear.cgColor], type: .axial)
+        descriptionLabel.attributedText = header.descriptionLabel.attributedText
         
         /// avatar
-        if let headerAvatar = header.authorAvatar {
-            authorAvatar = UserAvatarView(frame: headerAvatar.frame)
+        if let originalauthorAvatar = header.authorAvatar {
+            authorAvatar = UserAvatarView(frame: originalauthorAvatar.frame)
             if let url = model.author?.photoUrl, let imageUrl = URL(string: url) {
                 authorAvatar!.setImage(imageUrl)
             } else {
@@ -89,68 +136,44 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
             
         }
         
-        if let headerName = header.authorNameLabel {
-            authorNameLabel = Text(.article, .white, headerName.frame)
-            authorNameLabel!.text = headerName.text
+        if let originalauthorNameLabel = header.authorNameLabel {
+            authorNameLabel = Text(.article, .white, originalauthorNameLabel.frame)
+            authorNameLabel!.text = originalauthorNameLabel.text
         }
         
-        
-        /// back btn
-        let backButton : Button = ButtonBuilder()
-            .setFrame(CGRect(origin: CGPoint(x: 0, y: 0), size: .zero))
-            .setStyle(.icon)
-            .setColor(.clear)
-            .setIcon(.back)
-            .setIconColor(.white)
-            .setIconSize(CGSize(width: 17, height: 15))
-            .setCornerRadius(13)
-            .setShadow(.NavigationBar)
-            .build()
-        
-        let saveToBookmark : Button = ButtonBuilder()
-            .setFrame(CGRect(origin: CGPoint(x: UIScreen.main.bounds.width-20, y: 20), size: .zero))
-            .setStyle(.icon)
-            .setColor(.clear)
-            .setIcon(model.isSubscribed ? Icons.bookmarkfill : Icons.bookmark)
-            .setIconColor(.white)
-            .setIconSize(CGSize(width: 20, height: 20))
-            .build()
-        
-        let viewCountIcon: UIImageView = UIImageView(frame: card.viewCountIcon.frame)
-        viewCountIcon.image = Icons.eye.image()
-        let viewCountLabel: Text = Text(.regular, #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42),card.viewCountLabel.frame)
+        bookmarkButton.setIcon(model.isSubscribed ? Icons.bookmarkfill : Icons.bookmark)
+                
+        viewCountLabel.frame = card.viewCountLabel.frame
+        viewCountIcon.frame = card.viewCountIcon.frame
         viewCountLabel.text = card.viewCountLabel.text
-        let creationDateLabel: Text = Text(.regular, #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42),card.creationDateLabel.frame)
+        
+        creationDateLabel.frame = card.creationDateLabel.frame
         creationDateLabel.text = card.creationDateLabel.text
-        viewCountIcon.contentMode = .scaleAspectFit
-        viewCountIcon.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.42)
+    
         
         /// add Subview
         containerView.addSubview(fromViewController.view)
         
-        containerView.addSubview(backImg)
-        backImg.layer.addSublayer(gradient)
-        backImg.addSubview(title)
-        backImg.addSubview(description)
+        containerView.addSubview(backgroundImageView)
+        backgroundImageView.layer.addSublayer(gradient)
+        backgroundImageView.addSubview(title)
+        backgroundImageView.addSubview(descriptionLabel)
         if authorAvatar != nil && authorNameLabel != nil {
-            backImg.addSubview(authorAvatar!)
-            backImg.addSubview(authorNameLabel!)
+            backgroundImageView.addSubview(authorAvatar!)
+            backgroundImageView.addSubview(authorNameLabel!)
         }
-        backImg.addSubview(backButton)
-        backImg.addSubview(saveToBookmark)
+        backgroundImageView.addSubview(backButton)
+        backgroundImageView.addSubview(bookmarkButton)
         
-        backImg.addSubview(viewCountIcon)
-        backImg.addSubview(viewCountLabel)
-        backImg.addSubview(creationDateLabel)
-        
-        gradient.frame = UIScreen.main.bounds
-        
-        
-        /// constraints
+        backgroundImageView.addSubview(viewCountIcon)
+        backgroundImageView.addSubview(viewCountLabel)
+        backgroundImageView.addSubview(creationDateLabel)
+            
+    
         title.easy.layout(
-            Leading(20),Trailing(20),Bottom(5).to(description)
+            Leading(20),Trailing(20),Bottom(5).to(descriptionLabel)
         )
-        description.easy.layout(
+        descriptionLabel.easy.layout(
             Leading(20),Trailing(20),Bottom(20)
         )
         if authorAvatar != nil && authorNameLabel != nil {
@@ -165,16 +188,14 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
                 Height(40)
             )
         }
+        
         backButton.easy.layout(Left(20),Top(20),Width(40),Height(40))
         backButton.icon.alpha = 1
-        saveToBookmark.easy.layout(Trailing(20),Top(20),Width(40),Height(40))
-        saveToBookmark.icon.alpha = 1
-        
-        
-        viewCountIcon.bounds.origin = card.viewCountLabel.frame.origin
-        print(card.viewCountLabel.bounds)
-        print(card.viewCountLabel.frame)
-        viewCountIcon.easy.layout(Width(17), Height(17))
+        bookmarkButton.easy.layout(Trailing(20),Top(20),Width(40),Height(40))
+        bookmarkButton.icon.alpha = 1
+            
+        viewCountIcon.bounds.origin = card.viewCountIcon.bounds.origin
+
         viewCountLabel.bounds.origin = card.viewCountLabel.bounds.origin
         creationDateLabel.bounds = card.creationDateLabel.bounds
         
@@ -184,39 +205,38 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         
         gradient.resizeAndMove(frame: card.gradient.bounds, animated: true, duration: 0.6)
         
-        let animator1 = {
-            UIViewPropertyAnimator(duration: 0.6, dampingRatio: 1) {
-                let imgFrame = PostAnimatorHelper.pop()
-                containerView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                backImg.frame = imgFrame
-                backImg.layer.cornerRadius = 13
-                backButton.icon.alpha = 0
-                saveToBookmark.icon.alpha = 0
-                
-                if card.viewCountLabel.superview != nil {
-                    viewCountIcon.alpha = 1
-                    viewCountLabel.alpha = 1
-                }
-                
-                if card.creationDateLabel.superview != nil {
-                    creationDateLabel.alpha = 1
-                    
-                }
-                
-                if card.authorAvatar.superview == nil {
-                    self.authorAvatar?.alpha = 0
-                }
-                
-                if card.authorNameLabel.superview == nil {
-                    self.authorNameLabel?.alpha = 0
-                }
-                
-                containerView.layoutIfNeeded()
+        animator.addAnimations { [weak self] in
+            let imgFrame = PostAnimatorHelper.pop()
+            containerView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self?.backgroundImageView.frame = imgFrame
+            self?.backgroundImageView.layer.cornerRadius = 13
+            self?.backButton.icon.alpha = 0
+            self?.bookmarkButton.icon.alpha = 0
+            
+            if card.viewCountLabel.superview != nil {
+                self?.viewCountIcon.alpha = 1
+                self?.viewCountLabel.alpha = 1
             }
-        }()
+            
+            if card.creationDateLabel.superview != nil {
+                self?.creationDateLabel.alpha = 1
+                
+            }
+            
+            if card.authorAvatar.superview == nil {
+                self?.authorAvatar?.alpha = 0
+            }
+            
+            if card.authorNameLabel.superview == nil {
+                self?.authorNameLabel?.alpha = 0
+            }
+            
+            containerView.layoutIfNeeded()
+        }
         
-        animator1.startAnimation()
-        animator1.addCompletion {_ in
+        
+        animator.startAnimation()
+        animator.addCompletion {_ in
             fromViewController.view.isHidden = true
             transitionContext.completeTransition(true)
         }
@@ -273,7 +293,7 @@ extension CALayer {
             groupAnimation.animations = [positionAnimation, boundsAnimation]
             groupAnimation.fillMode = .forwards
             groupAnimation.duration = duration
-            groupAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+            groupAnimation.timingFunction = CAMediaTimingFunction(name: .linear)
             self.frame = frame
             add(groupAnimation, forKey: "frame")
             

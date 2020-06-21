@@ -32,10 +32,10 @@ class CardViewProfile: CardView {
         backgroundImageView.easy.layout(Edges())
         backgroundImageView.contentMode = .scaleAspectFill
         
-        let attributedString = NSMutableAttributedString(string: descriptionLabel.text ?? "")
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        let attributedString = NSMutableAttributedString(string:  descriptionLabel.text ?? "", attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle])
+        
         descriptionLabel.attributedText = attributedString
         descriptionLabel.numberOfLines = 3
         descriptionLabel.easy.layout(

@@ -14,23 +14,23 @@ class ArticlePostCellView: UITableViewCell, BasePostCellProtocol {
     var id: String = UUID().uuidString
     var postType: PostCellType = .Article
     
-    var article = Text(.article, .label, .zero)
+    var article = Text(.article, .secondaryLabel, .zero)
     
     func setup(viewModel: BasePostCellViewModelProtocol) {
         guard let model = viewModel as? ArticlePostCellViewModel else {print("ArticlePostCellView viewModel type error"); return}
-        let firstChar = model.text?.first
-        let lastText = model.text?.suffix(from: model.text!.index(after: model.text!.startIndex))
-        let atributedString = NSMutableAttributedString()
-        let firstCharFont = FontNames.PlayBold.uiFont(19)
-        
-        let paragraph = NSAttributedString(string: "   ")
-        let firstAtributedText = NSAttributedString(string: String.init(firstChar!), attributes: [NSAttributedString.Key.font : firstCharFont])
-        let lastAtributedText = NSAttributedString(string: String.init(lastText!), attributes: [NSAttributedString.Key.font : article.font!])
-        
-        atributedString.append(paragraph)
-        atributedString.append(firstAtributedText)
-        atributedString.append(lastAtributedText)
 
+        let mainText = model.text ?? ""
+        
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.firstLineHeadIndent = 8
+        paragraph.lineSpacing = 2
+    
+        
+        let atributedString = NSMutableAttributedString(string: mainText,
+        attributes: [NSAttributedString.Key.font : article.font!,
+                     NSAttributedString.Key.paragraphStyle : paragraph])
+
+     
         
         article.attributedText = atributedString
         setupDesign()
