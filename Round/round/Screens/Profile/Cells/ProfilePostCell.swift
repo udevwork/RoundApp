@@ -15,7 +15,7 @@ class ProfilePostCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(card)
-        card.easy.layout(Top(),Bottom(),Leading(20),Trailing(20))
+        card.easy.layout(Top(),Bottom(),Leading(13),Trailing(13))
     }
     
     required init?(coder: NSCoder) {

@@ -8,13 +8,19 @@
 
 import UIKit
 
-class PostAnimatorHelper {
-   private static var cardOriginalFrame : [CGRect] = []
+public class PostAnimatorHelper {
+    private static var cardOriginalFrame : [PostAnimationsTempData] = []
     
-    static func pop() -> CGRect{
-       return cardOriginalFrame.removeLast()
+    static func pop() -> PostAnimationsTempData{
+        return cardOriginalFrame.removeLast()
     }
-    static func push(cardFrame: CGRect){
-        cardOriginalFrame.append(cardFrame)
+    static func push(_ tempData: PostAnimationsTempData){
+        cardOriginalFrame.append(tempData)
     }
+}
+
+public struct PostAnimationsTempData {
+    var mainPicOriginalFrame: CGRect
+    var avatarOriginalFrame: CGRect
+    var selectedCard: UIView
 }

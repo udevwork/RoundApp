@@ -408,6 +408,9 @@ final class FirebaseAPI : API {
     }
     
     public func getRandomPost(complition : @escaping (HTTPResult, [CardViewModel]?) -> ()){
+        complition(.success,GenerateFakePosts())
+        return
+        
         let randomInt = Int32.random(in: 1...Int32.max)
         let res = posts.whereField("xIndex", isGreaterThanOrEqualTo: randomInt).order(by: "xIndex").limit(to: 10)
         var models: [CardViewModel]? = []
@@ -424,7 +427,7 @@ final class FirebaseAPI : API {
                     let result = try FirestoreDecoder().decode(PostResponse.self, from: doc.data())
                     let card : CardViewModel = CardViewModel(id: doc.documentID, response: result )
                     models?.append(card)
-                    Debug.log(result.title ?? "", result.creationDate)
+                   // Debug.log(result.title ?? "", result.creationDate)
                 } catch let error {
                     Debug.log("FirebaseAPI.getRandomPost(): Decoder error: ", error)
                     complition(.error, nil)
@@ -432,6 +435,32 @@ final class FirebaseAPI : API {
             })
             complition(.success, models)
         }
+    }
+    
+    // MARK: FAKE POSTS
+    func GenerateFakePosts() ->  [CardViewModel] {
+
+        let date: Timestamp = Timestamp(date: Date())
+        
+        let author1 = User(uid: String.randomString(length: 6), photoUrl: "https://randomuser.me/api/portraits/men/32.jpg", userName: "Charley Harper")
+        
+        let author2 = User(uid: String.randomString(length: 6), photoUrl: "https://randomuser.me/api/portraits/women/44.jpg", userName: "Bovel Filler")
+        
+        let author3 = User(uid: String.randomString(length: 6), photoUrl: "https://randomuser.me/api/portraits/men/29.jpg", userName: "Khipers")
+        
+        let author4 = User(uid: String.randomString(length: 6), photoUrl: "https://randomuser.me/api/portraits/men/78.jpg", userName: "Kipler Lopes")
+        
+        let author5 = User(uid: String.randomString(length: 6), photoUrl: "https://randomuser.me/api/portraits/women/43.jpg", userName: "Ferdin Khar")
+        
+        let author6 = User(uid: String.randomString(length: 6), photoUrl: "https://randomuser.me/api/portraits/men/17.jpg", userName: "Lionel Lipredion")
+        
+        return [CardViewModel(id: "lol", mainImageURL: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/cda33f84612027.5d62d15541aa4.jpg", title: "Sketch App", description: "test desc", viewsCount: 49, author: author1, creationDate: nil),
+                CardViewModel(id: "lol", mainImageURL: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/f7227c84612027.5d62d15542017.jpg", title: "Yollo is simple", description: "test desc", viewsCount: 25, author: author2, creationDate: date),
+                CardViewModel(id: "lol", mainImageURL: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/2863de84612027.5d62d1553f9b9.jpg", title: "daily user’s needs in one hand", description: "test desc", viewsCount: 235, author: author3, creationDate: date),
+                CardViewModel(id: "lol", mainImageURL: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ff3f0d97338487.5ec2e4ddaad43.jpg", title: "Your project made a great impression", description: "test desc", viewsCount: 2, author: author4, creationDate: date),
+                CardViewModel(id: "lol", mainImageURL: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/33f34397338487.5ec2e4ddaa753.jpg", title: "Good project, Awesome!", description: "test desc", viewsCount: 967, author: author5, creationDate: nil),
+                CardViewModel(id: "lol", mainImageURL: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5613a697338487.5ec2e4ddaa0fa.jpg", title: "typography", description: "test desc", viewsCount: 49, author: author6, creationDate: date)]
+        
     }
     
     public func deletePost(postId id: String, complition : @escaping () -> ()){

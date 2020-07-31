@@ -83,7 +83,7 @@ class PostViewController: BaseViewController<PostViewModel> {
     func setupHeaderAnimation() {
         animation.addAnimations { [weak self] in
             self?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-            self?.view.layer.cornerRadius = 13
+            self?.view.layer.cornerRadius = 50
             if self!.useAnimatableHeader == true {
                 self?.animatableHeader?.frame.origin = .zero
             }
@@ -138,9 +138,14 @@ class PostViewController: BaseViewController<PostViewModel> {
         let val = x/100
         if val < 1 {
             animation.isReversed = true
+            table.setContentOffset(contentOffset, animated: true)
+            animation.addCompletion { [weak self] _ in
+                self?.useAnimatableHeader = false
+            }
+        } else {
+            table.setContentOffset(.zero, animated: true)
         }
         animation.startAnimation()
-        table.setContentOffset(.zero, animated: true)
     }
     
     private func normalize(val : CGFloat) -> CGFloat{
@@ -191,7 +196,7 @@ class PostViewController: BaseViewController<PostViewModel> {
     }
     
     private func showAlertMenu(){
-        let action = UIAlertController(title: "Available actions", message: viewModel.cardView.titleLabel.text ?? nil, preferredStyle: .actionSheet)
+        let action = UIAlertController(title: "Available actions", message: viewModel.cardView.bottomTextBlockView.titleLabel.text ?? "Post", preferredStyle: .actionSheet)
         
         action.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
             FirebaseAPI.shared.deletePost(postId: self.viewModel.cardView.viewModel!.id) {

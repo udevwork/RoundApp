@@ -22,28 +22,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let model = MainViewModel()
         let contentView = MainViewController(viewModel: model)
-       // let contentView = RealmTest()
-
-        let rootNavigationController : UINavigationController = UINavigationController(rootViewController: contentView)
+        
+        let profile = SignInRouter.assembly(model: SignInViewModel())
+        
+        let tabbar = RUITabbarCountroller()
+        tabbar.viewControllers = [contentView,profile]
+        // let contentView = RealmTest()
+        // let uitest = UITest()
+        let rootNavigationController : UINavigationController = UINavigationController(rootViewController: tabbar)
         
         let navBar = rootNavigationController.navigationBar
         
         navBar.shadowImage = UIImage()
-        navBar.barTintColor  = UIColor.systemGray6
-        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.label,NSAttributedString.Key.font: FontNames.BellotaRegular.uiFont(14)]
+        navBar.setBackgroundImage(nil, for: UIBarMetrics.default)
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.label,NSAttributedString.Key.font: FontNames.PlayRegular.uiFont(20)]
         navBar.titleTextAttributes = textAttributes
-
+        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.label,NSAttributedString.Key.font: FontNames.PlayBold.uiFont(30)]
         
+        navBar.barStyle = .default
+        navBar.isTranslucent = true
+        navBar.prefersLargeTitles = true
+
         ///setup Back Button
         let backImage = Icons.chevronDown.image()
         rootNavigationController.navigationBar.backIndicatorImage = backImage
         rootNavigationController.navigationBar.tintColor = .label
         
-        navBar.isTranslucent = false
         
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = rootNavigationController
+            window.rootViewController = tabbar
             
             self.window = window
             window.makeKeyAndVisible()

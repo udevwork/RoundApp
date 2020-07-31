@@ -21,7 +21,7 @@ class BaseViewController<T> : UIViewController{
     init(viewModel: T) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = Colors.vcBackground.uicolor()
         dismissKey()
     }
     

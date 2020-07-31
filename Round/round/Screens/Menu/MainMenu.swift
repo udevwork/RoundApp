@@ -12,22 +12,21 @@ import EasyPeasy
 
 class MainMenu: UIView {
     
-   private let backgroundView: UIView = {
+    private let backgroundView: UIView = {
         let v = UIView(frame: UIScreen.main.bounds)
         v.backgroundColor = .white
         v.alpha = 0.3
         return v
     }()
     
-   private let stackContainer: UIView = {
+    private let stackContainer: UIView = {
         let v = UIView()
         v.backgroundColor = .white
         v.layer.cornerRadius = 13
         return v
     }()
     
-    
-   private let stack: UIStackView = {
+    private let stack: UIStackView = {
         let s = UIStackView()
         s.alignment = .center
         s.distribution = .fill
@@ -39,8 +38,8 @@ class MainMenu: UIView {
         addSubview(backgroundView)
         addSubview(stackContainer)
         stackContainer.addSubview(stack)
-        stackContainer.easy.layout(Top(50),Leading(50),Bottom(50),Trailing(50))
-        stack.easy.layout(Edges(5))
+        stackContainer.easy.layout(Top(50),Leading(20),Bottom(50),Trailing(20))
+        stack.easy.layout(Edges())
     }
     
     init(_ elements: [MainMenuElementModel]) {

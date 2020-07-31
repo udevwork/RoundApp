@@ -13,33 +13,35 @@ import Gemini
 
 class MainViewController: BaseViewController<MainViewModel> {
     
-    fileprivate var filterView : FilterSlider = FilterSlider()
     
-    var postCollectionView : GeminiCollectionView = {
+    // MARK: - Constants
+    
+    let cellWidth =   UIScreen.main.bounds.width
+    let cellHeight =  UIScreen.main.bounds.height
+
+    let sectionSpacing: CGFloat = 0
+    let cellSpacing: CGFloat = 0
+    
+    // MARK: - UI Components
+   
+    fileprivate lazy var postCollectionView : GeminiCollectionView = {
         let layout = PagingCollectionViewLayout()
-        layout.minimumLineSpacing = 15
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 70, height: UIScreen.main.bounds.height - 180)
+        layout.minimumLineSpacing = cellSpacing
+        layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: 0, bottom: 0, right: 0)
+        layout.scrollDirection = .vertical
+    
+        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         layout.numberOfItemsPerPage = 1
         layout.velocityThresholdPerPage = 10
         
         let collection = GeminiCollectionView(frame: .zero, collectionViewLayout: layout)
         collection.layer.masksToBounds = false
-        collection.backgroundColor = .systemGray6
+        collection.backgroundColor = .clear
         collection.showsVerticalScrollIndicator = false
         collection.showsHorizontalScrollIndicator = false
         collection.decelerationRate = UIScrollView.DecelerationRate.fast
-        
         return collection
     }()
-    
-    let createButton : Button = ButtonBuilder()
-        .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 40)))
-        .setStyle(.text)
-        .setText("Create")
-        .setTextColor(.white)
-        .setCornerRadius(13)
-        .build()
     
     override init(viewModel: MainViewModel) {
         super.init(viewModel: viewModel)
@@ -47,14 +49,31 @@ class MainViewController: BaseViewController<MainViewModel> {
         setUpMenuButton()
         setupView()
     }
-        
+    
+    
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.largeTitleDisplayMode = .never
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+       
+        postCollectionView.easy.layout( Trailing(),Leading(),Bottom(),Top(Design.safeArea.top + 10) )
+
+    }
     
     func setUpMenuButton(){
-        
-      
+        navigationItem.largeTitleDisplayMode = .never
         let item = UIBarButtonItem(image: Icons.user.image(), landscapeImagePhone: Icons.user.image(), style: .plain, target: self, action: #selector(user))
         self.navigationItem.rightBarButtonItem = item
     }
@@ -76,71 +95,27 @@ class MainViewController: BaseViewController<MainViewModel> {
     }
     
     fileprivate func setupView(){
-        let lol = postCollectionView.collectionViewLayout as! PagingCollectionViewLayout
-        let inset = (view.frame.width - 250)/2
-        lol.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: 0)
         
         view.addSubview(postCollectionView)
-        view.addSubview(filterView)
-        view.addSubview(createButton)
         postCollectionView.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
-        filterView.easy.layout (
-            Height(30), Top(5), Trailing(), Leading()
-        )
-        filterView.setup()
-        
-        filterView.onAddFilterPress = { [weak self] in
-            
-            FirebaseAPI.shared.getCounties { (status, resp) in
-                if status == .error { return }
-                
-                let map = resp?.Countries.map({ s -> CityViewModel in
-                    return CityViewModel(cityName: s)
-                })
-                
-                guard let model = map else { return }
-                
-                let filter = SearchViewController(viewModel: FilterViewModel(navigationTitle: "City", searchableModel: model, searchCellType: CityCell.self))
-                
-                filter.onCellPress = { [weak self] model in
-                    self?.filterView.addTag(tagName: model.searchParameter)
-                }
-                
-                self?.navigationController?.pushViewController(filter, animated: true)
-            }
-        }
-        
         postCollectionView.delegate = self
         postCollectionView.dataSource = self
-        postCollectionView.easy.layout(
-            Leading(),Trailing(),Top(20).to(filterView),Bottom(15).to(createButton)
-        )
+        //postCollectionView.easy.layout( Edges() )
         
-        
-//        postCollectionView.gemini
-//            .customAnimation()
-//            .rotationAngle(x: 0, y: 20, z: 0)
-//            .scaleEffect(.scaleUp)
-//            .scale(x: 0.6, y: 0.6, z: 0.6)
-//            .alpha(0.5)
-        
-        createButton.easy.layout(
-            Bottom(15),Trailing(inset)
-        )
-        
-        
+        postCollectionView.gemini
+            .customAnimation()
+            .alpha(0.2)
+           // .scale(x: 0.8, y: 0.8, z: 1)
+            .rotationAngle(x: 6, y: 0, z: 0)
+                
         viewModel.loadNewPost { _ in 
             DispatchQueue.main.async { [weak self] in
                 self?.postCollectionView.reloadData()
+              //  self?.postCollectionView.scrollToItem(at: IndexPath(row: 1, section: 0), at: .top, animated: true)
             }
         }
         
-        createButton.setTarget {
-            self.createPost()
-        }
-        
     }
-    
 }
 
 extension MainViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -153,7 +128,7 @@ extension MainViewController : UICollectionViewDelegate, UICollectionViewDataSou
         cell.setup(viewModel.cards[indexPath.row])
         cell.card.onCardPress = { [weak self] view, model in
             let postVC = PostViewController(viewModel: PostViewModel(cardView: view))
-            postVC.modalPresentationStyle = .overCurrentContext
+            postVC.modalPresentationStyle = .custom
             self?.present(postVC, animated: true, completion: nil)
         }
         return cell
@@ -165,14 +140,11 @@ extension MainViewController : UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.row >= viewModel.cards.count - 2 {
-            viewModel.loadNewPost { count in
+            viewModel.loadNewPost { inserIndexPaths in
                 DispatchQueue.main.async { [weak self] in
-                    var newIndexPath: [IndexPath] = []
-                    for i in (self!.viewModel.cards.count-1)-(count-1)...(self!.viewModel.cards.count-1) {
-                        newIndexPath.append(IndexPath(row: i, section: 0))
-                    }
+        
                     //self?.postCollectionView.reloadData()
-                    self?.postCollectionView.insertItems(at: newIndexPath)
+                    self?.postCollectionView.insertItems(at: inserIndexPaths)
                 }
             }
         }
@@ -187,7 +159,7 @@ class CustomCell: GeminiCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(card)
-        card.easy.layout(Edges())
+        card.easy.layout(Leading(25),Trailing(25),Top(0),Bottom(120 + Design.safeArea.bottom))
     }
     
     required init?(coder: NSCoder) {

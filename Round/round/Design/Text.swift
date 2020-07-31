@@ -24,13 +24,13 @@ class Text: UILabel {
             case .window:
                 return (.BellotaRegular, 21)
             case .title:
-                return (.PlayBold, 19)
+                return (.PlayBold, 21)
             case .article:
-                return (.BellotaBold, 17)
+                return (.BellotaBold, 18)
             case .regular:
                 return (.BellotaRegular, 13)
             case .light:
-                return (.BellotaLight, 10)
+                return (.BellotaLight, 11)
             }
         }
     }

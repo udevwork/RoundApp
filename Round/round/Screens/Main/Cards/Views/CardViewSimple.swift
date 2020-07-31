@@ -16,8 +16,8 @@ class CardViewSimple: CardView {
             addSubview($0)
         }
        // backgroundImageViewMask.layer.addSublayer(gradient)
-        addSubview(titleLabel)
-        addSubview(descriptionLabel)
+//        addSubview(titleLabel)
+//        addSubview(descriptionLabel)
         
       //  gradient.cornerRadius = 13
         backgroundImageViewMask.layer.cornerRadius = 13
@@ -31,23 +31,23 @@ class CardViewSimple: CardView {
         )
         backgroundImageView.easy.layout(Edges())
         backgroundImageView.contentMode = .scaleAspectFill
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 0
-        let attributedString = NSMutableAttributedString(string:  descriptionLabel.text ?? "", attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle])
-        
-        descriptionLabel.attributedText = attributedString
-        descriptionLabel.numberOfLines = 3
-        descriptionLabel.easy.layout(
-            Leading(20),Trailing(20),Bottom(20)
-        )
-        descriptionLabel.sizeToFit()
-        
-        titleLabel.numberOfLines = 3
-        titleLabel.easy.layout(
-            Leading(20),Trailing(20),Bottom(5).to(descriptionLabel)
-        )
-        titleLabel.sizeToFit()
+//
+//        let paragraphStyle = NSMutableParagraphStyle()
+//        paragraphStyle.lineSpacing = 0
+//        let attributedString = NSMutableAttributedString(string:  descriptionLabel.text ?? "", attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle])
+//
+//        descriptionLabel.attributedText = attributedString
+//        descriptionLabel.numberOfLines = 3
+//        descriptionLabel.easy.layout(
+//            Leading(20),Trailing(20),Bottom(20)
+//        )
+//        descriptionLabel.sizeToFit()
+//
+//        titleLabel.numberOfLines = 3
+//        titleLabel.easy.layout(
+//            Leading(20),Trailing(20),Bottom(5).to(descriptionLabel)
+//        )
+//        titleLabel.sizeToFit()
         
         actionButton.easy.layout(Edges())
         

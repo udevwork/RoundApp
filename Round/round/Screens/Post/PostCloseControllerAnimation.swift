@@ -15,31 +15,30 @@ import EasyPeasy
 
 class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransitioning {
     
+    var card : CardView? = nil
     let transitionDuration: TimeInterval = 0.6
     let animator = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 0.7, animations: nil)
     var header : PostViewControllerHeader? = nil
-    var card : CardView? = nil
     var authorAvatar : UserAvatarView? = nil
     var authorNameLabel : Text? = nil
     
     let backgroundImageView : UIImageView = {
         let i : UIImageView =  UIImageView(frame: UIScreen.main.bounds)
-        i.layer.cornerRadius = 13
         i.layer.masksToBounds = true
         i.contentMode = .scaleAspectFill
         return i
     }()
     
-    let blurredEffectView: UIVisualEffectView = {
-        let b = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
-        b.layer.cornerRadius = 13
+    lazy var blurredEffectView: UIVisualEffectView = {
+        let b = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterialDark))
+        b.layer.cornerRadius = header!.blurredEffectView.layer.cornerRadius
         b.layer.masksToBounds = true
         return b
     }()
     
     /// back btn
     let backButton : Button = ButtonBuilder()
-        .setFrame(CGRect(origin: CGPoint(x: 0, y: 0), size: .zero))
+        .setFrame(CGRect(origin: CGPoint(x: 20, y: 20), size: CGSize(width: 40, height: 40)))
         .setStyle(.icon)
         .setColor(.clear)
         .setIcon(.back)
@@ -49,8 +48,8 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         .setShadow(.NavigationBar)
         .build()
     
-    let bookmarkButton : Button = ButtonBuilder()
-        .setFrame(CGRect(origin: CGPoint(x: UIScreen.main.bounds.width-20, y: 20), size: .zero))
+    let actionButton : Button = ButtonBuilder()
+        .setFrame(CGRect(origin: CGPoint(x: UIScreen.main.bounds.width-20, y: 20), size: CGSize(width: 40, height: 40)))
         .setStyle(.icon)
         .setColor(.clear)
         .setIconColor(.white)
@@ -64,14 +63,14 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         return i
     }()
     
-    let title: Text = {
-        let t: Text = Text( .title, .label)
+    let titleLabel: Text = {
+        let t: Text = Text( .title, .white)
         t.numberOfLines = 2
         return t
     }()
     
     let descriptionLabel: Text = {
-        let t: Text = Text(.regular, .secondaryLabel)
+        let t: Text = Text(.regular, .white)
         t.numberOfLines = 2
         return t
     }()
@@ -117,11 +116,12 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         /// main image
        
         backgroundImageView.image = header.backgroundImageView.image
-    
+       
+
         /// title text
         
-        title.frame = header.titleLabel.frame
-        title.text = header.titleLabel.text
+        titleLabel.frame = header.titleLabel.frame
+        titleLabel.text = header.titleLabel.text
         /// descriptionLabel text
         descriptionLabel.frame = header.descriptionLabel.frame
         
@@ -143,48 +143,50 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
             authorNameLabel!.text = originalauthorNameLabel.text
         }
         
-        bookmarkButton.setIcon(model.isSubscribed ? Icons.bookmarkfill : Icons.bookmark)
+        actionButton.setIcon(model.isSubscribed ? Icons.bookmarkfill : Icons.bookmark)
         blurredEffectView.frame = header.blurredEffectView.frame
         
-        viewCountLabel.frame = card.viewCountLabel.frame
-        viewCountIcon.frame = card.viewCountIcon.frame
-        viewCountLabel.text = card.viewCountLabel.text
-        
-        creationDateLabel.frame = card.creationDateLabel.frame
-        creationDateLabel.text = card.creationDateLabel.text
-    
+//        viewCountLabel.frame = card.viewCountLabel.frame
+//        viewCountIcon.frame = card.viewCountIcon.frame
+//        viewCountLabel.text = card.viewCountLabel.text
+//
+//        creationDateLabel.frame = card.creationDateLabel.frame
+//        creationDateLabel.text = card.creationDateLabel.text
+//
         
         /// add Subview
         containerView.addSubview(fromViewController.view)
         
         containerView.addSubview(backgroundImageView)
         backgroundImageView.addSubview(blurredEffectView)
-        backgroundImageView.addSubview(title)
-        backgroundImageView.addSubview(descriptionLabel)
+        blurredEffectView.contentView.addSubview(titleLabel)
+        blurredEffectView.contentView.addSubview(descriptionLabel)
         if authorAvatar != nil && authorNameLabel != nil {
-            backgroundImageView.addSubview(authorAvatar!)
-            backgroundImageView.addSubview(authorNameLabel!)
+            containerView.addSubview(authorAvatar!)
+            containerView.addSubview(authorNameLabel!)
         }
         backgroundImageView.addSubview(backButton)
-        backgroundImageView.addSubview(bookmarkButton)
+        
+        actionButton.frame = header.actionButton.frame
+        backgroundImageView.addSubview(actionButton)
         
         backgroundImageView.addSubview(viewCountIcon)
         backgroundImageView.addSubview(viewCountLabel)
         backgroundImageView.addSubview(creationDateLabel)
             
     
-        title.easy.layout(
-            Leading(20),Trailing(20),Bottom(5).to(descriptionLabel)
+        titleLabel.easy.layout(
+            Leading(25),Trailing(25),Top(20)
         )
+        
         descriptionLabel.easy.layout(
-            Leading(20),Trailing(20),Bottom(20)
+            Leading(25),Trailing(25),Bottom(20),Top(3).to(titleLabel)
         )
-        blurredEffectView.easy.layout(Leading(10), Trailing(10), Bottom(10), Top(-8).to(title,.top))
+        
+        blurredEffectView.easy.layout(Leading(15), Trailing(15), Bottom(15))
+
 
         if authorAvatar != nil && authorNameLabel != nil {
-            authorAvatar!.easy.layout(
-                Leading(20),Top(20), Width(40), Height(40)
-            )
             
             authorNameLabel!.easy.layout(
                 Leading(20).to(authorAvatar!),
@@ -196,53 +198,66 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         
         backButton.easy.layout(Left(20),Top(20),Width(40),Height(40))
         backButton.icon.alpha = 1
-        bookmarkButton.easy.layout(Trailing(20),Top(20),Width(40),Height(40))
-        bookmarkButton.icon.alpha = 1
-            
-        viewCountIcon.bounds.origin = card.viewCountIcon.bounds.origin
-
-        viewCountLabel.bounds.origin = card.viewCountLabel.bounds.origin
-        creationDateLabel.bounds = card.creationDateLabel.bounds
         
+        actionButton.easy.layout(Trailing(20), Top(20))
+        
+        actionButton.icon.alpha = 1
+            
+//        viewCountIcon.bounds.origin = card.viewCountIcon.bounds.origin
+//
+//        viewCountLabel.bounds.origin = card.viewCountLabel.bounds.origin
+//        creationDateLabel.bounds = card.creationDateLabel.bounds
+//
         viewCountIcon.alpha = 0
         viewCountLabel.alpha = 0
         creationDateLabel.alpha = 0
-                
+        
+        backgroundImageView.layer.cornerRadius = fromViewController.view.layer.cornerRadius
+        
+        let tempOriginalData = PostAnimatorHelper.pop()
+        
         animator.addAnimations { [weak self] in
-            let imgFrame = PostAnimatorHelper.pop()
             containerView.transform = CGAffineTransform(scaleX: 1, y: 1)
-            self?.backgroundImageView.frame = imgFrame
-            self?.backgroundImageView.layer.cornerRadius = 13
+            self?.backgroundImageView.frame = tempOriginalData.mainPicOriginalFrame
+            self?.backgroundImageView.layer.shadowRadius = 30
+            self?.authorAvatar?.frame = tempOriginalData.avatarOriginalFrame
+            self?.backgroundImageView.layer.cornerRadius = card.backgroundImageView.layer.cornerRadius
             self?.backButton.icon.alpha = 0
-            self?.bookmarkButton.icon.alpha = 0
+            self?.actionButton.icon.alpha = 0
             
-            if card.viewCountLabel.superview != nil {
-                self?.viewCountIcon.alpha = 1
-                self?.viewCountLabel.alpha = 1
-            }
-            
-            if card.creationDateLabel.superview != nil {
-                self?.creationDateLabel.alpha = 1
-                
-            }
-            
-            if card.authorAvatar.superview == nil {
-                self?.authorAvatar?.alpha = 0
-            }
-            
-            if card.authorNameLabel.superview == nil {
-                self?.authorNameLabel?.alpha = 0
-            }
-            
+//            if card.viewCountLabel.superview != nil {
+//                self?.viewCountIcon.alpha = 1
+//                self?.viewCountLabel.alpha = 1
+//            }
+//            
+//            if card.creationDateLabel.superview != nil {
+//                self?.creationDateLabel.alpha = 1
+//                
+//            }
+//            
+//            if card.authorAvatar.superview == nil {
+//                self?.authorAvatar?.alpha = 0
+//            }
+//            
+//            if card.authorNameLabel.superview == nil {
+//                self?.authorNameLabel?.alpha = 0
+//            }
+//            
             containerView.layoutIfNeeded()
         }
         
         
         animator.startAnimation()
-        animator.addCompletion {_ in
-            toViewController.viewWillAppear(true)
+        animator.addCompletion { finished in
             fromViewController.view.isHidden = true
-            transitionContext.completeTransition(true)
+            if finished == .end {
+                tempOriginalData.selectedCard.isHidden = false
+                transitionContext.completeTransition(true)
+            }
         }
+    }
+    
+    deinit {
+        print("CLOSE DEINIT")
     }
 }

@@ -9,6 +9,14 @@
 import Foundation
 import UIKit
 
+class Design {
+    
+    static var safeArea : UIEdgeInsets {
+        let w = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        return w?.safeAreaInsets ?? UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+}
+
 enum FontNames : String {
     case BellotaRegular = "BellotaText-Regular"
     case BellotaLight =  "BellotaText-Light"
@@ -34,13 +42,44 @@ enum FontNames : String {
 enum ShadowPresets  {
     case NavigationBar
     case Button
+    case Post
+    case Avatar
     
     func data() -> (radius: CGFloat, offset : CGSize, opacity : Float, color : UIColor) {
         switch self {
         case .NavigationBar:
             return (10, .zero, 0.6, .black)
         case .Button:
-            return (10, .zero, 0.6, .black)
+            return (7, .zero, 0.3, .black)
+        case .Post:
+            return (25, .init(width: 0, height: 15), 0.5, #colorLiteral(red: 0.3450980392, green: 0.4666666667, blue: 0.6352941176, alpha: 1))
+        case .Avatar:
+            return (15, .init(width: 0, height: 10), 0.3, .black)
+        }
+    }
+}
+
+enum Colors: String {
+    case vcBackground = "viewControllerBackground"
+    case label = "contrastLabel"
+    case lightlabel = "lightLabel"
+    case lightblue = "blue" // use for shadows
+
+    
+    func uicolor() -> UIColor {
+        if let color = UIColor(named: self.rawValue) {
+            return color
+        } else {
+            Debug.log("Design.swift COLOR ERROR")
+            return .green
+        }
+    }
+    func cgcolor() -> CGColor {
+        if let color = UIColor(named: self.rawValue) {
+            return color.cgColor
+        } else {
+            Debug.log("Design.swift COLOR ERROR")
+            return UIColor.green.cgColor
         }
     }
 }
@@ -72,6 +111,8 @@ enum Icons : String {
     case addPostBlock    = "rectangle.stack.fill.badge.plus"
     case trash           = "trash.fill"
     case trashCross      = "trash.slash.fill"
+    case house           = "house.fill"
+    case clock           = "clock"
 
     case checkmark       = "checkmark.circle.fill"
     case xmarkOctagon    = "xmark.octagon.fill"
@@ -89,8 +130,6 @@ enum Icons : String {
     case chevronLeft     = "chevron.left"
     case settings        = "slider.horizontal.3"
     case settingsGear    = "gear"
-
-    
 
     func image(weight: UIImage.SymbolWeight = .black) -> UIImage {
         if let img = UIImage(systemName: self.rawValue, withConfiguration: UIImage.SymbolConfiguration(weight: weight)){
@@ -110,7 +149,7 @@ enum Images : String {
         if let img = UIImage(named: self.rawValue){
             return img
         } else {
-            Debug.log("Design.swift ERROR")
+            Debug.log("Design.swift Images ERROR")
             return UIImage(named: "empty")!
         }
     }

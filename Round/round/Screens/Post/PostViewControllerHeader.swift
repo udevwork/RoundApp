@@ -19,6 +19,7 @@ class PostViewControllerHeader: UIView {
     var isSubscribed: Bool = false
     
     let backButton : Button = ButtonBuilder()
+        .setFrame(CGRect(x: 20, y: 20, width: 40, height: 40))
         .setStyle(.icon)
         .setColor(.clear)
         .setIcon(Icons.back)
@@ -34,10 +35,10 @@ class PostViewControllerHeader: UIView {
         .setPressBlockingTimer(0.5)
         .build()
     
-    let blurredEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
+    let blurredEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterialDark))
     
-    var titleLabel : Text = Text(.title, .label)
-    var descriptionLabel : Text = Text(.regular, .secondaryLabel)
+    var titleLabel : Text = Text(.title, .white)
+    var descriptionLabel : Text = Text(.regular, .white)
     
     /// Author
     var authorAvatar : UserAvatarView? = nil
@@ -88,10 +89,14 @@ class PostViewControllerHeader: UIView {
         descriptionLabel.text = viewModel.description
         addSubview(backgroundImageView)
         addSubview(blurredEffectView)
-        [titleLabel,descriptionLabel,backButton,actionButton].forEach {
+        
+        [titleLabel,descriptionLabel].forEach {
+            blurredEffectView.contentView.addSubview($0)
+        }
+        
+        [backButton,actionButton].forEach {
             addSubview($0)
         }
-        backButton.easy.layout(Leading(20),Top(20),Width(40),Height(40))
         actionButton.easy.layout(Trailing(20),Top(20),Width(40),Height(40))
 
         /// if BookmarksRealmManager().get(postId: viewModel.id) != nil {
@@ -104,9 +109,9 @@ class PostViewControllerHeader: UIView {
             actionButton.setIcon(viewModel.isSubscribed ? Icons.bookmarkfill : Icons.bookmark)
         }
         
-        blurredEffectView.layer.cornerRadius = 13
+        blurredEffectView.easy.layout(Leading(15), Trailing(15), Bottom(15))
+        blurredEffectView.layer.cornerRadius = 40
         blurredEffectView.layer.masksToBounds = true
-        blurredEffectView.easy.layout(Leading(10), Trailing(10), Bottom(10), Top(-8).to(titleLabel,.top))
         backgroundImageView.easy.layout(
             Top(),Leading(),Trailing(),Bottom()
         )
@@ -121,13 +126,13 @@ class PostViewControllerHeader: UIView {
         descriptionLabel.attributedText = attributedString
         descriptionLabel.numberOfLines = 2
         descriptionLabel.easy.layout(
-            Leading(20),Trailing(20),Bottom(20)
+            Leading(25),Trailing(25),Bottom(20),Top(3).to(titleLabel)
         )
         descriptionLabel.sizeToFit()
 
         titleLabel.numberOfLines = 2
         titleLabel.easy.layout(
-            Leading(20),Trailing(20),Bottom(5).to(descriptionLabel)
+            Leading(25),Trailing(25),Top(20)
         )
         titleLabel.sizeToFit()
 

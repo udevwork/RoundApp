@@ -109,7 +109,7 @@ class PostEdtorViewController: BaseViewController<PostEditorViewModel> {
     }
     
     private func setupTable() {
-        blocksTableView.allowsSelection = true
+        blocksTableView.allowsSelection = false
         blocksTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
         
         blocksTableView.backgroundColor = UIColor.systemGray6

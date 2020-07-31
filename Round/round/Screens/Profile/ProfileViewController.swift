@@ -24,7 +24,7 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
     let header: ProfileViewControllerHeader = ProfileViewControllerHeader()
     
     let postCollection : UICollectionView = {
-        let flow = ProfileCollectionLayout()
+        let flow = UICollectionViewFlowLayout()
         flow.scrollDirection = .vertical
         flow.minimumLineSpacing = 20
         flow.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
@@ -41,17 +41,23 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
         postCollection.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshWeatherData(_:)), for: .valueChanged)
         refreshControl.beginRefreshing()
+        
+        if viewModel.userId == AccountManager.shared.data.uid {
+            isSelfProfile = true
+        }
+        
         viewModel.loadUserInfo()
         setupView()
         setupObserver()
         setUpLogoutButton()
-        if viewModel.userId == AccountManager.shared.data.uid {
-            isSelfProfile = true
-        }
     }
     
     deinit {
         print("ProfileViewController DEINIT")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     required init?(coder: NSCoder) {
@@ -92,8 +98,8 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
     private func setupView() {
         view.addSubview(postCollection)
         view.addSubview(header)
-        
-        header.easy.layout(Leading(), Trailing(),Height(300),Top())
+            header.easy.layout(Leading(), Trailing(),Height(140),Top())
+
         postCollection.register(ProfileViewControllerHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "ProfilePostHeader")
         postCollection.easy.layout(Leading(10), Trailing(10),Bottom(),Top().to(header))
         postCollection.register(ProfilePostCell.self, forCellWithReuseIdentifier: "ProfilePostCell")
@@ -164,7 +170,7 @@ class ProfileViewController: BaseViewController<ProfileViewModel> {
     
     private func expandAnimation() {
         animation.addAnimations { [weak self] in
-            self?.header.easy.layout(Height(300))
+            self?.header.easy.layout(Height(140))
             self?.view.layoutSubviews()
         }
         animation.addCompletion { s in
