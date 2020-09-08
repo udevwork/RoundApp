@@ -57,7 +57,7 @@ class PostViewController: BaseViewController<PostViewModel> {
         guard let header = header else { return }
         
         view.addSubview(table)
-        header.backButton.setTarget {
+        header.backButton.addTarget {
             self.dismiss(animated: true) {
             }
         }

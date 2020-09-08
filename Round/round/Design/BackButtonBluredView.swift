@@ -1,5 +1,5 @@
 //
-//  PostBluredTitleDescriptionView.swift
+//  BackButtonBluredView.swift
 //  round
 //
 //  Created by Denis Kotelnikov on 31.07.2020.
@@ -8,23 +8,15 @@
 
 import Foundation
 import UIKit
-import EasyPeasy
 
-class PostBluredTitleDescriptionView: UIView {
-    
-    var titleLabel : Text = Text(.title,  .white)
+class iconLableBluredView: UIView {
+    var arrowIcon : Text = Text(.title,  .white)
     var descriptionLabel : Text = Text(.regular, .white)
     let blurredEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterialDark))
     
     init() {
         super.init(frame: .zero)
         setupView()
-    }
-    
-    init(_ bluredView: PostBluredTitleDescriptionView) {
-        super.init(frame: bluredView.frame)
-        set(bluredView.titleLabel.text ?? "", bluredView.descriptionLabel.text ?? "")
-        setupViewFromOtherView()
     }
     
     private func setupView() {
@@ -48,29 +40,8 @@ class PostBluredTitleDescriptionView: UIView {
         )
         
     }
-    
-    private func setupViewFromOtherView(){
-        setupView()
-        setNeedsLayout()
-        layoutIfNeeded()
-    }
-    
-    public func set(_ title: String, _ description: String) {
-        titleLabel.text = title
         
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 0
-        let attributedString = NSMutableAttributedString(string:  description, attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle])
-        
-        
-        descriptionLabel.attributedText = attributedString
-        titleLabel.sizeToFit()
-        descriptionLabel.sizeToFit()
-    }
-    
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

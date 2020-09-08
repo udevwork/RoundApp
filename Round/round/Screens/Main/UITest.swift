@@ -13,7 +13,9 @@ import Firebase
 
 
 class UITest: UIViewController {
-    let viewToTest: UserAvatarNameDate = UserAvatarNameDate(URL(string: "https://www.gravatar.com/avatar/789ad08862abcdfbca8beec84e4998d9?s=32&d=identicon&r=PG"), "Arek Holko", Timestamp(date: Date()))
+    let viewToTest = IconLableBluredView(icon: .back, text: "Back", {
+        print("lol")
+    })
     
     
     init() {

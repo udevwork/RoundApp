@@ -16,6 +16,7 @@ class Text: UILabel {
         case window
         case title
         case article
+        case system
         case regular
         case light
         
@@ -27,6 +28,8 @@ class Text: UILabel {
                 return (.PlayBold, 21)
             case .article:
                 return (.BellotaBold, 18)
+            case .system:
+                return (.BellotaBold, 15)
             case .regular:
                 return (.BellotaRegular, 13)
             case .light:

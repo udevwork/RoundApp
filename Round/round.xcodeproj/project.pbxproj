@@ -20,6 +20,7 @@
 		9214322124D2D9AE005FCDC4 /* IconLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9214322024D2D9AE005FCDC4 /* IconLabelView.swift */; };
 		9214322324D2DFC3005FCDC4 /* UITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9214322224D2DFC3005FCDC4 /* UITest.swift */; };
 		9214322524D42132005FCDC4 /* PostBluredTitleDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9214322424D42132005FCDC4 /* PostBluredTitleDescriptionView.swift */; };
+		9214322724D42E3A005FCDC4 /* IconLableBluredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9214322624D42E3A005FCDC4 /* IconLableBluredView.swift */; };
 		921A263A23BF542700EF8715 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 921A263923BF542700EF8715 /* GoogleService-Info.plist */; };
 		9228541824541D710033E549 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9228541724541D710033E549 /* ProfileHeaderView.swift */; };
 		9228541B2454421D0033E549 /* ProfilePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9228541A2454421D0033E549 /* ProfilePostCell.swift */; };
@@ -165,6 +166,7 @@
 		9214322024D2D9AE005FCDC4 /* IconLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconLabelView.swift; sourceTree = "<group>"; };
 		9214322224D2DFC3005FCDC4 /* UITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITest.swift; sourceTree = "<group>"; };
 		9214322424D42132005FCDC4 /* PostBluredTitleDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBluredTitleDescriptionView.swift; sourceTree = "<group>"; };
+		9214322624D42E3A005FCDC4 /* IconLableBluredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconLableBluredView.swift; sourceTree = "<group>"; };
 		921A263923BF542700EF8715 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9228541724541D710033E549 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		9228541A2454421D0033E549 /* ProfilePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostCell.swift; sourceTree = "<group>"; };
@@ -536,6 +538,7 @@
 				92CBECA924D18E74001E6616 /* RUITabbarCountroller.swift */,
 				9214322024D2D9AE005FCDC4 /* IconLabelView.swift */,
 				9214322424D42132005FCDC4 /* PostBluredTitleDescriptionView.swift */,
+				9214322624D42E3A005FCDC4 /* IconLableBluredView.swift */,
 			);
 			path = Design;
 			sourceTree = "<group>";
@@ -971,6 +974,7 @@
 				926D209A23E470BC00C8B492 /* SimplePhotoResponse.swift in Sources */,
 				92F9C4EF23DCCAEE00AB9823 /* AsyncImageDownload.swift in Sources */,
 				92CC3CC82439F88800731371 /* LoginPageViewController.swift in Sources */,
+				9214322724D42E3A005FCDC4 /* IconLableBluredView.swift in Sources */,
 				926D209823E4703E00C8B492 /* ArticlePostResponse.swift in Sources */,
 				92CC3CCC2439F8A700731371 /* LoginPageRouter.swift in Sources */,
 				9260B85323B4C64700AB18A5 /* PostViewControllerHeader.swift in Sources */,

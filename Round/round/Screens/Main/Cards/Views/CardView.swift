@@ -39,48 +39,30 @@ class CardView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupDesign(){
+    func setupDesign() {
+        layer.cornerRadius = 13
+        clipsToBounds = false
         backgroundImageView.layer.cornerRadius = 50
         backgroundImageView.layer.masksToBounds = true
         backgroundImageViewMask.addSubview(backgroundImageView)
         addSubview(backgroundImageViewMask)
         backgroundImageViewMask.addSubview(bottomTextBlockView)
-        
-        [avatarHeader, actionButton].forEach {
-            addSubview($0)
-        }
-
-        layer.cornerRadius = 13
-        clipsToBounds = false
-        
-        backgroundImageViewMask.easy.layout(
-            Leading(),Trailing(),Top(60),Bottom()
-        )
+        [avatarHeader, actionButton, viewsCounterView].forEach { addSubview($0) }
+        backgroundImageViewMask.easy.layout(Leading(), Trailing(), Top(60), Bottom())
         backgroundImageViewMask.layer.masksToBounds = false
         backgroundImageView.easy.layout(Edges())
         backgroundImageView.contentMode = .scaleAspectFill
-
-        
-        avatarHeader.easy.layout(
-            Leading(),Top()
-        )
-        
-        
+        avatarHeader.easy.layout(Leading(10),Top(22))
+        viewsCounterView.easy.layout(Trailing(),CenterY().to(avatarHeader))
         bottomTextBlockView.easy.layout(Leading(15), Trailing(15), Bottom(15))
-       
-        
         actionButton.easy.layout(Edges())
-        
         actionButton.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
-        
     }
     
     func setupData(_ viewModel : CardViewModel?){
         self.viewModel = viewModel
         
-        guard let model = self.viewModel else {
-            return
-        }
+        guard let model = self.viewModel else { return }
         
         backgroundImageView.setImage(imageURL: URL(string: model.mainImageURL), placeholder: Images.imagePlaceholder.uiimage())
         

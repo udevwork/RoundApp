@@ -39,6 +39,8 @@ class IconLabelView: UIView {
         icon.easy.layout(Leading(), CenterY(), Size(11))
         label.easy.layout(Leading(3).to(icon), CenterY())
         self.easy.layout(Height(14),Width(17+label.frame.width))
+        setNeedsLayout()
+        layoutIfNeeded()
     }
     
 }

@@ -45,7 +45,11 @@ class UserAvatarView: UIView {
         authorAvatarImageView.image = UIImage(named: imageName)
     }
     
-    func setImage(_ image : UIImage){
+    func setImage(_ image : UIImage?){
+        guard let image = image else {
+            authorAvatarImageView.image = Images.avatarPlaceholder.uiimage()
+            return
+        }
         authorAvatarImageView.image = image
     }
     
