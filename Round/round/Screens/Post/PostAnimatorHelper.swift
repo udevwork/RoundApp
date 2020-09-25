@@ -21,7 +21,6 @@ public class PostAnimatorHelper {
 
 public struct PostAnimationsTempData {
     var mainPicOriginalFrame: CGRect
-    var avatarOriginalFrame: CGRect
     var viewsCounterOriginalFrame: CGRect
     var selectedCard: UIView
 }

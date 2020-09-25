@@ -24,12 +24,15 @@ class PostViewModel {
     }
     
     func loadPostBody(complition : @escaping ()->()){
-        Network().fetchPostBody(id: cardView.viewModel!.id) { viewModels in
-            Debug.log("PostViewModel.loadPostBody : ", viewModels)
-            complition()
-            self.postBlocks = viewModels
-            self.postBlocks = self.postBlocks.sorted { one, two in
-                one.order! < two.order!
+        FirebaseAPI.shared.getPostBody(id: cardView.viewModel!.id) { (HTTPResult, body) in
+            if HTTPResult == .success {
+                self.postBlocks = body!
+                self.postBlocks = self.postBlocks.sorted { one, two in
+                    one.order! < two.order!
+                }
+                complition()
+            } else {
+                print("fuck")
             }
         }
     }

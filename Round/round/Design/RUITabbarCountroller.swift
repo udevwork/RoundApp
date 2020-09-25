@@ -20,17 +20,21 @@ class RUITabbarCountroller: UITabBarController {
     func loadTabBar() {
         tabBar.isHidden = true
         view.addSubview(customTabBar)
-        customTabBar.easy.layout(Leading(20),Trailing(20),Bottom(20),Height(70))
-        
-        customTabBar.append(MenuStackElement(icon: .add, onTap: {
-            let vc = PostEditorRouter.assembly()
-            self.present(vc, animated: true, completion: nil)
-        }))
+        customTabBar.easy.layout(Leading(20), Trailing(20), Bottom(Design.safeArea.bottom + 30), Height(70))
         
         customTabBar.append(MenuStackElement(icon: .house, onTap: {
             self.selectedIndex = 0
         }))
+        
         customTabBar.append(MenuStackElement(icon: .user, onTap: {
+            self.selectedIndex = 1
+        }))
+        
+        customTabBar.append(MenuStackElement(icon: .chevronLeft, onTap: {
+            self.selectedIndex = 1
+        }))
+        
+        customTabBar.append(MenuStackElement(icon: .search, onTap: {
             self.selectedIndex = 1
         }))
         

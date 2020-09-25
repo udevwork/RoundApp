@@ -9,7 +9,6 @@
 import Foundation
 
 class MainViewModel {
-    public let user : User = User()
     public var cards : [CardViewModel] = []
     public var reloadCount: Int = 0
 

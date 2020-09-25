@@ -13,8 +13,9 @@ import EasyPeasy
 class MenuStack: UIView {
     
     private let stask: UIStackView = UIStackView()
-    private let bluredView: UIView = UIVisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial))
-        
+    //private let bluredView: UIView = UIVisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial))
+    private let backgroundView: UIView = UIView()
+
     init(size: CGSize) {
         
         stask.alignment = .center
@@ -22,22 +23,24 @@ class MenuStack: UIView {
         stask.axis = .horizontal
         
         super.init(frame: .init(origin: .zero, size: size))
-        addSubview(bluredView)
+        addSubview(backgroundView)
         addSubview(stask)
-        bluredView.easy.layout(Edges())
+        backgroundView.easy.layout(Edges())
         stask.easy.layout(CenterY(),Leading(90),Trailing(90))
 
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        bluredView.layer.cornerRadius = 30
-        bluredView.layer.masksToBounds = true
+        backgroundView.layer.cornerRadius = frame.height / 2
+        backgroundView.layer.masksToBounds = true
+        backgroundView.backgroundColor = .black
         self.layer.masksToBounds = false
-        self.layer.shadowPath = UIBezierPath(rect: bluredView.frame).cgPath
+        self.layer.shadowPath = UIBezierPath(rect: backgroundView.frame).cgPath
         self.layer.shadowRadius = 14
-        self.layer.shadowOpacity = 1
-        self.layer.shadowColor = Colors.lightblue.cgcolor()
+        self.layer.shadowOpacity = 0.6
+        self.layer.shadowOffset = CGSize(width: 0, height: 10)
+        self.layer.shadowColor = UIColor.black.cgColor
     }
     
     func append(_ view: MenuStackElement) {
@@ -55,6 +58,7 @@ class MenuStackElement: UIView {
     init(icon: Icons, onTap: @escaping ()->()) {
         self.onTap = onTap
         self.icon.image = icon.image()
+        self.icon.tintColor = .white
         self.icon.contentMode = .scaleAspectFit
         super.init(frame: .zero)
         addSubview(self.icon)

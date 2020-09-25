@@ -20,7 +20,6 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
     let animator = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 0.7, animations: nil)
     var header : PostViewControllerHeader? = nil
     
-    lazy var avatarHeader : UserAvatarNameDate = UserAvatarNameDate(header!.avatarHeader)
     lazy var viewsCounterView : IconLabelView = IconLabelView(icon: .eye, text: "")
     lazy var bottomTextBlockView: PostBluredTitleDescriptionView = PostBluredTitleDescriptionView(header!.bottomTextBlockView)
     lazy var backgroundImageView : UIImageView = {
@@ -35,14 +34,6 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         return img
     }()
     let backButton : IconLableBluredView = IconLableBluredView(icon: .back, text: "Back")
-    
-    lazy var actionButton : Button = ButtonBuilder()
-        .setFrame(card!.actionButton.frame)
-        .setStyle(.icon)
-        .setColor(.clear)
-        .setIconColor(.white)
-        .setIconSize(CGSize(width: 20, height: 20))
-        .build()
     
     init(header : PostViewControllerHeader, card : CardView) {
         super.init()
@@ -66,34 +57,24 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
             transitionContext.completeTransition(false)
             return
         }
-        print("fuck: ", containerView.frame)
         containerView.transform = CGAffineTransform(scaleX: fromViewController.view.transform.a, y: fromViewController.view.transform.d)
         
         toViewController.view.isHidden = false
         fromViewController.view.isHidden = true
         /// main image
         
-        actionButton.setIcon(model.isSubscribed ? Icons.bookmarkfill : Icons.bookmark)
         
         /// add Subview
         containerView.addSubview(fromViewController.view)
         
         containerView.addSubview(backgroundImageView)
-        containerView.addSubview(avatarHeader)
-        print("Hello", avatarHeader.frame)
         containerView.addSubview(viewsCounterView)
         backgroundImageView.addSubview(bottomTextBlockView)
         backgroundImageView.addSubview(backButton)
-        backgroundImageView.addSubview(actionButton)
-        actionButton.frame = header.actionButton.frame
         
         bottomTextBlockView.easy.layout(Leading(15), Trailing(15), Bottom(15))
         
-        avatarHeader.frame = header.convert(header.avatarHeader.frame, to: nil)
         backButton.easy.layout(Left(20),Top(20),Width(40),Height(40))
-        
-        actionButton.easy.layout(Trailing(20), Top(20))
-        
         
         backgroundImageView.layer.cornerRadius = fromViewController.view.layer.cornerRadius
         
@@ -103,13 +84,10 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         animator.addAnimations { [weak self] in
             containerView.transform = CGAffineTransform(scaleX: 1, y: 1)
             self?.backgroundImageView.frame = tempOriginalData.mainPicOriginalFrame
-            print("Save: ", tempOriginalData.avatarOriginalFrame)
 
-            self?.avatarHeader.frame = tempOriginalData.avatarOriginalFrame
             self?.viewsCounterView.frame = tempOriginalData.viewsCounterOriginalFrame
             self?.backgroundImageView.layer.cornerRadius = card.backgroundImageView.layer.cornerRadius
             self?.backButton.alpha = 0
-            self?.actionButton.alpha = 0
             self?.viewsCounterView.alpha = 1
             containerView.layoutIfNeeded()
         }
@@ -117,7 +95,6 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         animator.addCompletion { finished in
             fromViewController.view.isHidden = true
             if finished == .end {
-                print("Save: ", self.avatarHeader.frame)
                 
                 tempOriginalData.selectedCard.isHidden = false
                 transitionContext.completeTransition(true)

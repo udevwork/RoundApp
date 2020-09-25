@@ -17,7 +17,7 @@ class MainViewController: BaseViewController<MainViewModel> {
     // MARK: - Constants
     
     let cellWidth =   UIScreen.main.bounds.width
-    let cellHeight =  UIScreen.main.bounds.height
+    let cellHeight =  UIScreen.main.bounds.height - 100
 
     let sectionSpacing: CGFloat = 0
     let cellSpacing: CGFloat = 0
@@ -28,7 +28,7 @@ class MainViewController: BaseViewController<MainViewModel> {
         let layout = PagingCollectionViewLayout()
         layout.minimumLineSpacing = cellSpacing
         layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: 0, bottom: 0, right: 0)
-        layout.scrollDirection = .vertical
+        layout.scrollDirection = .horizontal
     
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         layout.numberOfItemsPerPage = 1
@@ -68,7 +68,9 @@ class MainViewController: BaseViewController<MainViewModel> {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
        
-        postCollectionView.easy.layout( Trailing(),Leading(),Bottom(),Top(Design.safeArea.top + 10) )
+        let bottom = Design.safeArea.bottom + 150
+        let top = Design.safeArea.top + 10
+        postCollectionView.easy.layout(Trailing(),Leading(),Bottom(),Top() )
 
     }
     
@@ -79,21 +81,10 @@ class MainViewController: BaseViewController<MainViewModel> {
     }
     
     @objc func user() {
-        if AccountManager.shared.data.anonymous {
-            let model = SignInViewModel()
-            let vc = SignInRouter.assembly(model: model)
-            self.navigationController?.pushViewController(vc, animated: true)
-        } else {
-            let vc = ProfileRouter.assembly(userId: AccountManager.shared.data.uid)
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+
     }
    
-    func createPost() {
-          let vc = PostEditorRouter.assembly()
-          self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
+   
     fileprivate func setupView(){
         
         view.addSubview(postCollectionView)
@@ -105,8 +96,8 @@ class MainViewController: BaseViewController<MainViewModel> {
         postCollectionView.gemini
             .customAnimation()
             .alpha(0.2)
-           // .scale(x: 0.8, y: 0.8, z: 1)
-            .rotationAngle(x: 6, y: 0, z: 0)
+            .scale(x: 0.8, y: 0.8, z: 1)
+            .rotationAngle(x: 0, y: 6, z: 0)
                 
         viewModel.loadNewPost { _ in 
             DispatchQueue.main.async { [weak self] in

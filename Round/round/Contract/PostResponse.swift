@@ -10,18 +10,9 @@ import Foundation
 import Firebase
 import CodableFirebase
 
-extension Timestamp: TimestampType {}
-extension GeoPoint: GeoPointType {}
-
-
 struct PostResponse : Codable {
     var description: String?
-    var author: User?
     var title: String?
     var mainPicURL: String?
-    var viewsCount: Int?
-    var showsCount: Int?
-    var creationDate: Timestamp?
-    var location: Location?
-    var subscribers: [String]?
+    var dowloadsCount: Int?
 }

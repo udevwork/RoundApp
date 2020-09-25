@@ -52,30 +52,11 @@ class SignInViewController: BaseViewController<SignInViewModel> {
         }
         
         createButton.setTarget {
-            Network().createNewUser(email: self.emailInput.input.text!, password: self.passwordInput.input.text!) { (result, user) in
-                if result == .success {
-                    Debug.log("success")
-                    Debug.log("USER: \(user?.userName ?? "no name"), \(user?.uid ?? "no id")")
-                    self.navigationController?.popViewController(animated: true)
-                } else {
-                    Debug.log("error")
-                }
-            }
+           // create user
         }
         
         signinButton.setTarget {
-            Network().signIn(email: self.emailInput.input.text!, password: self.passwordInput.input.text!) { (result, user) in
-                if result == .success {
-                    UserDefaults.standard.set(self.emailInput.input.text!, forKey: "email")
-                    UserDefaults.standard.set(self.passwordInput.input.text!, forKey: "password")
-                    
-                    Debug.log("success")
-                    Debug.log("USER: \(user?.userName ?? "no name"), \(user?.uid ?? "no id")")
-                    self.navigationController?.popViewController(animated: true)
-                } else {
-                    Debug.log("error")
-                }
-            }
+          // todo sign in
         }
         
 

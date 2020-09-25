@@ -16,10 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         FirebaseApp.configure()
-        AccountManager.shared.network.restoreLastUserSession()
-        AccountManager.shared.data.assemblyUser()
-
-
+     
         let model = MainViewModel()
         let contentView = MainViewController(viewModel: model)
         

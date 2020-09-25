@@ -17,7 +17,6 @@ class PostViewController: BaseViewController<PostViewModel> {
     var animatableHeader : PostViewControllerHeader? = nil
 
     var table : UITableView = UITableView(frame: .zero, style: .grouped)
-    private let refreshControl = UIRefreshControl()
     let animation = UIViewPropertyAnimator(duration: 0.3, dampingRatio: 0.8, animations: nil)
 
     var card : CardView? = nil
@@ -62,18 +61,9 @@ class PostViewController: BaseViewController<PostViewModel> {
             }
         }
         header.onAvatarPress = { [weak self] in
-            self?.routeToProfile()
+           
         }
-        header.actionButton.setTarget { [weak self] in
-            guard let sSelf = self else {
-                return
-            }
-            if sSelf.viewModel.cardView.viewModel!.isSelfPost {
-                sSelf.showAlertMenu()
-            } else {
-                sSelf.onBookmarkPress()
-            }
-        }
+       
         table.easy.layout(Edges())
         let gesture: UIScreenEdgePanGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(closeGesture))
         gesture.edges = UIRectEdge.left
@@ -176,11 +166,8 @@ class PostViewController: BaseViewController<PostViewModel> {
         table.sectionFooterHeight = 0
         table.tableFooterView = nil
         table.rowHeight = UITableView.automaticDimension
-        table.refreshControl = refreshControl
         table.allowsSelection = false
-        refreshControl.addTarget(self, action: #selector(refreshWeatherData(_:)), for: .valueChanged)
-        refreshControl.tintColor = .clear
-        refreshControl.attributedTitle = NSAttributedString(string: "close", attributes: nil)
+      
         if #available(iOS 11.0, *) {
             table.insetsContentViewsToSafeArea = true;
             table.contentInsetAdjustmentBehavior = .never
@@ -190,34 +177,8 @@ class PostViewController: BaseViewController<PostViewModel> {
         table.register(SimplePhotoPostCellView.self, forCellReuseIdentifier: "SimplePhotoPostCellView")
     }
     
-    private func routeToProfile(){
-        let vc = ProfileRouter.assembly(userId: (viewModel.cardView.viewModel?.author?.uid)!)
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    private func showAlertMenu(){
-        let action = UIAlertController(title: "Available actions", message: viewModel.cardView.bottomTextBlockView.titleLabel.text ?? "Post", preferredStyle: .actionSheet)
-        
-        action.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
-            FirebaseAPI.shared.deletePost(postId: self.viewModel.cardView.viewModel!.id) {
-                self.showDeleteSuccsessAlert()
-            }
-        }))
-        
-        action.addAction(UIAlertAction(title: "Statistics", style: .default, handler: { action in
-            
-        }))
-        
-        action.addAction(UIAlertAction(title: "Add to bookmark", style: .default, handler: { action in
-            
-        }))
-        
-        action.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        self.present(action, animated: true) {
-            
-        }
-    }
+
+
     
     private func showDeleteSuccsessAlert(){
         let action = UIAlertController(title: "Delete cemplete", message: nil, preferredStyle: .alert)
@@ -231,47 +192,6 @@ class PostViewController: BaseViewController<PostViewModel> {
         }
     }
     
-    private func onBookmarkPress(){
-        print("bookmark", "press")
-        
-        if header!.isSubscribed { // remoove
-            print("bookmark 1", header!.isSubscribed)
-            FirebaseAPI.shared.removeBookmark(postId: viewModel.cardView.viewModel!.id) { [weak self] result in
-                guard let self = self else {return}
-                if result == .success {
-                    self.header!.actionButton.setIcon(Icons.bookmark)
-                    self.header!.isSubscribed = false
-                    AccountManager.shared.data.bookmarks.removeAll { bid -> Bool in
-                        if bid == self.viewModel.cardView.viewModel!.id {
-                            print("bookmark", "remove, ",bid)
-                            return true
-                        } else {
-                            return false
-                        }
-                    }
-                    
-                }
-            }
-            
-        } else { // add
-            print("bookmark 2", header!.isSubscribed)
-            FirebaseAPI.shared.saveBookmark(postId: viewModel.cardView.viewModel!.id) { [weak self] result in
-                guard let self = self else {return}
-                if result == .success {
-                    self.header!.actionButton.setIcon(Icons.bookmarkfill)
-                    self.header!.isSubscribed = true
-                    AccountManager.shared.data.bookmarks.append(self.viewModel.cardView.viewModel!.id)
-                    print("bookmark", "add, ",self.viewModel.cardView.viewModel!.id)
-                    
-                }
-            }
-        }
-        
-    }
-    
-    @objc private func refreshWeatherData(_ sender: Any) {
-        animation.startAnimation()
-    }
 }
 
 extension PostViewController : UIViewControllerTransitioningDelegate {
