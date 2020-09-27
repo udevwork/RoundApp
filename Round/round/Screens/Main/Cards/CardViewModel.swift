@@ -15,7 +15,6 @@ class CardViewModel {
     let title : String
     let description : String
     let dowloadsCount : Int
-
     
     init(id : String, mainImageURL : String?, title : String?, description : String?, dowloadsCount : Int?) {
         self.id = id
@@ -33,12 +32,6 @@ class CardViewModel {
         self.dowloadsCount = response.dowloadsCount ?? 0
     
     }
-    
-    init() {
-        self.id = ""
-        self.mainImageURL = ""
-        self.title = "nil"
-        self.description = "nil"
-        self.dowloadsCount = 0
-    }
+
 }
+

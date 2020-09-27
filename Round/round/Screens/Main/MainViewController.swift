@@ -17,17 +17,14 @@ class MainViewController: BaseViewController<MainViewModel> {
     // MARK: - Constants
     
     let cellWidth =   UIScreen.main.bounds.width
-    let cellHeight =  UIScreen.main.bounds.height - 100
+    let cellHeight =  UIScreen.main.bounds.height - 200
 
-    let sectionSpacing: CGFloat = 0
-    let cellSpacing: CGFloat = 0
-    
     // MARK: - UI Components
    
     fileprivate lazy var postCollectionView : GeminiCollectionView = {
         let layout = PagingCollectionViewLayout()
-        layout.minimumLineSpacing = cellSpacing
-        layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: 0, bottom: 0, right: 0)
+        layout.minimumLineSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.scrollDirection = .horizontal
     
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
@@ -56,26 +53,13 @@ class MainViewController: BaseViewController<MainViewModel> {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationItem.largeTitleDisplayMode = .never
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-       
-        let bottom = Design.safeArea.bottom + 150
-        let top = Design.safeArea.top + 10
-        postCollectionView.easy.layout(Trailing(),Leading(),Bottom(),Top() )
-
-    }
+ 
     
     func setUpMenuButton(){
-        navigationItem.largeTitleDisplayMode = .never
+       // navigationItem.largeTitleDisplayMode = .never
         let item = UIBarButtonItem(image: Icons.user.image(), landscapeImagePhone: Icons.user.image(), style: .plain, target: self, action: #selector(user))
         self.navigationItem.rightBarButtonItem = item
     }
@@ -88,6 +72,9 @@ class MainViewController: BaseViewController<MainViewModel> {
     fileprivate func setupView(){
         
         view.addSubview(postCollectionView)
+        let bottom = Design.safeArea.bottom + 150
+        let top = Design.safeArea.top + 100
+        postCollectionView.easy.layout(Trailing(),Leading(),Bottom(bottom),Top(top))
         postCollectionView.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
         postCollectionView.delegate = self
         postCollectionView.dataSource = self
@@ -99,10 +86,9 @@ class MainViewController: BaseViewController<MainViewModel> {
             .scale(x: 0.8, y: 0.8, z: 1)
             .rotationAngle(x: 0, y: 6, z: 0)
                 
-        viewModel.loadNewPost { _ in 
+        viewModel.loadNewPost {
             DispatchQueue.main.async { [weak self] in
                 self?.postCollectionView.reloadData()
-              //  self?.postCollectionView.scrollToItem(at: IndexPath(row: 1, section: 0), at: .top, animated: true)
             }
         }
         
@@ -128,29 +114,15 @@ extension MainViewController : UICollectionViewDelegate, UICollectionViewDataSou
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         postCollectionView.animateVisibleCells()
     }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row >= viewModel.cards.count - 2 {
-            viewModel.loadNewPost { inserIndexPaths in
-                DispatchQueue.main.async { [weak self] in
-        
-                    //self?.postCollectionView.reloadData()
-                    self?.postCollectionView.insertItems(at: inserIndexPaths)
-                }
-            }
-        }
-        if let cell = cell as? GeminiCell {
-            self.postCollectionView.animateCell(cell)
-        }
-    }
+
 }
 
 class CustomCell: GeminiCell {
-    let card : CardView = CardView(viewModel: nil, frame: .zero)
+    let card : CardView = CardView()
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(card)
-        card.easy.layout(Leading(25),Trailing(25),Top(0),Bottom(120 + Design.safeArea.bottom))
+        card.easy.layout(Leading(25),Trailing(25),Top(),Bottom())
     }
     
     required init?(coder: NSCoder) {
@@ -160,5 +132,4 @@ class CustomCell: GeminiCell {
     public func setup(_ model: CardViewModel){
         card.setupData(model)
     }
-    
 }

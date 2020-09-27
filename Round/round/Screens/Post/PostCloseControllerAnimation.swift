@@ -20,7 +20,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
     let animator = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 0.7, animations: nil)
     var header : PostViewControllerHeader? = nil
     
-    lazy var viewsCounterView : IconLabelView = IconLabelView(icon: .eye, text: "")
+    lazy var viewsCounterView : IconLabelView = IconLabelView(icon: .download, text: String(card?.viewModel?.dowloadsCount ?? 999))
     lazy var bottomTextBlockView: PostBluredTitleDescriptionView = PostBluredTitleDescriptionView(header!.bottomTextBlockView)
     lazy var backgroundImageView : UIImageView = {
         let img = UIImageView()
@@ -48,7 +48,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
         let containerView = transitionContext.containerView
-        guard let header = header, let card = card, let model = card.viewModel else {
+        guard let card = card else {
             return
         }
         
@@ -78,6 +78,8 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         
         backgroundImageView.layer.cornerRadius = fromViewController.view.layer.cornerRadius
         
+        backgroundImageView.layer.borderWidth = 0
+        backgroundImageView.layer.borderColor = UIColor.clear.cgColor
 
         let tempOriginalData = PostAnimatorHelper.pop()
 
@@ -89,6 +91,10 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
             self?.backgroundImageView.layer.cornerRadius = card.backgroundImageView.layer.cornerRadius
             self?.backButton.alpha = 0
             self?.viewsCounterView.alpha = 1
+            
+            self?.backgroundImageView.layer.borderWidth = 6
+            self?.backgroundImageView.layer.borderColor = UIColor.systemGray6.cgColor
+            
             containerView.layoutIfNeeded()
         }
         

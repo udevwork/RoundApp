@@ -15,10 +15,10 @@ class PostViewController: BaseViewController<PostViewModel> {
     
     var header : PostViewControllerHeader? = nil
     var animatableHeader : PostViewControllerHeader? = nil
-
+    
     var table : UITableView = UITableView(frame: .zero, style: .grouped)
     let animation = UIViewPropertyAnimator(duration: 0.3, dampingRatio: 0.8, animations: nil)
-
+    
     var card : CardView? = nil
     
     
@@ -57,13 +57,9 @@ class PostViewController: BaseViewController<PostViewModel> {
         
         view.addSubview(table)
         header.backButton.addTarget {
-            self.dismiss(animated: true) {
-            }
+            self.dismiss(animated: true) { }
         }
-        header.onAvatarPress = { [weak self] in
-           
-        }
-       
+        
         table.easy.layout(Edges())
         let gesture: UIScreenEdgePanGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(closeGesture))
         gesture.edges = UIRectEdge.left
@@ -167,18 +163,21 @@ class PostViewController: BaseViewController<PostViewModel> {
         table.tableFooterView = nil
         table.rowHeight = UITableView.automaticDimension
         table.allowsSelection = false
-      
+        
         if #available(iOS 11.0, *) {
             table.insetsContentViewsToSafeArea = true;
             table.contentInsetAdjustmentBehavior = .never
         }
+        
         table.register(TitlePostCellView.self, forCellReuseIdentifier: "TitlePostCellView")
         table.register(ArticlePostCellView.self, forCellReuseIdentifier: "ArticlePostCellView")
         table.register(SimplePhotoPostCellView.self, forCellReuseIdentifier: "SimplePhotoPostCellView")
+        table.register(GalleryPostCellView.self, forCellReuseIdentifier: "GalleryPostCellView")
+        
     }
     
-
-
+    
+    
     
     private func showDeleteSuccsessAlert(){
         let action = UIAlertController(title: "Delete cemplete", message: nil, preferredStyle: .alert)
@@ -222,8 +221,8 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
         
         switch model.type {
         case .Title:
-            cell = TitlePostCellView()
-
+            cell = tableView.dequeueReusableCell(withIdentifier: "TitlePostCellView", for: indexPath) as! TitlePostCellView
+            
             if let t = cellType(of: .previous, currentIndexPathRow: indexPath.row), t == .Article {
                 padding.top = 5
             }
@@ -238,7 +237,7 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
             }
             
         case .Article:
-            cell = ArticlePostCellView()
+            cell = tableView.dequeueReusableCell(withIdentifier: "ArticlePostCellView", for: indexPath) as! ArticlePostCellView
             
             if let t = cellType(of: .previous, currentIndexPathRow: indexPath.row), t == .Article {
                 padding.top = 1.5
@@ -247,9 +246,11 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
                 padding.bottom = 1.5
             }
         case .SimplePhoto:
-            cell = SimplePhotoPostCellView()
+            cell = tableView.dequeueReusableCell(withIdentifier: "SimplePhotoPostCellView", for: indexPath) as! SimplePhotoPostCellView
             padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            
+        case .Gallery:
+            cell = tableView.dequeueReusableCell(withIdentifier: "GalleryPostCellView", for: indexPath) as! GalleryPostCellView
+            padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         case .none:
             break
         }
@@ -264,7 +265,7 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
         if row > viewModel.postBlocks.count-1 || row < 0 {
             return nil
         } else {
-           return viewModel.postBlocks[row].type
+            return viewModel.postBlocks[row].type
         }
     }
     
@@ -281,6 +282,6 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
         
         return UITableView.automaticDimension
     }
-
+    
 }
 

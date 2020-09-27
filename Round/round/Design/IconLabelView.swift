@@ -12,20 +12,22 @@ import EasyPeasy
 
 class IconLabelView: UIView {
     
-    let icon: UIImageView = {
-        let i = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: 14, height: 14)))
-        i.contentMode = .scaleAspectFit
-        i.tintColor = Colors.lightlabel.uicolor()
-        return i
-    }()
+    private let iconSize: CGSize = CGSize(width: 19, height: 19)
+    private let contentInset: UIEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 20)
     
-    let label: Text = Text(.light, Colors.lightlabel.uicolor())
+    private let blurredEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterialDark))
+    private var iconView: UIImageView?
+    private var labelView: Text?
     
-    init(icon: Icons, text: String) {
-        self.icon.image = icon.image(weight: .thin)
-        self.label.text = text
+    init(icon: Icons? = nil, text: String? = nil) {
         super.init(frame: .zero)
         setupView()
+        if let icon = icon {
+            setIcon(icon)
+        }
+        if let text = text {
+            setText(text)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -33,12 +35,59 @@ class IconLabelView: UIView {
     }
     
     private func setupView() {
-        addSubview(icon)
-        addSubview(label)
-        label.sizeToFit()
-        icon.easy.layout(Leading(), CenterY(), Size(11))
-        label.easy.layout(Leading(3).to(icon), CenterY())
-        self.easy.layout(Height(14),Width(17+label.frame.width))
+        addSubview(blurredEffectView)
+        blurredEffectView.layer.masksToBounds = true
+    }
+    
+    public func setIcon(_ icon: Icons){
+        if iconView != nil {
+            iconView!.image = icon.image(weight: .thin)
+            setupFrame()
+            return
+        }
+        iconView = UIImageView(frame: CGRect(origin: .zero, size: iconSize))
+        guard let iconView = iconView else { return }
+        blurredEffectView.contentView.addSubview(iconView)
+        
+        iconView.image = icon.image(weight: .thin)
+        iconView.contentMode = .scaleAspectFit
+        iconView.tintColor = .systemGray6
+            
+        blurredEffectView.contentView.addSubview(iconView)
+                
+        iconView.easy.layout(Size(iconSize), Leading(contentInset.left), CenterY())
+        setupFrame()
+        
+    }
+    
+    public func setText(_ text: String){
+        if labelView != nil {
+            labelView!.text = text
+            labelView!.sizeToFit()
+            setupFrame()
+            return
+        }
+        self.labelView = Text(.system, .systemGray6)
+        guard let labelView = labelView else { return }
+        labelView.text = text
+        blurredEffectView.contentView.addSubview(labelView)
+        labelView.sizeToFit()
+        labelView.easy.layout(
+            Leading(5).to(iconView!).when{ self.iconView != nil },
+            Leading(5).when{ self.iconView == nil },
+            CenterY())
+        setupFrame()
+    }
+    
+    private func setupFrame(){
+        let width: CGFloat = iconSize.width + contentInset.left + contentInset.right + (labelView?.frame.width ?? 0)
+        let height: CGFloat = iconSize.height + contentInset.bottom + contentInset.top
+        let size = CGSize(width: width, height: height)
+
+        frame =  CGRect(origin: .zero, size: size)
+        blurredEffectView.frame = frame
+        blurredEffectView.layer.cornerRadius = frame.height/2
+
         setNeedsLayout()
         layoutIfNeeded()
     }

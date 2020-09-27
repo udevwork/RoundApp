@@ -20,7 +20,7 @@ final class FirebaseAPI : API {
         return singletone
     }()
     
-    private let posts = Firestore.firestore().collection("posts")
+    private let posts = Firestore.firestore().collection("Designs")
     
     private init (){}
     
@@ -132,7 +132,6 @@ final class FirebaseAPI : API {
     }
     
     func getPostBody(id: String, complition: @escaping (HTTPResult, [BasePostCellViewModelProtocol]?) -> ()){
-        incrementPostDownloadCounter(post: id)
         posts.document(id).collection("content").getDocuments { (snap, error) in
             if error != nil {
                 Debug.log("FirebaseAPI.getPostBody(): getDocument error: ", error ?? "nil")
@@ -166,6 +165,11 @@ final class FirebaseAPI : API {
                         let vm = SimplePhotoPostCellViewModel(model : resp)
                         models.append(vm)
                         break
+                    case .Gallery:
+                        let resp = try FirebaseDecoder().decode(GalleryPostResponse.self, from: data)
+                        let vm = GalleryPostCellViewModel(model : resp)
+                        models.append(vm)
+                        break
                     }
                     
                 } catch let error {
@@ -179,24 +183,40 @@ final class FirebaseAPI : API {
     }
     
     public func incrementPostDownloadCounter(post id: String){
-        posts.document(id).updateData(["viewsCount" : FieldValue.increment(Int64(1))])
+        posts.document(id).updateData(["dowloadsCount" : FieldValue.increment(Int64(1))])
     }
     
     
-    public func getRandomPost(complition : @escaping (HTTPResult, [CardViewModel]?) -> ()){
-        complition(.success,GenerateFakePosts())
-        
+    public func getPosts(complition : @escaping (HTTPResult, [CardViewModel]?) -> ()){
+     
+        posts.getDocuments { (snap, error) in
+            var model : [CardViewModel] = []
+
+            snap!.documents.forEach { doc in
+                let data = doc.data()
+                do {
+                    let resp = try FirebaseDecoder().decode(PostResponse.self, from: data)
+                    let vm = CardViewModel(id: doc.documentID, response: resp)
+                    model.append(vm)
+                } catch let error {
+                    Debug.log("FirebaseAPI.getPostBody(): Decoder error: \(data)", error)
+                    complition(HTTPResult.error, nil)
+                }
+            }
+            complition(.success, model)
+        }
+       
     }
     
     // MARK: FAKE POSTS
     func GenerateFakePosts() ->  [CardViewModel] {
         
-        return [CardViewModel(id: "2xj3OWNITjyTqsr1ywTd", mainImageURL: "https://sun1-89.userapi.com/L4DebQB2_VxT_E7M0SQHpbNaydSXG4FNne12Kw/YRndy3wHacI.jpg", title: "Sketch App", description: "test desc", dowloadsCount: 49),
-                CardViewModel(id: "2xj3OWNITjyTqsr1ywTd", mainImageURL: "https://sun1-27.userapi.com/FCwVKehCCRG7L7USg3heTu0eXB55Y7UF_6uihA/-MicidUH3hI.jpg", title: "Yollo is simple", description: "test desc", dowloadsCount: 25),
-                CardViewModel(id: "2xj3OWNITjyTqsr1ywTd", mainImageURL: "https://sun1-17.userapi.com/4xj1TPGxiiZ0kq22dVqVa9RPbmtoHzIx6lCbSQ/LGJzdp1V5kA.jpg", title: "daily user’s needs in one hand", description: "test desc", dowloadsCount: 235),
-                CardViewModel(id: "2xj3OWNITjyTqsr1ywTd", mainImageURL: "https://sun1-28.userapi.com/7KI4xmTMWXpguxYSdBezONejxtzrVy5zgYMwlw/xpuW-ItMIec.jpg", title: "Your project made a great impression", description: "test desc", dowloadsCount: 2),
-                CardViewModel(id: "2xj3OWNITjyTqsr1ywTd", mainImageURL: "https://sun1-90.userapi.com/bGW_nINR-jkO3MKtAzq8JKk8P-Ztj5B8eVHNyw/MXbeiYKem80.jpg", title: "Good project, Awesome!", description: "test desc", dowloadsCount: 967),
-                CardViewModel(id: "2xj3OWNITjyTqsr1ywTd", mainImageURL: "https://sun1-95.userapi.com/aqD57_9h05HJJRplDi-_PTDdHHfltb_P6KcRxA/EwkMTmzJoPI.jpg", title: "typography", description: "test desc", dowloadsCount: 49)]
+        return [CardViewModel(id: "AQJ0z1EQ325uW0GeLm8F", mainImageURL: "https://sun1-89.userapi.com/L4DebQB2_VxT_E7M0SQHpbNaydSXG4FNne12Kw/YRndy3wHacI.jpg", title: "Sketch App", description: "test desc", dowloadsCount: 49),
+                CardViewModel(id: "AQJ0z1EQ325uW0GeLm8F", mainImageURL: "https://sun1-27.userapi.com/FCwVKehCCRG7L7USg3heTu0eXB55Y7UF_6uihA/-MicidUH3hI.jpg", title: "Yollo is simple", description: "test desc", dowloadsCount: 25),
+                CardViewModel(id: "AQJ0z1EQ325uW0GeLm8F", mainImageURL: "https://sun1-17.userapi.com/4xj1TPGxiiZ0kq22dVqVa9RPbmtoHzIx6lCbSQ/LGJzdp1V5kA.jpg", title: "daily user’s needs in one hand", description: "test desc", dowloadsCount: 235),
+                CardViewModel(id: "AQJ0z1EQ325uW0GeLm8F", mainImageURL: "https://sun1-28.userapi.com/7KI4xmTMWXpguxYSdBezONejxtzrVy5zgYMwlw/xpuW-ItMIec.jpg", title: "Your project made a great impression", description: "test desc", dowloadsCount: 2),
+                CardViewModel(id: "AQJ0z1EQ325uW0GeLm8F", mainImageURL: "https://sun1-90.userapi.com/bGW_nINR-jkO3MKtAzq8JKk8P-Ztj5B8eVHNyw/MXbeiYKem80.jpg", title: "Good project, Awesome!", description: "test desc", dowloadsCount: 967),
+                CardViewModel(id: "AQJ0z1EQ325uW0GeLm8F", mainImageURL: "https://sun1-95.userapi.com/aqD57_9h05HJJRplDi-_PTDdHHfltb_P6KcRxA/EwkMTmzJoPI.jpg", title: "typography", description: "test desc", dowloadsCount: 49)]
         
     }
     
@@ -205,6 +225,4 @@ final class FirebaseAPI : API {
         complition()
     }
 }
-
-
 

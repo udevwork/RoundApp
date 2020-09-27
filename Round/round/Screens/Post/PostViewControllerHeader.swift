@@ -59,10 +59,5 @@ class PostViewControllerHeader: UIView {
         }
         return super.hitTest(point, with: event)
     }
-    
-    public var onAvatarPress : ()->() = { }
-    
-    @objc func routeToProfile(){
-        onAvatarPress()
-    }
+
 }

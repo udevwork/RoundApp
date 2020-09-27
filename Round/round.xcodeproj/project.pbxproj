@@ -83,6 +83,11 @@
 		92DC5836249E172600711B03 /* BellotaText-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92DC5830249E172600711B03 /* BellotaText-Light.ttf */; };
 		92DC5837249E172600711B03 /* BellotaText-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92DC5831249E172600711B03 /* BellotaText-Italic.ttf */; };
 		92DC5838249E172600711B03 /* BellotaText-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92DC5832249E172600711B03 /* BellotaText-LightItalic.ttf */; };
+		92E53E3C2520D8450033D98B /* GalleryPostCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E3B2520D8450033D98B /* GalleryPostCellView.swift */; };
+		92E53E402520D8550033D98B /* GalleryPostCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E3F2520D8550033D98B /* GalleryPostCellViewModel.swift */; };
+		92E53E432520DCB50033D98B /* GalleryPostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E422520DCB50033D98B /* GalleryPostResponse.swift */; };
+		92E53E472520ED3E0033D98B /* DownloadPostCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E462520ED3E0033D98B /* DownloadPostCellView.swift */; };
+		92E53E4B2520ED460033D98B /* DownloadPostCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E4A2520ED460033D98B /* DownloadPostCellViewModel.swift */; };
 		92E62AC2239BF83E009A2CD2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E62AC1239BF83E009A2CD2 /* MainViewController.swift */; };
 		92E62AC4239BFB98009A2CD2 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 92E62AC3239BFB98009A2CD2 /* Podfile */; };
 		92E62AC7239CDBEB009A2CD2 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E62AC6239CDBEB009A2CD2 /* MainViewModel.swift */; };
@@ -195,6 +200,11 @@
 		92DC5830249E172600711B03 /* BellotaText-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BellotaText-Light.ttf"; sourceTree = "<group>"; };
 		92DC5831249E172600711B03 /* BellotaText-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BellotaText-Italic.ttf"; sourceTree = "<group>"; };
 		92DC5832249E172600711B03 /* BellotaText-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BellotaText-LightItalic.ttf"; sourceTree = "<group>"; };
+		92E53E3B2520D8450033D98B /* GalleryPostCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPostCellView.swift; sourceTree = "<group>"; };
+		92E53E3F2520D8550033D98B /* GalleryPostCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPostCellViewModel.swift; sourceTree = "<group>"; };
+		92E53E422520DCB50033D98B /* GalleryPostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPostResponse.swift; sourceTree = "<group>"; };
+		92E53E462520ED3E0033D98B /* DownloadPostCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPostCellView.swift; sourceTree = "<group>"; };
+		92E53E4A2520ED460033D98B /* DownloadPostCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPostCellViewModel.swift; sourceTree = "<group>"; };
 		92E62AC1239BF83E009A2CD2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		92E62AC3239BFB98009A2CD2 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		92E62AC6239CDBEB009A2CD2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -291,6 +301,8 @@
 		9260B85623B4E3BB00AB18A5 /* PostCells */ = {
 			isa = PBXGroup;
 			children = (
+				92E53E452520ED0B0033D98B /* DownloadCell */,
+				92E53E3A2520D8150033D98B /* GalleryCell */,
 				9260B86523B606EB00AB18A5 /* SimplePhotoCell */,
 				9260B86023B6059500AB18A5 /* ArticleCell */,
 				9260B85923B5EDBB00AB18A5 /* TitleCell */,
@@ -332,6 +344,7 @@
 				926D209523E4702E00C8B492 /* TitlePostResponse.swift */,
 				926D209723E4703E00C8B492 /* ArticlePostResponse.swift */,
 				926D209923E470BC00C8B492 /* SimplePhotoResponse.swift */,
+				92E53E422520DCB50033D98B /* GalleryPostResponse.swift */,
 			);
 			path = FireResponse;
 			sourceTree = "<group>";
@@ -470,6 +483,24 @@
 				92DC581A249E170400711B03 /* PlayfairDisplay-SemiBoldItalic.ttf */,
 			);
 			path = PlayfairDisplay;
+			sourceTree = "<group>";
+		};
+		92E53E3A2520D8150033D98B /* GalleryCell */ = {
+			isa = PBXGroup;
+			children = (
+				92E53E3B2520D8450033D98B /* GalleryPostCellView.swift */,
+				92E53E3F2520D8550033D98B /* GalleryPostCellViewModel.swift */,
+			);
+			path = GalleryCell;
+			sourceTree = "<group>";
+		};
+		92E53E452520ED0B0033D98B /* DownloadCell */ = {
+			isa = PBXGroup;
+			children = (
+				92E53E462520ED3E0033D98B /* DownloadPostCellView.swift */,
+				92E53E4A2520ED460033D98B /* DownloadPostCellViewModel.swift */,
+			);
+			path = DownloadCell;
 			sourceTree = "<group>";
 		};
 		92E62AC5239CDBCE009A2CD2 /* Main */ = {
@@ -779,6 +810,7 @@
 				9298E25F23F28D1100952F28 /* SearchViewController.swift in Sources */,
 				9260B85B23B5EDEC00AB18A5 /* TitlePostCellView.swift in Sources */,
 				9260B85D23B5EDF900AB18A5 /* TitlePostCellViewModel.swift in Sources */,
+				92E53E432520DCB50033D98B /* GalleryPostResponse.swift in Sources */,
 				92E8C351239BF681009F84EE /* SceneDelegate.swift in Sources */,
 				926D209A23E470BC00C8B492 /* SimplePhotoResponse.swift in Sources */,
 				92F9C4EF23DCCAEE00AB9823 /* AsyncImageDownload.swift in Sources */,
@@ -795,10 +827,12 @@
 				9298E24F23F1335500952F28 /* FilterTag.swift in Sources */,
 				92F46A26243B47AC00CCC386 /* InputField.swift in Sources */,
 				92132E96246335B100C58810 /* RNSimpleView.swift in Sources */,
+				92E53E402520D8550033D98B /* GalleryPostCellViewModel.swift in Sources */,
 				92B8622C249612C00087676A /* FirebaseRequestProtocol.swift in Sources */,
 				9260B86423B605D300AB18A5 /* ArticlePostCellViewModel.swift in Sources */,
 				9260B86723B6070D00AB18A5 /* SimplePhotoPostCellView.swift in Sources */,
 				92F46A28243B4ADB00CCC386 /* SignInViewController.swift in Sources */,
+				92E53E3C2520D8450033D98B /* GalleryPostCellView.swift in Sources */,
 				92F90372248394A300B0A176 /* BookmarkRealm.swift in Sources */,
 				92132E94246320EB00C58810 /* ErrorHandler.swift in Sources */,
 				92F46A2E243B4B0000CCC386 /* SignInRouter.swift in Sources */,
@@ -807,6 +841,7 @@
 				9214322324D2DFC3005FCDC4 /* UITest.swift in Sources */,
 				929B70D32479A585009A2484 /* RealmTest.swift in Sources */,
 				9298E25223F13A2600952F28 /* CardViewTemplate.swift in Sources */,
+				92E53E472520ED3E0033D98B /* DownloadPostCellView.swift in Sources */,
 				9209EBF324558D7600520513 /* UIImageExtension.swift in Sources */,
 				926D209623E4702E00C8B492 /* TitlePostResponse.swift in Sources */,
 				9256DF53246871CF00DB9777 /* RNFullscreenActivityIndicator.swift in Sources */,
@@ -822,6 +857,7 @@
 				9214322124D2D9AE005FCDC4 /* IconLabelView.swift in Sources */,
 				92ED214823AD7DB600819997 /* Button.swift in Sources */,
 				92AD4D332451F64600F26A62 /* PagingCollectionViewLayout.swift in Sources */,
+				92E53E4B2520ED460033D98B /* DownloadPostCellViewModel.swift in Sources */,
 				9298E25823F1479200952F28 /* FilterViewModel.swift in Sources */,
 				9260B85F23B5F17300AB18A5 /* BasePostCell.swift in Sources */,
 				9298E24D23F1333A00952F28 /* AddFilterButton.swift in Sources */,

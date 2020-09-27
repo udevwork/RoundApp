@@ -13,6 +13,7 @@ enum PostCellType : Int, Codable {
     case Title = 0
     case Article
     case SimplePhoto
+    case Gallery
 }
 
 protocol BasePostCellViewModelProtocol {

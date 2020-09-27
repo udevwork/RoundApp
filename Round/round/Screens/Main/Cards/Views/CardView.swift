@@ -23,14 +23,12 @@ class CardView: UIView {
     var backgroundImageViewMask : UIView = UIView()
     var actionButton : UIButton = UIButton()
    
-    let viewsCounterView: IconLabelView = IconLabelView(icon: Icons.eye, text: "101")
+    let downloadsCounterView: IconLabelView = IconLabelView()
 
     let bottomTextBlockView: PostBluredTitleDescriptionView = PostBluredTitleDescriptionView()
     
-    init(viewModel : CardViewModel?, frame: CGRect) {
-        super.init(frame: frame)
-        self.viewModel = viewModel
-        setupData(viewModel)
+    init() {
+        super.init(frame: .zero)
         setupDesign()
     }
     
@@ -39,14 +37,17 @@ class CardView: UIView {
     }
     
     func setupDesign() {
-        layer.cornerRadius = 13
+        layer.borderWidth = 6
+        layer.borderColor = UIColor.systemGray6.cgColor
+        layer.cornerRadius = 50
         clipsToBounds = false
         backgroundImageView.layer.cornerRadius = 50
         backgroundImageView.layer.masksToBounds = true
         backgroundImageViewMask.addSubview(backgroundImageView)
         addSubview(backgroundImageViewMask)
         backgroundImageViewMask.addSubview(bottomTextBlockView)
-        [actionButton, viewsCounterView].forEach { addSubview($0) }
+        [actionButton, downloadsCounterView].forEach { addSubview($0) }
+        downloadsCounterView.easy.layout(Top(35),Leading(35))
         backgroundImageViewMask.easy.layout(Leading(), Trailing(), Top(), Bottom())
         backgroundImageViewMask.layer.masksToBounds = false
         backgroundImageView.easy.layout(Edges())
@@ -61,7 +62,8 @@ class CardView: UIView {
         guard let model = self.viewModel else { return }
         backgroundImageView.setImage(imageURL: URL(string: model.mainImageURL), placeholder: Images.imagePlaceholder.uiimage())
         bottomTextBlockView.set(model.title, model.description)
-        
+        downloadsCounterView.setIcon(.download)
+        downloadsCounterView.setText(String(model.dowloadsCount))
     }
     
     @objc func buttonClicked(sender:UIButton)

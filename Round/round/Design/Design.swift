@@ -84,6 +84,8 @@ enum Colors: String {
     }
 }
 
+
+
 enum Icons : String {
     case add             = "plus.circle.fill"
     case bookmarkfill    = "bookmark.fill"
@@ -118,6 +120,7 @@ enum Icons : String {
     case xmarkOctagon    = "xmark.octagon.fill"
     case cloudError      = "xmark.icloud.fill"
     case eye             = "eye.fill"
+    case download        = "tray.and.arrow.down.fill"
     case tableEdit       = "table.badge.more.fill"
     case numberList      = "list.number"
     case arrowShare      = "arrowshape.turn.up.right.fill"

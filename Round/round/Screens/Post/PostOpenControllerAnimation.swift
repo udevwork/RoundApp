@@ -15,7 +15,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
     let transitionDuration: TimeInterval = 0.6
     var card : CardView? = nil
     
-    lazy var viewsCounterView : IconLabelView = IconLabelView(icon: .eye, text: card!.viewsCounterView.label.text!)
+    lazy var viewsCounterView : IconLabelView = IconLabelView(icon: .download, text: String(card!.viewModel?.dowloadsCount ?? 999))
     lazy var bottomTextBlockView: PostBluredTitleDescriptionView = PostBluredTitleDescriptionView(card!.bottomTextBlockView)
     lazy var backgroundImageView : UIImageView = {
         let img = UIImageView()
@@ -49,7 +49,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         toViewController.view.isHidden = true
         
         let backImgOrigin = card.convert(card.backgroundImageViewMask.frame, to: nil)
-        let viewsCounterOrigin = card.convert(card.viewsCounterView.frame, to: nil)
+        let viewsCounterOrigin = card.convert(card.downloadsCounterView.frame, to: nil)
         
         PostAnimatorHelper.push(PostAnimationsTempData(mainPicOriginalFrame: backImgOrigin,
                                                        viewsCounterOriginalFrame: viewsCounterOrigin,
