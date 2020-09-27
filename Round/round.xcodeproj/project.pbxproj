@@ -90,6 +90,7 @@
 		92E53E4B2520ED460033D98B /* DownloadPostCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E4A2520ED460033D98B /* DownloadPostCellViewModel.swift */; };
 		92E53E4E2520EE1C0033D98B /* DownloadPostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E4D2520EE1C0033D98B /* DownloadPostResponse.swift */; };
 		92E53E522520FF790033D98B /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E512520FF790033D98B /* DownloadViewController.swift */; };
+		92E53E56252109580033D98B /* ZipDowloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E55252109580033D98B /* ZipDowloader.swift */; };
 		92E62AC2239BF83E009A2CD2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E62AC1239BF83E009A2CD2 /* MainViewController.swift */; };
 		92E62AC4239BFB98009A2CD2 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 92E62AC3239BFB98009A2CD2 /* Podfile */; };
 		92E62AC7239CDBEB009A2CD2 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E62AC6239CDBEB009A2CD2 /* MainViewModel.swift */; };
@@ -209,6 +210,7 @@
 		92E53E4A2520ED460033D98B /* DownloadPostCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPostCellViewModel.swift; sourceTree = "<group>"; };
 		92E53E4D2520EE1C0033D98B /* DownloadPostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPostResponse.swift; sourceTree = "<group>"; };
 		92E53E512520FF790033D98B /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
+		92E53E55252109580033D98B /* ZipDowloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipDowloader.swift; sourceTree = "<group>"; };
 		92E62AC1239BF83E009A2CD2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		92E62AC3239BFB98009A2CD2 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		92E62AC6239CDBEB009A2CD2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -512,6 +514,7 @@
 			isa = PBXGroup;
 			children = (
 				92E53E512520FF790033D98B /* DownloadViewController.swift */,
+				92E53E55252109580033D98B /* ZipDowloader.swift */,
 			);
 			path = Download;
 			sourceTree = "<group>";
@@ -826,6 +829,7 @@
 				9260B85D23B5EDF900AB18A5 /* TitlePostCellViewModel.swift in Sources */,
 				92E53E432520DCB50033D98B /* GalleryPostResponse.swift in Sources */,
 				92E8C351239BF681009F84EE /* SceneDelegate.swift in Sources */,
+				92E53E56252109580033D98B /* ZipDowloader.swift in Sources */,
 				926D209A23E470BC00C8B492 /* SimplePhotoResponse.swift in Sources */,
 				92F9C4EF23DCCAEE00AB9823 /* AsyncImageDownload.swift in Sources */,
 				92CC3CC82439F88800731371 /* LoginPageViewController.swift in Sources */,
