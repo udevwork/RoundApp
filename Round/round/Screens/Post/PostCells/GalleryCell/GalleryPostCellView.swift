@@ -19,8 +19,8 @@ class GalleryPostCellView: UITableViewCell, BasePostCellProtocol, UICollectionVi
     
     fileprivate lazy var postCollectionView : GeminiCollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 30
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 35)
+        layout.minimumLineSpacing = 40
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 200, height: 300)
         

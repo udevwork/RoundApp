@@ -173,7 +173,8 @@ class PostViewController: BaseViewController<PostViewModel> {
         table.register(ArticlePostCellView.self, forCellReuseIdentifier: "ArticlePostCellView")
         table.register(SimplePhotoPostCellView.self, forCellReuseIdentifier: "SimplePhotoPostCellView")
         table.register(GalleryPostCellView.self, forCellReuseIdentifier: "GalleryPostCellView")
-        
+        table.register(DownloadPostCellView.self, forCellReuseIdentifier: "DownloadPostCellView")
+
     }
     
     
@@ -250,6 +251,15 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
             padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         case .Gallery:
             cell = tableView.dequeueReusableCell(withIdentifier: "GalleryPostCellView", for: indexPath) as! GalleryPostCellView
+            padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        case .Download:
+            cell = tableView.dequeueReusableCell(withIdentifier: "DownloadPostCellView", for: indexPath) as! DownloadPostCellView
+            (cell as! DownloadPostCellView).onDownloadPress = { link in
+                let vc = DownloadViewController(link: link)
+                vc.view.frame.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width/2)
+                
+                self.present(vc, animated: true, completion: nil)
+            }
             padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         case .none:
             break

@@ -11,11 +11,14 @@ import Foundation
 class DownloadPostCellViewModel : BasePostCellViewModelProtocol {
     var order: Int?
     var type : PostCellType?
-    let text : String?
+    var downloadLink : String?
+    var fileSize: String?
     
-    init(model : TitlePostResponse) {
+    init(model : DownloadPostResponse) {
         self.type = model.type
-        self.text = model.text
         self.order = model.order
+        self.downloadLink = model.downloadLink
+        self.fileSize = model.fileSize
+
     }
 }

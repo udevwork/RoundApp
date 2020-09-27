@@ -170,6 +170,11 @@ final class FirebaseAPI : API {
                         let vm = GalleryPostCellViewModel(model : resp)
                         models.append(vm)
                         break
+                    case .Download:
+                        let resp = try FirebaseDecoder().decode(DownloadPostResponse.self, from: data)
+                        let vm = DownloadPostCellViewModel(model : resp)
+                        models.append(vm)
+                        break
                     }
                     
                 } catch let error {

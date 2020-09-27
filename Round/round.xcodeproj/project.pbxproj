@@ -88,6 +88,8 @@
 		92E53E432520DCB50033D98B /* GalleryPostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E422520DCB50033D98B /* GalleryPostResponse.swift */; };
 		92E53E472520ED3E0033D98B /* DownloadPostCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E462520ED3E0033D98B /* DownloadPostCellView.swift */; };
 		92E53E4B2520ED460033D98B /* DownloadPostCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E4A2520ED460033D98B /* DownloadPostCellViewModel.swift */; };
+		92E53E4E2520EE1C0033D98B /* DownloadPostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E4D2520EE1C0033D98B /* DownloadPostResponse.swift */; };
+		92E53E522520FF790033D98B /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E512520FF790033D98B /* DownloadViewController.swift */; };
 		92E62AC2239BF83E009A2CD2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E62AC1239BF83E009A2CD2 /* MainViewController.swift */; };
 		92E62AC4239BFB98009A2CD2 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 92E62AC3239BFB98009A2CD2 /* Podfile */; };
 		92E62AC7239CDBEB009A2CD2 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E62AC6239CDBEB009A2CD2 /* MainViewModel.swift */; };
@@ -205,6 +207,8 @@
 		92E53E422520DCB50033D98B /* GalleryPostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPostResponse.swift; sourceTree = "<group>"; };
 		92E53E462520ED3E0033D98B /* DownloadPostCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPostCellView.swift; sourceTree = "<group>"; };
 		92E53E4A2520ED460033D98B /* DownloadPostCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPostCellViewModel.swift; sourceTree = "<group>"; };
+		92E53E4D2520EE1C0033D98B /* DownloadPostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPostResponse.swift; sourceTree = "<group>"; };
+		92E53E512520FF790033D98B /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		92E62AC1239BF83E009A2CD2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		92E62AC3239BFB98009A2CD2 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		92E62AC6239CDBEB009A2CD2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -345,6 +349,7 @@
 				926D209723E4703E00C8B492 /* ArticlePostResponse.swift */,
 				926D209923E470BC00C8B492 /* SimplePhotoResponse.swift */,
 				92E53E422520DCB50033D98B /* GalleryPostResponse.swift */,
+				92E53E4D2520EE1C0033D98B /* DownloadPostResponse.swift */,
 			);
 			path = FireResponse;
 			sourceTree = "<group>";
@@ -503,6 +508,14 @@
 			path = DownloadCell;
 			sourceTree = "<group>";
 		};
+		92E53E502520FF630033D98B /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				92E53E512520FF790033D98B /* DownloadViewController.swift */,
+			);
+			path = Download;
+			sourceTree = "<group>";
+		};
 		92E62AC5239CDBCE009A2CD2 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -550,6 +563,7 @@
 		92E62ACE239CEBC0009A2CD2 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				92E53E502520FF630033D98B /* Download */,
 				9260B84B23B1102000AB18A5 /* Filter */,
 				9294FEC124388DCB005B98EF /* Menu */,
 				92CC3CC62439F86300731371 /* LoginPage */,
@@ -827,6 +841,7 @@
 				9298E24F23F1335500952F28 /* FilterTag.swift in Sources */,
 				92F46A26243B47AC00CCC386 /* InputField.swift in Sources */,
 				92132E96246335B100C58810 /* RNSimpleView.swift in Sources */,
+				92E53E522520FF790033D98B /* DownloadViewController.swift in Sources */,
 				92E53E402520D8550033D98B /* GalleryPostCellViewModel.swift in Sources */,
 				92B8622C249612C00087676A /* FirebaseRequestProtocol.swift in Sources */,
 				9260B86423B605D300AB18A5 /* ArticlePostCellViewModel.swift in Sources */,
@@ -843,6 +858,7 @@
 				9298E25223F13A2600952F28 /* CardViewTemplate.swift in Sources */,
 				92E53E472520ED3E0033D98B /* DownloadPostCellView.swift in Sources */,
 				9209EBF324558D7600520513 /* UIImageExtension.swift in Sources */,
+				92E53E4E2520EE1C0033D98B /* DownloadPostResponse.swift in Sources */,
 				926D209623E4702E00C8B492 /* TitlePostResponse.swift in Sources */,
 				9256DF53246871CF00DB9777 /* RNFullscreenActivityIndicator.swift in Sources */,
 				9298E24B23F132F700952F28 /* FilterItem.swift in Sources */,

@@ -41,11 +41,14 @@ class Button: UIButton {
         case .iconText:
             addSubview(icon)
             addSubview(btnText)
+            btnText.easy.layout(Top(10),Bottom(10),Trailing(20))
+            icon.easy.layout(CenterY(),Width(20),Height(20),Leading(20),Trailing(20).to(btnText))
         case .textIcon:
             addSubview(btnText)
             addSubview(icon)
         case .text:
             addSubview(btnText)
+            btnText.easy.layout(Top(10),Bottom(10),Leading(20),Trailing(20))
         case .icon:
             addSubview(icon)
             icon.easy.layout(CenterX(),CenterY(),Width(20),Height(20))
@@ -129,7 +132,6 @@ class ButtonBuilder {
     
     func setText(_ text : String) -> ButtonBuilder {
         button.btnText.text = text
-        button.btnText.easy.layout(Top(10),Bottom(10),Leading(20),Trailing(20))
         return self
     }
     
