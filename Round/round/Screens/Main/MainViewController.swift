@@ -49,9 +49,6 @@ class MainViewController: BaseViewController<MainViewModel> {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        let model = DownloadViewControllerModel(link: "", downloadbleImage: Images.imagePlaceholder.uiimage(), downloadbleName: "Images.imagePlaceholder.uiimage()")
-        let vc = DownloadViewController(model: model)
-        self.present(vc, animated: true, completion: nil)
     }
     
     required init?(coder: NSCoder) {

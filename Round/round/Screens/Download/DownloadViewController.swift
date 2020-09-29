@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import EasyPeasy
+import ZIPFoundation
 
 struct DownloadViewControllerModel {
     var link: String
@@ -52,17 +53,77 @@ class DownloadViewController: UIViewController{
         
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.download()
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        download()
+        
     }
     func download() {
-        let url = URL(string: "https://firebasestorage.googleapis.com/v0/b/roundapp-4d7d3.appspot.com/o/fuck.png?alt=media&token=20e45ff6-e8f1-4e56-91b1-ddd85a531e1d")
+        let savePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        print("fuck: ", savePath)
+        let url = URL(string: "https://firebasestorage.googleapis.com/v0/b/roundapp-4d7d3.appspot.com/o/images.zip?alt=media&token=a5027027-a2c1-49b9-aece-09ee0ca89460")
         FileDownloader.loadFileAsync(url: url!) { (data, error) in
-            DispatchQueue.main.async {
-                let activityViewController = UIActivityViewController(activityItems: [data], applicationActivities: nil)
-                self.present(activityViewController, animated: true, completion: nil)
+            do {
+                try data?.write(to: savePath.appendingPathComponent("archive.zip"))
+            } catch let err{
+                print("FUCK ERROR WRITE: ", err)
             }
+            
+            print("FUCK WRITE OK")
+            
+            do {
+                try FileManager.default.unzipItem(at: savePath.appendingPathComponent("archive.zip"), to: savePath)
+            } catch let err {
+                print("FUCK ERROR unzipItem: ", err)
+            }
+            print("FUCK unzipItem OK")
+            
+            do {
+                let lol = try FileManager.default.contentsOfDirectory(at: savePath.appendingPathComponent("images"), includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+                var resuptImages: [Data] = []
+                lol.forEach { imageUrl in
+                    print("fuck image! : ", imageUrl.path)
+                    let imgData = FileManager.default.contents(atPath: imageUrl.path)
+                    resuptImages.append(imgData!)
+                }
+                DispatchQueue.main.async {
+                    let activityViewController = UIActivityViewController(activityItems: resuptImages, applicationActivities: nil)
+                    activityViewController.completionWithItemsHandler  = { type, success, items, error in
+                        if success {
+                            // Deleting files
+                            do {
+                                let lol = try FileManager.default.contentsOfDirectory(at: savePath, includingPropertiesForKeys: nil, options: [])
+                                
+                                 lol.forEach { urlToRemove in
+                                    do {
+                                     try FileManager.default.removeItem(at: urlToRemove)
+                                    } catch {
+                                        print("Could not delete file \(error)")
+                                    }
+                                }
+                                
+                            } catch {
+                                print("Could not clear temp folder: \(error)")
+                            }
+                        }
+                    }
+                    self.present(activityViewController, animated: true, completion: {
+                        print("COMPLITION")
+                    })
+                }
+                // process files
+            } catch let err {
+                print("FUCK ERROR contentsOfDirectory: ", err)
+            }
+            
+          
+            
         } status: { status in
             DispatchQueue.main.async {
                 self.text.text = status

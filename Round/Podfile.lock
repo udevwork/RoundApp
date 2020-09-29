@@ -311,6 +311,7 @@ PODS:
   - Realm/Headers (5.0.0)
   - RealmSwift (5.0.0):
     - Realm (= 5.0.0)
+  - ZIPFoundation (0.9.11)
 
 DEPENDENCIES:
   - CodableFirebase
@@ -325,6 +326,7 @@ DEPENDENCIES:
   - Gemini
   - Kingfisher (~> 5.0)
   - RealmSwift
+  - ZIPFoundation
 
 SPEC REPOS:
   trunk:
@@ -359,6 +361,7 @@ SPEC REPOS:
     - PromisesObjC
     - Realm
     - RealmSwift
+    - ZIPFoundation
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
@@ -392,7 +395,8 @@ SPEC CHECKSUMS:
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Realm: 76066d333de26f97e9caedaa85ee3ff4a62ca265
   RealmSwift: c1bdff09b422569dc6881410d9ccf712bcdb79b0
+  ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: e46d9d322f9baef583092b49ce2437d5a3c1a761
+PODFILE CHECKSUM: 32b89172b6e14444e7a8b1a25bf6316e376a7670
 
 COCOAPODS: 1.9.2

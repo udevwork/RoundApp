@@ -255,8 +255,9 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
         case .Download:
             cell = tableView.dequeueReusableCell(withIdentifier: "DownloadPostCellView", for: indexPath) as! DownloadPostCellView
             (cell as! DownloadPostCellView).onDownloadPress = { link in
-              //  let vc = DownloadViewController(link: link)
-                //  self.present(vc, animated: true, completion: nil)
+                let model = DownloadViewControllerModel(link: "", downloadbleImage: Images.imagePlaceholder.uiimage(), downloadbleName: "Images.imagePlaceholder.uiimage()")
+                let vc = DownloadViewController(model: model)
+                self.present(vc, animated: true, completion: nil)
             }
             padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         case .none:
