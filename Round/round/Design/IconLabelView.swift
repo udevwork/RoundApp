@@ -51,7 +51,7 @@ class IconLabelView: UIView {
         
         iconView.image = icon.image(weight: .thin)
         iconView.contentMode = .scaleAspectFit
-        iconView.tintColor = .systemGray6
+        iconView.tintColor = .white
             
         blurredEffectView.contentView.addSubview(iconView)
                 
@@ -67,7 +67,7 @@ class IconLabelView: UIView {
             setupFrame()
             return
         }
-        self.labelView = Text(.system, .systemGray6)
+        self.labelView = Text(.system, .white)
         guard let labelView = labelView else { return }
         labelView.text = text
         blurredEffectView.contentView.addSubview(labelView)

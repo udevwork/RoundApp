@@ -17,7 +17,9 @@
 		9214322524D42132005FCDC4 /* PostBluredTitleDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9214322424D42132005FCDC4 /* PostBluredTitleDescriptionView.swift */; };
 		9214322724D42E3A005FCDC4 /* IconLableBluredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9214322624D42E3A005FCDC4 /* IconLableBluredView.swift */; };
 		921A263A23BF542700EF8715 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 921A263923BF542700EF8715 /* GoogleService-Info.plist */; };
+		923B47E22524576000AAD64D /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B47E12524576000AAD64D /* DownloadViewModel.swift */; };
 		9242C4C7244F2C87009EA6AE /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9242C4C6244F2C87009EA6AE /* Notifications.swift */; };
+		9254B23425265940002D49F5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9254B23325265940002D49F5 /* StoreKit.framework */; };
 		9256DF53246871CF00DB9777 /* RNFullscreenActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256DF52246871CF00DB9777 /* RNFullscreenActivityIndicator.swift */; };
 		925865F8248E12B50027C345 /* CardViewSimple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925865F7248E12B50027C345 /* CardViewSimple.swift */; };
 		925865FA248EB14C0027C345 /* CardViewProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925865F9248EB14C0027C345 /* CardViewProfile.swift */; };
@@ -90,7 +92,6 @@
 		92E53E4B2520ED460033D98B /* DownloadPostCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E4A2520ED460033D98B /* DownloadPostCellViewModel.swift */; };
 		92E53E4E2520EE1C0033D98B /* DownloadPostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E4D2520EE1C0033D98B /* DownloadPostResponse.swift */; };
 		92E53E522520FF790033D98B /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E512520FF790033D98B /* DownloadViewController.swift */; };
-		92E53E56252109580033D98B /* ZipDowloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E53E55252109580033D98B /* ZipDowloader.swift */; };
 		92E62AC2239BF83E009A2CD2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E62AC1239BF83E009A2CD2 /* MainViewController.swift */; };
 		92E62AC4239BFB98009A2CD2 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 92E62AC3239BFB98009A2CD2 /* Podfile */; };
 		92E62AC7239CDBEB009A2CD2 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E62AC6239CDBEB009A2CD2 /* MainViewModel.swift */; };
@@ -137,7 +138,10 @@
 		9214322424D42132005FCDC4 /* PostBluredTitleDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBluredTitleDescriptionView.swift; sourceTree = "<group>"; };
 		9214322624D42E3A005FCDC4 /* IconLableBluredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconLableBluredView.swift; sourceTree = "<group>"; };
 		921A263923BF542700EF8715 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		923B47E12524576000AAD64D /* DownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewModel.swift; sourceTree = "<group>"; };
 		9242C4C6244F2C87009EA6AE /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		9254B20B252633C9002D49F5 /* roundRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = roundRelease.entitlements; sourceTree = "<group>"; };
+		9254B23325265940002D49F5 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9256DF52246871CF00DB9777 /* RNFullscreenActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNFullscreenActivityIndicator.swift; sourceTree = "<group>"; };
 		925865F7248E12B50027C345 /* CardViewSimple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewSimple.swift; sourceTree = "<group>"; };
 		925865F9248EB14C0027C345 /* CardViewProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewProfile.swift; sourceTree = "<group>"; };
@@ -210,7 +214,6 @@
 		92E53E4A2520ED460033D98B /* DownloadPostCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPostCellViewModel.swift; sourceTree = "<group>"; };
 		92E53E4D2520EE1C0033D98B /* DownloadPostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPostResponse.swift; sourceTree = "<group>"; };
 		92E53E512520FF790033D98B /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
-		92E53E55252109580033D98B /* ZipDowloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipDowloader.swift; sourceTree = "<group>"; };
 		92E62AC1239BF83E009A2CD2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		92E62AC3239BFB98009A2CD2 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		92E62AC6239CDBEB009A2CD2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -256,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D19F14FEB2ACE0182E01741 /* Pods_round.framework in Frameworks */,
+				9254B23425265940002D49F5 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,7 +518,7 @@
 			isa = PBXGroup;
 			children = (
 				92E53E512520FF790033D98B /* DownloadViewController.swift */,
-				92E53E55252109580033D98B /* ZipDowloader.swift */,
+				923B47E12524576000AAD64D /* DownloadViewModel.swift */,
 			);
 			path = Download;
 			sourceTree = "<group>";
@@ -599,6 +603,7 @@
 		92E8C34D239BF681009F84EE /* round */ = {
 			isa = PBXGroup;
 			children = (
+				9254B20B252633C9002D49F5 /* roundRelease.entitlements */,
 				929B70D4247A8730009A2484 /* DataBase */,
 				92B043AB23A8EA6300330D8A /* Design */,
 				92E62ACE239CEBC0009A2CD2 /* Screens */,
@@ -656,6 +661,7 @@
 		FC6AB66A88CC6884A1B80DB7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9254B23325265940002D49F5 /* StoreKit.framework */,
 				F7B852BC606DDD68D0C317ED /* Pods_round.framework */,
 			);
 			name = Frameworks;
@@ -829,7 +835,6 @@
 				9260B85D23B5EDF900AB18A5 /* TitlePostCellViewModel.swift in Sources */,
 				92E53E432520DCB50033D98B /* GalleryPostResponse.swift in Sources */,
 				92E8C351239BF681009F84EE /* SceneDelegate.swift in Sources */,
-				92E53E56252109580033D98B /* ZipDowloader.swift in Sources */,
 				926D209A23E470BC00C8B492 /* SimplePhotoResponse.swift in Sources */,
 				92F9C4EF23DCCAEE00AB9823 /* AsyncImageDownload.swift in Sources */,
 				92CC3CC82439F88800731371 /* LoginPageViewController.swift in Sources */,
@@ -850,6 +855,7 @@
 				92B8622C249612C00087676A /* FirebaseRequestProtocol.swift in Sources */,
 				9260B86423B605D300AB18A5 /* ArticlePostCellViewModel.swift in Sources */,
 				9260B86723B6070D00AB18A5 /* SimplePhotoPostCellView.swift in Sources */,
+				923B47E22524576000AAD64D /* DownloadViewModel.swift in Sources */,
 				92F46A28243B4ADB00CCC386 /* SignInViewController.swift in Sources */,
 				92E53E3C2520D8450033D98B /* GalleryPostCellView.swift in Sources */,
 				92F90372248394A300B0A176 /* BookmarkRealm.swift in Sources */,
@@ -1026,6 +1032,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"round/Preview Content\"";
 				DEVELOPMENT_TEAM = 87XM268947;
 				ENABLE_PREVIEWS = YES;
@@ -1047,9 +1054,12 @@
 			baseConfigurationReference = F51D8B8D7C7EA57A4D12A05C /* Pods-round.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = round/roundRelease.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"round/Preview Content\"";
-				DEVELOPMENT_TEAM = AV8JDKX7VK;
+				DEVELOPMENT_TEAM = 87XM268947;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = round/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1059,6 +1069,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.creatorsplatform.round;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

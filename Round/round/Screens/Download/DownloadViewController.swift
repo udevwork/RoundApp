@@ -11,21 +11,22 @@ import UIKit
 import EasyPeasy
 import ZIPFoundation
 
-struct DownloadViewControllerModel {
-    var link: String
-    var downloadbleImage: UIImage
-    var downloadbleName: String
-}
 
-class DownloadViewController: UIViewController{
+class DownloadViewController: UIViewController {
     
+    private var drugtumbler: UIView = UIView()
     private var content: UIView = UIView()
+    private var delimiter: UIView = UIView()
     private var image: UIImageView = UIImageView()
-    private var text: Text = Text(.regular, .label)
+    private var assetNametext: Text = Text(.article, .label)
+    private var assetDescriptiontext: Text = Text(.regular, .label)
+    private var progressText: Text = Text(.regular, .label)
+    private var progbar: UIProgressView = UIProgressView(progressViewStyle: .bar)
     
-    private var model: DownloadViewControllerModel
-    init(model: DownloadViewControllerModel) {
-        self.model = model
+    private let viewModel: DownloadViewModel
+    
+    init(model: DownloadViewModel.Model) {
+        viewModel = DownloadViewModel(model: model)
         super.init(nibName: nil, bundle: nil)
         setupDesign()
     }
@@ -34,105 +35,81 @@ class DownloadViewController: UIViewController{
         modalPresentationStyle = .popover
         view.backgroundColor = .clear
         view.addSubview(content)
-        content.layer.cornerRadius = 15
+        content.layer.cornerRadius = 25
         content.backgroundColor = .systemGray6
-        content.easy.layout(Bottom(20), Leading(20), Trailing(20), Height(400))
+        content.easy.layout(Bottom(20 + Design.safeArea.bottom), Leading(20), Trailing(20), Height(360))
+        content.setupShadow(preset: .Post)
         
-        image.image = model.downloadbleImage
+        view.addSubview(drugtumbler)
+        drugtumbler.layer.cornerRadius = 3
+        drugtumbler.backgroundColor = .systemGray
+        drugtumbler.easy.layout(Bottom(6).to(content, .top), Width(50), Height(6), CenterX())
+        
+        image.image = viewModel.model.downloadbleImage
         content.addSubview(image)
-        image.easy.layout(Size(200), CenterX(), CenterY(-20))
-        image.layer.cornerRadius = 15
+        image.easy.layout(Leading(20), Trailing(20), Top(20), Height(220))
+        image.layer.cornerRadius = 20
         image.layer.borderWidth = 6
         image.layer.borderColor = UIColor.white.cgColor
         image.layer.masksToBounds = true
         image.contentMode = .scaleAspectFill
         
-        text.text = model.downloadbleName
-        content.addSubview(text)
-        text.easy.layout(Top(10).to(image), CenterX())
+        assetNametext.text = viewModel.model.downloadbleName
+        content.addSubview(assetNametext)
+        assetNametext.easy.layout(Leading(20), Trailing(20), Top(10).to(image))
         
+        assetDescriptiontext.text = viewModel.model.downloadbleDescription
+        content.addSubview(assetDescriptiontext)
+        assetDescriptiontext.easy.layout(Leading(20), Trailing(20), Top(5).to(assetNametext))
+        assetDescriptiontext.numberOfLines = 2
+        
+        content.addSubview(delimiter)
+        delimiter.easy.layout(Leading(20), Trailing(20), Top(10).to(assetDescriptiontext), Height(1))
+        delimiter.backgroundColor = .systemGray3
+        
+        content.addSubview(progressText)
+        progressText.easy.layout(Leading(20), Top(5).to(delimiter), CenterX())
+ 
+        content.addSubview(progbar)
+        progbar.easy.layout(Width(100), Trailing(20), CenterY().to(progressText), Height(5))
+        progbar.layer.cornerRadius = 2.5
+        progbar.layer.masksToBounds = true
+        progbar.progressTintColor = .systemGray
+        progbar.trackTintColor = .systemGray4
+        progbar.isHidden = true
+        
+        viewModel.onProgress = { progress in
+            self.progbar.setProgress(progress, animated: true)
+        }
+        viewModel.onStatus = { status in
+            self.progbar.isHidden = false
+            self.progbar.setProgress(0, animated: false)
+            self.progressText.text = status
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.download()
+            self.viewModel.download { images in
+                self.showSaveToFilesMenu(data: images)
+            }
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        
-    }
-    func download() {
-        let savePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        print("fuck: ", savePath)
-        let url = URL(string: "https://firebasestorage.googleapis.com/v0/b/roundapp-4d7d3.appspot.com/o/images.zip?alt=media&token=a5027027-a2c1-49b9-aece-09ee0ca89460")
-        FileDownloader.loadFileAsync(url: url!) { (data, error) in
-            do {
-                try data?.write(to: savePath.appendingPathComponent("archive.zip"))
-            } catch let err{
-                print("FUCK ERROR WRITE: ", err)
-            }
-            
-            print("FUCK WRITE OK")
-            
-            do {
-                try FileManager.default.unzipItem(at: savePath.appendingPathComponent("archive.zip"), to: savePath)
-            } catch let err {
-                print("FUCK ERROR unzipItem: ", err)
-            }
-            print("FUCK unzipItem OK")
-            
-            do {
-                let lol = try FileManager.default.contentsOfDirectory(at: savePath.appendingPathComponent("images"), includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-                var resuptImages: [Data] = []
-                lol.forEach { imageUrl in
-                    print("fuck image! : ", imageUrl.path)
-                    let imgData = FileManager.default.contents(atPath: imageUrl.path)
-                    resuptImages.append(imgData!)
-                }
-                DispatchQueue.main.async {
-                    let activityViewController = UIActivityViewController(activityItems: resuptImages, applicationActivities: nil)
-                    activityViewController.completionWithItemsHandler  = { type, success, items, error in
-                        if success {
-                            // Deleting files
-                            do {
-                                let lol = try FileManager.default.contentsOfDirectory(at: savePath, includingPropertiesForKeys: nil, options: [])
-                                
-                                 lol.forEach { urlToRemove in
-                                    do {
-                                     try FileManager.default.removeItem(at: urlToRemove)
-                                    } catch {
-                                        print("Could not delete file \(error)")
-                                    }
-                                }
-                                
-                            } catch {
-                                print("Could not clear temp folder: \(error)")
-                            }
-                        }
-                    }
-                    self.present(activityViewController, animated: true, completion: {
-                        print("COMPLITION")
-                    })
-                }
-                // process files
-            } catch let err {
-                print("FUCK ERROR contentsOfDirectory: ", err)
-            }
-            
-          
-            
-        } status: { status in
-            DispatchQueue.main.async {
-                self.text.text = status
+    func showSaveToFilesMenu(data: [Data]) {
+        let activityViewController = UIActivityViewController(activityItems: data, applicationActivities: nil)
+        activityViewController.completionWithItemsHandler  = { type, success, items, error in
+            if success {
+                self.viewModel.deleteFilesInWorkindDir()
             }
         }
-        
-        
+        self.present(activityViewController, animated: true, completion: nil)
     }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    
+    
 }

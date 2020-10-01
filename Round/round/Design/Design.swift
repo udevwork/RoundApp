@@ -52,7 +52,7 @@ enum ShadowPresets  {
         case .Button:
             return (7, .zero, 0.3, .black)
         case .Post:
-            return (25, .init(width: 0, height: 15), 0.5, #colorLiteral(red: 0.3450980392, green: 0.4666666667, blue: 0.6352941176, alpha: 1))
+            return (25, .init(width: 0, height: 15), 0.5, #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))
         case .Avatar:
             return (15, .init(width: 0, height: 10), 0.3, .black)
         }
@@ -115,10 +115,12 @@ enum Icons : String {
     case trashCross      = "trash.slash.fill"
     case house           = "house.fill"
     case clock           = "clock"
+    case cart            = "cart.fill"
 
     case checkmark       = "checkmark.circle.fill"
     case xmarkOctagon    = "xmark.octagon.fill"
     case cloudError      = "xmark.icloud.fill"
+    case cloud           = "icloud.fill"
     case eye             = "eye.fill"
     case download        = "tray.and.arrow.down.fill"
     case tableEdit       = "table.badge.more.fill"
@@ -133,7 +135,8 @@ enum Icons : String {
     case chevronLeft     = "chevron.left"
     case settings        = "slider.horizontal.3"
     case settingsGear    = "gear"
-
+    case arrayDown       = "arrowtriangle.down.fill"
+    
     func image(weight: UIImage.SymbolWeight = .black) -> UIImage {
         if let img = UIImage(systemName: self.rawValue, withConfiguration: UIImage.SymbolConfiguration(weight: weight)){
         return img

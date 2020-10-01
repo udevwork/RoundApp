@@ -26,7 +26,7 @@ class MenuStack: UIView {
         addSubview(backgroundView)
         addSubview(stask)
         backgroundView.easy.layout(Edges())
-        stask.easy.layout(CenterY(),Leading(90),Trailing(90))
+        stask.easy.layout(CenterY(),Leading(40),Trailing(40))
 
     }
 
@@ -34,7 +34,7 @@ class MenuStack: UIView {
         super.layoutSubviews()
         backgroundView.layer.cornerRadius = frame.height / 2
         backgroundView.layer.masksToBounds = true
-        backgroundView.backgroundColor = .black
+        backgroundView.backgroundColor = .systemGray6
         self.layer.masksToBounds = false
         self.layer.shadowPath = UIBezierPath(rect: backgroundView.frame).cgPath
         self.layer.shadowRadius = 14

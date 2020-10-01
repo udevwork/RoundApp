@@ -20,7 +20,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
     let animator = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 0.7, animations: nil)
     var header : PostViewControllerHeader? = nil
     
-    lazy var viewsCounterView : IconLabelView = IconLabelView(icon: .download, text: String(card?.viewModel?.dowloadsCount ?? 999))
+    lazy var downloadsCounterView : IconLabelView = IconLabelView(icon: .download, text: String(card?.viewModel?.dowloadsCount ?? 999))
     lazy var bottomTextBlockView: PostBluredTitleDescriptionView = PostBluredTitleDescriptionView(header!.bottomTextBlockView)
     lazy var backgroundImageView : UIImageView = {
         let img = UIImageView()
@@ -68,14 +68,14 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         containerView.addSubview(fromViewController.view)
         
         containerView.addSubview(backgroundImageView)
-        containerView.addSubview(viewsCounterView)
+        backgroundImageView.addSubview(downloadsCounterView)
         backgroundImageView.addSubview(bottomTextBlockView)
         backgroundImageView.addSubview(backButton)
         
         bottomTextBlockView.easy.layout(Leading(15), Trailing(15), Bottom(15))
         
         backButton.easy.layout(Left(20),Top(20),Width(40),Height(40))
-        
+        downloadsCounterView.easy.layout(Top(35),Leading(35))
         backgroundImageView.layer.cornerRadius = fromViewController.view.layer.cornerRadius
         
         backgroundImageView.layer.borderWidth = 0
@@ -87,10 +87,9 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
             containerView.transform = CGAffineTransform(scaleX: 1, y: 1)
             self?.backgroundImageView.frame = tempOriginalData.mainPicOriginalFrame
 
-            self?.viewsCounterView.frame = tempOriginalData.viewsCounterOriginalFrame
             self?.backgroundImageView.layer.cornerRadius = card.backgroundImageView.layer.cornerRadius
             self?.backButton.alpha = 0
-            self?.viewsCounterView.alpha = 1
+            self?.downloadsCounterView.alpha = 1
             
             self?.backgroundImageView.layer.borderWidth = 6
             self?.backgroundImageView.layer.borderColor = UIColor.systemGray6.cgColor

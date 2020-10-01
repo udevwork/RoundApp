@@ -30,11 +30,7 @@ class RUITabbarCountroller: UITabBarController {
             self.selectedIndex = 1
         }))
         
-        customTabBar.append(MenuStackElement(icon: .chevronLeft, onTap: {
-            self.selectedIndex = 1
-        }))
-        
-        customTabBar.append(MenuStackElement(icon: .search, onTap: {
+        customTabBar.append(MenuStackElement(icon: .settings, onTap: {
             self.selectedIndex = 1
         }))
         

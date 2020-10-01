@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Purchases
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -17,6 +18,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         FirebaseApp.configure()
      
+        Purchases.debugLogsEnabled = true
+        Purchases.configure(withAPIKey: "ZvtSeixatjkoOtSlmzItkrOjIwiATNbV")
+        
         let model = MainViewModel()
         let contentView = MainViewController(viewModel: model)
         

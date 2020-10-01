@@ -50,7 +50,7 @@ class CardView: UIView {
         downloadsCounterView.easy.layout(Top(35),Leading(35))
         backgroundImageViewMask.easy.layout(Leading(), Trailing(), Top(), Bottom())
         backgroundImageViewMask.layer.masksToBounds = false
-        backgroundImageView.easy.layout(Edges())
+        backgroundImageView.easy.layout(Edges(1))
         backgroundImageView.contentMode = .scaleAspectFill
         bottomTextBlockView.easy.layout(Leading(15), Trailing(15), Bottom(15))
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(buttonClicked)))
@@ -60,16 +60,31 @@ class CardView: UIView {
         self.viewModel = viewModel
         
         guard let model = self.viewModel else { return }
+        if model.isTamplateCard {
+            setupTemplateCardDesign()
+            return
+        }
         backgroundImageView.setImage(imageURL: URL(string: model.mainImageURL), placeholder: Images.imagePlaceholder.uiimage())
         bottomTextBlockView.set(model.title, model.description)
         downloadsCounterView.setIcon(.download)
         downloadsCounterView.setText(String(model.dowloadsCount))
     }
     
+    private func setupTemplateCardDesign(){
+        guard let model = self.viewModel else { return }
+        actionButton.removeFromSuperview()
+        backgroundImageView.image = Images.imagePlaceholder.uiimage()
+        downloadsCounterView.setIcon(.cloud)
+        downloadsCounterView.setText("...")
+        bottomTextBlockView.set(model.title, model.description)
+    }
+    
     @objc func buttonClicked(sender:UIButton)
     {
         if viewModel == nil {return}
-        onCardPress?(self,viewModel!)
+        if viewModel!.isTamplateCard == false {
+            onCardPress?(self,viewModel!)
+        }
     }
     
 }

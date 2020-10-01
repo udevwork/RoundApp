@@ -90,10 +90,23 @@ class MainViewController: BaseViewController<MainViewModel> {
                 
         viewModel.loadNewPost {
             DispatchQueue.main.async { [weak self] in
-                self?.postCollectionView.reloadData()
+                self?.animatedCollectionReloading()
             }
         }
         
+    }
+    
+    
+    private func animatedCollectionReloading(){
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
+            self.postCollectionView.alpha = 0
+        } completion: { _ in
+            self.postCollectionView.reloadData()
+        }
+        
+        UIView.animate(withDuration: 0.2, delay: 0.4, options: .curveEaseOut) {
+            self.postCollectionView.alpha = 1
+        } completion: { _ in }
     }
 }
 

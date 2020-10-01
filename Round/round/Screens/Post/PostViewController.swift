@@ -254,10 +254,15 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
             padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         case .Download:
             cell = tableView.dequeueReusableCell(withIdentifier: "DownloadPostCellView", for: indexPath) as! DownloadPostCellView
-            (cell as! DownloadPostCellView).onDownloadPress = { link in
-                let model = DownloadViewControllerModel(link: "", downloadbleImage: Images.imagePlaceholder.uiimage(), downloadbleName: "Images.imagePlaceholder.uiimage()")
+            (cell as! DownloadPostCellView).onDownloadPress = { [weak self] link in
+                guard let self = self else { return }
+                let model = DownloadViewModel.Model(link: link,
+                                                    downloadbleImage: self.header!.backgroundImageView.image!,
+                                                    downloadbleName: self.header!.bottomTextBlockView.titleLabel.text!,
+                                                    downloadbleDescription: self.header!.bottomTextBlockView.descriptionLabel.text!)
                 let vc = DownloadViewController(model: model)
                 self.present(vc, animated: true, completion: nil)
+                FirebaseAPI.shared.incrementPostDownloadCounter(post: self.viewModel.cardView.viewModel?.id ?? "")
             }
             padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         case .none:

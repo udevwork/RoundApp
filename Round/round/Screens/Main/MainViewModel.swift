@@ -9,15 +9,21 @@
 import Foundation
 
 class MainViewModel {
-    public var cards : [CardViewModel] = []
+    public lazy var cards : [CardViewModel] = [templateCard()]
     
     func loadNewPost(complition : @escaping ()->()) {
-        FirebaseAPI.shared.getPosts { (result, model) in
-            if result == .success {
-                self.cards = model!
-                complition()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            FirebaseAPI.shared.getPosts { (result, model) in
+                if result == .success {
+                    self.cards = model!
+                    complition()
+                }
             }
         }
     }
 
+    private func templateCard() -> CardViewModel{
+        return CardViewModel()
+    }
+    
 }

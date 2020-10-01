@@ -9,35 +9,30 @@
 import Foundation
 import UIKit
 import EasyPeasy
+import Purchases
 
 class SignInViewController: BaseViewController<SignInViewModel> {
     
-    let emailInput: InputField = InputField(icon: Icons.email, placeHolder: "email")
-    let passwordInput: InputField = InputField(icon: Icons.password, placeHolder: "password")
+    let nameLabel = Text(.title, .label)
+    let delimiter: UIView = UIView()
+    let dascriptionLabel = Text(.article, .systemGray2)
     
-    let signinButton : Button = ButtonBuilder()
+    let subscribeButton : Button = ButtonBuilder()
         .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 40)))
         .setStyle(.iconText)
-        .setText("sign in")
+        .setColor(.systemGray3)
+        .setText("subscribe")
         .setTextColor(.white)
-        .setIcon(.logIn)
+        .setIcon(.cart)
+        .setIconColor(.white)
         .setCornerRadius(13)
         .build()
     
-   let createButton : Button = ButtonBuilder()
-        .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 40)))
-        .setStyle(.iconText)
-        .setText("create")
-        .setTextColor(.white)
-        .setIcon(Icons.add)
-        .setCornerRadius(13)
-        .build()
-
     
     override init(viewModel: SignInViewModel) {
         super.init(viewModel: viewModel)
         navigationItem.largeTitleDisplayMode = .never
-        title = "Sign in"
+        title = "Subscribe"
         setupView()
     }
     
@@ -46,45 +41,45 @@ class SignInViewController: BaseViewController<SignInViewModel> {
     }
     
     private func setupView() {
+        nameLabel.numberOfLines = 0
+        dascriptionLabel.numberOfLines = 0
         
-        [passwordInput,emailInput,signinButton,createButton].forEach {
-            view.addSubview($0)
+        
+        nameLabel.text = "IDesigner subscription"
+        dascriptionLabel.text = "Subscribe to get unlimited access to all icons, packs and designs!\nNew packages will be added every week, and the old ones will be replenished with new icons!\n\nThis is weekly subscription!"
+        
+        view.addSubview(nameLabel)
+        nameLabel.easy.layout(Top(110),Leading(40),Trailing(40))
+        nameLabel.sizeToFit()
+        
+        view.addSubview(delimiter)
+        delimiter.easy.layout(Top(5).to(nameLabel),Leading(40),Trailing(40),Height(1))
+        delimiter.backgroundColor = .systemGray2
+        
+        view.addSubview(dascriptionLabel)
+        dascriptionLabel.easy.layout(Top(20).to(nameLabel),Leading(40),Trailing(40))
+        dascriptionLabel.sizeToFit()
+        
+        view.addSubview(subscribeButton)
+        subscribeButton.easy.layout(Top(40).to(dascriptionLabel),Leading(40))
+        
+        subscribeButton.setTarget {
+            Purchases.shared.offerings { (offerings, error) in
+                if let error = error {
+                    print("FUCK ERROR")
+                    print(error.localizedDescription)
+                    return
+                }
+                if let offerings = offerings {
+                    print(offerings.current as Any)
+                    offerings.all.forEach { data in
+                        print("FUCK: ", data.key)
+                    }
+                }
+            }
         }
-        
-        createButton.setTarget {
-           // create user
-        }
-        
-        signinButton.setTarget {
-          // todo sign in
-        }
-        
-
-        
-        emailInput.easy.layout(Top(100),Leading(20),Trailing(20), Height(50))
-        passwordInput.easy.layout(Top(20).to(emailInput),Leading(20),Trailing(20), Height(50))
-        signinButton.easy.layout(Top(20).to(passwordInput),Leading(20))
-        createButton.easy.layout(Top(20).to(passwordInput),Leading(20).to(signinButton))
-        
-        emailInput.input.autocorrectionType = .no
-        emailInput.input.keyboardType = .emailAddress
-        emailInput.input.autocapitalizationType = .none
-        passwordInput.input.autocorrectionType = .no
-        passwordInput.input.isSecureTextEntry = true
-        passwordInput.input.autocapitalizationType = .none
-        
-        //        loginInput.input.addTarget(self, action: #selector(loginFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-        //        emailInput.input.addTarget(self, action: #selector(emailFieldDidChange(_:)), for: UIControl.Event.editingChanged)
         
     }
-    
-    
-    //    @objc func emailFieldDidChange(_ textField: UITextField) {
-    //        print(textField.text)
-    //    }
-    //    @objc func loginFieldDidChange(_ textField: UITextField) {
-    //        print(textField.text)
-    //    }
 }
 
 
