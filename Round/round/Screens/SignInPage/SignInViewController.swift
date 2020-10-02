@@ -13,6 +13,8 @@ import Purchases
 
 class SignInViewController: BaseViewController<SignInViewModel> {
     
+    var package: Purchases.Package? = nil
+    
     let nameLabel = Text(.title, .label)
     let delimiter: UIView = UIView()
     let dascriptionLabel = Text(.article, .systemGray2)
@@ -46,10 +48,10 @@ class SignInViewController: BaseViewController<SignInViewModel> {
         
         
         nameLabel.text = "IDesigner subscription"
-        dascriptionLabel.text = "Subscribe to get unlimited access to all icons, packs and designs!\nNew packages will be added every week, and the old ones will be replenished with new icons!\n\nThis is weekly subscription!"
+        dascriptionLabel.text = "Subscribe to get unlimited access to all icons, packs and designs!"
         
         view.addSubview(nameLabel)
-        nameLabel.easy.layout(Top(110),Leading(40),Trailing(40))
+        nameLabel.easy.layout(Top(70),Leading(40),Trailing(40))
         nameLabel.sizeToFit()
         
         view.addSubview(delimiter)
@@ -63,17 +65,30 @@ class SignInViewController: BaseViewController<SignInViewModel> {
         view.addSubview(subscribeButton)
         subscribeButton.easy.layout(Top(40).to(dascriptionLabel),Leading(40))
         
+        Purchases.shared.offerings { [self] (offerings, error) in
+            if let error = error {
+                print("FUCK ERROR")
+                print(error.localizedDescription)
+                return
+            }
+            if let offerings = offerings {
+                print(offerings.current?.availablePackages as Any)
+                package = offerings.current!.availablePackages.first!
+                dascriptionLabel.text! += "\n \(package!.localizedIntroductoryPriceString)"
+                dascriptionLabel.text! += "\n \(package!.localizedPriceString)"
+                dascriptionLabel.text! += "\n \(package!.product.localizedTitle)"
+                dascriptionLabel.text! += "\n \(package!.product.localizedDescription)"
+            }
+            
+        }
+        
+        
+        
         subscribeButton.setTarget {
-            Purchases.shared.offerings { (offerings, error) in
-                if let error = error {
-                    print("FUCK ERROR")
-                    print(error.localizedDescription)
-                    return
-                }
-                if let offerings = offerings {
-                    print(offerings.current as Any)
-                    offerings.all.forEach { data in
-                        print("FUCK: ", data.key)
+            if let package = self.package {
+                Purchases.shared.purchasePackage(package) { (transaction, purchaserInfo, error, userCancelled) in
+                    if purchaserInfo!.entitlements["your_entitlement_id"]?.isActive == true {
+                        // Unlock that great "pro" content
                     }
                 }
             }

@@ -19,6 +19,7 @@
 		921A263A23BF542700EF8715 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 921A263923BF542700EF8715 /* GoogleService-Info.plist */; };
 		923B47E22524576000AAD64D /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B47E12524576000AAD64D /* DownloadViewModel.swift */; };
 		9242C4C7244F2C87009EA6AE /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9242C4C6244F2C87009EA6AE /* Notifications.swift */; };
+		924DC82325277F3100836A7D /* CircleProgresBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924DC82225277F3100836A7D /* CircleProgresBar.swift */; };
 		9254B23425265940002D49F5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9254B23325265940002D49F5 /* StoreKit.framework */; };
 		9256DF53246871CF00DB9777 /* RNFullscreenActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256DF52246871CF00DB9777 /* RNFullscreenActivityIndicator.swift */; };
 		925865F8248E12B50027C345 /* CardViewSimple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925865F7248E12B50027C345 /* CardViewSimple.swift */; };
@@ -140,6 +141,7 @@
 		921A263923BF542700EF8715 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		923B47E12524576000AAD64D /* DownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewModel.swift; sourceTree = "<group>"; };
 		9242C4C6244F2C87009EA6AE /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		924DC82225277F3100836A7D /* CircleProgresBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgresBar.swift; sourceTree = "<group>"; };
 		9254B20B252633C9002D49F5 /* roundRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = roundRelease.entitlements; sourceTree = "<group>"; };
 		9254B23325265940002D49F5 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9256DF52246871CF00DB9777 /* RNFullscreenActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNFullscreenActivityIndicator.swift; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 				9214322024D2D9AE005FCDC4 /* IconLabelView.swift */,
 				9214322424D42132005FCDC4 /* PostBluredTitleDescriptionView.swift */,
 				9214322624D42E3A005FCDC4 /* IconLableBluredView.swift */,
+				924DC82225277F3100836A7D /* CircleProgresBar.swift */,
 			);
 			path = Design;
 			sourceTree = "<group>";
@@ -854,6 +857,7 @@
 				92E53E402520D8550033D98B /* GalleryPostCellViewModel.swift in Sources */,
 				92B8622C249612C00087676A /* FirebaseRequestProtocol.swift in Sources */,
 				9260B86423B605D300AB18A5 /* ArticlePostCellViewModel.swift in Sources */,
+				924DC82325277F3100836A7D /* CircleProgresBar.swift in Sources */,
 				9260B86723B6070D00AB18A5 /* SimplePhotoPostCellView.swift in Sources */,
 				923B47E22524576000AAD64D /* DownloadViewModel.swift in Sources */,
 				92F46A28243B4ADB00CCC386 /* SignInViewController.swift in Sources */,
