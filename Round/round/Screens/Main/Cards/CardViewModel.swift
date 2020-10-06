@@ -15,7 +15,7 @@ class CardViewModel {
     let title : String
     let description : String
     let dowloadsCount : Int
-    let isTamplateCard: Bool
+    var isTamplateCard: Bool = false
     
     init(id : String, mainImageURL : String?, title : String?, description : String?, dowloadsCount : Int?) {
         self.id = id
@@ -23,7 +23,7 @@ class CardViewModel {
         self.title = title ?? ""
         self.description = description ?? ""
         self.dowloadsCount = dowloadsCount ?? 0
-        isTamplateCard = false
+        
     }
     
     init(id : String, response: PostResponse) {
@@ -32,7 +32,6 @@ class CardViewModel {
         self.title = response.title ?? ""
         self.description = response.description ?? ""
         self.dowloadsCount = response.dowloadsCount ?? 0
-        isTamplateCard = false
     }
     
     init() {

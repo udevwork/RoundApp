@@ -7,20 +7,5 @@
 //
 
 class Debug {
-    public static var LOGGING : Bool = true
-    public static var DUMPING : Bool = false
-    
-    public static func log(_ title : String, _ any : Any){
-        if !LOGGING {return}
-        #if DEBUG
-        print(title,any)
-        #endif
-    }
-    public static func log(_ object : Any){
-        if !DUMPING {return}
-        #if DEBUG
-        dump(object)
-        #endif
-        
-    }
+    public static var offlineMode : Bool = true
 }

@@ -12,39 +12,63 @@ import EasyPeasy
 
 class RUITabbarCountroller: UITabBarController {
     var customTabBar: MenuStack = MenuStack(size: CGSize(width: 300, height: 70))
-
+    
+    var buttons: [MenuStackElement] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadTabBar()
     }
+    
     func loadTabBar() {
-        tabBar.isHidden = true
+        tabBar.removeFromSuperview()
         view.addSubview(customTabBar)
         customTabBar.easy.layout(Leading(20), Trailing(20), Bottom(Design.safeArea.bottom + 30), Height(70))
         
-        customTabBar.append(MenuStackElement(icon: .house, onTap: {
-            self.selectedIndex = 0
-        }))
-        
-        customTabBar.append(MenuStackElement(icon: .user, onTap: {
-            self.selectedIndex = 1
-        }))
-        
-        customTabBar.append(MenuStackElement(icon: .settings, onTap: {
-            self.selectedIndex = 1
-        }))
-        
+        buttons = [MenuStackElement(icon: .house, onTap: { self.goTo(0) }),
+                   MenuStackElement(icon: .user, onTap: { self.goTo(1) }),
+                   MenuStackElement(icon: .info, onTap: { self.goTo(2) }),
+                   MenuStackElement(icon: .settingsGear, onTap: { self.goTo(3) })]
+
+        buttons.forEach { customTabBar.append($0) }
+        iconAnimate(0)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-       
+    private func goTo(_ index: Int){
+        if index == selectedIndex { return }
+        self.selectedIndex = index
+        let nextVC = selectedViewController!
+        nextVC.view.frame.origin = CGPoint(x: 0, y: 20)
+        nextVC.view.alpha = 0
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut) {
+            nextVC.view.alpha = 1
+            nextVC.view.frame.origin = CGPoint(x: 0, y: 0)
+        } completion: { (ok) in
+            
+        }
+        iconAnimate(index)
     }
     
-    func setupCustomTabMenu(completion: @escaping ([UIViewController]) -> Void) {
-        // handle creation of the tab bar and attach touch event listeners
-    }
-    func changeTab(tab: Int) {
-        self.selectedIndex = tab
+    private func iconAnimate(_ index: Int){
+        for (i, element) in buttons.enumerated() {
+            if i == index {
+                UIView.animate(withDuration: 0.2) {
+                    element.icon.alpha = 1
+                    element.icon.layer.shadowRadius = 7
+                    element.icon.layer.shadowOpacity = 0.3
+                    element.icon.layer.shadowOffset = CGSize(width: 0, height: 4)
+                    element.icon.layer.shadowColor = UIColor.label.cgColor
+                }
+            } else {
+                UIView.animate(withDuration: 0.2) {
+                    element.icon.alpha = 0.3
+                    element.icon.layer.shadowRadius = 0
+                    element.icon.layer.shadowOpacity = 0
+                    element.icon.layer.shadowOffset = CGSize(width: 0, height: 0)
+                    element.icon.layer.shadowColor = UIColor.clear.cgColor
+                }
+            }
+        }
     }
 }
+

@@ -18,9 +18,9 @@ class DownloadViewController: UIViewController {
     private var content: UIView = UIView()
     private var delimiter: UIView = UIView()
     private var image: UIImageView = UIImageView()
-    private var assetNametext: Text = Text(.article, .label)
-    private var assetDescriptiontext: Text = Text(.regular, .label)
-    private var progressText: Text = Text(.regular, .label)
+    private var assetNametext: Text = Text(.title, .label)
+    private var assetDescriptiontext: Text = Text(.system, .label)
+    private var progressText: Text = Text(.system, .label)
     private var progbar: UIProgressView = UIProgressView(progressViewStyle: .bar)
     
     private let viewModel: DownloadViewModel
@@ -37,7 +37,7 @@ class DownloadViewController: UIViewController {
         view.addSubview(content)
         content.layer.cornerRadius = 25
         content.backgroundColor = .systemGray6
-        content.easy.layout(Bottom(20 + Design.safeArea.bottom), Leading(20), Trailing(20), Height(360))
+        content.easy.layout(Bottom(20 + Design.safeArea.bottom), Leading(20), Trailing(20), Height(400))
         content.setupShadow(preset: .Post)
         
         view.addSubview(drugtumbler)
@@ -56,22 +56,22 @@ class DownloadViewController: UIViewController {
         
         assetNametext.text = viewModel.model.downloadbleName
         content.addSubview(assetNametext)
-        assetNametext.easy.layout(Leading(20), Trailing(20), Top(10).to(image))
+        assetNametext.easy.layout(Leading(40), Trailing(40), Top(20).to(image))
         
         assetDescriptiontext.text = viewModel.model.downloadbleDescription
         content.addSubview(assetDescriptiontext)
-        assetDescriptiontext.easy.layout(Leading(20), Trailing(20), Top(5).to(assetNametext))
+        assetDescriptiontext.easy.layout(Leading(40), Trailing(40), Top(5).to(assetNametext))
         assetDescriptiontext.numberOfLines = 2
         
         content.addSubview(delimiter)
-        delimiter.easy.layout(Leading(20), Trailing(20), Top(10).to(assetDescriptiontext), Height(1))
+        delimiter.easy.layout(Leading(40), Trailing(40), Top(20).to(assetDescriptiontext), Height(1))
         delimiter.backgroundColor = .systemGray3
         
         content.addSubview(progressText)
-        progressText.easy.layout(Leading(20), Top(5).to(delimiter), CenterX())
+        progressText.easy.layout(Leading(40), Top(20).to(delimiter), CenterX())
  
         content.addSubview(progbar)
-        progbar.easy.layout(Width(100), Trailing(20), CenterY().to(progressText), Height(5))
+        progbar.easy.layout(Width(100), Trailing(40), CenterY().to(progressText), Height(5))
         progbar.layer.cornerRadius = 2.5
         progbar.layer.masksToBounds = true
         progbar.progressTintColor = .systemGray

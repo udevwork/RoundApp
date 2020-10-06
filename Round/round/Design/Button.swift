@@ -24,6 +24,7 @@ class Button: UIButton {
     
     
      var icon : UIImageView = UIImageView()
+    let loader: UIActivityIndicatorView = UIActivityIndicatorView(style: .medium)
     fileprivate var btnText : Text = Text(.article)
     
     init() {
@@ -109,6 +110,25 @@ class Button: UIButton {
     @objc func buttonDown(sender:UIButton)
     {
         icon.tintColor = .systemIndigo
+    }
+    
+    public func showLoader(_ show: Bool){
+        if style == .some(.icon) || style == .some(.iconText) {
+            if show {
+                if loader.superview == nil {
+                    addSubview(loader)
+                    loader.frame = icon.frame
+                    icon.isHidden = true
+                    loader.startAnimating()
+                }
+            } else {
+                loader.removeFromSuperview()
+                loader.stopAnimating()
+                icon.isHidden = false
+            }
+        } else {
+            debugPrint("loader can be only if  style == .icon or .iconText")
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -210,15 +230,15 @@ class ButtonBuilder {
     }
     
     func build() -> Button {
-        if button.style == nil { Debug.log("Button builder: ", "You need to assign a style for button!") }
+        if button.style == nil { debugPrint("Button builder: ", "You need to assign a style for button!") }
         if button.style == Button.Style.text {
             if button.btnText.text == "" {
-                Debug.log("Button builder: ", "It looks like you forgot to add text for the button")
+                debugPrint("Button builder: ", "It looks like you forgot to add text for the button")
             }
         }
         if button.style == Button.Style.icon {
             if button.icon.image == nil {
-                Debug.log("Button builder: ", "it looks like you forgot to add an icon for the button")
+                debugPrint("Button builder: ", "it looks like you forgot to add an icon for the button")
             }
         }
         if button.backColor == nil {

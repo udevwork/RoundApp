@@ -18,3 +18,4 @@ extension String {
           return components(separatedBy: .whitespaces).joined()
       }
 }
+

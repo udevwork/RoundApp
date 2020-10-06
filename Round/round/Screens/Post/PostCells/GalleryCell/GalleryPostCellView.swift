@@ -16,17 +16,17 @@ class GalleryPostCellView: UITableViewCell, BasePostCellProtocol, UICollectionVi
     var id: String = UUID().uuidString
     var postType: PostCellType = .Gallery
     var urls: [String] = []
+    var onScreenshotPress: (Int)->() = { _ in}
     
-    fileprivate lazy var postCollectionView : GeminiCollectionView = {
+    fileprivate lazy var postCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 40
+        layout.minimumLineSpacing = 20
         layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 200, height: 300)
+        layout.itemSize = CGSize(width: 150, height: 200)
         
-        let collection = GeminiCollectionView(frame: .zero, collectionViewLayout: layout)
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.layer.masksToBounds = false
-        collection.backgroundColor = .clear
         collection.showsVerticalScrollIndicator = false
         collection.showsHorizontalScrollIndicator = false
         collection.decelerationRate = UIScrollView.DecelerationRate.fast
@@ -45,12 +45,10 @@ class GalleryPostCellView: UITableViewCell, BasePostCellProtocol, UICollectionVi
     }
     
     func setupDesign() {
-        postCollectionView.easy.layout(Edges(),Height(320))
-        postCollectionView.gemini
-            .customAnimation()
-            .alpha(0.2)
-            .scale(x: 0.8, y: 0.8, z: 1)
-            .rotationAngle(x: 0, y: 6, z: 0)
+        postCollectionView.easy.layout(Edges(),Height(250))
+        postCollectionView.backgroundColor = .clear
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
     }
     
     func setPadding(padding: UIEdgeInsets) {
@@ -67,17 +65,19 @@ class GalleryPostCellView: UITableViewCell, BasePostCellProtocol, UICollectionVi
         return cell
     }
     
-    class CustomCell: GeminiCell {
-        private let imageView : UIImageView = UIImageView()
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        onScreenshotPress(indexPath.row)
+    }
+    
+    class CustomCell: UICollectionViewCell {
+        let imageView : UIImageView = UIImageView()
         override init(frame: CGRect) {
             super.init(frame: frame)
             addSubview(imageView)
             imageView.easy.layout(Edges())
             imageView.layer.masksToBounds = true
             imageView.contentMode = .scaleAspectFill
-            imageView.layer.cornerRadius = 8
-            imageView.layer.borderColor = UIColor.systemGray6.cgColor
-            imageView.layer.borderWidth = 4
+            imageView.layer.cornerRadius = 7
         }
         
         required init?(coder: NSCoder) {
@@ -92,5 +92,38 @@ class GalleryPostCellView: UITableViewCell, BasePostCellProtocol, UICollectionVi
         }
     }
 
+    var hiddenCell: UIView? = nil
+    
 }
 
+extension GalleryPostCellView: GalleryPagerMediaViewerDelegateProtocol {
+    func pagerMedia(closed: PagerMediaViewer) {
+        hiddenCell?.isHidden = false
+    }
+    
+    func pagerMedia(frameOfImageInCell id: Int) -> CGRect? {
+        
+        if let cell = postCollectionView.cellForItem(at: IndexPath(row: id, section: 0)) {
+            hiddenCell?.isHidden = false
+            hiddenCell = cell
+            hiddenCell?.isHidden = true
+            let selectedFrame = postCollectionView.convert(cell.frame, to: nil)
+            return selectedFrame
+        } else {
+            hiddenCell?.isHidden = false
+            return .zero
+        }
+    }
+    
+    func pagerMedia(imageOfInDataSource id: Int) -> UIImage? {
+        let iview = UIImageView()
+        iview.setImage(imageURL: URL(string: urls[id]), placeholder: Images.imagePlaceholder.rawValue)
+        return iview.image
+    }
+    
+    func pagerMedia(ImagesCountFor: PagerMediaViewer) -> Int {
+        return urls.count
+    }
+    
+    
+}

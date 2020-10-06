@@ -17,6 +17,8 @@ class MainViewModel {
                 if result == .success {
                     self.cards = model!
                     complition()
+                } else {
+                    
                 }
             }
         }

@@ -14,9 +14,12 @@ class DownloadPostCellView: UITableViewCell, BasePostCellProtocol {
     public var id: String = UUID().uuidString
     public var postType: PostCellType = .Download
     public var onDownloadPress: ((String)->())? = nil
+    
+    private let content: UIView = UIView()
+    
     public var link: String? = nil
-    public var title = Text(.article, .systemGray3, .zero)
-    public let downloadButton: Button = ButtonBuilder()
+    private var title = Text(.article, .systemGray3, .zero)
+    private let downloadButton: Button = ButtonBuilder()
         .setFrame(CGRect(origin: .zero, size: CGSize(width: 100, height: 60)))
         .setStyle(.iconText)
         .setColor(.black)
@@ -37,16 +40,20 @@ class DownloadPostCellView: UITableViewCell, BasePostCellProtocol {
     }
         
     func setupDesign() {
-        backgroundColor = .systemGray6
-        contentView.addSubview(title)
-        contentView.addSubview(downloadButton)
-        downloadButton.easy.layout(Trailing(20), CenterY().to(title))
-        title.easy.layout(Trailing(20).to(downloadButton, .leading),Top(40),Bottom(40), Height(80))
+        backgroundColor = .clear
+        contentView.addSubview(content)
+        content.easy.layout(Edges(20))
+        content.backgroundColor = .systemGray5
+        content.layer.cornerRadius = 20
+        content.setupShadow(preset: .Post)
+        content.addSubview(title)
+        content.addSubview(downloadButton)
+        downloadButton.easy.layout(Trailing(20), CenterY(), Top(20), Bottom(20))
+        title.easy.layout(Leading(20), CenterY())
         title.numberOfLines = 1
         title.sizeToFit()
         layoutSubviews()
         downloadButton.setTarget { [weak self] in
-            print("download: ", self?.link as Any)
             self?.onDownloadPress?(self?.link ?? "")
         }
     }

@@ -43,6 +43,7 @@ class DownloadViewModel {
                 try data?.write(to: savePath.appendingPathComponent("archive.zip"))
             } catch let err {
                 print("FUCK ERROR WRITE: ", err)
+                Notifications.shared.Show(RNSimpleView(text: "Error save archive", icon: Icons.cross.image(), iconColor: .systemRed))
             }
             
             print("FUCK WRITE OK")
@@ -61,6 +62,7 @@ class DownloadViewModel {
                 try FileManager.default.unzipItem(at: savePath.appendingPathComponent("archive.zip"), to: savePath, skipCRC32: false, progress: progress, preferredEncoding: nil)
             } catch let err {
                 print("FUCK ERROR unzipItem: ", err)
+                Notifications.shared.Show(RNSimpleView(text: "Error unzip", icon: Icons.cross.image(), iconColor: .systemRed))
             }
             print("FUCK unzipItem OK")
             
@@ -78,6 +80,7 @@ class DownloadViewModel {
                 // process files
             } catch let err {
                 print("FUCK ERROR contentsOfDirectory: ", err)
+                Notifications.shared.Show(RNSimpleView(text: "Error clearing temp files", icon: Icons.cross.image(), iconColor: .systemRed))
             }
         }
     }
@@ -92,9 +95,11 @@ class DownloadViewModel {
                     try FileManager.default.removeItem(at: urlToRemove)
                 } catch {
                     print("Could not delete file \(error)")
+                    Notifications.shared.Show(RNSimpleView(text: "Error delete file", icon: Icons.cross.image(), iconColor: .systemRed))
                 }
             }
         } catch {
+            Notifications.shared.Show(RNSimpleView(text: "Error clearing temp files", icon: Icons.cross.image(), iconColor: .systemRed))
             print("Could not clear temp folder: \(error)")
         }
     }

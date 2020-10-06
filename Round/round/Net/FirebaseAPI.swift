@@ -22,7 +22,9 @@ final class FirebaseAPI : API {
     
     private let posts = Firestore.firestore().collection("Designs")
     
-    private init (){}
+    private init () {
+       
+    }
     
     func createUser(email: String, password: String, complition : @escaping (HTTPResult, User?) -> ()) {
         Notifications.shared.Show(RNTopActivityIndicator(text: "Creating user"))
@@ -30,7 +32,7 @@ final class FirebaseAPI : API {
             if error == nil {
                 
             } else {
-                Debug.log("error: ", error ?? "FirebaseAPI.createNewUser(...)")
+                debugPrint("error: ", error ?? "FirebaseAPI.createNewUser(...)")
                 ErrorHandler().HandleAuthError(error)
                 complition(HTTPResult.error, nil)
             }
@@ -40,7 +42,7 @@ final class FirebaseAPI : API {
     func signIn(email: String, password: String, complition : @escaping (HTTPResult, User?) -> ()) {
         Auth.auth().signIn(withEmail: email, password: password) { user, error in
             if error == nil && user != nil {
-                Debug.log("sign in OK!")
+                debugPrint("sign in OK!")
                 // complition(HTTPResult.success, user)
             } else {
                 ErrorHandler().HandleAuthError(error)
@@ -56,14 +58,14 @@ final class FirebaseAPI : API {
                 if err == nil {
                     if let user = res?.user {
                         complition(.success)
-                        Debug.log("sign out OK!")
-                        Debug.log("USER ID: \(user.uid)")
+                        debugPrint("sign out OK!")
+                        debugPrint("USER ID: \(user.uid)")
                     }
                 }
             }
         } catch let signOutError as NSError {
             complition(.error)
-            Debug.log("Error signing out: %@", signOutError)
+            debugPrint("Error signing out: %@", signOutError)
         }
     }
     
@@ -72,7 +74,7 @@ final class FirebaseAPI : API {
         var arrayToReturn : [CardViewModel] = []
         posts.whereField("filterAuthorID", isEqualTo: userID).getDocuments { (snap, error) in
             if error != nil {
-                Debug.log("FirebaseAPI.getPostCards(): getDocuments error: ", error ?? "nil")
+                debugPrint("FirebaseAPI.getPostCards(): getDocuments error: ", error ?? "nil")
                 complition(HTTPResult.error, nil)
                 return
             }
@@ -84,10 +86,10 @@ final class FirebaseAPI : API {
                     
                     let card : CardViewModel = CardViewModel(id: doc.documentID, response: result)
                     
-                    Debug.log(card)
+                    debugPrint(card)
                     arrayToReturn.append(card)
                 } catch let error {
-                    Debug.log("FirebaseAPI.getPostCards(): Decoder error: ", error)
+                    debugPrint("FirebaseAPI.getPostCards(): Decoder error: ", error)
                     complition(HTTPResult.error, nil)
                     
                 }
@@ -103,12 +105,12 @@ final class FirebaseAPI : API {
         
         posts.document(id).getDocument { doc, err in
             if err != nil {
-                Debug.log("FirebaseAPI.getPostCards(): getDocuments error: ", err ?? "error")
+                debugPrint("FirebaseAPI.getPostCards(): getDocuments error: ", err ?? "error")
                 complition(HTTPResult.error, nil)
                 return
             }
             if doc == nil {
-                Debug.log("FirebaseAPI.getPostCards(): getDocuments NO DOC: ", err ?? "error")
+                debugPrint("FirebaseAPI.getPostCards(): getDocuments NO DOC: ", err ?? "error")
                 complition(HTTPResult.error, nil)
                 return
             }
@@ -118,10 +120,10 @@ final class FirebaseAPI : API {
                 
                 let card : CardViewModel = CardViewModel(id: doc!.documentID, response: result)
                 
-                Debug.log(card)
+                debugPrint(card)
                 complition(HTTPResult.error, card)
             } catch let error {
-                Debug.log("FirebaseAPI.getPostCards(): Decoder error: ", error)
+                debugPrint("FirebaseAPI.getPostCards(): Decoder error: ", error)
                 complition(HTTPResult.error, nil)
                 
             }
@@ -132,14 +134,14 @@ final class FirebaseAPI : API {
     }
     
     func getPostBody(id: String, complition: @escaping (HTTPResult, [BasePostCellViewModelProtocol]?) -> ()){
-        posts.document(id).collection("content").getDocuments { (snap, error) in
+        posts.document(id).collection("content").getDocuments { [self] (snap, error) in
             if error != nil {
-                Debug.log("FirebaseAPI.getPostBody(): getDocument error: ", error ?? "nil")
+                debugPrint("FirebaseAPI.getPostBody(): getDocument error: ", error ?? "nil")
                 complition(HTTPResult.error, nil)
                 return
             }
             guard let snap = snap else {
-                Debug.log("FirebaseAPI.getPostBody(): snap error: ", "snap == nil")
+                debugPrint("FirebaseAPI.getPostBody(): snap error: ", "snap == nil")
                 complition(HTTPResult.error, nil)
                 return
             }
@@ -178,9 +180,13 @@ final class FirebaseAPI : API {
                     }
                     
                 } catch let error {
-                    Debug.log("FirebaseAPI.getPostBody(): Decoder error: \(data)", error)
+                    debugPrint("FirebaseAPI.getPostBody(): Decoder error: \(data)", error)
                     complition(HTTPResult.error, nil)
                 }
+            }
+            
+            if Debug.offlineMode {
+                models.append(contentsOf: GenerateOfflinePostsBody())
             }
             
             complition(HTTPResult.success, models)
@@ -194,7 +200,7 @@ final class FirebaseAPI : API {
     
     public func getPosts(complition : @escaping (HTTPResult, [CardViewModel]?) -> ()){
      
-        posts.getDocuments { (snap, error) in
+        posts.getDocuments { [self] (snap, error) in
             var model : [CardViewModel] = []
 
             snap!.documents.forEach { doc in
@@ -204,10 +210,15 @@ final class FirebaseAPI : API {
                     let vm = CardViewModel(id: doc.documentID, response: resp)
                     model.append(vm)
                 } catch let error {
-                    Debug.log("FirebaseAPI.getPostBody(): Decoder error: \(data)", error)
+                    debugPrint("FirebaseAPI.getPostBody(): Decoder error: \(data)", error)
                     complition(HTTPResult.error, nil)
                 }
             }
+            
+            if Debug.offlineMode {
+                model.append(contentsOf: GenerateOfflinePosts())
+            }
+            
             complition(.success, model)
         }
        
@@ -222,6 +233,61 @@ final class FirebaseAPI : API {
                 CardViewModel(id: "AQJ0z1EQ325uW0GeLm8F", mainImageURL: "https://sun1-28.userapi.com/7KI4xmTMWXpguxYSdBezONejxtzrVy5zgYMwlw/xpuW-ItMIec.jpg", title: "Your project made a great impression", description: "test desc", dowloadsCount: 2),
                 CardViewModel(id: "AQJ0z1EQ325uW0GeLm8F", mainImageURL: "https://sun1-90.userapi.com/bGW_nINR-jkO3MKtAzq8JKk8P-Ztj5B8eVHNyw/MXbeiYKem80.jpg", title: "Good project, Awesome!", description: "test desc", dowloadsCount: 967),
                 CardViewModel(id: "AQJ0z1EQ325uW0GeLm8F", mainImageURL: "https://sun1-95.userapi.com/aqD57_9h05HJJRplDi-_PTDdHHfltb_P6KcRxA/EwkMTmzJoPI.jpg", title: "typography", description: "test desc", dowloadsCount: 49)]
+        
+    }
+    
+    // MARK: FAKE Offline POSTS
+    func GenerateOfflinePosts() ->  [CardViewModel] {
+        
+        return [CardViewModel(id: "AQJ0z1EQ325uW0GeLm8F", mainImageURL: "https://cdn.shopify.com/s/files/1/2252/3393/products/web_01copy_2100x.jpg?v=1601744709", title: "BLVCK", description: "Bundle Pack (3 sets in 1)", dowloadsCount: 25)]
+        
+    }
+    
+    // MARK: FAKE Offline POSTS BODY
+    func GenerateOfflinePostsBody() ->  [BasePostCellViewModelProtocol] {
+        var models : [BasePostCellViewModelProtocol] = []
+        
+        models.append(TitlePostCellViewModel(model: TitlePostResponse(type: .Title, order: 0, text: "IOS14 ICONS SET")))
+        
+        models.append(GalleryPostCellViewModel(model: GalleryPostResponse(type: .Gallery, order: 1, imagesUrl: [
+            "https://cdn.shopify.com/s/files/1/2252/3393/products/web_02_2100x.jpg?v=1601746418",
+            "https://cdn.shopify.com/s/files/1/2252/3393/products/web_03_2100x.jpg?v=1601746646",
+            "https://cdn.shopify.com/s/files/1/2252/3393/products/web_04_2100x.jpg?v=1601746499",
+            "https://cdn.shopify.com/s/files/1/2252/3393/products/web_05_2100x.jpg?v=1601746560"
+        ])))
+        
+        models.append(ArticlePostCellViewModel(model: ArticlePostResponse(type: .Article, order: 2, text: """
+What Is Included in each pack:
+
+Pack 1: Blvck Monochrome Signature Set ($15)
+
+- 140 custom icons
+- 2 versions included: 70 Blvck & 70 Whte icons
+- 10 complimentary Wallpapers
+- Continuous updates
+
+Pack 2: Blvck Rainbow Set ($10)
+
+- 70 custom icons
+- 10 complimentary Wallpapers
+- Continuous updates
+
+Pack 3: Blvckmoji Set ($10)
+
+- 42 custom icons
+- 10 complimentary Wallpapers
+- Continuous updates
+
+Pack 4: Bundle Pack - 3 Packs in one ($25)
+
+- 140 Blvck MonoChrome + 70 Blvck Rainbow + 42 Blvckmoji Sets
+- 10 complimentary Wallpapers
+- Continuous updates
+""")))
+        
+        models.append(DownloadPostCellViewModel(model: DownloadPostResponse(type: .Download, order: 3, downloadLink: "", fileSize: "69MB")))
+        
+        return models
         
     }
     

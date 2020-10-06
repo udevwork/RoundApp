@@ -34,7 +34,7 @@ class MenuStack: UIView {
         super.layoutSubviews()
         backgroundView.layer.cornerRadius = frame.height / 2
         backgroundView.layer.masksToBounds = true
-        backgroundView.backgroundColor = .systemGray6
+        backgroundView.backgroundColor = Colors.stackMenuColor.uicolor()
         self.layer.masksToBounds = false
         self.layer.shadowPath = UIBezierPath(rect: backgroundView.frame).cgPath
         self.layer.shadowRadius = 14

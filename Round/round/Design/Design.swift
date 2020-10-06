@@ -31,7 +31,7 @@ enum FontNames : String {
     func printAllAvalableFontFamilys() {
         for family in UIFont.familyNames.sorted() {
             let names = UIFont.fontNames(forFamilyName: family)
-            Debug.log("FONTS: ", "Family: \(family) Font names: \(names)")
+            debugPrint("FONTS: ", "Family: \(family) Font names: \(names)")
         }
     }
     func uiFont(_ size: CGFloat) -> UIFont {
@@ -63,14 +63,13 @@ enum Colors: String {
     case vcBackground = "viewControllerBackground"
     case label = "contrastLabel"
     case lightlabel = "lightLabel"
-    case lightblue = "blue" // use for shadows
-
+    case stackMenuColor = "stackMenuColor"
     
     func uicolor() -> UIColor {
         if let color = UIColor(named: self.rawValue) {
             return color
         } else {
-            Debug.log("Design.swift COLOR ERROR")
+            debugPrint("Design.swift COLOR ERROR")
             return .green
         }
     }
@@ -78,7 +77,7 @@ enum Colors: String {
         if let color = UIColor(named: self.rawValue) {
             return color.cgColor
         } else {
-            Debug.log("Design.swift COLOR ERROR")
+            debugPrint("Design.swift COLOR ERROR")
             return UIColor.green.cgColor
         }
     }
@@ -117,6 +116,8 @@ enum Icons : String {
     case clock           = "clock"
     case cart            = "cart.fill"
 
+    case handPointer     = "hand.point.up.fill"
+    
     case checkmark       = "checkmark.circle.fill"
     case xmarkOctagon    = "xmark.octagon.fill"
     case cloudError      = "xmark.icloud.fill"
@@ -136,12 +137,13 @@ enum Icons : String {
     case settings        = "slider.horizontal.3"
     case settingsGear    = "gear"
     case arrayDown       = "arrowtriangle.down.fill"
+    case info            = "info.circle.fill"
     
     func image(weight: UIImage.SymbolWeight = .black) -> UIImage {
         if let img = UIImage(systemName: self.rawValue, withConfiguration: UIImage.SymbolConfiguration(weight: weight)){
         return img
         } else {
-            Debug.log("Design.swift ERROR")
+            debugPrint("Design.swift ERROR")
             return UIImage(named: "empty")!
         }
     }
@@ -155,7 +157,7 @@ enum Images : String {
         if let img = UIImage(named: self.rawValue){
             return img
         } else {
-            Debug.log("Design.swift Images ERROR")
+            debugPrint("Design.swift Images ERROR")
             return UIImage(named: "empty")!
         }
     }
