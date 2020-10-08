@@ -17,10 +17,11 @@ class MainViewController: BaseViewController<MainViewModel> {
     // MARK: - Constants
     
     let cellWidth =   UIScreen.main.bounds.width
-    let cellHeight =  UIScreen.main.bounds.height - 200
+    let cellHeight =  UIScreen.main.bounds.height - 250
 
     // MARK: - UI Components
-   
+    let header: TitleHeader = TitleHeader()
+
     fileprivate lazy var postCollectionView : GeminiCollectionView = {
         let layout = PagingCollectionViewLayout()
         layout.minimumLineSpacing = 0
@@ -42,15 +43,15 @@ class MainViewController: BaseViewController<MainViewModel> {
     
     override init(viewModel: MainViewModel) {
         super.init(viewModel: viewModel)
-        title = "Round"
-        setUpMenuButton()
+        header.text = localized(.icons)
         setupView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        header.easy.layout(Top(Design.safeArea.top + 10),Leading(),Trailing(),Height(40))
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -59,20 +60,8 @@ class MainViewController: BaseViewController<MainViewModel> {
         super.viewWillAppear(animated)
     }
  
-    
-    func setUpMenuButton(){
-       // navigationItem.largeTitleDisplayMode = .never
-        let item = UIBarButtonItem(image: Icons.user.image(), landscapeImagePhone: Icons.user.image(), style: .plain, target: self, action: #selector(user))
-        self.navigationItem.rightBarButtonItem = item
-    }
-    
-    @objc func user() {
-
-    }
-   
-   
     fileprivate func setupView(){
-        
+        view.addSubview(header)
         view.addSubview(postCollectionView)
         let bottom = Design.safeArea.bottom + 150
         let top = Design.safeArea.top + 100
@@ -93,7 +82,6 @@ class MainViewController: BaseViewController<MainViewModel> {
                 self?.animatedCollectionReloading()
             }
         }
-        
     }
     
     
@@ -137,7 +125,7 @@ class CustomCell: GeminiCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(card)
-        card.easy.layout(Leading(25),Trailing(25),Top(),Bottom())
+        card.easy.layout(Leading(25),Trailing(25),Top(10),Bottom(-20))
     }
     
     required init?(coder: NSCoder) {

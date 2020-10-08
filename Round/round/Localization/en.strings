@@ -1,0 +1,64 @@
+/* 
+  EN.strings
+  round
+
+  Created by Denis Kotelnikov on 08.10.2020.
+  Copyright © 2020 Denis Kotelnikov. All rights reserved.
+*/
+
+// header
+"icons" = "Icons";
+"subscription" = "Subscription";
+"how_to" = "How to set icon?";
+"settings" = "Settings";
+
+// subscription
+"subscribe" = "subscribe";
+
+// tutorial
+"1title" = "1. Open Shortcuts";
+"1article" = "If you haven't found it, download it from the app store";
+"2title" = "2. Add a new shortcut";
+"2article" = "Click on the plus in the upper right corner";
+"3title" = "3. New action";
+"3article" = "Press the button in the center";
+"4title" = "4. Scripting";
+"4article" = "Find the script button from the available actions";
+"5title" = "5. Application";
+"5article" = "Select Open Application. It can be at the bottom of the list";
+"6title" = "6. Application selection";
+"6article" = "Select the application you want to open from the list";
+"7title" = "7. Details";
+"7article" = "Click on the three dots in the upper right corner";
+"8title" = "8. Add to screen";
+"8article" = "Click on Add to Home Screen";
+"9title" = "9. Icon";
+"9article" = "You can choose an icon and title here";
+"10title" = "10. Icon source";
+"10article" = "Find the icons where you saved them";
+"11title" = "11. Add";
+"11article" = "Check how the icon looks and add it to the screen";
+"12title" = "12. Added!";
+"12article" = "If you saw a check mark, then everything is correct";
+"13title" = "Excellent";
+"13article" = "Admiring the result";
+
+// settings
+"policy" = "privacy policy";
+"termsOfUse" = "Terms of Use";
+"сontactUs" = "Contact us";
+"subscriptionTerms" = "Subscription Terms";
+"restore" = "Restore";
+
+// notifications
+"unlocked" = "Unlocked!";
+"purchaseError" = "Payment error";
+"purchaseRestore" = "Purchases restored!";
+"archiveSaveError" = "Failed to save archive!";
+"unzipError" = "Unpacking error";
+"tempClearError" = "Don't delete temporary files";
+
+// design
+"download" = "Download!";
+"downloadind" = "Downloading";
+"unzipping" = "Unzipping";

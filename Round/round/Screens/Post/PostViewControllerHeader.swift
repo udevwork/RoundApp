@@ -41,7 +41,7 @@ class PostViewControllerHeader: UIView {
         
         backButton.easy.layout(Leading(20),Top(20+Design.safeArea.top))
                
-        bottomTextBlockView.easy.layout(Leading(15), Trailing(15), Bottom(15))
+        bottomTextBlockView.easy.layout(Leading(20), Trailing(20), Bottom(20))
         
         backgroundImageView.easy.layout(
             Top(),Leading(),Trailing(),Bottom()

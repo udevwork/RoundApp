@@ -18,6 +18,7 @@ class RUITabbarCountroller: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadTabBar()
+        title = "fuck"
     }
     
     func loadTabBar() {

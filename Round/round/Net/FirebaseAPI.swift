@@ -11,7 +11,6 @@ import Firebase
 import FirebaseFirestore
 import CodableFirebase
 import FirebaseStorage
-import FirebaseAuth
 
 final class FirebaseAPI : API {
     
@@ -25,50 +24,6 @@ final class FirebaseAPI : API {
     private init () {
        
     }
-    
-    func createUser(email: String, password: String, complition : @escaping (HTTPResult, User?) -> ()) {
-        Notifications.shared.Show(RNTopActivityIndicator(text: "Creating user"))
-        Auth.auth().createUser(withEmail: email, password: password) { user, error in
-            if error == nil {
-                
-            } else {
-                debugPrint("error: ", error ?? "FirebaseAPI.createNewUser(...)")
-                ErrorHandler().HandleAuthError(error)
-                complition(HTTPResult.error, nil)
-            }
-        }
-    }
-    
-    func signIn(email: String, password: String, complition : @escaping (HTTPResult, User?) -> ()) {
-        Auth.auth().signIn(withEmail: email, password: password) { user, error in
-            if error == nil && user != nil {
-                debugPrint("sign in OK!")
-                // complition(HTTPResult.success, user)
-            } else {
-                ErrorHandler().HandleAuthError(error)
-                complition(.error,nil)
-            }
-        }
-    }
-    
-    func signOut(complition : @escaping (HTTPResult) -> ()) {
-        do {
-            try Auth.auth().signOut()
-            Auth.auth().signInAnonymously { res, err in
-                if err == nil {
-                    if let user = res?.user {
-                        complition(.success)
-                        debugPrint("sign out OK!")
-                        debugPrint("USER ID: \(user.uid)")
-                    }
-                }
-            }
-        } catch let signOutError as NSError {
-            complition(.error)
-            debugPrint("Error signing out: %@", signOutError)
-        }
-    }
-    
     
     func getPostCards(userID: String, complition : @escaping (HTTPResult, [CardViewModel]?) -> ()) {
         var arrayToReturn : [CardViewModel] = []

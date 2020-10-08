@@ -23,13 +23,13 @@ class DownloadPostCellView: UITableViewCell, BasePostCellProtocol {
         .setFrame(CGRect(origin: .zero, size: CGSize(width: 100, height: 60)))
         .setStyle(.iconText)
         .setColor(.black)
-        .setText("Download")
+        .setText(localized(.download))
         .setTextColor(.white)
         .setIcon(.download)
         .setIconColor(.white)
         .setIconSize(CGSize(width: 20, height: 20))
         .setCornerRadius(8)
-        .setShadow(ShadowPresets.Button)
+        .setShadow(ShadowPresets.regular)
         .build()
     
    public func setup(viewModel: BasePostCellViewModelProtocol) {
@@ -44,8 +44,7 @@ class DownloadPostCellView: UITableViewCell, BasePostCellProtocol {
         contentView.addSubview(content)
         content.easy.layout(Edges(20))
         content.backgroundColor = .systemGray5
-        content.layer.cornerRadius = 20
-        content.setupShadow(preset: .Post)
+        content.layer.cornerRadius = 15
         content.addSubview(title)
         content.addSubview(downloadButton)
         downloadButton.easy.layout(Trailing(20), CenterY(), Top(20), Bottom(20))

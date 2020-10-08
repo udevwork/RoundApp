@@ -33,18 +33,18 @@ class PostBluredTitleDescriptionView: UIView {
         blurredEffectView.contentView.addSubview(descriptionLabel)
         
         blurredEffectView.easy.layout(Edges())
-        blurredEffectView.layer.cornerRadius = 40
+        blurredEffectView.layer.cornerRadius = 15
         blurredEffectView.layer.masksToBounds = true
         
         titleLabel.numberOfLines = 2
         descriptionLabel.numberOfLines = 2
         
         titleLabel.easy.layout(
-            Leading(25),Trailing(25),Top(20)
+            Leading(20),Trailing(20),Top(17)
         )
         
         descriptionLabel.easy.layout(
-            Leading(25),Trailing(25),Bottom(20),Top(3).to(titleLabel)
+            Leading(20),Trailing(20),Bottom(17),Top(3).to(titleLabel)
         )
         
     }

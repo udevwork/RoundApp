@@ -38,7 +38,7 @@ class DownloadViewController: UIViewController {
         content.layer.cornerRadius = 25
         content.backgroundColor = .systemGray6
         content.easy.layout(Bottom(20 + Design.safeArea.bottom), Leading(20), Trailing(20), Height(400))
-        content.setupShadow(preset: .Post)
+        content.setupShadow(preset: .medium)
         
         view.addSubview(drugtumbler)
         drugtumbler.layer.cornerRadius = 3

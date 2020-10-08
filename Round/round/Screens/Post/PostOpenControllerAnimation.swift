@@ -40,7 +40,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
     
     fileprivate func setupView(_ toViewController: UIViewController, _ containerView: UIView) {
         guard let card = card else { return }
-        guard let model = card.viewModel else { return }
+      //  guard let model = card.viewModel else { return }
         
         toViewController.view.frame = UIScreen.main.bounds
         toViewController.view.layer.masksToBounds = true
@@ -65,7 +65,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         backgroundImageView.addSubview(backButton)
         containerView.addSubview(toViewController.view)
         backButton.easy.layout(Leading(20),Top(20+Design.safeArea.top))
-        bottomTextBlockView.easy.layout(Leading(15), Trailing(15), Bottom(15))
+        bottomTextBlockView.easy.layout(Leading(20), Trailing(20), Bottom(20))
         viewsCounterView.frame = viewsCounterOrigin
     }
     

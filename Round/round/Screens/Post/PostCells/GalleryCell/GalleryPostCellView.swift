@@ -77,7 +77,7 @@ class GalleryPostCellView: UITableViewCell, BasePostCellProtocol, UICollectionVi
             imageView.easy.layout(Edges())
             imageView.layer.masksToBounds = true
             imageView.contentMode = .scaleAspectFill
-            imageView.layer.cornerRadius = 7
+            imageView.layer.cornerRadius = 15
         }
         
         required init?(coder: NSCoder) {

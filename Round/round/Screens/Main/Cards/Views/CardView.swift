@@ -38,21 +38,21 @@ class CardView: UIView {
     
     func setupDesign() {
         layer.borderWidth = 6
-        layer.borderColor = UIColor.systemGray6.cgColor
-        layer.cornerRadius = 50
+        layer.borderColor = UIColor.systemGray.cgColor
+        layer.cornerRadius = 25
         clipsToBounds = false
-        backgroundImageView.layer.cornerRadius = 50
+        backgroundImageView.layer.cornerRadius = 25
         backgroundImageView.layer.masksToBounds = true
         backgroundImageViewMask.addSubview(backgroundImageView)
         addSubview(backgroundImageViewMask)
         backgroundImageViewMask.addSubview(bottomTextBlockView)
         [actionButton, downloadsCounterView].forEach { addSubview($0) }
-        downloadsCounterView.easy.layout(Top(35),Leading(35))
+        downloadsCounterView.easy.layout(Top(20),Leading(20))
         backgroundImageViewMask.easy.layout(Leading(), Trailing(), Top(), Bottom())
         backgroundImageViewMask.layer.masksToBounds = false
         backgroundImageView.easy.layout(Edges(1))
         backgroundImageView.contentMode = .scaleAspectFill
-        bottomTextBlockView.easy.layout(Leading(15), Trailing(15), Bottom(15))
+        bottomTextBlockView.easy.layout(Leading(20), Trailing(20), Bottom(20))
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(buttonClicked)))
     }
     

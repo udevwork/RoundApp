@@ -15,26 +15,15 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel> {
     
     var package: Purchases.Package? = nil
     
-    let nameLabel = Text(.title, .label)
-    let delimiter: UIView = UIView()
+    let header: TitleHeader = TitleHeader()
+    
     let dascriptionLabel = Text(.article, .systemGray2)
     
     let subscribeButton : Button = ButtonBuilder()
         .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 40)))
         .setStyle(.iconText)
         .setColor(.systemGray3)
-        .setText("subscribe")
-        .setTextColor(.white)
-        .setIcon(.cart)
-        .setIconColor(.white)
-        .setCornerRadius(13)
-        .build()
-    
-    let restoreButton : Button = ButtonBuilder()
-        .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 40)))
-        .setStyle(.iconText)
-        .setColor(.systemGray3)
-        .setText("restore")
+        .setText(localized(.subscribe))
         .setTextColor(.white)
         .setIcon(.cart)
         .setIconColor(.white)
@@ -45,11 +34,11 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel> {
         super.init(viewModel: viewModel)
         navigationItem.largeTitleDisplayMode = .never
         title = "Subscribe"
-        setupView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupView()
         setupInfo()
     }
     
@@ -58,28 +47,21 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel> {
     }
     
     private func setupView() {
-        nameLabel.numberOfLines = 0
         dascriptionLabel.numberOfLines = 0
         
+        header.text = localized(.subs)
         
-        nameLabel.text = "IDesigner subscription"
-        
-        view.addSubview(nameLabel)
-        nameLabel.easy.layout(Top(70),Leading(40),Trailing(40))
-        nameLabel.sizeToFit()
-        
-        view.addSubview(delimiter)
-        delimiter.easy.layout(Top(5).to(nameLabel),Leading(40),Trailing(40),Height(1))
-        delimiter.backgroundColor = .systemGray2
-        
+        view.addSubview(header)
+        header.easy.layout(Top(Design.safeArea.top + 10),Leading(),Trailing(),Height(40))
+
+      
         view.addSubview(dascriptionLabel)
-        dascriptionLabel.easy.layout(Top(20).to(nameLabel),Leading(40),Trailing(40))
+        dascriptionLabel.easy.layout(Top(20).to(header),Leading(40),Trailing(40))
         dascriptionLabel.sizeToFit()
         
         view.addSubview(subscribeButton)
         subscribeButton.easy.layout(Top(40).to(dascriptionLabel),Leading(40))
-        view.addSubview(restoreButton)
-        restoreButton.easy.layout(Top(10).to(subscribeButton),Leading(40))
+       
         
         subscribeButton.setTarget {
             self.subscribeButton.showLoader(true)
@@ -88,24 +70,17 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel> {
                     Purchases.shared.purchasePackage(package) { (transaction, purchaserInfo, error, userCancelled) in
                         if let info = purchaserInfo?.entitlements["IDesignerSubscriber"], info.isActive == true {
                             debugPrint("UNLOCKED")
-                            Notifications.shared.Show(RNSimpleView(text: "Succsess!", icon: Icons.checkmark.image(), iconColor: .systemGreen))
+                            Notifications.shared.Show(RNSimpleView(text: localized(.unlocked), icon: Icons.checkmark.image(), iconColor: .systemGreen))
                             self.setupInfo()
                         }
                         self.subscribeButton.showLoader(false)
                     }
                 }
             } else {
-                Notifications.shared.Show(RNSimpleView(text: "You cant purchase!", icon: Icons.cross.image(), iconColor: .systemRed))
+                Notifications.shared.Show(RNSimpleView(text: localized(.purchaseError), icon: Icons.cross.image(), iconColor: .systemRed))
             }
         }
-        
-        restoreButton.setTarget {
-            Purchases.shared.restoreTransactions { (purchaserInfo, error) in
-                debugPrint("RESTORE")
-                debugPrint(purchaserInfo as Any)
-                Notifications.shared.Show(RNSimpleView(text: "Restored!", icon: Icons.checkmark.image(), iconColor: .systemGreen))
-            }
-        }
+
     }
     
     private func setupInfo() {
@@ -146,7 +121,6 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel> {
                     dascriptionLabel.text = res
                     
                     subscribeButton.isHidden = false
-                    restoreButton.isHidden = false
                 }
             }
     
@@ -161,7 +135,6 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel> {
         dascriptionLabel.text = res
         
         subscribeButton.isHidden = true
-        restoreButton.isHidden = true
     }
     
 }

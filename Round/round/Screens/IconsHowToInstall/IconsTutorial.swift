@@ -19,32 +19,32 @@ class IconsTutorialRouter {
 
 class IconsTutorialModel {
     let model: [howToModel] = [
-        howToModel(title: "1. open shortcats", imageName: "1", text: "1) Add space between table rows swift space between table cells"),
-        howToModel(title: "2. open shortcats",imageName: "2", text: "2) swift sadd spacing between tableview cells swift"),
-        howToModel(title: "3. open shortcats",imageName: "3", text: "2) swift sadd spacing between tableview cells swift"),
-        howToModel(title: "4. open shortcats",imageName: "4", text: "2) swift sadd spacing between tableview cells swift"),
-        howToModel(title: "5. open shortcats",imageName: "5", text: "2) swift sadd spacing between tableview cells swift"),
-        howToModel(title: "6. open shortcats",imageName: "6", text: "2) swift sadd spacing between tableview cells swift"),
-        howToModel(title: "7. open shortcats",imageName: "7", text: "2) swift sadd spacing between tableview cells swift"),
-        howToModel(title: "8. open shortcats",imageName: "8", text: "2) swift sadd spacing between tableview cells swift"),
-        howToModel(title: "9. open shortcats",imageName: "9", text: "2) swift sadd spacing between tableview cells swift"),
-        howToModel(title: "10. open shortcats",imageName: "10", text: "2) swift sadd spacing between tableview cells swift"),
-        howToModel(title: "11. open shortcats",imageName: "11", text: "2) swift sadd spacing between tableview cells swift"),
-        howToModel(title: "12. open shortcats",imageName: "12", text: "2) swift sadd spacing between tableview cells swift"),
-        howToModel(title: "13. open shortcats",imageName: "13", text: "2) swift sadd spacing between tableview cells swift"),
+        howToModel(title: localized(.title_1), imageName: "1", text: localized(.article_1)),
+        howToModel(title: localized(.title_2),imageName: "2", text: localized(.article_2)),
+        howToModel(title: localized(.title_3),imageName: "3", text: localized(.article_3)),
+        howToModel(title: localized(.title_4),imageName: "4", text: localized(.article_4)),
+        howToModel(title: localized(.title_5),imageName: "5", text: localized(.article_5)),
+        howToModel(title: localized(.title_6),imageName: "6", text: localized(.article_6)),
+        howToModel(title: localized(.title_7),imageName: "7", text: localized(.article_7)),
+        howToModel(title: localized(.title_8),imageName: "8", text: localized(.article_8)),
+        howToModel(title: localized(.title_9),imageName: "9", text: localized(.article_9)),
+        howToModel(title: localized(.title_10),imageName: "10", text: localized(.article_10)),
+        howToModel(title: localized(.title_11),imageName: "11", text: localized(.article_11)),
+        howToModel(title: localized(.title_12),imageName: "12", text: localized(.article_12)),
+        howToModel(title: localized(.title_13),imageName: "13", text: localized(.article_13))
     ]
 }
 
 class IconsTutorial: BaseViewController<IconsTutorialModel>, UICollectionViewDelegate, UICollectionViewDataSource {
-  
-    let header: howToHeader = howToHeader()
+    
+    let header: TitleHeader = TitleHeader()
     
     let cellWidth =   UIScreen.main.bounds.width
-    let cellHeight =  UIScreen.main.bounds.height - 150
+    let cellHeight =  UIScreen.main.bounds.height - 300
     
     fileprivate lazy var collectionView : GeminiCollectionView = {
         let layout = PagingCollectionViewLayout()
-        layout.minimumLineSpacing = 10
+        layout.minimumLineSpacing = -50
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
@@ -55,25 +55,30 @@ class IconsTutorial: BaseViewController<IconsTutorialModel>, UICollectionViewDel
         collection.showsHorizontalScrollIndicator = false
         collection.decelerationRate = UIScrollView.DecelerationRate.fast
         collection.isScrollEnabled = true
+        collection.backgroundColor = .clear
         return collection
     }()
     
     override init(viewModel: IconsTutorialModel) {
         super.init(viewModel: viewModel)
+        view.insetsLayoutMarginsFromSafeArea = true
+
         view.addSubview(collectionView)
         view.addSubview(header)
         collectionView.delegate = self
         collectionView.dataSource = self
-        let bottom = Design.safeArea.bottom + 150
-        let top = Design.safeArea.top + 100
-        collectionView.easy.layout(Trailing(),Leading(),Bottom(bottom),Top(top))
         collectionView.register(howToCell.self, forCellWithReuseIdentifier: "cell")
         
         collectionView.gemini
             .customAnimation()
             .alpha(0.01)
-            .rotationAngle(x: 0, y: 0, z: 0)
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+       header.text = localized(.howto)
+        header.easy.layout(Top(Design.safeArea.top + 10),Leading(),Trailing(),Height(40))
+        collectionView.easy.layout(Trailing(), Leading(), CenterY(), Height(cellHeight))
     }
     
     required init?(coder: NSCoder) {
@@ -89,16 +94,6 @@ class IconsTutorial: BaseViewController<IconsTutorialModel>, UICollectionViewDel
         let model = viewModel.model[indexPath.row]
         cell.setup(title: model.title, image: UIImage(named: model.imageName)!, text: model.text)
         return cell
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        collectionView.animateVisibleCells()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-         if let cell = cell as? GeminiCell {
-             self.collectionView.animateCell(cell)
-         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -117,17 +112,7 @@ extension IconsTutorial: GalleryPagerMediaViewerDelegateProtocol {
     }
     
     func pagerMedia(frameOfImageInCell id: Int) -> CGRect? {
-        
-        if let cell = (collectionView.cellForItem(at: IndexPath(row: id, section: 0)) as? howToCell ) {
-            hiddenCell?.isHidden = false
-            hiddenCell = cell
-            hiddenCell?.isHidden = true
-            let selectedFrame = cell.convert(cell.screenshot.frame, to: nil)
-            return selectedFrame
-        } else {
-            hiddenCell?.isHidden = false
-            return .zero
-        }
+        return .zero
     }
     
     func pagerMedia(imageOfInDataSource id: Int) -> UIImage? {
@@ -164,8 +149,7 @@ class howToCell: GeminiCell {
         addSubview(content)
         content.layer.cornerRadius = 25
         content.backgroundColor = .systemGray6
-        content.easy.layout(Leading(20),Trailing(20),Top(10),Bottom(10))
-        content.setupShadow(preset: .Post)
+        content.easy.layout(Width(UIScreen.main.bounds.width - 60), CenterY(), CenterX())
         
         content.addSubview(title)
         content.addSubview(screenshot)
@@ -175,11 +159,13 @@ class howToCell: GeminiCell {
         title.numberOfLines = 1
         title.textAlignment = .center
         
-        screenshot.easy.layout(CenterX(), Top(70), Bottom(110))
-        screenshot.contentMode = .scaleAspectFit
+        screenshot.easy.layout(Top(20).to(title), Leading(20), Trailing(20), Height(UIScreen.main.bounds.width - 90))
+        screenshot.contentMode = .scaleAspectFill
+        screenshot.layer.cornerRadius = 15
+        screenshot.layer.masksToBounds = true
         
-        article.easy.layout(Leading(20), Trailing(20), Bottom(20))
-        article.numberOfLines = 3
+        article.easy.layout(Leading(20), Trailing(20), Top(20).to(screenshot), Bottom(20))
+        article.numberOfLines = 2
         article.textAlignment = .center
     }
 
@@ -191,10 +177,17 @@ class howToCell: GeminiCell {
     }
 }
 
-class howToHeader: UIView {
+class TitleHeader: UIView {
   
-    var Title: Text = Text(.title, .label)
+    private let title: Text = Text(.title, .label)
+    private let delimiter: UIView = UIView()
 
+    var text: String = "" {
+        didSet{
+            self.title.text = text
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupDesign()
@@ -206,8 +199,13 @@ class howToHeader: UIView {
     
     private func setupDesign(){
         backgroundColor = .clear
-        addSubview(Title)
-        Title.easy.layout(Leading(20), Trailing(20), Top(20), Bottom(20))
+        addSubview(title)
+        title.easy.layout(Leading(40), CenterY())
+        
+        addSubview(delimiter)
+        delimiter.easy.layout(Bottom(), Leading(40), Trailing(40), Height(1))
+        delimiter.backgroundColor = .systemGray2
+        
     }
     
 }

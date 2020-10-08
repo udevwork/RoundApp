@@ -40,21 +40,21 @@ enum FontNames : String {
 }
 
 enum ShadowPresets  {
-    case NavigationBar
-    case Button
-    case Post
-    case Avatar
+    case small
+    case regular
+    case medium
+    case large
     
     func data() -> (radius: CGFloat, offset : CGSize, opacity : Float, color : UIColor) {
         switch self {
-        case .NavigationBar:
-            return (10, .zero, 0.6, .black)
-        case .Button:
-            return (7, .zero, 0.3, .black)
-        case .Post:
-            return (25, .init(width: 0, height: 15), 0.5, #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))
-        case .Avatar:
-            return (15, .init(width: 0, height: 10), 0.3, .black)
+        case .small:
+            return (4, .init(width: 0, height: 4), 0.2, .systemGray)
+        case .regular:
+            return (7, .zero, 0.3, .systemGray)
+        case .medium:
+            return (10, .init(width: 0, height: 6), 0.5, .systemGray)
+        case .large:
+            return (15, .init(width: 0, height: 10), 0.3, .systemGray)
         }
     }
 }
@@ -138,6 +138,9 @@ enum Icons : String {
     case settingsGear    = "gear"
     case arrayDown       = "arrowtriangle.down.fill"
     case info            = "info.circle.fill"
+    case doc             = "doc.plaintext.fill"
+    case userQuestion    = "person.fill.questionmark"
+    case dollar          = "dollarsign.circle.fill"
     
     func image(weight: UIImage.SymbolWeight = .black) -> UIImage {
         if let img = UIImage(systemName: self.rawValue, withConfiguration: UIImage.SymbolConfiguration(weight: weight)){

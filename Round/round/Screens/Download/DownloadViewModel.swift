@@ -42,15 +42,15 @@ class DownloadViewModel {
             do {
                 try data?.write(to: savePath.appendingPathComponent("archive.zip"))
             } catch let err {
-                print("FUCK ERROR WRITE: ", err)
-                Notifications.shared.Show(RNSimpleView(text: "Error save archive", icon: Icons.cross.image(), iconColor: .systemRed))
+                debugPrint("FUCK ERROR WRITE: ", err)
+                Notifications.shared.Show(RNSimpleView(text: localized(.archiveSaveError), icon: Icons.cross.image(), iconColor: .systemRed))
             }
             
-            print("FUCK WRITE OK")
+            debugPrint("FUCK WRITE OK")
             
             do {
                 DispatchQueue.main.async {
-                    self.onStatus("Unzipping")
+                    self.onStatus(localized(.unzipping))
                 }
                 let progress = Progress()
                 observation = progress.observe(\.fractionCompleted) { (progress, _) in
@@ -62,15 +62,15 @@ class DownloadViewModel {
                 try FileManager.default.unzipItem(at: savePath.appendingPathComponent("archive.zip"), to: savePath, skipCRC32: false, progress: progress, preferredEncoding: nil)
             } catch let err {
                 print("FUCK ERROR unzipItem: ", err)
-                Notifications.shared.Show(RNSimpleView(text: "Error unzip", icon: Icons.cross.image(), iconColor: .systemRed))
+                Notifications.shared.Show(RNSimpleView(text: localized(.unzipError), icon: Icons.cross.image(), iconColor: .systemRed))
             }
-            print("FUCK unzipItem OK")
+            debugPrint("FUCK unzipItem OK")
             
             do {
                 let lol = try FileManager.default.contentsOfDirectory(at: savePath.appendingPathComponent("Images"), includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
                 var resuptImages: [Data] = []
                 lol.forEach { imageUrl in
-                    print("fuck image! : ", imageUrl.path)
+                    debugPrint("Image! URL: ", imageUrl.path)
                     let imgData = FileManager.default.contents(atPath: imageUrl.path)
                     resuptImages.append(imgData!)
                 }
@@ -79,8 +79,8 @@ class DownloadViewModel {
                 }
                 // process files
             } catch let err {
-                print("FUCK ERROR contentsOfDirectory: ", err)
-                Notifications.shared.Show(RNSimpleView(text: "Error clearing temp files", icon: Icons.cross.image(), iconColor: .systemRed))
+                debugPrint("ERROR contentsOfDirectory: ", err)
+                Notifications.shared.Show(RNSimpleView(text: localized(.tempClearError), icon: Icons.cross.image(), iconColor: .systemRed))
             }
         }
     }
@@ -94,13 +94,13 @@ class DownloadViewModel {
                 do {
                     try FileManager.default.removeItem(at: urlToRemove)
                 } catch {
-                    print("Could not delete file \(error)")
-                    Notifications.shared.Show(RNSimpleView(text: "Error delete file", icon: Icons.cross.image(), iconColor: .systemRed))
+                    debugPrint("Could not delete file \(error)")
+                    Notifications.shared.Show(RNSimpleView(text: localized(.tempClearError), icon: Icons.cross.image(), iconColor: .systemRed))
                 }
             }
         } catch {
-            Notifications.shared.Show(RNSimpleView(text: "Error clearing temp files", icon: Icons.cross.image(), iconColor: .systemRed))
-            print("Could not clear temp folder: \(error)")
+            Notifications.shared.Show(RNSimpleView(text: localized(.tempClearError), icon: Icons.cross.image(), iconColor: .systemRed))
+            debugPrint("Could not clear temp folder: \(error)")
         }
     }
     
@@ -110,7 +110,7 @@ class DownloadViewModel {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         DispatchQueue.main.async {
-            self.onStatus("Downloading")
+            self.onStatus(localized(.downloadind))
         }
         let completionHandler: (Data?, URLResponse?, Error?)->() = { data, response, error in
             if error == nil

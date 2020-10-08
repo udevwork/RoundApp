@@ -72,10 +72,10 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         backgroundImageView.addSubview(bottomTextBlockView)
         backgroundImageView.addSubview(backButton)
         
-        bottomTextBlockView.easy.layout(Leading(15), Trailing(15), Bottom(15))
+        bottomTextBlockView.easy.layout(Leading(20), Trailing(20), Bottom(20))
         
         backButton.easy.layout(Left(20),Top(20),Width(40),Height(40))
-        downloadsCounterView.easy.layout(Top(35),Leading(35))
+        downloadsCounterView.easy.layout(Top(20),Leading(20))
         backgroundImageView.layer.cornerRadius = fromViewController.view.layer.cornerRadius
         
         backgroundImageView.layer.borderWidth = 0
@@ -92,7 +92,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
             self?.downloadsCounterView.alpha = 1
             
             self?.backgroundImageView.layer.borderWidth = 6
-            self?.backgroundImageView.layer.borderColor = UIColor.systemGray6.cgColor
+            self?.backgroundImageView.layer.borderColor = UIColor.systemGray.cgColor
             
             containerView.layoutIfNeeded()
         }
