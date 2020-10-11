@@ -48,7 +48,7 @@ class IconsTutorial: BaseViewController<IconsTutorialModel>, UICollectionViewDel
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
-
+        
         let collection = GeminiCollectionView(frame: .zero, collectionViewLayout: layout)
         collection.layer.masksToBounds = false
         collection.showsVerticalScrollIndicator = false
@@ -62,7 +62,7 @@ class IconsTutorial: BaseViewController<IconsTutorialModel>, UICollectionViewDel
     override init(viewModel: IconsTutorialModel) {
         super.init(viewModel: viewModel)
         view.insetsLayoutMarginsFromSafeArea = true
-
+        
         view.addSubview(collectionView)
         view.addSubview(header)
         collectionView.delegate = self
@@ -76,9 +76,9 @@ class IconsTutorial: BaseViewController<IconsTutorialModel>, UICollectionViewDel
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-       header.text = localized(.howto)
+        header.text = localized(.howto)
         header.easy.layout(Top(Design.safeArea.top + 10),Leading(),Trailing(),Height(40))
-        collectionView.easy.layout(Trailing(), Leading(), CenterY(), Height(cellHeight))
+        collectionView.easy.layout(Trailing(), Leading(), CenterY(15), Height(cellHeight))
     }
     
     required init?(coder: NSCoder) {
@@ -103,7 +103,7 @@ class IconsTutorial: BaseViewController<IconsTutorialModel>, UICollectionViewDel
     }
     
     var hiddenCell: UIView? = nil
-
+    
 }
 
 extension IconsTutorial: GalleryPagerMediaViewerDelegateProtocol {
@@ -130,11 +130,11 @@ extension IconsTutorial: GalleryPagerMediaViewerDelegateProtocol {
 class howToCell: GeminiCell {
     public var content: UIView = UIView()
     private var title: Text = Text(.title, .label)
-
+    
     public var screenshot: UIImageView = UIImageView()
     private var article: Text = Text(.article, .label)
     public var onPress: ()->() = {}
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupDesign()
@@ -154,12 +154,12 @@ class howToCell: GeminiCell {
         content.addSubview(title)
         content.addSubview(screenshot)
         content.addSubview(article)
-
+        
         title.easy.layout(Leading(20), Trailing(20), Top(20))
         title.numberOfLines = 1
         title.textAlignment = .center
         
-        screenshot.easy.layout(Top(20).to(title), Leading(20), Trailing(20), Height(UIScreen.main.bounds.width - 90))
+        screenshot.easy.layout(Top(20).to(title), Leading(20), Trailing(20), Height(UIScreen.main.bounds.width - 100))
         screenshot.contentMode = .scaleAspectFill
         screenshot.layer.cornerRadius = 15
         screenshot.layer.masksToBounds = true
@@ -168,7 +168,7 @@ class howToCell: GeminiCell {
         article.numberOfLines = 2
         article.textAlignment = .center
     }
-
+    
     public func setup(title: String,image: UIImage, text: String){
         screenshot.image = image
         article.text = text
@@ -178,10 +178,10 @@ class howToCell: GeminiCell {
 }
 
 class TitleHeader: UIView {
-  
+    
     private let title: Text = Text(.title, .label)
     private let delimiter: UIView = UIView()
-
+    
     var text: String = "" {
         didSet{
             self.title.text = text
@@ -200,10 +200,10 @@ class TitleHeader: UIView {
     private func setupDesign(){
         backgroundColor = .clear
         addSubview(title)
-        title.easy.layout(Leading(40), CenterY())
+        title.easy.layout(Leading(20), CenterY())
         
         addSubview(delimiter)
-        delimiter.easy.layout(Bottom(), Leading(40), Trailing(40), Height(1))
+        delimiter.easy.layout(Bottom(), Leading(20), Trailing(20), Height(1))
         delimiter.backgroundColor = .systemGray2
         
     }

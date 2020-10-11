@@ -31,11 +31,13 @@ final class Notifications {
     }
     
     public func Show(_ notificationView: RNBaseView){
-        currentNotification?.hide()
-        currentNotification = notificationView
-        currentNotification?.setupView()
-        top.addSubview(currentNotification as! UIView)
-        currentNotification?.show()
+        DispatchQueue.main.async {
+            self.currentNotification?.hide()
+            self.currentNotification = notificationView
+            self.currentNotification?.setupView()
+            self.top.addSubview(self.currentNotification as! UIView)
+            self.currentNotification?.show()
+        }
     }
 }
 

@@ -27,9 +27,8 @@ class RUITabbarCountroller: UITabBarController {
         customTabBar.easy.layout(Leading(20), Trailing(20), Bottom(Design.safeArea.bottom + 30), Height(70))
         
         buttons = [MenuStackElement(icon: .house, onTap: { self.goTo(0) }),
-                   MenuStackElement(icon: .user, onTap: { self.goTo(1) }),
-                   MenuStackElement(icon: .info, onTap: { self.goTo(2) }),
-                   MenuStackElement(icon: .settingsGear, onTap: { self.goTo(3) })]
+                   MenuStackElement(icon: .info, onTap: { self.goTo(1) }),
+                   MenuStackElement(icon: .settingsGear, onTap: { self.goTo(2) })]
 
         buttons.forEach { customTabBar.append($0) }
         iconAnimate(0)

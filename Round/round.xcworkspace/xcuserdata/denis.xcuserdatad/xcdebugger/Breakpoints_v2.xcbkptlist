@@ -36,16 +36,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "34420B29-2341-4CC4-85D8-4F380632C38E"
-            shouldBeEnabled = "Yes"
+            uuid = "8B919CE9-8A63-4326-83B8-62A72F4A08DD"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "round/Design/Button.swift"
+            filePath = "round/Screens/Post/PostCells/DownloadCell/DownloadPostCellView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
-            landmarkName = "showLoader(_:)"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "setup(viewModel:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

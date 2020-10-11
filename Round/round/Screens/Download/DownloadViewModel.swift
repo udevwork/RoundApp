@@ -67,7 +67,7 @@ class DownloadViewModel {
             debugPrint("FUCK unzipItem OK")
             
             do {
-                let lol = try FileManager.default.contentsOfDirectory(at: savePath.appendingPathComponent("Images"), includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+                let lol = try FileManager.default.contentsOfDirectory(at: savePath.appendingPathComponent("images"), includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
                 var resuptImages: [Data] = []
                 lol.forEach { imageUrl in
                     debugPrint("Image! URL: ", imageUrl.path)

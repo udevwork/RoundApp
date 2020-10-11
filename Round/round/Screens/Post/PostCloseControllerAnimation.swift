@@ -33,7 +33,7 @@ class PostCloseControllerAnimation: NSObject, UIViewControllerAnimatedTransition
         img.image = header!.backgroundImageView.image
         return img
     }()
-    let backButton : IconLableBluredView = IconLableBluredView(icon: .back, text: "Back")
+    let backButton : IconLableBluredView = IconLableBluredView(icon: .back, text: localized(.back))
     
     init(header : PostViewControllerHeader, card : CardView) {
         super.init()

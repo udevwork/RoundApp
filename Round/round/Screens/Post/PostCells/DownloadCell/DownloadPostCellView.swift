@@ -14,31 +14,47 @@ class DownloadPostCellView: UITableViewCell, BasePostCellProtocol {
     public var id: String = UUID().uuidString
     public var postType: PostCellType = .Download
     public var onDownloadPress: ((String)->())? = nil
+    public var onbuyPress: ((String)->())? = nil
+    public var isPurchised: Bool = false
     
     private let content: UIView = UIView()
     
     public var link: String? = nil
-    private var title = Text(.article, .systemGray3, .zero)
+    public var productID: String? = nil
+    
+    private var title = Text(.article, .systemGray6, .zero)
     private let downloadButton: Button = ButtonBuilder()
         .setFrame(CGRect(origin: .zero, size: CGSize(width: 100, height: 60)))
         .setStyle(.iconText)
         .setColor(.black)
-        .setText(localized(.download))
         .setTextColor(.white)
-        .setIcon(.download)
         .setIconColor(.white)
         .setIconSize(CGSize(width: 20, height: 20))
         .setCornerRadius(8)
         .setShadow(ShadowPresets.regular)
         .build()
     
-   public func setup(viewModel: BasePostCellViewModelProtocol) {
+    public func setup(viewModel: BasePostCellViewModelProtocol) {
         guard let model = viewModel as? DownloadPostCellViewModel else {print("TitlePostCellView viewModel type error"); return}
-        title.text = model.fileSize
+        if let id = model.productID {
+            if ProductManager().get(productID: id) == nil {
+                IAPManager.shared.getPackPrice(ID: id) { product in
+                    self.title.text = product.localizedPrice
+                    self.downloadButton.setText(localized(.buy))
+                    self.downloadButton.setIcon(.cart)
+                }
+            } else {
+                self.title.text = model.fileSize
+                self.downloadButton.setText(localized(.download))
+                self.downloadButton.setIcon(.download)
+                isPurchised = true
+            }
+        }
         link = model.downloadLink
+        productID = model.productID
         setupDesign()
     }
-        
+    
     func setupDesign() {
         backgroundColor = .clear
         contentView.addSubview(content)
@@ -53,12 +69,17 @@ class DownloadPostCellView: UITableViewCell, BasePostCellProtocol {
         title.sizeToFit()
         layoutSubviews()
         downloadButton.setTarget { [weak self] in
-            self?.onDownloadPress?(self?.link ?? "")
+            guard let self = self else {return}
+            if self.isPurchised {
+                self.onDownloadPress?(self.link ?? "")
+            } else {
+                self.onbuyPress?(self.productID ?? "")
+            }
         }
     }
     
     func setPadding(padding: UIEdgeInsets) {
-       // title.easy.layout(Leading(padding.left),Trailing(padding.right),Top(padding.top),Bottom(padding.bottom))
-       // layoutSubviews()
+        // title.easy.layout(Leading(padding.left),Trailing(padding.right),Top(padding.top),Bottom(padding.bottom))
+        // layoutSubviews()
     }
 }

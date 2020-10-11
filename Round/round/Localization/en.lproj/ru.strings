@@ -14,6 +14,7 @@
 
 // subscription
 "subscribe" = "подписаться";
+"subDescription" = "Разблокируйте доступ к эксклюзивным иконкам. Воспользуйтесь одним из предложений. После подписки вам будут доступны все паки.";
 
 // tutorial
 "1title" = "1. Откройте Команды";
@@ -54,11 +55,21 @@
 "unlocked" = "Разблокировано!";
 "purchaseError" = "Ошибка оплаты";
 "purchaseRestore" = "Покупки восстановлены!";
+"purchaseRestoreError" = "Ошибка восстановления";
 "archiveSaveError" = "Не удалось сохранить архив!";
 "unzipError" = "Ошибка распаковки";
-"tempClearError" = "Не удалочь удалить временные файлы";
+"tempClearError" = "Не удалось удалить временные файлы";
+"emailCopyed" = "Почта для связи скопирована";
+"saved" = "Готово! Иконки сохранены";
+
 
 // design
-"download" = "Скачать!";
+"download" = "Скачать";
+"buy" = "Купить";
 "downloadind" = "Скачивание";
 "unzipping" = "Распаковка";
+
+// other
+"postsLoadingTitle" = "Загрузка";
+"postsLoadingSubtitle" = "еще пара секунд...";
+"back" = "назад";

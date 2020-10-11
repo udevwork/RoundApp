@@ -17,7 +17,7 @@ class MainViewController: BaseViewController<MainViewModel> {
     // MARK: - Constants
     
     let cellWidth =   UIScreen.main.bounds.width
-    let cellHeight =  UIScreen.main.bounds.height - 250
+    let cellHeight =  UIScreen.main.bounds.height - 230
 
     // MARK: - UI Components
     let header: TitleHeader = TitleHeader()

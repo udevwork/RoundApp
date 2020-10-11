@@ -14,6 +14,7 @@
 
 // subscription
 "subscribe" = "subscribe";
+"subDescription" = "Unlock access to exclusive icons. Take advantage of one of the suggestions. After subscribing, all packs will be available to you.";
 
 // tutorial
 "1title" = "1. Open Shortcuts";
@@ -54,11 +55,20 @@
 "unlocked" = "Unlocked!";
 "purchaseError" = "Payment error";
 "purchaseRestore" = "Purchases restored!";
+"purchaseRestoreError" = "Restoring error";
 "archiveSaveError" = "Failed to save archive!";
 "unzipError" = "Unpacking error";
 "tempClearError" = "Don't delete temporary files";
+"emailCopyed" = "Email copyed";
+"saved" = "Done! Icons saved";
 
 // design
-"download" = "Download!";
+"download" = "Download";
+"buy" = "Buy";
 "downloadind" = "Downloading";
 "unzipping" = "Unzipping";
+
+// other
+"postsLoadingTitle" = "Loading";
+"postsLoadingSubtitle" = "a couple more seconds ...";
+"back" = "Back";

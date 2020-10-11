@@ -18,7 +18,7 @@ class PostViewControllerHeader: UIView {
     var backgroundImageView : UIImageView = UIImageView()
     var isSubscribed: Bool = false
     
-    let backButton : IconLableBluredView = IconLableBluredView(icon: .back, text: "Back")
+    let backButton : IconLableBluredView = IconLableBluredView(icon: .back, text: localized(.back))
     
     let bottomTextBlockView: PostBluredTitleDescriptionView = PostBluredTitleDescriptionView()
     

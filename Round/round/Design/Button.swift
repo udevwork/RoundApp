@@ -229,6 +229,13 @@ class ButtonBuilder {
         return self
     }
     
+    func setTextCentered() -> ButtonBuilder {
+        button.btnText.easy.clear()
+        button.btnText.easy.layout(Edges())
+        button.btnText.textAlignment = .center
+        return self
+    }
+    
     func build() -> Button {
         if button.style == nil { debugPrint("Button builder: ", "You need to assign a style for button!") }
         if button.style == Button.Style.text {

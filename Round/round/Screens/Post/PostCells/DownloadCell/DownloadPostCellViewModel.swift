@@ -13,12 +13,13 @@ class DownloadPostCellViewModel : BasePostCellViewModelProtocol {
     var type : PostCellType?
     var downloadLink : String?
     var fileSize: String?
+    var productID: String?
     
     init(model : DownloadPostResponse) {
         self.type = model.type
         self.order = model.order
         self.downloadLink = model.downloadLink
         self.fileSize = model.fileSize
-
+        self.productID = model.productID
     }
 }

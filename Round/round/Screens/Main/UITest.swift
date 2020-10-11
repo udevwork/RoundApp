@@ -13,8 +13,8 @@ import Firebase
 
 
 class UITest: UIViewController {
-    let viewToTest = IconLableBluredView(icon: .back, text: "Back", {
-        print("lol")
+    let viewToTest = IconLableBluredView(icon: .back, text: localized(.back), {
+        debugPrint("lol")
     })
     
     

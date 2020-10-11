@@ -7,5 +7,5 @@
 //
 
 class Debug {
-    public static var offlineMode : Bool = true
+    public static var offlineMode : Bool = false
 }

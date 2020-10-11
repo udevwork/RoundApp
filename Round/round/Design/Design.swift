@@ -44,6 +44,7 @@ enum ShadowPresets  {
     case regular
     case medium
     case large
+    case subscribeButton
     
     func data() -> (radius: CGFloat, offset : CGSize, opacity : Float, color : UIColor) {
         switch self {
@@ -52,9 +53,11 @@ enum ShadowPresets  {
         case .regular:
             return (7, .zero, 0.3, .systemGray)
         case .medium:
-            return (10, .init(width: 0, height: 6), 0.5, .systemGray)
+            return (10, .init(width: 0, height: 6), 0.5, .black)
         case .large:
             return (15, .init(width: 0, height: 10), 0.3, .systemGray)
+        case .subscribeButton:
+            return (10, .init(width: 0, height: 6), 0.3, .systemIndigo)
         }
     }
 }
@@ -155,7 +158,9 @@ enum Icons : String {
 enum Images : String {
     case avatarPlaceholder   = "avatarPlaceholder"
     case imagePlaceholder    = "ImagePlaceholder"
-    
+    case postLoadingTemplate = "PostLoadingTemplate"
+    case subsWallpaper       = "subscScreenWallpaper"
+
     func uiimage() -> UIImage {
         if let img = UIImage(named: self.rawValue){
             return img

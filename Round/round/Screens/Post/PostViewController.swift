@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import EasyPeasy
-import Purchases
+import StoreKit
 class PostViewController: BaseViewController<PostViewModel> {
     
     
@@ -258,34 +258,31 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
             padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         case .Download:
             cell = tableView.dequeueReusableCell(withIdentifier: "DownloadPostCellView", for: indexPath) as! DownloadPostCellView
-            (cell as! DownloadPostCellView).onDownloadPress = { [weak self] link in
-                guard let self = self else { return }
-                Purchases.shared.purchaserInfo { (purchaserInfo, error) in
-                    if let error = error {
-                        print(error)
-                        return
-                    }
-                    if let info = purchaserInfo {
-                        if info.entitlements["IDesignerSubscriber"]?.isActive == true {
-                            let model = DownloadViewModel.Model(link: link,
-                                                                downloadbleImage: self.header!.backgroundImageView.image!,
-                                                                downloadbleName: self.header!.bottomTextBlockView.titleLabel.text!,
-                                                                downloadbleDescription: self.header!.bottomTextBlockView.descriptionLabel.text!)
-                            let vc = DownloadViewController(model: model)
-                            self.present(vc, animated: true, completion: nil)
-                            FirebaseAPI.shared.incrementPostDownloadCounter(post: self.viewModel.cardView.viewModel?.id ?? "")
-                        } else {
-                            debugPrint("IDesignerSubscriber in diactivated!")
-                            let vc = SubscriptionsRouter.assembly(model: SubscriptionsViewModel())
-                            self.present(vc, animated: true, completion: nil)
-                        }
+           let dCell = (cell as! DownloadPostCellView)
+        
+            dCell.onbuyPress = { [weak self] link in
+                 guard let self = self else { return }
+                IAPManager.shared.purchase { [weak self] ok in
+                    guard let self = self else { return }
+                    if ok {
+                        self.table.reloadData()
                     } else {
-                        debugPrint("no purchaserInfo")
+                        debugPrint("Purch fail")
                     }
-                    
                 }
-
             }
+            
+            dCell.onDownloadPress = { [weak self] link in
+                guard let self = self else { return }
+                let model = DownloadViewModel.Model(link: link,
+                                                    downloadbleImage: self.header!.backgroundImageView.image!,
+                                                    downloadbleName: self.header!.bottomTextBlockView.titleLabel.text!,
+                                                    downloadbleDescription: self.header!.bottomTextBlockView.descriptionLabel.text!)
+                let vc = DownloadViewController(model: model)
+                self.present(vc, animated: true, completion: nil)
+                FirebaseAPI.shared.incrementPostDownloadCounter(post: self.viewModel.cardView.viewModel?.id ?? "")
+            }
+            
             padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         case .none:
             break

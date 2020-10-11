@@ -19,12 +19,11 @@ class CardView: UIView {
     
     var viewModel : CardViewModel? = nil
     var onCardPress : ((CardView, CardViewModel)->())? = nil
-    var backgroundImageView : UIImageView = UIImageView(image: Images.imagePlaceholder.uiimage())
-    var backgroundImageViewMask : UIView = UIView()
-    var actionButton : UIButton = UIButton()
-   
+    let backgroundImageView : UIImageView = UIImageView(image: Images.imagePlaceholder.uiimage())
+    let backgroundImageViewMask : UIView = UIView()
+    let actionButton : UIButton = UIButton()
+    let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .large)
     let downloadsCounterView: IconLabelView = IconLabelView()
-
     let bottomTextBlockView: PostBluredTitleDescriptionView = PostBluredTitleDescriptionView()
     
     init() {
@@ -73,10 +72,13 @@ class CardView: UIView {
     private func setupTemplateCardDesign(){
         guard let model = self.viewModel else { return }
         actionButton.removeFromSuperview()
-        backgroundImageView.image = Images.imagePlaceholder.uiimage()
+        backgroundImageView.image = Images.postLoadingTemplate.uiimage()
         downloadsCounterView.setIcon(.cloud)
         downloadsCounterView.setText("...")
         bottomTextBlockView.set(model.title, model.description)
+        addSubview(loadingIndicator)
+        loadingIndicator.easy.layout(Center())
+        loadingIndicator.startAnimating()
     }
     
     @objc func buttonClicked(sender:UIButton)

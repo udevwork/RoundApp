@@ -15,15 +15,18 @@ import PDFKit
 class PDFViewer: UIViewController {
     
     enum pdfs {
-        case agreement
-        case policy
+        case PRIVACYPOLICY
+        case SUBSCRIPTIONTERMS
+        case TERMSANDCONDITIONSOFUSE
         
         func file() -> URL? {
             switch self {
-            case .agreement:
-                return Bundle.main.url(forResource: "agreement", withExtension: "pdf")
-            case .policy:
-                return Bundle.main.url(forResource: "agreement", withExtension: "pdf")
+            case .PRIVACYPOLICY:
+                return Bundle.main.url(forResource: "PRIVACY POLICY", withExtension: "pdf")
+            case .SUBSCRIPTIONTERMS:
+                return Bundle.main.url(forResource: "SUBSCRIPTION TERMS", withExtension: "pdf")
+            case .TERMSANDCONDITIONSOFUSE:
+                return Bundle.main.url(forResource: "TERMS AND CONDITIONS OF USE", withExtension: "pdf")
             }
         }
     }

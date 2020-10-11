@@ -27,7 +27,7 @@ class PostOpenControllerAnimation: NSObject, UIViewControllerAnimatedTransitioni
         img.contentMode = .scaleAspectFill
         return img
     }()
-    let backButton : IconLableBluredView = IconLableBluredView(icon: .back, text: "Back")
+    let backButton : IconLableBluredView = IconLableBluredView(icon: .back, text: localized(.back))
     
     init(card : CardView) {
         super.init()

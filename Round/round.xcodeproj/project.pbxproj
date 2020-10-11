@@ -17,6 +17,9 @@
 		9214322524D42132005FCDC4 /* PostBluredTitleDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9214322424D42132005FCDC4 /* PostBluredTitleDescriptionView.swift */; };
 		9214322724D42E3A005FCDC4 /* IconLableBluredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9214322624D42E3A005FCDC4 /* IconLableBluredView.swift */; };
 		921A263A23BF542700EF8715 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 921A263923BF542700EF8715 /* GoogleService-Info.plist */; };
+		921EB1B5252F7A5200B6814D /* SUBSCRIPTION TERMS.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 921EB1B2252F7A5100B6814D /* SUBSCRIPTION TERMS.pdf */; };
+		921EB1B6252F7A5200B6814D /* TERMS AND CONDITIONS OF USE.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 921EB1B3252F7A5100B6814D /* TERMS AND CONDITIONS OF USE.pdf */; };
+		921EB1B7252F7A5200B6814D /* PRIVACY POLICY.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 921EB1B4252F7A5200B6814D /* PRIVACY POLICY.pdf */; };
 		9233BB04252EFF10000B7461 /* ru.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9233BB06252EFF10000B7461 /* ru.strings */; };
 		9233BB0F252F01EE000B7461 /* en.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9233BB0E252F01EE000B7461 /* en.strings */; };
 		923B47E22524576000AAD64D /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B47E12524576000AAD64D /* DownloadViewModel.swift */; };
@@ -60,9 +63,9 @@
 		9283A357252B964A002F855E /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9283A356252B9649002F855E /* Tutorial.swift */; };
 		9283A35D252B9FD4002F855E /* IconsTutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9283A35C252B9FD4002F855E /* IconsTutorial.swift */; };
 		9283A367252C82FE002F855E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9283A366252C82FE002F855E /* Settings.swift */; };
-		9283A36B252C953E002F855E /* agreement.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9283A36A252C953E002F855E /* agreement.pdf */; };
 		9283A373252C95C2002F855E /* PDFViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9283A372252C95C2002F855E /* PDFViewer.swift */; };
 		9284BBE924636BE900D151B9 /* RNTopActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284BBE824636BE900D151B9 /* RNTopActivityIndicator.swift */; };
+		928BECDD253243C200D9D759 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928BECDC253243C200D9D759 /* IAPManager.swift */; };
 		9294FEC324388F82005B98EF /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9294FEC224388F82005B98EF /* MainMenu.swift */; };
 		9298E24B23F132F700952F28 /* FilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298E24A23F132F700952F28 /* FilterItem.swift */; };
 		9298E24D23F1333A00952F28 /* AddFilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298E24C23F1333A00952F28 /* AddFilterButton.swift */; };
@@ -152,6 +155,9 @@
 		9214322424D42132005FCDC4 /* PostBluredTitleDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBluredTitleDescriptionView.swift; sourceTree = "<group>"; };
 		9214322624D42E3A005FCDC4 /* IconLableBluredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconLableBluredView.swift; sourceTree = "<group>"; };
 		921A263923BF542700EF8715 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		921EB1B2252F7A5100B6814D /* SUBSCRIPTION TERMS.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "SUBSCRIPTION TERMS.pdf"; sourceTree = "<group>"; };
+		921EB1B3252F7A5100B6814D /* TERMS AND CONDITIONS OF USE.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "TERMS AND CONDITIONS OF USE.pdf"; sourceTree = "<group>"; };
+		921EB1B4252F7A5200B6814D /* PRIVACY POLICY.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "PRIVACY POLICY.pdf"; sourceTree = "<group>"; };
 		9233BB05252EFF10000B7461 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ru.strings; sourceTree = "<group>"; };
 		9233BB0B252F0096000B7461 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		9233BB0E252F01EE000B7461 /* en.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = en.strings; sourceTree = "<group>"; };
@@ -197,9 +203,9 @@
 		9283A356252B9649002F855E /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
 		9283A35C252B9FD4002F855E /* IconsTutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsTutorial.swift; sourceTree = "<group>"; };
 		9283A366252C82FE002F855E /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		9283A36A252C953E002F855E /* agreement.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = agreement.pdf; sourceTree = "<group>"; };
 		9283A372252C95C2002F855E /* PDFViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewer.swift; sourceTree = "<group>"; };
 		9284BBE824636BE900D151B9 /* RNTopActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNTopActivityIndicator.swift; sourceTree = "<group>"; };
+		928BECDC253243C200D9D759 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
 		9294FEC224388F82005B98EF /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		9298E24A23F132F700952F28 /* FilterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItem.swift; sourceTree = "<group>"; };
 		9298E24C23F1333A00952F28 /* AddFilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFilterButton.swift; sourceTree = "<group>"; };
@@ -302,6 +308,16 @@
 				F51D8B8D7C7EA57A4D12A05C /* Pods-round.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		921EB1B0252F7A0700B6814D /* Documents */ = {
+			isa = PBXGroup;
+			children = (
+				921EB1B4252F7A5200B6814D /* PRIVACY POLICY.pdf */,
+				921EB1B2252F7A5100B6814D /* SUBSCRIPTION TERMS.pdf */,
+				921EB1B3252F7A5100B6814D /* TERMS AND CONDITIONS OF USE.pdf */,
+			);
+			path = Documents;
 			sourceTree = "<group>";
 		};
 		924DC8252527CDDC00836A7D /* GalleryViewer */ = {
@@ -648,6 +664,7 @@
 				92CD63D22460254000D8F77C /* Location.swift */,
 				92CD63D424602B5400D8F77C /* PostResponse.swift */,
 				92628583249F6491008BF1CA /* CALayerExtansion.swift */,
+				928BECDC253243C200D9D759 /* IAPManager.swift */,
 			);
 			path = Contract;
 			sourceTree = "<group>";
@@ -674,7 +691,6 @@
 			isa = PBXGroup;
 			children = (
 				92E62AC3239BFB98009A2CD2 /* Podfile */,
-				9283A36A252C953E002F855E /* agreement.pdf */,
 				92E8C34D239BF681009F84EE /* round */,
 				92E8C34C239BF681009F84EE /* Products */,
 				06A86CBC0C63CF7DF8049250 /* Pods */,
@@ -693,6 +709,7 @@
 		92E8C34D239BF681009F84EE /* round */ = {
 			isa = PBXGroup;
 			children = (
+				921EB1B0252F7A0700B6814D /* Documents */,
 				9283A33C252AF4F8002F855E /* Localization */,
 				929B70D4247A8730009A2484 /* DataBase */,
 				92B043AB23A8EA6300330D8A /* Design */,
@@ -821,6 +838,8 @@
 			files = (
 				92DC5829249E170500711B03 /* PlayfairDisplay-Bold.ttf in Resources */,
 				92ED213F23AD23DB00819997 /* Gentleman-Medium.ttf in Resources */,
+				921EB1B7252F7A5200B6814D /* PRIVACY POLICY.pdf in Resources */,
+				921EB1B5252F7A5200B6814D /* SUBSCRIPTION TERMS.pdf in Resources */,
 				92DC5822249E170500711B03 /* PlayfairDisplay-MediumItalic.ttf in Resources */,
 				92DC5825249E170500711B03 /* PlayfairDisplay-SemiBold.ttf in Resources */,
 				92DC582C249E170500711B03 /* PlayfairDisplay-Medium.ttf in Resources */,
@@ -832,6 +851,7 @@
 				92ED214123AD23DB00819997 /* Gentleman-Hairline.ttf in Resources */,
 				92DC5824249E170500711B03 /* PlayfairDisplay-BoldItalic.ttf in Resources */,
 				92DC5835249E172600711B03 /* BellotaText-Regular.ttf in Resources */,
+				921EB1B6252F7A5200B6814D /* TERMS AND CONDITIONS OF USE.pdf in Resources */,
 				92DC582A249E170500711B03 /* PlayfairDisplay-ExtraBoldItalic.ttf in Resources */,
 				92E8C35B239BF685009F84EE /* LaunchScreen.storyboard in Resources */,
 				92ED214223AD23DB00819997 /* Gentleman-Book.ttf in Resources */,
@@ -852,7 +872,6 @@
 				92ED213B23AD23DB00819997 /* Gentleman-ExtraLight.ttf in Resources */,
 				92ED213C23AD23DB00819997 /* Gentleman-Bold.ttf in Resources */,
 				92DC5837249E172600711B03 /* BellotaText-Italic.ttf in Resources */,
-				9283A36B252C953E002F855E /* agreement.pdf in Resources */,
 				92DC5823249E170500711B03 /* PlayfairDisplay-Black.ttf in Resources */,
 				92DC5836249E172600711B03 /* BellotaText-Light.ttf in Resources */,
 			);
@@ -933,6 +952,7 @@
 				9260B85B23B5EDEC00AB18A5 /* TitlePostCellView.swift in Sources */,
 				9260B85D23B5EDF900AB18A5 /* TitlePostCellViewModel.swift in Sources */,
 				92E53E432520DCB50033D98B /* GalleryPostResponse.swift in Sources */,
+				928BECDD253243C200D9D759 /* IAPManager.swift in Sources */,
 				924DC83A2527CDDC00836A7D /* PagerMediaItemBaseLogic.swift in Sources */,
 				92E8C351239BF681009F84EE /* SceneDelegate.swift in Sources */,
 				926D209A23E470BC00C8B492 /* SimplePhotoResponse.swift in Sources */,
@@ -1149,7 +1169,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"round/Preview Content\"";
 				DEVELOPMENT_TEAM = 87XM268947;
 				ENABLE_PREVIEWS = YES;
@@ -1174,7 +1194,7 @@
 				CODE_SIGN_ENTITLEMENTS = round/roundRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"round/Preview Content\"";
 				DEVELOPMENT_TEAM = 87XM268947;
 				ENABLE_PREVIEWS = YES;

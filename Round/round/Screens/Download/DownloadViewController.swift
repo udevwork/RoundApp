@@ -37,7 +37,7 @@ class DownloadViewController: UIViewController {
         view.addSubview(content)
         content.layer.cornerRadius = 25
         content.backgroundColor = .systemGray6
-        content.easy.layout(Bottom(20 + Design.safeArea.bottom), Leading(20), Trailing(20), Height(400))
+        content.easy.layout(Bottom(5 + Design.safeArea.bottom), Leading(5), Trailing(5), Height(400))
         content.setupShadow(preset: .medium)
         
         view.addSubview(drugtumbler)
@@ -106,6 +106,9 @@ class DownloadViewController: UIViewController {
         activityViewController.completionWithItemsHandler  = { type, success, items, error in
             if success {
                 self.viewModel.deleteFilesInWorkindDir()
+                self.dismiss(animated: true) {
+                    Notifications.shared.Show(RNSimpleView(text: localized(.saved), icon: Icons.download.image(), iconColor: .systemGreen))
+                }
             }
         }
         self.present(activityViewController, animated: true, completion: nil)

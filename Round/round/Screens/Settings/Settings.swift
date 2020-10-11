@@ -13,7 +13,6 @@ import Foundation
 import UIKit
 import EasyPeasy
 import PDFKit
-import Purchases
 
 class SettingsRouter {
     static func assembly() -> UIViewController{
@@ -43,7 +42,7 @@ class SettingsViewController: BaseViewController<SettingsModel>, UITableViewDele
         
         view.addSubview(table)
         view.addSubview(header)
-
+        
         table.delegate = self
         table.dataSource = self
         table.easy.layout(Bottom(),Leading(), Trailing(), Top(20).to(header))
@@ -61,50 +60,53 @@ class SettingsViewController: BaseViewController<SettingsModel>, UITableViewDele
     private func setupModel(){
         viewModel.model = [
             SettingCellModel(title: localized(.policy), icon: .doc, onPress: {
-                print("fuck1")
+                self.present(PDFViewer(file: .PRIVACYPOLICY), animated: true, completion: nil)
             }),
             SettingCellModel(title: localized(.termsOfUse), icon: .userQuestion, onPress: {
-                print("fuck2")
-            }),
-            SettingCellModel(title: localized(.сontactUs), icon: .email, onPress: {
-                self.present(PDFViewer(file: .agreement), animated: true, completion: nil)
+                self.present(PDFViewer(file: .TERMSANDCONDITIONSOFUSE), animated: true, completion: nil)
             }),
             SettingCellModel(title: localized(.subscriptionTerms), icon: .cart, onPress: {
-                self.present(PDFViewer(file: .agreement), animated: true, completion: nil)
+                self.present(PDFViewer(file: .SUBSCRIPTIONTERMS), animated: true, completion: nil)
             }),
-            SettingCellModel(title: localized(.restore), icon: .dollar, onPress: {
-                Purchases.shared.restoreTransactions { (purchaserInfo, error) in
-                    debugPrint("RESTORE")
-                    debugPrint(purchaserInfo as Any)
-                    Notifications.shared.Show(RNSimpleView(text: localized(.purchaseRestore), icon: Icons.checkmark.image(), iconColor: .systemGreen))
+            SettingCellModel(title: localized(.сontactUs), icon: .email, onPress: {
+                UIPasteboard.general.string = "udevwork@gmail.com"
+                Notifications.shared.Show(RNSimpleView(text: localized(.emailCopyed), icon: Icons.emailCircle.image(), iconColor: .systemGreen))
+            }),
+            SettingCellModel(title: localized(.restore), icon: .dollar, onPress: { [self] in
+                let indicator = (self.table.cellForRow(at: IndexPath(row: 4, section: 0)) as! SettingCell).loadingIndicator
+                indicator.startAnimating()
+                IAPManager.shared.restore { ok in
+                    debugPrint("Restored")
+                    indicator.stopAnimating()
+                    Notifications.shared.Show(RNSimpleView(text: localized(.purchaseRestore), icon: Icons.cart.image(), iconColor: .systemBlue))
                 }
             })
-        ]
-        
-    }
+    ]
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.model.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! SettingCell
-        let model = viewModel.model[indexPath.row]
-        cell.setup(title: model.title, image: model.icon.image())
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.model[indexPath.row].onPress()
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
-    }
+}
+
+required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+}
+
+func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return viewModel.model.count
+}
+
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! SettingCell
+    let model = viewModel.model[indexPath.row]
+    cell.setup(title: model.title, image: model.icon.image())
+    return cell
+}
+
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    viewModel.model[indexPath.row].onPress()
+}
+
+func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 70
+}
 
 }
 
@@ -112,7 +114,7 @@ class SettingCell: UITableViewCell {
     private var content: UIView = UIView()
     private var title: Text = Text(.system, .label)
     private var icon: UIImageView = UIImageView()
-    
+    public var loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .medium)
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupDesign()
@@ -135,10 +137,12 @@ class SettingCell: UITableViewCell {
         icon.contentMode = .scaleAspectFill
         icon.tintColor = .systemGray
         content.addSubview(title)
-        title.easy.layout(Leading(10).to(icon), CenterY())
+        title.easy.layout(Leading(10).to(icon), CenterY(), Trailing(20))
         title.numberOfLines = 1
-        
+        title.lineBreakMode = .byTruncatingTail
         selectionStyle = .none
+        content.addSubview(loadingIndicator)
+        loadingIndicator.easy.layout(CenterY(),Trailing(20))
     }
     
     public func setup(title: String,image: UIImage){

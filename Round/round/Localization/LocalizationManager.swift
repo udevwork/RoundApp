@@ -15,6 +15,7 @@ enum LocalizationKeys : String {
     case settings = "settings"
     
     case subscribe = "subscribe";
+    case subDescription = "subDescription"
     
     case title_1 = "1title"
     case article_1 = "1article"
@@ -52,13 +53,21 @@ enum LocalizationKeys : String {
     case unlocked = "unlocked"
     case purchaseError = "purchaseError"
     case purchaseRestore = "purchaseRestore"
+    case purchaseRestoreError = "purchaseRestoreError"
     case archiveSaveError = "archiveSaveError"
     case unzipError = "unzipError"
     case tempClearError = "tempClearError"
+    case emailCopyed = "emailCopyed"
+    case saved = "saved"
     
     case download = "download"
+    case buy = "buy"
     case downloadind = "downloadind"
     case unzipping = "unzipping"
+    
+    case postsLoadingTitle = "postsLoadingTitle"
+    case postsLoadingSubtitle = "postsLoadingSubtitle"
+    case back = "back"
     
     func localized()->String {
         return self.rawValue.localized()

@@ -1,5 +1,5 @@
 //
-//  BookmarkRealm.swift
+//  userPurchase.swift
 //  round
 //
 //  Created by Denis Kotelnikov on 31.05.2020.
@@ -9,24 +9,25 @@
 import Foundation
 import RealmSwift
 
-class BookmarkRealm: Object {
-    @objc dynamic var postId: String = ""
+class userPurchase: Object {
+    @objc dynamic var productID: String = ""
+    
     override static func primaryKey() -> String? {
-        return "postId"
+        return "productID"
     }
     
     convenience init(postId: String) {
         self.init()
-        self.postId = postId
+        self.productID = productID
     }
 }
 
-extension BookmarkRealm {
-    static func ==(lhs: BookmarkRealm, rhs: BookmarkRealm) -> Bool {
-        return (lhs.postId == rhs.postId)
+extension userPurchase {
+    static func ==(lhs: userPurchase, rhs: userPurchase) -> Bool {
+        return (lhs.productID == rhs.productID)
     }
     
-    static func !=(lhs: BookmarkRealm, rhs: BookmarkRealm) -> Bool {
-        return (lhs.postId != rhs.postId)
+    static func !=(lhs: userPurchase, rhs: userPurchase) -> Bool {
+        return (lhs.productID != rhs.productID)
     }
 }

@@ -13,4 +13,5 @@ struct DownloadPostResponse : Codable {
     var order : Int?
     var downloadLink : String?
     var fileSize: String?
+    var productID: String?
 }

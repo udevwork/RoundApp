@@ -6,12 +6,13 @@
 //  Copyright © 2020 Denis Kotelnikov. All rights reserved.
 //
 
-import Foundation
+//import Foundation
 
-class SubscriptionsViewModel: BaseViewModel {
-    var router: SubscriptionsRouter?
-    
-    typealias routerType = SubscriptionsRouter
-    
-    
-}
+//class SubscriptionsViewModel: BaseViewModel {
+//    var router: SubscriptionsRouter?
+//
+//    typealias routerType = SubscriptionsRouter
+//
+//    var model: [PricingModel] = []
+//
+//}

@@ -38,8 +38,8 @@ class CardViewModel {
         isTamplateCard = true
         id = ""
         mainImageURL = ""
-        title = "Loading"
-        description = "Few seconds"
+        title = localized(.postsLoadingTitle)
+        description = localized(.postsLoadingSubtitle)
         dowloadsCount = 0
     }
     

@@ -26,7 +26,7 @@ class MenuStack: UIView {
         addSubview(backgroundView)
         addSubview(stask)
         backgroundView.easy.layout(Edges())
-        stask.easy.layout(CenterY(),Leading(40),Trailing(40))
+        stask.easy.layout(CenterY(),Leading(50),Trailing(50))
 
     }
 
@@ -75,7 +75,7 @@ class MenuStackElement: UIView {
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let biggerFrame = icon.frame.insetBy(dx: -20, dy: -20)
+        let biggerFrame = icon.frame.insetBy(dx: -40, dy: -40)
         return biggerFrame.contains(point) ? icon : super.hitTest(point, with: event)
     }
 }
