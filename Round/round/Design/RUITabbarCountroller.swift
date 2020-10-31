@@ -11,20 +11,19 @@ import UIKit
 import EasyPeasy
 
 class RUITabbarCountroller: UITabBarController {
-    var customTabBar: MenuStack = MenuStack(size: CGSize(width: 300, height: 70))
+    var customTabBar: MenuStack = MenuStack(size: CGSize(width: 300, height: 50))
     
     var buttons: [MenuStackElement] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadTabBar()
-        title = "fuck"
     }
     
     func loadTabBar() {
         tabBar.removeFromSuperview()
         view.addSubview(customTabBar)
-        customTabBar.easy.layout(Leading(20), Trailing(20), Bottom(Design.safeArea.bottom + 30), Height(70))
+        customTabBar.easy.layout(Leading(20), Trailing(20), Bottom(Design.safeArea.bottom + 30), Height(50))
         
         buttons = [MenuStackElement(icon: .house, onTap: { self.goTo(0) }),
                    MenuStackElement(icon: .info, onTap: { self.goTo(1) }),
@@ -55,9 +54,9 @@ class RUITabbarCountroller: UITabBarController {
                 UIView.animate(withDuration: 0.2) {
                     element.icon.alpha = 1
                     element.icon.layer.shadowRadius = 7
-                    element.icon.layer.shadowOpacity = 0.3
+                    element.icon.layer.shadowOpacity = 0.8
                     element.icon.layer.shadowOffset = CGSize(width: 0, height: 4)
-                    element.icon.layer.shadowColor = UIColor.label.cgColor
+                    element.icon.layer.shadowColor = UIColor.systemPurple.cgColor
                 }
             } else {
                 UIView.animate(withDuration: 0.2) {

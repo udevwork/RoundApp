@@ -10,48 +10,11 @@ import Foundation
 import EasyPeasy
 
 class CardViewSimple: CardView {
-    override func setupDesign() {
-        backgroundImageViewMask.addSubview(backgroundImageView)
-        [backgroundImageViewMask,actionButton].forEach {
-            addSubview($0)
-        }
-       // backgroundImageViewMask.layer.addSublayer(gradient)
-//        addSubview(titleLabel)
-//        addSubview(descriptionLabel)
-        
-      //  gradient.cornerRadius = 13
-        backgroundImageViewMask.layer.cornerRadius = 13
-        layer.cornerRadius = 13
-        
-        clipsToBounds = false
-        backgroundImageViewMask.layer.masksToBounds = true
-
-        backgroundImageViewMask.easy.layout(
-            Leading(),Trailing(),Top(),Bottom()
-        )
-        backgroundImageView.easy.layout(Edges())
-        backgroundImageView.contentMode = .scaleAspectFill
-//
-//        let paragraphStyle = NSMutableParagraphStyle()
-//        paragraphStyle.lineSpacing = 0
-//        let attributedString = NSMutableAttributedString(string:  descriptionLabel.text ?? "", attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle])
-//
-//        descriptionLabel.attributedText = attributedString
-//        descriptionLabel.numberOfLines = 3
-//        descriptionLabel.easy.layout(
-//            Leading(20),Trailing(20),Bottom(20)
-//        )
-//        descriptionLabel.sizeToFit()
-//
-//        titleLabel.numberOfLines = 3
-//        titleLabel.easy.layout(
-//            Leading(20),Trailing(20),Bottom(5).to(descriptionLabel)
-//        )
-//        titleLabel.sizeToFit()
-        
-        actionButton.easy.layout(Edges())
-        
-        actionButton.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
-        layoutSubviews()
+    override func setupData(_ viewModel: CardViewModel?) {
+        actionButton.removeFromSuperview()
+        backgroundImageView.image = Images.postLoadingTemplate.uiimage()
+        downloadsCounterView.setIcon(.info)
+        downloadsCounterView.setText("...")
+        bottomTextBlockView.set(localized(.comingsoon), localized(.morenew))
     }
 }

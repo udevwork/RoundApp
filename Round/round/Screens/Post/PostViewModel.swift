@@ -32,7 +32,7 @@ class PostViewModel {
                 }
                 complition()
             } else {
-                print("fuck")
+                debugPrint("oh... error")
             }
         }
     }

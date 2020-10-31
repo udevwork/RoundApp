@@ -15,7 +15,13 @@ import Foundation
 import UIKit
 import EasyPeasy
 
-class CardView: UIView {
+protocol CardProtocol: UIView {
+    var onCardPress : ((CardView, CardViewModel)->())? { get set }
+    func setupDesign()
+    func setupData(_ viewModel : CardViewModel?)
+}
+
+class CardView: UIView, CardProtocol {
     
     var viewModel : CardViewModel? = nil
     var onCardPress : ((CardView, CardViewModel)->())? = nil

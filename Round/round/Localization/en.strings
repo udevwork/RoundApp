@@ -48,7 +48,7 @@
 "policy" = "privacy policy";
 "termsOfUse" = "Terms of Use";
 "сontactUs" = "Contact us";
-"subscriptionTerms" = "Subscription Terms";
+"subscriptionTerms" = "Purchases Terms";
 "restore" = "Restore";
 
 // notifications
@@ -67,6 +67,9 @@
 "buy" = "Buy";
 "downloadind" = "Downloading";
 "unzipping" = "Unzipping";
+"packnotavailable" = "Will be available later";
+"comingsoon" = "Сoming soon";
+"morenew" = "More new creative solutions";
 
 // other
 "postsLoadingTitle" = "Loading";

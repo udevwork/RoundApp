@@ -14,12 +14,12 @@ class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObser
     static let shared = IAPManager()
     private override init() {}
     
-    private var onGetPackPrice: ((SKProduct)->())?
+    private var onGetPackPrice: ((SKProduct?)->())?
     private var onPurchasingComplete: ((Bool)->())?
     private var productID: String?
     private var payment: SKPayment? = nil
 
-    public func getPackPrice(ID: String,complition: @escaping (SKProduct)->()){
+    public func getPackPrice(ID: String,complition: @escaping (SKProduct?)->()) {
         self.onGetPackPrice = complition
         self.productID = ID
         let request = SKProductsRequest(productIdentifiers: [ID])
@@ -32,18 +32,21 @@ class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObser
         print(response.products.first?.localizedTitle as Any)
         if response.products.count > 0, let product = response.products.first {
             DispatchQueue.main.async {
-                self.onGetPackPrice?(product)
+                self.onGetPackPrice?(product) // can be nil
             }
             self.payment = SKPayment(product: product)
         } else {
             print(response.products.first as Any)
+            DispatchQueue.main.async {
+                self.onGetPackPrice?(nil) // can be nil
+            }
         }
     }
     
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         transactions.forEach { transact in
-            switch transact.transactionState{
+            switch transact.transactionState {
             case .purchasing:
                 debugPrint("purchasing")
             case .purchased:

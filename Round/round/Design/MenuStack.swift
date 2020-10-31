@@ -13,7 +13,6 @@ import EasyPeasy
 class MenuStack: UIView {
     
     private let stask: UIStackView = UIStackView()
-    //private let bluredView: UIView = UIVisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial))
     private let backgroundView: UIView = UIView()
 
     init(size: CGSize) {
@@ -27,7 +26,6 @@ class MenuStack: UIView {
         addSubview(stask)
         backgroundView.easy.layout(Edges())
         stask.easy.layout(CenterY(),Leading(50),Trailing(50))
-
     }
 
     override func layoutSubviews() {
@@ -45,6 +43,7 @@ class MenuStack: UIView {
     
     func append(_ view: MenuStackElement) {
         stask.addArrangedSubview(view)
+        view.easy.layout(Size(60))
     }
     
     required init?(coder: NSCoder) {
@@ -62,7 +61,7 @@ class MenuStackElement: UIView {
         self.icon.contentMode = .scaleAspectFit
         super.init(frame: .zero)
         addSubview(self.icon)
-        self.icon.easy.layout(Edges())
+        self.icon.easy.layout(Edges(20))
         self.icon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onPress) ))
     }
     

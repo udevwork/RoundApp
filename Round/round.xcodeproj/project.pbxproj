@@ -37,7 +37,6 @@
 		9254B23425265940002D49F5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9254B23325265940002D49F5 /* StoreKit.framework */; };
 		9256DF53246871CF00DB9777 /* RNFullscreenActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256DF52246871CF00DB9777 /* RNFullscreenActivityIndicator.swift */; };
 		925865F8248E12B50027C345 /* CardViewSimple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925865F7248E12B50027C345 /* CardViewSimple.swift */; };
-		925865FA248EB14C0027C345 /* CardViewProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925865F9248EB14C0027C345 /* CardViewProfile.swift */; };
 		925A5A42244365DB009C7A42 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A5A41244365DB009C7A42 /* Observer.swift */; };
 		9260B85023B131A100AB18A5 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9260B84F23B131A100AB18A5 /* PostViewController.swift */; };
 		9260B85323B4C64700AB18A5 /* PostViewControllerHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9260B85223B4C64700AB18A5 /* PostViewControllerHeader.swift */; };
@@ -66,7 +65,6 @@
 		9283A373252C95C2002F855E /* PDFViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9283A372252C95C2002F855E /* PDFViewer.swift */; };
 		9284BBE924636BE900D151B9 /* RNTopActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284BBE824636BE900D151B9 /* RNTopActivityIndicator.swift */; };
 		928BECDD253243C200D9D759 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928BECDC253243C200D9D759 /* IAPManager.swift */; };
-		9294FEC324388F82005B98EF /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9294FEC224388F82005B98EF /* MainMenu.swift */; };
 		9298E24B23F132F700952F28 /* FilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298E24A23F132F700952F28 /* FilterItem.swift */; };
 		9298E24D23F1333A00952F28 /* AddFilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298E24C23F1333A00952F28 /* AddFilterButton.swift */; };
 		9298E24F23F1335500952F28 /* FilterTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298E24E23F1335500952F28 /* FilterTag.swift */; };
@@ -177,7 +175,6 @@
 		9254B23325265940002D49F5 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9256DF52246871CF00DB9777 /* RNFullscreenActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNFullscreenActivityIndicator.swift; sourceTree = "<group>"; };
 		925865F7248E12B50027C345 /* CardViewSimple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewSimple.swift; sourceTree = "<group>"; };
-		925865F9248EB14C0027C345 /* CardViewProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewProfile.swift; sourceTree = "<group>"; };
 		925A5A41244365DB009C7A42 /* Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		9260B84F23B131A100AB18A5 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		9260B85223B4C64700AB18A5 /* PostViewControllerHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewControllerHeader.swift; sourceTree = "<group>"; };
@@ -206,7 +203,6 @@
 		9283A372252C95C2002F855E /* PDFViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewer.swift; sourceTree = "<group>"; };
 		9284BBE824636BE900D151B9 /* RNTopActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNTopActivityIndicator.swift; sourceTree = "<group>"; };
 		928BECDC253243C200D9D759 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
-		9294FEC224388F82005B98EF /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		9298E24A23F132F700952F28 /* FilterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItem.swift; sourceTree = "<group>"; };
 		9298E24C23F1333A00952F28 /* AddFilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFilterButton.swift; sourceTree = "<group>"; };
 		9298E24E23F1335500952F28 /* FilterTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTag.swift; sourceTree = "<group>"; };
@@ -357,7 +353,6 @@
 			children = (
 				92E62AC8239CE6DE009A2CD2 /* CardView.swift */,
 				925865F7248E12B50027C345 /* CardViewSimple.swift */,
-				925865F9248EB14C0027C345 /* CardViewProfile.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -469,14 +464,6 @@
 				9283A372252C95C2002F855E /* PDFViewer.swift */,
 			);
 			path = PDFViewer;
-			sourceTree = "<group>";
-		};
-		9294FEC124388DCB005B98EF /* Menu */ = {
-			isa = PBXGroup;
-			children = (
-				9294FEC224388F82005B98EF /* MainMenu.swift */,
-			);
-			path = Menu;
 			sourceTree = "<group>";
 		};
 		9298E24923F1311100952F28 /* Filter slider */ = {
@@ -678,7 +665,6 @@
 				924DC8252527CDDC00836A7D /* GalleryViewer */,
 				92E53E502520FF630033D98B /* Download */,
 				9260B84B23B1102000AB18A5 /* Filter */,
-				9294FEC124388DCB005B98EF /* Menu */,
 				92F46A24243B446400CCC386 /* Subscriptions */,
 				9260B84C23B12C8500AB18A5 /* Post */,
 				92E62AC5239CDBCE009A2CD2 /* Main */,
@@ -944,7 +930,6 @@
 				92E8C34F239BF681009F84EE /* AppDelegate.swift in Sources */,
 				92F9C4EB23DC7E0D00AB9823 /* API.swift in Sources */,
 				9242C4C7244F2C87009EA6AE /* Notifications.swift in Sources */,
-				9294FEC324388F82005B98EF /* MainMenu.swift in Sources */,
 				92CD5CFD244AFE250025C600 /* StringExtansion.swift in Sources */,
 				9273364323F8456F008B4F43 /* CountriesList.swift in Sources */,
 				9298E25F23F28D1100952F28 /* SearchViewController.swift in Sources */,
@@ -1015,7 +1000,6 @@
 				92628584249F6491008BF1CA /* CALayerExtansion.swift in Sources */,
 				9260B85823B4E45600AB18A5 /* PostCloseControllerAnimation.swift in Sources */,
 				9298E25D23F1DA8900952F28 /* SearchInput.swift in Sources */,
-				925865FA248EB14C0027C345 /* CardViewProfile.swift in Sources */,
 				92E62ACB239CE883009A2CD2 /* CardViewModel.swift in Sources */,
 				9260B85523B4CF9A00AB18A5 /* PostOpenControllerAnimation.swift in Sources */,
 				92628582249F3A43008BF1CA /* PostAnimatorHelper.swift in Sources */,
@@ -1169,7 +1153,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "\"round/Preview Content\"";
 				DEVELOPMENT_TEAM = 87XM268947;
 				ENABLE_PREVIEWS = YES;
@@ -1194,7 +1178,7 @@
 				CODE_SIGN_ENTITLEMENTS = round/roundRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "\"round/Preview Content\"";
 				DEVELOPMENT_TEAM = 87XM268947;
 				ENABLE_PREVIEWS = YES;

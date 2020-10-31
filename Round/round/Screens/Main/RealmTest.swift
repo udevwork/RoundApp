@@ -75,8 +75,8 @@ class RealmTest: UIViewController {
         alert.addTextField(configurationHandler: nil)
         alert.addTextField(configurationHandler: nil)
         alert.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak alert, weak self] action in
-            print(alert?.textFields![0].text ?? "")
-            print(alert?.textFields![1].text ?? "")
+            debugPrint(alert?.textFields![0].text ?? "")
+            debugPrint(alert?.textFields![1].text ?? "")
             
             self?.saveToRealm(id: UUID().uuidString, name: alert!.textFields![0].text!, age: alert!.textFields![1].text!)
         }))
@@ -105,7 +105,7 @@ class RealmTest: UIViewController {
     }
     
     func saveToRealm(id: String, name: String, age: String){
-        print("save: ", name, age)
+        debugPrint("save: ", name, age)
         let block = {
             self.realm.create(RealmUser.self, value: ["id": id, "name": name, "age": age], update: .modified)
             
@@ -147,11 +147,11 @@ extension RealmTest: UITableViewDelegate, UITableViewDataSource {
         if editingStyle == .delete {
             let block = {
                 guard let cell = tableView.cellForRow(at: indexPath) as? RealmUserCell, let u = cell.user else {
-                    print("no cell or user")
+                    debugPrint("no cell or user")
                     return
                 }
                 guard let object = self.realm.object(ofType: RealmUser.self, forPrimaryKey: u.id) else {
-                    print("no object with name: ", u.name ?? "")
+                    debugPrint("no object with name: ", u.name ?? "")
                     return
                 }
                 self.realm.delete(object)
@@ -164,7 +164,7 @@ extension RealmTest: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? RealmUserCell, let u = cell.user else {
-            print("no text")
+            debugPrint("no text")
             return
         }
         edit(user: u)

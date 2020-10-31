@@ -18,19 +18,19 @@ class DownloadViewModel {
         var downloadbleImage: UIImage
         var downloadbleName: String
         var downloadbleDescription: String
-
+        
     }
     public let model: DownloadViewModel.Model
     private var observation: NSKeyValueObservation?
     public var onProgress: ((Float)->())!
     public var onStatus: ((String)->())!
-
+    
     init(model: DownloadViewModel.Model) {
         self.model = model
     }
     
     let savePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
+    
     func download(completion: @escaping ([Data])->()) {
         guard let url = URL(string: self.model.link) else {
             return
@@ -61,10 +61,10 @@ class DownloadViewModel {
                 
                 try FileManager.default.unzipItem(at: savePath.appendingPathComponent("archive.zip"), to: savePath, skipCRC32: false, progress: progress, preferredEncoding: nil)
             } catch let err {
-                print("FUCK ERROR unzipItem: ", err)
+                debugPrint(" ERROR unzipItem: ", err)
                 Notifications.shared.Show(RNSimpleView(text: localized(.unzipError), icon: Icons.cross.image(), iconColor: .systemRed))
             }
-            debugPrint("FUCK unzipItem OK")
+            debugPrint(" unzipItem OK")
             
             do {
                 let lol = try FileManager.default.contentsOfDirectory(at: savePath.appendingPathComponent("images"), includingPropertiesForKeys: nil, options: .skipsHiddenFiles)

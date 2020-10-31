@@ -13,6 +13,7 @@ import UIKit
 class Text: UILabel {
     
     enum Style {
+        case price
         case window
         case title
         case article
@@ -34,6 +35,8 @@ class Text: UILabel {
                 return (.BellotaRegular, 13)
             case .light:
                 return (.BellotaLight, 11)
+            case .price:
+                return (.PlayBlack, 20)
             }
         }
     }

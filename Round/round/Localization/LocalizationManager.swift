@@ -64,12 +64,15 @@ enum LocalizationKeys : String {
     case buy = "buy"
     case downloadind = "downloadind"
     case unzipping = "unzipping"
+    case packnotavailable = "packnotavailable"
+    case comingsoon = "comingsoon"
+    case morenew = "morenew"
     
     case postsLoadingTitle = "postsLoadingTitle"
     case postsLoadingSubtitle = "postsLoadingSubtitle"
     case back = "back"
     
-    func localized()->String {
+    func localized() -> String {
         return self.rawValue.localized()
     }
 }

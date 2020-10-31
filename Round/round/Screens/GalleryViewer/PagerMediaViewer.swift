@@ -83,7 +83,7 @@ public class PagerMediaViewer: UIPageViewController, UIGestureRecognizerDelegate
         controllerToShow = PagerMediaViewerImagePage()
         currentPage = controllerToShow as? PagerMediaViewerImagePage
         
-        debugPrint("fuck: current page was setted")
+        debugPrint("current page was setted")
         controllerToShow.delegate = self
         controllerToShow.setup(data: data)
         return controllerToShow as! UIViewController
@@ -126,14 +126,12 @@ extension PagerMediaViewer: UIPageViewControllerDataSource, UIPageViewController
         let page = (pageViewController.viewControllers?.first as! PagerMediaViewerImagePage)
         currentIndex = page.data?.index ?? 0
         viewModel.selectedPhotoIndexPath = IndexPath(row: currentIndex, section: 0)
-        print("FUCK! : ", currentIndex)
         let img = delegateGallery?.pagerMedia(imageOfInDataSource: currentIndex)
         closeAnimator.img.image = img
         
         currentPage = pageViewController.viewControllers![0] as? PagerMediaViewerImagePage
-        debugPrint("PagerMediaViewer: current page was setted as bitch")
+        debugPrint("PagerMediaViewer: current page was setted")
         
-        //let frame = (currentPage?.targetView as? AnimatedImageView)?.frame
         closeAnimator.imgFromFrame = currentPage?.getImageOriginalFrame()
         debugPrint("PagerMediaViewer: index: ", currentIndex)
     }

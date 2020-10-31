@@ -78,7 +78,7 @@ class IconsTutorial: BaseViewController<IconsTutorialModel>, UICollectionViewDel
         super.viewWillAppear(animated)
         header.text = localized(.howto)
         header.easy.layout(Top(Design.safeArea.top + 10),Leading(),Trailing(),Height(40))
-        collectionView.easy.layout(Trailing(), Leading(), CenterY(15), Height(cellHeight))
+        collectionView.easy.layout(Trailing(), Leading(), CenterY(25), Height(cellHeight))
     }
     
     required init?(coder: NSCoder) {
