@@ -82,6 +82,13 @@
 		92CD5CFD244AFE250025C600 /* StringExtansion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CD5CFC244AFE250025C600 /* StringExtansion.swift */; };
 		92CD63D32460254000D8F77C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CD63D22460254000D8F77C /* Location.swift */; };
 		92CD63D524602B5400D8F77C /* PostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CD63D424602B5400D8F77C /* PostResponse.swift */; };
+		92DA8D16254D4AEB001F12AD /* IconEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DA8D15254D4AEB001F12AD /* IconEditorViewController.swift */; };
+		92DA8D1A254D4B02001F12AD /* IconEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DA8D19254D4B02001F12AD /* IconEditorViewModel.swift */; };
+		92DA8D1D254D4B13001F12AD /* IconEditorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DA8D1C254D4B13001F12AD /* IconEditorRouter.swift */; };
+		92DA8D22254D60E4001F12AD /* IconEditorInstruments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DA8D21254D60E4001F12AD /* IconEditorInstruments.swift */; };
+		92DA8D27254D6EEF001F12AD /* EditorIntsrument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DA8D26254D6EEF001F12AD /* EditorIntsrument.swift */; };
+		92DA8D2D254D9CE9001F12AD /* IconEditorSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DA8D2C254D9CE9001F12AD /* IconEditorSlider.swift */; };
+		92DA8D30254DBB57001F12AD /* IconEdotorIconsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DA8D2F254DBB57001F12AD /* IconEdotorIconsListViewController.swift */; };
 		92DC5821249E170500711B03 /* PlayfairDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92DC5815249E170400711B03 /* PlayfairDisplay-Regular.ttf */; };
 		92DC5822249E170500711B03 /* PlayfairDisplay-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92DC5816249E170400711B03 /* PlayfairDisplay-MediumItalic.ttf */; };
 		92DC5823249E170500711B03 /* PlayfairDisplay-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92DC5817249E170400711B03 /* PlayfairDisplay-Black.ttf */; };
@@ -220,6 +227,13 @@
 		92CD5CFC244AFE250025C600 /* StringExtansion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtansion.swift; sourceTree = "<group>"; };
 		92CD63D22460254000D8F77C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		92CD63D424602B5400D8F77C /* PostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostResponse.swift; sourceTree = "<group>"; };
+		92DA8D15254D4AEB001F12AD /* IconEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditorViewController.swift; sourceTree = "<group>"; };
+		92DA8D19254D4B02001F12AD /* IconEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditorViewModel.swift; sourceTree = "<group>"; };
+		92DA8D1C254D4B13001F12AD /* IconEditorRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditorRouter.swift; sourceTree = "<group>"; };
+		92DA8D21254D60E4001F12AD /* IconEditorInstruments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditorInstruments.swift; sourceTree = "<group>"; };
+		92DA8D26254D6EEF001F12AD /* EditorIntsrument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorIntsrument.swift; sourceTree = "<group>"; };
+		92DA8D2C254D9CE9001F12AD /* IconEditorSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditorSlider.swift; sourceTree = "<group>"; };
+		92DA8D2F254DBB57001F12AD /* IconEdotorIconsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEdotorIconsListViewController.swift; sourceTree = "<group>"; };
 		92DC5815249E170400711B03 /* PlayfairDisplay-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayfairDisplay-Regular.ttf"; sourceTree = "<group>"; };
 		92DC5816249E170400711B03 /* PlayfairDisplay-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayfairDisplay-MediumItalic.ttf"; sourceTree = "<group>"; };
 		92DC5817249E170400711B03 /* PlayfairDisplay-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayfairDisplay-Black.ttf"; sourceTree = "<group>"; };
@@ -535,6 +549,36 @@
 			path = Notification;
 			sourceTree = "<group>";
 		};
+		92DA8D14254D4ABC001F12AD /* IconEditor */ = {
+			isa = PBXGroup;
+			children = (
+				92DA8D25254D6ECF001F12AD /* Instruments */,
+				92DA8D20254D60B8001F12AD /* Views */,
+				92DA8D15254D4AEB001F12AD /* IconEditorViewController.swift */,
+				92DA8D19254D4B02001F12AD /* IconEditorViewModel.swift */,
+				92DA8D1C254D4B13001F12AD /* IconEditorRouter.swift */,
+			);
+			path = IconEditor;
+			sourceTree = "<group>";
+		};
+		92DA8D20254D60B8001F12AD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				92DA8D21254D60E4001F12AD /* IconEditorInstruments.swift */,
+				92DA8D2C254D9CE9001F12AD /* IconEditorSlider.swift */,
+				92DA8D2F254DBB57001F12AD /* IconEdotorIconsListViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		92DA8D25254D6ECF001F12AD /* Instruments */ = {
+			isa = PBXGroup;
+			children = (
+				92DA8D26254D6EEF001F12AD /* EditorIntsrument.swift */,
+			);
+			path = Instruments;
+			sourceTree = "<group>";
+		};
 		92DC5812249E16AB00711B03 /* gentelman */ = {
 			isa = PBXGroup;
 			children = (
@@ -659,6 +703,7 @@
 		92E62ACE239CEBC0009A2CD2 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				92DA8D14254D4ABC001F12AD /* IconEditor */,
 				9283A371252C95A4002F855E /* PDFViewer */,
 				9283A365252C826D002F855E /* Settings */,
 				9283A35A252B9FB9002F855E /* IconsHowToInstall */,
@@ -924,6 +969,7 @@
 				9283A357252B964A002F855E /* Tutorial.swift in Sources */,
 				92ED214623AD46ED00819997 /* Design.swift in Sources */,
 				9284BBE924636BE900D151B9 /* RNTopActivityIndicator.swift in Sources */,
+				92DA8D22254D60E4001F12AD /* IconEditorInstruments.swift in Sources */,
 				92132E98246337AE00C58810 /* RNGestureManager.swift in Sources */,
 				9298E25A23F19F3100952F28 /* BaseControllerViewModel.swift in Sources */,
 				92ED214423AD259200819997 /* Text.swift in Sources */,
@@ -946,6 +992,7 @@
 				926D209823E4703E00C8B492 /* ArticlePostResponse.swift in Sources */,
 				9260B85323B4C64700AB18A5 /* PostViewControllerHeader.swift in Sources */,
 				92E62AC2239BF83E009A2CD2 /* MainViewController.swift in Sources */,
+				92DA8D1D254D4B13001F12AD /* IconEditorRouter.swift in Sources */,
 				925A5A42244365DB009C7A42 /* Observer.swift in Sources */,
 				92CD63D32460254000D8F77C /* Location.swift in Sources */,
 				929B70D6247A8748009A2484 /* DBManager.swift in Sources */,
@@ -965,6 +1012,7 @@
 				92E53E3C2520D8450033D98B /* GalleryPostCellView.swift in Sources */,
 				92F90372248394A300B0A176 /* BookmarkRealm.swift in Sources */,
 				92132E94246320EB00C58810 /* ErrorHandler.swift in Sources */,
+				92DA8D1A254D4B02001F12AD /* IconEditorViewModel.swift in Sources */,
 				92F46A2E243B4B0000CCC386 /* SubscriptionsRouter.swift in Sources */,
 				924DC83B2527CDDC00836A7D /* PagerMediaItemProtocol.swift in Sources */,
 				92E62AD2239D0DDC009A2CD2 /* BaseViewController.swift in Sources */,
@@ -980,6 +1028,7 @@
 				9298E24B23F132F700952F28 /* FilterItem.swift in Sources */,
 				924DC8372527CDDC00836A7D /* PagerMediaViewerViewModel.swift in Sources */,
 				92E62AC9239CE6DE009A2CD2 /* CardView.swift in Sources */,
+				92DA8D30254DBB57001F12AD /* IconEdotorIconsListViewController.swift in Sources */,
 				9214322524D42132005FCDC4 /* PostBluredTitleDescriptionView.swift in Sources */,
 				9260B86923B6071500AB18A5 /* SimplePhotoPostCellViewModel.swift in Sources */,
 				926D209E23E6C68D00C8B492 /* FilterSlider.swift in Sources */,
@@ -988,11 +1037,14 @@
 				92B5E41E24AA622A007CBAEE /* MenuStack.swift in Sources */,
 				924DC8342527CDDC00836A7D /* PagerMediaOpenTransition.swift in Sources */,
 				925865F8248E12B50027C345 /* CardViewSimple.swift in Sources */,
+				92DA8D16254D4AEB001F12AD /* IconEditorViewController.swift in Sources */,
 				9214322124D2D9AE005FCDC4 /* IconLabelView.swift in Sources */,
+				92DA8D2D254D9CE9001F12AD /* IconEditorSlider.swift in Sources */,
 				92ED214823AD7DB600819997 /* Button.swift in Sources */,
 				92AD4D332451F64600F26A62 /* PagingCollectionViewLayout.swift in Sources */,
 				92E53E4B2520ED460033D98B /* DownloadPostCellViewModel.swift in Sources */,
 				9298E25823F1479200952F28 /* FilterViewModel.swift in Sources */,
+				92DA8D27254D6EEF001F12AD /* EditorIntsrument.swift in Sources */,
 				924DC83E2527CDDC00836A7D /* PagerMediaViewer.swift in Sources */,
 				9260B85F23B5F17300AB18A5 /* BasePostCell.swift in Sources */,
 				9298E24D23F1333A00952F28 /* AddFilterButton.swift in Sources */,
@@ -1153,7 +1205,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"round/Preview Content\"";
 				DEVELOPMENT_TEAM = 87XM268947;
 				ENABLE_PREVIEWS = YES;
@@ -1163,6 +1215,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.creatorsplatform.round;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1178,7 +1231,7 @@
 				CODE_SIGN_ENTITLEMENTS = round/roundRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"round/Preview Content\"";
 				DEVELOPMENT_TEAM = 87XM268947;
 				ENABLE_PREVIEWS = YES;
@@ -1188,6 +1241,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.creatorsplatform.round;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

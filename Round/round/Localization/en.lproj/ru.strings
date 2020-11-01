@@ -10,6 +10,7 @@
 "icons" = "Иконки";
 "subscription" = "Подписка";
 "how_to" = "Как установить иконки?";
+"icon_Editor" = "Редактор иконок";
 "settings" = "Настройки";
 
 // subscription
@@ -61,7 +62,9 @@
 "tempClearError" = "Не удалось удалить временные файлы";
 "emailCopyed" = "Почта для связи скопирована";
 "saved" = "Готово! Иконки сохранены";
-
+"editorIconSaved" = "Иконка сохранена в фото!";
+"editorIconSaveError" = "Ошибка сохранения";
+"backgroundClearNotification" = "Фоновое изображение уже пусто";
 
 // design
 "download" = "Скачать";
@@ -71,6 +74,20 @@
 "packnotavailable" = "Будет доступен позже";
 "comingsoon" = "Уже скоро";
 "morenew" = "Больше новых креативных решений";
+
+// icons editor
+"iconList" = "Иконки";
+"iconColor" = "Цвет иконки";
+"iconSize" = "Размер";
+"iconSizeFull" = "Размер иконки";
+"backgroundImage" = "Фоновое";
+"backgroundAlpha" = "Прозрачность";
+"backgroundAlphaFull" = "Прозрачность фона";
+"backgroundColor" = "Цвет фона";
+"backgroundCornerRadius" = "Закругление";
+"backgroundCornerRadiusFull" = "Закругление углов";
+"backgroundClearImage" = "Очистить фон";
+"saveIcon" = "Сохранить";
 
 // other
 "postsLoadingTitle" = "Загрузка";

@@ -41,13 +41,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     fileprivate func setupWindow(_ scene: UIScene) {
         let model = MainViewModel()
-        let contentView = MainViewController(viewModel: model)
         
+        let contentView = MainViewController(viewModel: model)
         let tutorial = IconsTutorialRouter.assembly()
         let settings = SettingsRouter.assembly()
-
+        let iconEditor = IconEditorRouter.assembly()
+        
         let tabbar = RUITabbarCountroller()
-        tabbar.viewControllers = [contentView,tutorial,settings]
+        tabbar.viewControllers = [contentView,tutorial,settings,iconEditor]
         // let contentView = RealmTest()
         // let uitest = UITest()
         let rootNavigationController: UINavigationController = UINavigationController(rootViewController: tabbar)
@@ -63,14 +64,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        navBar.barStyle = .default
         navBar.isTranslucent = false
 //        navBar.prefersLargeTitles = true
-        debugPrint("naigation bar: ", navBar.frame)
         ///setup Back Button
 //        let backImage = Icons.chevronDown.image()
 //        rootNavigationController.navigationBar.backIndicatorImage = backImage
 //        rootNavigationController.navigationBar.tintColor = .label
-        
-        debugPrint("FACK TABBAR: ", tabbar.additionalSafeAreaInsets)
-        debugPrint("FACK navBar: ", rootNavigationController.additionalSafeAreaInsets)
+   
 
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)

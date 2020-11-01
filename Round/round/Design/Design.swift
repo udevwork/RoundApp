@@ -118,9 +118,17 @@ enum Icons : String {
     case house           = "house.fill"
     case clock           = "clock"
     case cart            = "cart.fill"
-
-    case handPointer     = "hand.point.up.fill"
     
+    // editor
+    case iconCreator     = "wand.and.rays"
+    case brush           = "paintbrush.fill"
+    case scale           = "move.3d"
+    case cornerRadius    = "app.fill"
+    case iconsStack      = "square.stack.3d.down.forward.fill"
+    case save            = "square.and.arrow.down"
+    case alpha           = "circle.lefthalf.fill"
+    
+    case handPointer     = "hand.point.up.fill"
     case checkmark       = "checkmark.circle.fill"
     case xmarkOctagon    = "xmark.octagon.fill"
     case cloudError      = "xmark.icloud.fill"

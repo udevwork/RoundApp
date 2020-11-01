@@ -25,7 +25,7 @@ class MenuStack: UIView {
         addSubview(backgroundView)
         addSubview(stask)
         backgroundView.easy.layout(Edges())
-        stask.easy.layout(CenterY(),Leading(50),Trailing(50))
+        stask.easy.layout(CenterY(),Leading(20),Trailing(20))
     }
 
     override func layoutSubviews() {
@@ -61,7 +61,7 @@ class MenuStackElement: UIView {
         self.icon.contentMode = .scaleAspectFit
         super.init(frame: .zero)
         addSubview(self.icon)
-        self.icon.easy.layout(Edges(20))
+        self.icon.easy.layout(Edges(18))
         self.icon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onPress) ))
     }
     

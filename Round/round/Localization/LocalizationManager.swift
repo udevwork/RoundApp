@@ -12,6 +12,7 @@ enum LocalizationKeys : String {
     case icons = "icons"
     case subs = "subscription"
     case howto = "how_to"
+    case iconEditor = "icon_Editor"
     case settings = "settings"
     
     case subscribe = "subscribe";
@@ -59,6 +60,9 @@ enum LocalizationKeys : String {
     case tempClearError = "tempClearError"
     case emailCopyed = "emailCopyed"
     case saved = "saved"
+    case editorIconSaved = "editorIconSaved"
+    case editorIconSaveError = "editorIconSaveError"
+    case backgroundClearNotification = "backgroundClearNotification"
     
     case download = "download"
     case buy = "buy"
@@ -67,6 +71,21 @@ enum LocalizationKeys : String {
     case packnotavailable = "packnotavailable"
     case comingsoon = "comingsoon"
     case morenew = "morenew"
+    
+    
+    // icons editor
+    case iconList = "iconList"
+    case iconColor = "iconColor"
+    case iconSize = "iconSize"
+    case iconSizeFull = "iconSizeFull"
+    case backgroundImage = "backgroundImage"
+    case backgroundAlpha = "backgroundAlpha"
+    case backgroundAlphaFull = "backgroundAlphaFull"
+    case backgroundColor = "backgroundColor"
+    case backgroundCornerRadius = "backgroundCornerRadius"
+    case backgroundCornerRadiusFull = "backgroundCornerRadiusFull"
+    case backgroundClearImage = "backgroundClearImage"
+    case saveIcon = "saveIcon"
     
     case postsLoadingTitle = "postsLoadingTitle"
     case postsLoadingSubtitle = "postsLoadingSubtitle"
