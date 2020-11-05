@@ -116,6 +116,7 @@ class Button: UIButton {
         if style == .some(.icon) || style == .some(.iconText) {
             if show {
                 if loader.superview == nil {
+                    loader.color = .systemGray
                     addSubview(loader)
                     loader.frame = icon.frame
                     icon.isHidden = true

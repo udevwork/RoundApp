@@ -13,6 +13,7 @@ import Foundation
 import UIKit
 import EasyPeasy
 import PDFKit
+import Purchases
 
 class SettingsRouter {
     static func assembly() -> UIViewController{
@@ -60,6 +61,13 @@ class SettingsViewController: BaseViewController<SettingsModel>, UITableViewDele
     
     private func setupModel(){
         viewModel.model = [
+            SettingCellModel(title: localized(.subs), icon: .crown, onPress: {
+                if SubscriptionsViewModel.userSubscibed {
+                    self.present(SubscriptionsRouter.assembly(model: SubscriptionsViewModel()), animated: true, completion: nil)
+                } else {
+                    Notifications.shared.Show(RNSimpleView(text: localized(.unlocked), icon: Icons.crown.image(), iconColor: .systemGreen))
+                }
+            }),
             SettingCellModel(title: localized(.policy), icon: .doc, onPress: {
                 self.present(PDFViewer(file: .PRIVACYPOLICY), animated: true, completion: nil)
             }),
@@ -76,6 +84,13 @@ class SettingsViewController: BaseViewController<SettingsModel>, UITableViewDele
             SettingCellModel(title: localized(.restore), icon: .dollar, onPress: { [self] in
                 let indicator = (self.table.cellForRow(at: IndexPath(row: 4, section: 0)) as! SettingCell).loadingIndicator
                 indicator.startAnimating()
+                Purchases.shared.restoreTransactions { (purchaserInfo, error) in
+                    if error != nil {
+                        debugPrint("subscribtion: ", error as Any)
+                    } else {
+                        debugPrint("subscribtion Restored")
+                    }
+                }
                 IAPManager.shared.restore { ok in
                     debugPrint("Restored")
                     indicator.stopAnimating()

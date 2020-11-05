@@ -21,7 +21,7 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel>  {
     public var titleLable: Text = Text(.title,.white)
     public var priceLable: Text = Text(.big,.white)
     public var timeLable: Text = Text(.regular,.white)
-    public var descriptionLable: Text = Text(.article,.label)
+    public var descriptionLable: Text = Text(.article, .systemIndigo)
 
     public let subscribeButton : Button = ButtonBuilder()
         .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 80)))
@@ -85,15 +85,17 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel>  {
         
         timeLable.easy.layout(Leading().to(priceLable), Top().to(priceLable, .topMargin))
         timeLable.text = "/week"
-        
+        timeLable.alpha = 0.5
         descriptionLable.easy.layout(Leading(20), Trailing(20), Top(20).to(wallpaper))
         descriptionLable.numberOfLines = 0
         descriptionLable.lineBreakMode = .byTruncatingTail
         descriptionLable.text = localized(.subDescription)
         
         let mainStack = vStack([
-            hStack([ icon(), text("lol"), spacing()]),
-            hStack([ icon(), text("kek"), spacing()])
+            hStack([ icon(), text("Редактор"), spacing()]),
+            hStack([ icon(), text("Более 500 иконок"), spacing()]),
+            hStack([ icon(), text("Доступ ко всем наборам"), spacing()]),
+            hStack([ icon(), text("Премиум аккаунт"), spacing()])
         ])
         content.addSubview(mainStack)
         mainStack.easy.layout(Top(20).to(descriptionLable), Leading(20), Trailing(20))
@@ -124,20 +126,15 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel>  {
     func text(_ t: String) -> UIView {
         let lable = Text(.article, .label)
         lable.text = t
+        lable.numberOfLines = 1
         return lable
     }
     
     func icon() -> UIView {
-        let b = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 20, height: 20)))
-        b.backgroundColor = .label
-        b.layer.masksToBounds = true
-        b.layer.cornerRadius = 10
-        
         let i = UIImageView(image: Icons.checkmark.image())
         i.tintColor = .systemIndigo
         i.contentMode = .scaleAspectFit
-        b.addSubview(i)
-        return b
+        return i
     }
     
     func spacing(_ space: CGFloat = 0) -> UIView {

@@ -57,7 +57,7 @@ enum ShadowPresets  {
         case .large:
             return (15, .init(width: 0, height: 10), 0.3, .systemGray)
         case .subscribeButton:
-            return (10, .init(width: 0, height: 6), 0.3, .systemIndigo)
+            return (15, .init(width: 0, height: 6), 0.7, .systemIndigo)
         }
     }
 }
@@ -119,6 +119,7 @@ enum Icons : String {
     case house           = "house.fill"
     case clock           = "clock"
     case cart            = "cart.fill"
+    case crown           = "crown.fill"
     
     // editor
     case iconCreator     = "wand.and.rays"
