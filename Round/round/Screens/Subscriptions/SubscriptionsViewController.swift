@@ -85,7 +85,7 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel>  {
             priceLable.text = "\(package.localizedPriceString)"
             
             timeLable.easy.layout(Leading().to(priceLable), Top().to(priceLable, .topMargin))
-            timeLable.text = "/week"
+            timeLable.text = "/\(localized(.week)))"
             timeLable.alpha = 0.5
         }
         descriptionLable.easy.layout(Leading(20), Trailing(20), Top(20).to(wallpaper))
@@ -94,10 +94,10 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel>  {
         descriptionLable.text = localized(.subDescription)
         
         let mainStack = vStack([
-            hStack([ icon(), text("Редактор"), spacing()]),
-            hStack([ icon(), text("Более 500 иконок"), spacing()]),
-            hStack([ icon(), text("Доступ ко всем наборам"), spacing()]),
-            hStack([ icon(), text("Премиум аккаунт"), spacing()])
+            hStack([ icon(), text(localized(.subone)), spacing()]),
+            hStack([ icon(), text(localized(.subtwo)), spacing()]),
+            hStack([ icon(), text(localized(.subthree)), spacing()]),
+            hStack([ icon(), text(localized(.subfour)), spacing()])
         ])
         content.addSubview(mainStack)
         mainStack.easy.layout(Top(20).to(descriptionLable), Leading(20), Trailing(20))

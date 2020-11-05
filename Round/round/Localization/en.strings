@@ -15,7 +15,12 @@
 
 // subscription
 "subscribe" = "subscribe";
-"subDescription" = "Unlock access to exclusive icons. Take advantage of one of the suggestions. After subscribing, all packs will be available to you.";
+"subDescription" = "Get full access with a PRO account!";
+"subone" = "Editor";
+"subtwo" = "More than 500 icons";
+"subthree" = "Access to all sets";
+"subfour" = "Premium Account";
+"week" = "week";
 
 // tutorial
 "1title" = "1. Open Shortcuts";
@@ -46,7 +51,7 @@
 "13article" = "Admiring the result";
 
 // settings
-"policy" = "privacy policy";
+"policy" = "Privacy policy";
 "termsOfUse" = "Terms of Use";
 "сontactUs" = "Contact us";
 "subscriptionTerms" = "Purchases Terms";

@@ -17,6 +17,11 @@ enum LocalizationKeys : String {
     
     case subscribe = "subscribe";
     case subDescription = "subDescription"
+    case subone = "subone"
+    case subtwo = "subtwo"
+    case subthree = "subthree"
+    case subfour = "subfour"
+    case week = "week"
     
     case title_1 = "1title"
     case article_1 = "1article"

@@ -37,7 +37,8 @@ class DownloadPostCellView: UITableViewCell, BasePostCellProtocol {
     public func setup(viewModel: BasePostCellViewModelProtocol) {
         guard let model = viewModel as? DownloadPostCellViewModel else { print("TitlePostCellView viewModel type error"); return }
         if let id = model.productID {
-            if ProductManager().get(productID: id) == nil || SubscriptionsViewModel.userSubscibed == false{
+            if ProductManager().get(productID: id) == nil || SubscriptionsViewModel.userSubscibed == false {
+          // if false {
                 IAPManager.shared.getPackPrice(ID: id) { product in
                     if let product = product {
                         self.title.text = product.localizedPrice
