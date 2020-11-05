@@ -181,6 +181,7 @@ class TitleHeader: UIView {
     
     private let title: Text = Text(.title, .label)
     private let delimiter: UIView = UIView()
+    private let crown: UIImageView = UIImageView(image: UIImage(systemName: "crown.fill"))
     
     var text: String = "" {
         didSet{
@@ -205,6 +206,14 @@ class TitleHeader: UIView {
         addSubview(delimiter)
         delimiter.easy.layout(Bottom(), Leading(20), Trailing(20), Height(1))
         delimiter.backgroundColor = .systemGray2
+        
+        if SubscriptionsViewModel.userSubscibed {
+            addSubview(crown)
+            crown.tintColor = .label
+            crown.setupShadow(preset: .medium)
+            crown.contentMode = .scaleAspectFit
+            crown.easy.layout(Size(15),Trailing(20),CenterY())
+        }
         
     }
     

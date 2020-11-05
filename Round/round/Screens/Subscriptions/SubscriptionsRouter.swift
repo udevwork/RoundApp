@@ -6,20 +6,20 @@
 //  Copyright © 2020 Denis Kotelnikov. All rights reserved.
 //
 
-//import Foundation
-//
-//class SubscriptionsRouter: RouterProtocol {
-//    var controller: SubscriptionsViewController?
-//    
-//    static func assembly(model: SubscriptionsViewModel) -> SubscriptionsViewController {
-//        model.router = SubscriptionsRouter()
-//            let vc : SubscriptionsViewController = SubscriptionsViewController(viewModel: model)
-//            return vc
-//    }
-//    
-//    typealias viewControllerModel = SubscriptionsViewModel
-//    
-//    typealias viewController = SubscriptionsViewController
-//    
-//    
-//}
+import Foundation
+
+class SubscriptionsRouter: RouterProtocol {
+    var controller: SubscriptionsViewController?
+    
+    static func assembly(model: SubscriptionsViewModel) -> SubscriptionsViewController {
+        model.router = SubscriptionsRouter()
+            let vc : SubscriptionsViewController = SubscriptionsViewController(viewModel: model)
+            return vc
+    }
+    
+    typealias viewControllerModel = SubscriptionsViewModel
+    
+    typealias viewController = SubscriptionsViewController
+    
+    
+}

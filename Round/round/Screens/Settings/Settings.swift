@@ -48,6 +48,7 @@ class SettingsViewController: BaseViewController<SettingsModel>, UITableViewDele
         table.easy.layout(Bottom(),Leading(), Trailing(), Top(20).to(header))
         table.register(SettingCell.self, forCellReuseIdentifier: "cell")
         table.separatorStyle = .none
+        table.backgroundColor = .clear
     }
     
     override func viewWillAppear(_ animated: Bool) {

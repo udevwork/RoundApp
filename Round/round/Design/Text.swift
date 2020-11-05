@@ -13,6 +13,7 @@ import UIKit
 class Text: UILabel {
     
     enum Style {
+        case big
         case price
         case window
         case title
@@ -23,6 +24,8 @@ class Text: UILabel {
         
         func data() -> ( fontName: FontNames, size : CGFloat) {
             switch self {
+            case .big:
+                return (.BellotaBold, 27)
             case .window:
                 return (.BellotaRegular, 21)
             case .title:

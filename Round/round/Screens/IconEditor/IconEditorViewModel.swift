@@ -20,8 +20,7 @@ class IconEditorViewModel {
     var saveBackgroundAlpha : Float = 1
     var saveBackgroundRound : Float = 0
     var saveIconScale : Float = 1
-    
-    
+        
     init(router: IconEditorRouter) {
         self.router = router
         setupInstruments()
@@ -127,8 +126,12 @@ class IconEditorViewModel {
     
     public func saveToGallery() {
         slider?.animate(show: false)
-
-        backgroundColor!.isOpaque = true
+        
+        if SubscriptionsViewModel.userSubscibed == false {
+            router.showSubscription()
+            return
+        }
+        
         UIGraphicsBeginImageContext(backgroundColor!.frame.size)
         backgroundColor!.layer.render(in:UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
@@ -136,5 +139,6 @@ class IconEditorViewModel {
         let result = UIImage(cgImage: image!.cgImage!)
         UIImageWriteToSavedPhotosAlbum(result, router, #selector(router.saveImageAlert), nil)
     }
+
     
 }

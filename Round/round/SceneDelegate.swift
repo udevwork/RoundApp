@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-//import Purchases
+import Purchases
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         setupFirebase()
-       // setupPurchases()
+        setupPurchases()
         setupWindow(scene)
     }
     
@@ -29,15 +29,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
-//    private func setupPurchases() {
-//
-//        let userID = UIDevice.current.identifierForVendor!.uuidString
-//        let withAPIKey = "ZvtSeixatjkoOtSlmzItkrOjIwiATNbV"
-//        debugPrint("userID: ", userID)
-//
-//        Purchases.debugLogsEnabled = true
-//        Purchases.configure(withAPIKey: withAPIKey, appUserID: userID)
-//    }
+    private func setupPurchases() {
+
+        let userID = UIDevice.current.identifierForVendor!.uuidString
+        let withAPIKey = "ZvtSeixatjkoOtSlmzItkrOjIwiATNbV"
+        debugPrint("userID: ", userID)
+
+        Purchases.debugLogsEnabled = true
+        Purchases.configure(withAPIKey: withAPIKey, appUserID: userID)
+        SubscriptionsViewModel.checkIfUserSubscribed()
+    }
     
     fileprivate func setupWindow(_ scene: UIScene) {
         let model = MainViewModel()

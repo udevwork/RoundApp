@@ -55,6 +55,11 @@ class IconEditorRouter : NSObject {
         }
     }
     
+    func showSubscription(){
+        let subs = SubscriptionsRouter.assembly(model: SubscriptionsViewModel())
+        view?.present(subs, animated: true, completion: nil)
+    }
+    
 }
 
 extension IconEditorRouter: UIColorPickerViewControllerDelegate {

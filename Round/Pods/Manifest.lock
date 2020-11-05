@@ -306,6 +306,9 @@ PODS:
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
   - PromisesObjC (1.2.8)
+  - Purchases (3.7.5):
+    - PurchasesCoreSwift (= 3.7.5)
+  - PurchasesCoreSwift (3.7.5)
   - Realm (5.0.0):
     - Realm/Headers (= 5.0.0)
   - Realm/Headers (5.0.0)
@@ -325,6 +328,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - Gemini
   - Kingfisher (~> 5.0)
+  - Purchases
   - RealmSwift
   - ZIPFoundation
 
@@ -359,6 +363,8 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+    - Purchases
+    - PurchasesCoreSwift
     - Realm
     - RealmSwift
     - ZIPFoundation
@@ -393,10 +399,12 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  Purchases: 7ebce9418bc16732c3c3bb4b6ff7e7e397de024e
+  PurchasesCoreSwift: 50636e307c1ab76c7a7894a87d042665f2fe0be9
   Realm: 76066d333de26f97e9caedaa85ee3ff4a62ca265
   RealmSwift: c1bdff09b422569dc6881410d9ccf712bcdb79b0
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: 4842744f788608a09d7c28f182cf5a1cb8f6f39a
+PODFILE CHECKSUM: 2920e0bcce746338b54364a0387895388917a555
 
 COCOAPODS: 1.9.2

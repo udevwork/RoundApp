@@ -50,6 +50,10 @@
 		9260B86723B6070D00AB18A5 /* SimplePhotoPostCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9260B86623B6070D00AB18A5 /* SimplePhotoPostCellView.swift */; };
 		9260B86923B6071500AB18A5 /* SimplePhotoPostCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9260B86823B6071500AB18A5 /* SimplePhotoPostCellViewModel.swift */; };
 		9260B86D23B6405D00AB18A5 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9260B86C23B6405D00AB18A5 /* PostViewModel.swift */; };
+		9261DBF8255329790091E277 /* colorline.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9261DBF4255329780091E277 /* colorline.bundle */; };
+		9261DBF9255329790091E277 /* fill.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9261DBF5255329780091E277 /* fill.bundle */; };
+		9261DBFA255329790091E277 /* line.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9261DBF6255329790091E277 /* line.bundle */; };
+		9261DBFB255329790091E277 /* color.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9261DBF7255329790091E277 /* color.bundle */; };
 		92628582249F3A43008BF1CA /* PostAnimatorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92628581249F3A43008BF1CA /* PostAnimatorHelper.swift */; };
 		92628584249F6491008BF1CA /* CALayerExtansion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92628583249F6491008BF1CA /* CALayerExtansion.swift */; };
 		926D209623E4702E00C8B492 /* TitlePostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926D209523E4702E00C8B492 /* TitlePostResponse.swift */; };
@@ -195,6 +199,10 @@
 		9260B86623B6070D00AB18A5 /* SimplePhotoPostCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePhotoPostCellView.swift; sourceTree = "<group>"; };
 		9260B86823B6071500AB18A5 /* SimplePhotoPostCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePhotoPostCellViewModel.swift; sourceTree = "<group>"; };
 		9260B86C23B6405D00AB18A5 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
+		9261DBF4255329780091E277 /* colorline.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = colorline.bundle; sourceTree = "<group>"; };
+		9261DBF5255329780091E277 /* fill.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = fill.bundle; sourceTree = "<group>"; };
+		9261DBF6255329790091E277 /* line.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = line.bundle; sourceTree = "<group>"; };
+		9261DBF7255329790091E277 /* color.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = color.bundle; sourceTree = "<group>"; };
 		92628581249F3A43008BF1CA /* PostAnimatorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAnimatorHelper.swift; sourceTree = "<group>"; };
 		92628583249F6491008BF1CA /* CALayerExtansion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayerExtansion.swift; sourceTree = "<group>"; };
 		926D209523E4702E00C8B492 /* TitlePostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlePostResponse.swift; sourceTree = "<group>"; };
@@ -432,6 +440,17 @@
 				9260B86823B6071500AB18A5 /* SimplePhotoPostCellViewModel.swift */,
 			);
 			path = SimplePhotoCell;
+			sourceTree = "<group>";
+		};
+		9261D492255306E80091E277 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				9261DBF7255329790091E277 /* color.bundle */,
+				9261DBF4255329780091E277 /* colorline.bundle */,
+				9261DBF5255329780091E277 /* fill.bundle */,
+				9261DBF6255329790091E277 /* line.bundle */,
+			);
+			path = Icons;
 			sourceTree = "<group>";
 		};
 		926D209423E46FE300C8B492 /* FireResponse */ = {
@@ -740,6 +759,7 @@
 		92E8C34D239BF681009F84EE /* round */ = {
 			isa = PBXGroup;
 			children = (
+				9261D492255306E80091E277 /* Icons */,
 				921EB1B0252F7A0700B6814D /* Documents */,
 				9283A33C252AF4F8002F855E /* Localization */,
 				929B70D4247A8730009A2484 /* DataBase */,
@@ -869,6 +889,9 @@
 			files = (
 				92DC5829249E170500711B03 /* PlayfairDisplay-Bold.ttf in Resources */,
 				92ED213F23AD23DB00819997 /* Gentleman-Medium.ttf in Resources */,
+				9261DBFA255329790091E277 /* line.bundle in Resources */,
+				9261DBFB255329790091E277 /* color.bundle in Resources */,
+				9261DBF9255329790091E277 /* fill.bundle in Resources */,
 				921EB1B7252F7A5200B6814D /* PRIVACY POLICY.pdf in Resources */,
 				921EB1B5252F7A5200B6814D /* SUBSCRIPTION TERMS.pdf in Resources */,
 				92DC5822249E170500711B03 /* PlayfairDisplay-MediumItalic.ttf in Resources */,
@@ -899,6 +922,7 @@
 				92DC5833249E172600711B03 /* BellotaText-BoldItalic.ttf in Resources */,
 				92E62AC4239BFB98009A2CD2 /* Podfile in Resources */,
 				92E8C355239BF685009F84EE /* Assets.xcassets in Resources */,
+				9261DBF8255329790091E277 /* colorline.bundle in Resources */,
 				9233BB0F252F01EE000B7461 /* en.strings in Resources */,
 				92ED213B23AD23DB00819997 /* Gentleman-ExtraLight.ttf in Resources */,
 				92ED213C23AD23DB00819997 /* Gentleman-Bold.ttf in Resources */,

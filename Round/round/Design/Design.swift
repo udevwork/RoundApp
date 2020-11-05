@@ -63,10 +63,11 @@ enum ShadowPresets  {
 }
 
 enum Colors: String {
-    case vcBackground = "viewControllerBackground"
+    case vcBackground = "ViewControllerBackground"
     case label = "contrastLabel"
     case lightlabel = "lightLabel"
     case stackMenuColor = "stackMenuColor"
+    case subsBackgroundColor = "subsBackgroundColor"
     
     func uicolor() -> UIColor {
         if let color = UIColor(named: self.rawValue) {
