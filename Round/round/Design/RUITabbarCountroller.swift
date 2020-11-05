@@ -26,9 +26,9 @@ class RUITabbarCountroller: UITabBarController {
         customTabBar.easy.layout(Leading(20), Trailing(20), Bottom(Design.safeArea.bottom + 30), Height(50))
         
         buttons = [MenuStackElement(icon: .house, onTap: { self.goTo(0) }),
-                   MenuStackElement(icon: .info, onTap: { self.goTo(1) }),
-                   MenuStackElement(icon: .settingsGear, onTap: { self.goTo(2) }),
-                   MenuStackElement(icon: .iconCreator, onTap: { self.goTo(3) })]
+                   MenuStackElement(icon: .iconCreator, onTap: { self.goTo(1) }),
+                   MenuStackElement(icon: .info, onTap: { self.goTo(2) }),
+                   MenuStackElement(icon: .settingsGear, onTap: { self.goTo(3) })]
 
         buttons.forEach { customTabBar.append($0) }
         iconAnimate(0)
@@ -55,9 +55,9 @@ class RUITabbarCountroller: UITabBarController {
                 UIView.animate(withDuration: 0.2) {
                     element.icon.alpha = 1
                     element.icon.layer.shadowRadius = 7
-                    element.icon.layer.shadowOpacity = 0.8
+                    element.icon.layer.shadowOpacity = 0.7
                     element.icon.layer.shadowOffset = CGSize(width: 0, height: 4)
-                    element.icon.layer.shadowColor = UIColor.systemPurple.cgColor
+                    element.icon.layer.shadowColor = UIColor.systemIndigo.cgColor
                 }
             } else {
                 UIView.animate(withDuration: 0.2) {

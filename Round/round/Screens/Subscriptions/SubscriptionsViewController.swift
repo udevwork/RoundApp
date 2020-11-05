@@ -80,12 +80,14 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel>  {
         titleLable.easy.layout(Leading(20), Trailing(20), Top(20))
         titleLable.text = localized(.subs)
         
-        priceLable.easy.layout(Leading(20), Top().to(titleLable))
-        priceLable.text = "\(SubscriptionsViewModel.package?.localizedPriceString ?? "")"
-        
-        timeLable.easy.layout(Leading().to(priceLable), Top().to(priceLable, .topMargin))
-        timeLable.text = "/week"
-        timeLable.alpha = 0.5
+        if let package = SubscriptionsViewModel.package {
+            priceLable.easy.layout(Leading(20), Top().to(titleLable))
+            priceLable.text = "\(package.localizedPriceString)"
+            
+            timeLable.easy.layout(Leading().to(priceLable), Top().to(priceLable, .topMargin))
+            timeLable.text = "/week"
+            timeLable.alpha = 0.5
+        }
         descriptionLable.easy.layout(Leading(20), Trailing(20), Top(20).to(wallpaper))
         descriptionLable.numberOfLines = 0
         descriptionLable.lineBreakMode = .byTruncatingTail

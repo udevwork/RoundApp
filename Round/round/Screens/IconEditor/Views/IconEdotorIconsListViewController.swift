@@ -30,7 +30,7 @@ class IconEditorIconsListViewController: UIViewController, UITableViewDelegate, 
     var iconsData: [Icon] = []
     var searchIconsData: [Icon] = []
 
-    
+    let headerBackgound: UIView = UIView()
     let selector: UISegmentedControl = UISegmentedControl()
     let searchBar: UISearchBar = UISearchBar()
     var isSearching: Bool = false
@@ -38,6 +38,7 @@ class IconEditorIconsListViewController: UIViewController, UITableViewDelegate, 
     init() {
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = Colors.vcBackground.uicolor()
+        view.addSubview(headerBackgound)
         view.addSubview(table)
         view.addSubview(searchBar)
         view.addSubview(selector)
@@ -46,6 +47,9 @@ class IconEditorIconsListViewController: UIViewController, UITableViewDelegate, 
         table.dataSource = self
         table.register(IconEditorIconCell.self, forCellReuseIdentifier: "cell")
         self.modalPresentationStyle = .automatic
+        
+        headerBackgound.backgroundColor = .systemGray5
+        headerBackgound.easy.layout(Top(), Leading(), Trailing(), Bottom().to(table, .top))
         
         loadBundles()
         loadImages(bundle: currentBundle)
@@ -56,11 +60,12 @@ class IconEditorIconsListViewController: UIViewController, UITableViewDelegate, 
         selector.easy.layout(Top(20),Leading(20),Trailing(20))
         selector.addTarget(self, action: #selector(bundleChange), for: .valueChanged)
         table.backgroundColor = .clear
-        table.easy.layout(Top(20).to(searchBar), Leading(), Trailing(), Bottom())
+        table.easy.layout(Top(10).to(searchBar), Leading(), Trailing(), Bottom())
         table.keyboardDismissMode = .onDrag
         selector.selectedSegmentIndex = 0
+        selector.setTitleTextAttributes([NSAttributedString.Key.font: FontNames.BellotaBold.uiFont(13)], for: .normal)
         
-        searchBar.easy.layout(Top(20).to(selector),Leading(15),Trailing(15))
+        searchBar.easy.layout(Top(10).to(selector),Leading(15),Trailing(15))
         searchBar.tintColor = .clear
         searchBar.backgroundImage = UIImage()
         searchBar.delegate = self

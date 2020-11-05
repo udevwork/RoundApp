@@ -63,9 +63,9 @@ class SettingsViewController: BaseViewController<SettingsModel>, UITableViewDele
         viewModel.model = [
             SettingCellModel(title: localized(.subs), icon: .crown, onPress: {
                 if SubscriptionsViewModel.userSubscibed {
-                    self.present(SubscriptionsRouter.assembly(model: SubscriptionsViewModel()), animated: true, completion: nil)
-                } else {
                     Notifications.shared.Show(RNSimpleView(text: localized(.unlocked), icon: Icons.crown.image(), iconColor: .systemGreen))
+                } else {
+                    self.present(SubscriptionsRouter.assembly(model: SubscriptionsViewModel()), animated: true, completion: nil)
                 }
             }),
             SettingCellModel(title: localized(.policy), icon: .doc, onPress: {

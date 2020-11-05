@@ -49,27 +49,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let iconEditor = IconEditorRouter.assembly()
         
         let tabbar = RUITabbarCountroller()
-        tabbar.viewControllers = [contentView,tutorial,settings,iconEditor]
+        tabbar.viewControllers = [contentView,iconEditor,tutorial,settings]
         // let contentView = RealmTest()
         // let uitest = UITest()
         let rootNavigationController: UINavigationController = UINavigationController(rootViewController: tabbar)
         
         let navBar = rootNavigationController.navigationBar
-//
-//        navBar.shadowImage = UIImage()
-//        navBar.setBackgroundImage(nil, for: UIBarMetrics.default)
-//        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.label,NSAttributedString.Key.font: FontNames.PlayRegular.uiFont(20)]
-//        navBar.titleTextAttributes = textAttributes
-//        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.label,NSAttributedString.Key.font: FontNames.PlayBold.uiFont(30)]
-        
-//        navBar.barStyle = .default
+
         navBar.isTranslucent = false
-//        navBar.prefersLargeTitles = true
-        ///setup Back Button
-//        let backImage = Icons.chevronDown.image()
-//        rootNavigationController.navigationBar.backIndicatorImage = backImage
-//        rootNavigationController.navigationBar.tintColor = .label
-   
 
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
