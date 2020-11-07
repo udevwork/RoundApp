@@ -17,6 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         setupFirebase()
         setupPurchases()
+        setupAuth()
         setupWindow(scene)
     }
     
@@ -26,6 +27,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             Firestore.firestore().clearPersistence { error in
                 debugPrint("Firestore.firestore().clearPersistence: error : ", error as Any)
             }
+        }
+    }
+    
+    private func setupAuth(){
+        Auth.auth().signInAnonymously() { (authResult, error) in
+            if let e = error {
+                debugPrint("AUTH ERROR: ", e)
+            } else {
+                debugPrint("AUTH OK")
+            }
+            guard let user = authResult?.user else { return }
+            debugPrint("AUTH USER ID: ", user.uid)
         }
     }
     

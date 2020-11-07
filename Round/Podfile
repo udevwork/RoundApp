@@ -4,6 +4,7 @@ pod "EasyPeasy"
 pod 'Kingfisher', '~> 5.0'
 pod 'ZIPFoundation'
 pod 'Firebase/Analytics'
+pod 'Firebase/Crashlytics'
 pod 'Firebase/Database'
 pod 'Firebase/Functions'
 pod 'Firebase/Core'

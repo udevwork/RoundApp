@@ -19,7 +19,7 @@ final class FirebaseAPI : API {
         return singletone
     }()
     
-    private let posts = Firestore.firestore().collection("Designs")
+    private let posts = Firestore.firestore().collection("Test")
     
     private init () {
        
@@ -150,8 +150,13 @@ final class FirebaseAPI : API {
     
     public func incrementPostDownloadCounter(post id: String){
         posts.document(id).updateData(["dowloadsCount" : FieldValue.increment(Int64(1))])
+        debugPrint("incrementPostDownloadCounter")
     }
     
+    public func incrementViewsCounter(post id: String){
+        posts.document(id).updateData(["viewsCount" : FieldValue.increment(Int64(1))])
+        debugPrint("incrementPostDownloadCounter")
+    }
     
     public func getPosts(complition : @escaping (HTTPResult, [CardViewModel]?) -> ()){
      

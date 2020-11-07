@@ -15,6 +15,8 @@ class DownloadPostCellViewModel : BasePostCellViewModelProtocol {
     var fileSize: String?
     var productID: String?
     
+    var isProssesing: Bool = false
+    
     init(model : DownloadPostResponse) {
         self.type = model.type
         self.order = model.order

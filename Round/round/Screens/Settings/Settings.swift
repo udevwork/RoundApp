@@ -61,6 +61,11 @@ class SettingsViewController: BaseViewController<SettingsModel>, UITableViewDele
     
     private func setupModel(){
         viewModel.model = [
+            SettingCellModel(title: "Create post", icon: .edit, onPress: {
+                
+                    self.present(PostCreatorViewController(), animated: true, completion: nil)
+                
+            }),
             SettingCellModel(title: localized(.subs), icon: .crown, onPress: {
                 if SubscriptionsViewModel.userSubscibed {
                     Notifications.shared.Show(RNSimpleView(text: localized(.unlocked), icon: Icons.crown.image(), iconColor: .systemGreen))

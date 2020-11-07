@@ -33,10 +33,10 @@ class SimplePhotoPostCellView: UITableViewCell, BasePostCellProtocol {
             self?.photo.easy.reload()
         })
         
-        setupDesign()
+        setupDesign(viewModel)
     }
     
-    func setupDesign() {
+    func setupDesign(_ viewModel: BasePostCellViewModelProtocol) {
         backgroundColor = .systemGray5
         addSubview(photo)
         photo.contentMode = .scaleAspectFill

@@ -41,10 +41,10 @@ class GalleryPostCellView: UITableViewCell, BasePostCellProtocol, UICollectionVi
         postCollectionView.register(GalleryPostCellView.CustomCell.self, forCellWithReuseIdentifier: "cell")
         postCollectionView.delegate = self
         postCollectionView.dataSource = self
-        setupDesign()
+        setupDesign(viewModel)
     }
     
-    func setupDesign() {
+    func setupDesign(_ viewModel: BasePostCellViewModelProtocol) {
         postCollectionView.easy.layout(Edges(),Height(250))
         postCollectionView.backgroundColor = .clear
         contentView.backgroundColor = .clear

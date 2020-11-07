@@ -22,6 +22,7 @@
 		921EB1B7252F7A5200B6814D /* PRIVACY POLICY.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 921EB1B4252F7A5200B6814D /* PRIVACY POLICY.pdf */; };
 		9233BB04252EFF10000B7461 /* ru.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9233BB06252EFF10000B7461 /* ru.strings */; };
 		9233BB0F252F01EE000B7461 /* en.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9233BB0E252F01EE000B7461 /* en.strings */; };
+		9236CF482556CA3900673860 /* PostCreatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9236CF472556CA3900673860 /* PostCreatorViewController.swift */; };
 		923B47E22524576000AAD64D /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B47E12524576000AAD64D /* DownloadViewModel.swift */; };
 		9242C4C7244F2C87009EA6AE /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9242C4C6244F2C87009EA6AE /* Notifications.swift */; };
 		924DC82325277F3100836A7D /* CircleProgresBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924DC82225277F3100836A7D /* CircleProgresBar.swift */; };
@@ -170,6 +171,7 @@
 		9233BB05252EFF10000B7461 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ru.strings; sourceTree = "<group>"; };
 		9233BB0B252F0096000B7461 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		9233BB0E252F01EE000B7461 /* en.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = en.strings; sourceTree = "<group>"; };
+		9236CF472556CA3900673860 /* PostCreatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCreatorViewController.swift; sourceTree = "<group>"; };
 		923B47E12524576000AAD64D /* DownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewModel.swift; sourceTree = "<group>"; };
 		9242C4C6244F2C87009EA6AE /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		924DC82225277F3100836A7D /* CircleProgresBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgresBar.swift; sourceTree = "<group>"; };
@@ -336,6 +338,14 @@
 				921EB1B3252F7A5100B6814D /* TERMS AND CONDITIONS OF USE.pdf */,
 			);
 			path = Documents;
+			sourceTree = "<group>";
+		};
+		9236CF462556CA1000673860 /* PostCreator */ = {
+			isa = PBXGroup;
+			children = (
+				9236CF472556CA3900673860 /* PostCreatorViewController.swift */,
+			);
+			path = PostCreator;
 			sourceTree = "<group>";
 		};
 		924DC8252527CDDC00836A7D /* GalleryViewer */ = {
@@ -722,6 +732,7 @@
 		92E62ACE239CEBC0009A2CD2 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				9236CF462556CA1000673860 /* PostCreator */,
 				92DA8D14254D4ABC001F12AD /* IconEditor */,
 				9283A371252C95A4002F855E /* PDFViewer */,
 				9283A365252C826D002F855E /* Settings */,
@@ -838,6 +849,7 @@
 				92E8C348239BF681009F84EE /* Frameworks */,
 				92E8C349239BF681009F84EE /* Resources */,
 				56ED0247BFAF97E64F41ABBA /* [CP] Embed Pods Frameworks */,
+				92F308B22555D3CD00963D67 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -952,6 +964,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-round/Pods-round-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		92F308B22555D3CD00963D67 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
 		A8B128FB8F2F8877B6D4AE58 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -983,6 +1012,7 @@
 			files = (
 				924DC8362527CDDC00836A7D /* PagerMediaViewerContract.swift in Sources */,
 				924DC8352527CDDC00836A7D /* PagerMediaCloseTransition.swift in Sources */,
+				9236CF482556CA3900673860 /* PostCreatorViewController.swift in Sources */,
 				9283A373252C95C2002F855E /* PDFViewer.swift in Sources */,
 				9260B86D23B6405D00AB18A5 /* PostViewModel.swift in Sources */,
 				928275F923DD7515001B3965 /* Debug.swift in Sources */,
@@ -1229,7 +1259,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"round/Preview Content\"";
 				DEVELOPMENT_TEAM = 87XM268947;
 				ENABLE_PREVIEWS = YES;
@@ -1255,7 +1285,7 @@
 				CODE_SIGN_ENTITLEMENTS = round/roundRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"round/Preview Content\"";
 				DEVELOPMENT_TEAM = 87XM268947;
 				ENABLE_PREVIEWS = YES;

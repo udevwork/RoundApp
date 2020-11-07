@@ -33,10 +33,10 @@ class ArticlePostCellView: UITableViewCell, BasePostCellProtocol {
      
         
         article.attributedText = atributedString
-        setupDesign()
+        setupDesign(viewModel)
     }
     
-    func setupDesign() {
+    func setupDesign(_ viewModel: BasePostCellViewModelProtocol) {
         backgroundColor = .systemGray6
         addSubview(article)
         article.easy.layout(Leading(20),Trailing(20),Top(40),Bottom(40))

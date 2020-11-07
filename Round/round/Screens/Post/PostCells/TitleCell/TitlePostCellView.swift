@@ -19,10 +19,10 @@ class TitlePostCellView: UITableViewCell, BasePostCellProtocol {
    public func setup(viewModel: BasePostCellViewModelProtocol) {
         guard let model = viewModel as? TitlePostCellViewModel else {print("TitlePostCellView viewModel type error"); return}
         title.text = model.text
-        setupDesign()
+        setupDesign(viewModel)
     }
     
-    func setupDesign() {
+    func setupDesign(_ viewModel: BasePostCellViewModelProtocol) {
         backgroundColor = .systemGray6
         addSubview(title)
         title.easy.layout(Leading(20),Trailing(20),Top(40),Bottom(40))

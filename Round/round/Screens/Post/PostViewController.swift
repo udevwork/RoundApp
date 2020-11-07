@@ -20,7 +20,7 @@ class PostViewController: BaseViewController<PostViewModel> {
     let animation = UIViewPropertyAnimator(duration: 0.3, dampingRatio: 0.8, animations: nil)
     
     var card : CardView? = nil
-    
+    var isProcessing: Bool = false
     
     override init(viewModel: PostViewModel) {
         super.init(viewModel: viewModel)
@@ -64,6 +64,7 @@ class PostViewController: BaseViewController<PostViewModel> {
         let gesture: UIScreenEdgePanGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(closeGesture))
         gesture.edges = UIRectEdge.left
         view.addGestureRecognizer(gesture)
+        FirebaseAPI.shared.incrementViewsCounter(post: self.viewModel.cardView.viewModel?.id ?? "")
     }
     
     func setupHeaderAnimation() {
@@ -260,14 +261,20 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
             cell = tableView.dequeueReusableCell(withIdentifier: "DownloadPostCellView", for: indexPath) as! DownloadPostCellView
            let dCell = (cell as! DownloadPostCellView)
         
+           // dCell.downloadButton.showLoader(self.isProcessing)
+            
             dCell.onbuyPress = { [weak self] link in
                  guard let self = self else { return }
+                self.isProcessing = true
+              //  dCell.downloadButton.showLoader(self.isProcessing)
                 IAPManager.shared.purchase { [weak self] ok in
                     guard let self = self else { return }
                     if ok {
                         self.table.reloadData()
+                        self.isProcessing = false
                     } else {
                         debugPrint("Purch fail")
+                        self.isProcessing = false
                     }
                 }
             }
