@@ -12,16 +12,17 @@ import EasyPeasy
 import Purchases
 import Gemini
 
-class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel>  {
+class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel>, UITableViewDelegate, UITableViewDataSource  {
 
     private var drugtumbler: UIView = UIView()
     let content: UIView = UIView()
+    fileprivate let table : UITableView = UITableView()
+
     
     let wallpaper: UIView = UIView()
     public var titleLable: Text = Text(.title,.white)
     public var priceLable: Text = Text(.big,.white)
-    public var timeLable: Text = Text(.regular,.white)
-    public var descriptionLable: Text = Text(.article, .systemIndigo)
+    public var timeLable: Text = Text(.article,.white)
 
     public let subscribeButton : Button = ButtonBuilder()
         .setFrame(CGRect(origin: .zero, size: CGSize(width: 125, height: 80)))
@@ -59,20 +60,20 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel>  {
         view.addSubview(drugtumbler)
 
         content.addSubview(wallpaper)
+        content.addSubview(table)
         content.addSubview(subscribeButton)
         content.addSubview(priceLable)
         content.addSubview(timeLable)
         content.addSubview(titleLable)
-        content.addSubview(descriptionLable)
 
         content.backgroundColor = .systemGray6
         content.layer.cornerRadius = 30
         content.layer.masksToBounds = true
-        content.easy.layout(Bottom(5 + Design.safeArea.bottom), Leading(5), Trailing(5), Top(50))
+        content.easy.layout(Bottom(5 + Design.safeArea.bottom), Leading(5), Trailing(5), Top(6).to(drugtumbler))
         
         drugtumbler.layer.cornerRadius = 3
         drugtumbler.backgroundColor = .systemGray
-        drugtumbler.easy.layout(Bottom(6).to(content, .top), Width(50), Height(6), CenterX())
+        drugtumbler.easy.layout(Top(), Width(50), Height(6), CenterX())
         
         wallpaper.backgroundColor = .systemIndigo
         wallpaper.easy.layout(Top(),Leading(),Trailing(), Bottom(-20).to(priceLable, .bottomMargin))
@@ -85,22 +86,20 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel>  {
             priceLable.text = "\(package.localizedPriceString)"
             
             timeLable.easy.layout(Leading().to(priceLable), Top().to(priceLable, .topMargin))
-            timeLable.text = "/\(localized(.week)))"
-            timeLable.alpha = 0.5
+            timeLable.text = "/\(localized(.week))"
+            timeLable.alpha = 0.7
         }
-        descriptionLable.easy.layout(Leading(20), Trailing(20), Top(20).to(wallpaper))
-        descriptionLable.numberOfLines = 0
-        descriptionLable.lineBreakMode = .byTruncatingTail
-        descriptionLable.text = localized(.subDescription)
-        
-        let mainStack = vStack([
-            hStack([ icon(), text(localized(.subone)), spacing()]),
-            hStack([ icon(), text(localized(.subtwo)), spacing()]),
-            hStack([ icon(), text(localized(.subthree)), spacing()]),
-            hStack([ icon(), text(localized(.subfour)), spacing()])
-        ])
-        content.addSubview(mainStack)
-        mainStack.easy.layout(Top(20).to(descriptionLable), Leading(20), Trailing(20))
+       
+        table.delegate = self
+        table.dataSource = self
+        table.register(SubscribeCellTitle.self, forCellReuseIdentifier: "Title")
+        table.register(SubscribeCellBenefit.self, forCellReuseIdentifier: "Benefit")
+        table.register(SubscribeCellInfo.self, forCellReuseIdentifier: "Info")
+        table.register(SubscribeCellTerms.self, forCellReuseIdentifier: "Terms")
+        table.easy.layout(Top().to(wallpaper),Bottom(),Leading(),Trailing())
+        table.separatorStyle = .none
+        table.rowHeight = UITableView.automaticDimension
+        table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         
         subscribeButton.easy.layout(CenterX(),Bottom(20),Height(50),Leading(20), Trailing(20))
         subscribeButton.setText(localized(.subscribe))
@@ -125,39 +124,36 @@ class SubscriptionsViewController: BaseViewController<SubscriptionsViewModel>  {
         }
     }
     
-    func text(_ t: String) -> UIView {
-        let lable = Text(.article, .label)
-        lable.text = t
-        lable.numberOfLines = 1
-        return lable
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.model.count
     }
-    
-    func icon() -> UIView {
-        let i = UIImageView(image: Icons.checkmark.image())
-        i.tintColor = .systemIndigo
-        i.contentMode = .scaleAspectFit
-        return i
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell: UITableViewCell? = nil
+        let model = viewModel.model[indexPath.row]
+        
+        switch model {
+        case .Benefit(let data):
+            cell = tableView.dequeueReusableCell(withIdentifier: "Benefit")
+            (cell as! SubscribeCellBenefit).setup(data: data)
+        case .Info(let data):
+            cell = tableView.dequeueReusableCell(withIdentifier: "Info")
+            (cell as! SubscribeCellInfo).setup(data: data)
+        case .Terms(let data):
+            cell = tableView.dequeueReusableCell(withIdentifier: "Terms")
+            (cell as! SubscribeCellTerms).setup(data: data)
+        case .Title(let data):
+            cell = tableView.dequeueReusableCell(withIdentifier: "Title")
+            (cell as! SubscribeCellTitle).setup(data: data)
+        }
+        
+        return cell ?? UITableViewCell()
     }
-    
-    func spacing(_ space: CGFloat = 0) -> UIView {
-        let s = UIView(frame: CGRect(origin: .zero, size: CGSize(width: space, height: 0)))
-        return s
-    }
-    
-    func vStack(_ v: [UIView]) -> UIView {
-        let stack = UIStackView(arrangedSubviews: v)
-        stack.axis = .vertical
-        stack.spacing = 10
-        return stack
-    }
-    
-    func hStack(_ v: [UIView]) -> UIView {
-        let stack = UIStackView(arrangedSubviews: v)
-        stack.axis = .horizontal
-        stack.alignment = .leading
-        stack.spacing = 10
-        return stack
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
 }
+
 

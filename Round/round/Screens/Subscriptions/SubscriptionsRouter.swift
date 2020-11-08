@@ -9,17 +9,25 @@
 import Foundation
 
 class SubscriptionsRouter: RouterProtocol {
-    var controller: SubscriptionsViewController?
-    
-    static func assembly(model: SubscriptionsViewModel) -> SubscriptionsViewController {
-        model.router = SubscriptionsRouter()
-            let vc : SubscriptionsViewController = SubscriptionsViewController(viewModel: model)
-            return vc
-    }
-    
     typealias viewControllerModel = SubscriptionsViewModel
-    
     typealias viewController = SubscriptionsViewController
     
+    weak var controller: SubscriptionsViewController?
+    
+    static func assembly(model: SubscriptionsViewModel) -> SubscriptionsViewController {
+        let router = SubscriptionsRouter()
+        model.router = router
+        let vc = SubscriptionsViewController(viewModel: model)
+        router.controller = vc
+        return vc
+    }
+    
+    func showTerms() {
+        controller?.present(PDFViewer(file: .SUBSCRIPTIONTERMS), animated: true, completion: nil)
+    }
+    
+    func showPrivacy() {
+        controller?.present(PDFViewer(file: .PRIVACYPOLICY), animated: true, completion: nil)
+    }
     
 }

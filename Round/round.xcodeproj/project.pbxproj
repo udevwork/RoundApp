@@ -22,6 +22,10 @@
 		921EB1B7252F7A5200B6814D /* PRIVACY POLICY.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 921EB1B4252F7A5200B6814D /* PRIVACY POLICY.pdf */; };
 		9233BB04252EFF10000B7461 /* ru.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9233BB06252EFF10000B7461 /* ru.strings */; };
 		9233BB0F252F01EE000B7461 /* en.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9233BB0E252F01EE000B7461 /* en.strings */; };
+		9236CF722557113C00673860 /* SubscribeCellTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9236CF712557113C00673860 /* SubscribeCellTitle.swift */; };
+		9236CF762557135F00673860 /* SubscribeCellBenefit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9236CF752557135F00673860 /* SubscribeCellBenefit.swift */; };
+		9236CF79255713B300673860 /* SubscribeCellTerms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9236CF78255713B300673860 /* SubscribeCellTerms.swift */; };
+		9236CF7C255713E400673860 /* SubscribeCellInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9236CF7B255713E400673860 /* SubscribeCellInfo.swift */; };
 		923B47E22524576000AAD64D /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B47E12524576000AAD64D /* DownloadViewModel.swift */; };
 		9242C4C7244F2C87009EA6AE /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9242C4C6244F2C87009EA6AE /* Notifications.swift */; };
 		924DC82325277F3100836A7D /* CircleProgresBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924DC82225277F3100836A7D /* CircleProgresBar.swift */; };
@@ -145,7 +149,7 @@
 		92F46A26243B47AC00CCC386 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F46A25243B47AC00CCC386 /* InputField.swift */; };
 		92F46A28243B4ADB00CCC386 /* SubscriptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F46A27243B4ADB00CCC386 /* SubscriptionsViewController.swift */; };
 		92F46A2A243B4AEB00CCC386 /* SubscriptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F46A29243B4AEB00CCC386 /* SubscriptionsViewModel.swift */; };
-		92F46A2C243B4AF600CCC386 /* SignInContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F46A2B243B4AF600CCC386 /* SignInContract.swift */; };
+		92F46A2C243B4AF600CCC386 /* SubscriptionsContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F46A2B243B4AF600CCC386 /* SubscriptionsContract.swift */; };
 		92F46A2E243B4B0000CCC386 /* SubscriptionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F46A2D243B4B0000CCC386 /* SubscriptionsRouter.swift */; };
 		92F90372248394A300B0A176 /* BookmarkRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F90371248394A300B0A176 /* BookmarkRealm.swift */; };
 		92F9C4EB23DC7E0D00AB9823 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9C4EA23DC7E0D00AB9823 /* API.swift */; };
@@ -170,6 +174,10 @@
 		9233BB05252EFF10000B7461 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ru.strings; sourceTree = "<group>"; };
 		9233BB0B252F0096000B7461 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		9233BB0E252F01EE000B7461 /* en.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = en.strings; sourceTree = "<group>"; };
+		9236CF712557113C00673860 /* SubscribeCellTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeCellTitle.swift; sourceTree = "<group>"; };
+		9236CF752557135F00673860 /* SubscribeCellBenefit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeCellBenefit.swift; sourceTree = "<group>"; };
+		9236CF78255713B300673860 /* SubscribeCellTerms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeCellTerms.swift; sourceTree = "<group>"; };
+		9236CF7B255713E400673860 /* SubscribeCellInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeCellInfo.swift; sourceTree = "<group>"; };
 		923B47E12524576000AAD64D /* DownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewModel.swift; sourceTree = "<group>"; };
 		9242C4C6244F2C87009EA6AE /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		924DC82225277F3100836A7D /* CircleProgresBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgresBar.swift; sourceTree = "<group>"; };
@@ -296,7 +304,7 @@
 		92F46A25243B47AC00CCC386 /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		92F46A27243B4ADB00CCC386 /* SubscriptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsViewController.swift; sourceTree = "<group>"; };
 		92F46A29243B4AEB00CCC386 /* SubscriptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsViewModel.swift; sourceTree = "<group>"; };
-		92F46A2B243B4AF600CCC386 /* SignInContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInContract.swift; sourceTree = "<group>"; };
+		92F46A2B243B4AF600CCC386 /* SubscriptionsContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsContract.swift; sourceTree = "<group>"; };
 		92F46A2D243B4B0000CCC386 /* SubscriptionsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsRouter.swift; sourceTree = "<group>"; };
 		92F90371248394A300B0A176 /* BookmarkRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRealm.swift; sourceTree = "<group>"; };
 		92F9C4EA23DC7E0D00AB9823 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -336,6 +344,17 @@
 				921EB1B3252F7A5100B6814D /* TERMS AND CONDITIONS OF USE.pdf */,
 			);
 			path = Documents;
+			sourceTree = "<group>";
+		};
+		9236CF702557110800673860 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				9236CF712557113C00673860 /* SubscribeCellTitle.swift */,
+				9236CF752557135F00673860 /* SubscribeCellBenefit.swift */,
+				9236CF78255713B300673860 /* SubscribeCellTerms.swift */,
+				9236CF7B255713E400673860 /* SubscribeCellInfo.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		924DC8252527CDDC00836A7D /* GalleryViewer */ = {
@@ -801,9 +820,10 @@
 		92F46A24243B446400CCC386 /* Subscriptions */ = {
 			isa = PBXGroup;
 			children = (
+				9236CF702557110800673860 /* Cells */,
 				92F46A27243B4ADB00CCC386 /* SubscriptionsViewController.swift */,
 				92F46A29243B4AEB00CCC386 /* SubscriptionsViewModel.swift */,
-				92F46A2B243B4AF600CCC386 /* SignInContract.swift */,
+				92F46A2B243B4AF600CCC386 /* SubscriptionsContract.swift */,
 				92F46A2D243B4B0000CCC386 /* SubscriptionsRouter.swift */,
 			);
 			path = Subscriptions;
@@ -986,7 +1006,7 @@
 				9283A373252C95C2002F855E /* PDFViewer.swift in Sources */,
 				9260B86D23B6405D00AB18A5 /* PostViewModel.swift in Sources */,
 				928275F923DD7515001B3965 /* Debug.swift in Sources */,
-				92F46A2C243B4AF600CCC386 /* SignInContract.swift in Sources */,
+				92F46A2C243B4AF600CCC386 /* SubscriptionsContract.swift in Sources */,
 				92CD63D524602B5400D8F77C /* PostResponse.swift in Sources */,
 				92E62AC7239CDBEB009A2CD2 /* MainViewModel.swift in Sources */,
 				9260B85023B131A100AB18A5 /* PostViewController.swift in Sources */,
@@ -1001,9 +1021,11 @@
 				92F9C4EB23DC7E0D00AB9823 /* API.swift in Sources */,
 				9242C4C7244F2C87009EA6AE /* Notifications.swift in Sources */,
 				92CD5CFD244AFE250025C600 /* StringExtansion.swift in Sources */,
+				9236CF722557113C00673860 /* SubscribeCellTitle.swift in Sources */,
 				9273364323F8456F008B4F43 /* CountriesList.swift in Sources */,
 				9298E25F23F28D1100952F28 /* SearchViewController.swift in Sources */,
 				9283A367252C82FE002F855E /* Settings.swift in Sources */,
+				9236CF7C255713E400673860 /* SubscribeCellInfo.swift in Sources */,
 				9260B85B23B5EDEC00AB18A5 /* TitlePostCellView.swift in Sources */,
 				9260B85D23B5EDF900AB18A5 /* TitlePostCellViewModel.swift in Sources */,
 				92E53E432520DCB50033D98B /* GalleryPostResponse.swift in Sources */,
@@ -1027,6 +1049,7 @@
 				92E53E522520FF790033D98B /* DownloadViewController.swift in Sources */,
 				92E53E402520D8550033D98B /* GalleryPostCellViewModel.swift in Sources */,
 				924DC8382527CDDC00836A7D /* PagerMediaViewerRouter.swift in Sources */,
+				9236CF79255713B300673860 /* SubscribeCellTerms.swift in Sources */,
 				92B8622C249612C00087676A /* FirebaseRequestProtocol.swift in Sources */,
 				9260B86423B605D300AB18A5 /* ArticlePostCellViewModel.swift in Sources */,
 				924DC82325277F3100836A7D /* CircleProgresBar.swift in Sources */,
@@ -1034,6 +1057,7 @@
 				923B47E22524576000AAD64D /* DownloadViewModel.swift in Sources */,
 				92F46A28243B4ADB00CCC386 /* SubscriptionsViewController.swift in Sources */,
 				92E53E3C2520D8450033D98B /* GalleryPostCellView.swift in Sources */,
+				9236CF762557135F00673860 /* SubscribeCellBenefit.swift in Sources */,
 				92F90372248394A300B0A176 /* BookmarkRealm.swift in Sources */,
 				92132E94246320EB00C58810 /* ErrorHandler.swift in Sources */,
 				92DA8D1A254D4B02001F12AD /* IconEditorViewModel.swift in Sources */,

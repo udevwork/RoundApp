@@ -20,6 +20,7 @@ class Text: UILabel {
         case article
         case system
         case regular
+        case small
         case light
         
         func data() -> ( fontName: FontNames, size : CGFloat) {
@@ -36,6 +37,8 @@ class Text: UILabel {
                 return (.BellotaBold, 15)
             case .regular:
                 return (.BellotaRegular, 13)
+            case .small:
+                return (.BellotaRegular, 11)
             case .light:
                 return (.BellotaLight, 11)
             case .price:

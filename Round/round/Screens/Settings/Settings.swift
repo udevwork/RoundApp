@@ -50,6 +50,8 @@ class SettingsViewController: BaseViewController<SettingsModel>, UITableViewDele
         table.register(SettingCell.self, forCellReuseIdentifier: "cell")
         table.separatorStyle = .none
         table.backgroundColor = .clear
+        table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +61,7 @@ class SettingsViewController: BaseViewController<SettingsModel>, UITableViewDele
     }
     
     
-    private func setupModel(){
+    private func setupModel() {
         viewModel.model = [
             SettingCellModel(title: localized(.subs), icon: .crown, onPress: {
                 if SubscriptionsViewModel.userSubscibed {

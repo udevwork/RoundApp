@@ -37,18 +37,26 @@ class DownloadPostCellView: UITableViewCell, BasePostCellProtocol {
     public func setup(viewModel: BasePostCellViewModelProtocol) {
         guard let model = viewModel as? DownloadPostCellViewModel else { print("TitlePostCellView viewModel type error"); return }
         if let id = model.productID {
-            if ProductManager().get(productID: id) == nil || SubscriptionsViewModel.userSubscibed == false {
-          // if false {
-                IAPManager.shared.getPackPrice(ID: id) { product in
-                    if let product = product {
-                        self.title.text = product.localizedPrice
-                        self.downloadButton.setText(localized(.buy))
-                        self.downloadButton.setIcon(.cart)
-                        self.downloadButton.isHidden = false
-                    } else {
-                        self.title.text = localized(.packnotavailable)
-                        self.downloadButton.isHidden = true
+            if SubscriptionsViewModel.userSubscibed == false {
+                if ProductManager().get(productID: id) == nil {
+              // if false {
+                    IAPManager.shared.getPackPrice(ID: id) { product in
+                        if let product = product {
+                            self.title.text = product.localizedPrice
+                            self.downloadButton.setText(localized(.buy))
+                            self.downloadButton.setIcon(.cart)
+                            self.downloadButton.isHidden = false
+                        } else {
+                            self.title.text = localized(.packnotavailable)
+                            self.downloadButton.isHidden = true
+                        }
                     }
+                } else {
+                    self.title.text = model.fileSize
+                    self.downloadButton.setText(localized(.download))
+                    self.downloadButton.setIcon(.download)
+                    self.downloadButton.isHidden = false
+                    isPurchised = true
                 }
             } else {
                 self.title.text = model.fileSize

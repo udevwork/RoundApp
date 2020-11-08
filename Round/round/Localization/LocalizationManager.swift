@@ -23,6 +23,18 @@ enum LocalizationKeys : String {
     case subfour = "subfour"
     case week = "week"
     
+    case subinfoone = "subinfoone"
+    case subinfotwo = "subinfotwo"
+    case subinfothree = "subinfothree"
+    case subinfofour = "subinfofour"
+    case subinfofive = "subinfofive"
+    case subinfosix = "subinfosix"
+    case subinfoseven = "subinfoseven"
+    
+    case subAlert = "subAlert"
+    case subAlertOk = "subAlertOk"
+    case subAlertCansel = "subAlertCansel"
+    
     case title_1 = "1title"
     case article_1 = "1article"
     case title_2 = "2title"

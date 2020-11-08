@@ -8,19 +8,31 @@
 
 // header
 "icons" = "Icons";
-"subscription" = "Subscription";
+"subscription" = "Аuto-renewable subscription";
 "how_to" = "How to set icon?";
 "icon_Editor" = "Icon editor";
 "settings" = "Settings";
 
 // subscription
 "subscribe" = "subscribe";
-"subDescription" = "Get full access with a PRO account!";
-"subone" = "Editor";
-"subtwo" = "More than 500 icons";
-"subthree" = "Access to all sets";
+"subDescription" = "Weekly access to features:";
+"subone" = "Access to all functions of the icon editor";
+"subtwo" = "Free use of over 500 icons in the editor";
+"subthree" = "Free download of any ready-made icon packs";
 "subfour" = "Premium Account";
 "week" = "week";
+
+"subinfoone" = "• Non-subscribed users cannot save their work in the icon editor, but can try out its functions";
+"subinfotwo" = "• Non-subscribed users can only buy icon packs for their fixed price.";
+"subinfothree" = "• Payment will be charged to iTunes Account at confirmation of purchase.";
+"subinfofour" = "• Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period.";
+"subinfofive" = "• Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal.";
+"subinfosix" = "• Subscriptions may be managed by the user and auto-renewal may be turned off by going to the Settings App after purchase.";
+"subinfoseven" = "• Any unused portion of a free trial period, if offered, will be forfeited when the user purchases a subscription to that publication, where applicable.";
+
+"subAlert" = "With a subscription, you can download everything unlimited!";
+"subAlertOk" = "Try subscription";
+"subAlertCansel" = "Buy for a fixed price";
 
 // tutorial
 "1title" = "1. Open Shortcuts";
@@ -54,7 +66,7 @@
 "policy" = "Privacy policy";
 "termsOfUse" = "Terms of Use";
 "сontactUs" = "Contact us";
-"subscriptionTerms" = "Purchases Terms";
+"subscriptionTerms" = "Subscription Terms";
 "restore" = "Restore";
 
 // notifications

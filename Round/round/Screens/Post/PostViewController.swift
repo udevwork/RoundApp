@@ -259,21 +259,33 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
         case .Download:
             cell = tableView.dequeueReusableCell(withIdentifier: "DownloadPostCellView", for: indexPath) as! DownloadPostCellView
            let dCell = (cell as! DownloadPostCellView)
-        
+            
             dCell.onbuyPress = { [weak self] link in
-                 guard let self = self else { return }
-                IAPManager.shared.purchase { [weak self] ok in
-                    guard let self = self else { return }
-                    if ok {
-                        self.table.reloadData()
-                    } else {
-                        debugPrint("Purch fail")
+                guard let self = self else { return }
+                
+                let alert = UIAlertController(title: localized(.subs), message: localized(.subAlert), preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: localized(.subAlertOk), style: .default, handler: { _ in
+                    self.present(SubscriptionsRouter.assembly(model: SubscriptionsViewModel()), animated: true, completion: nil)
+                }))
+                
+                alert.addAction(UIAlertAction(title: localized(.subAlertCansel), style: .destructive, handler: { _ in
+                    IAPManager.shared.purchase { [weak self] ok in
+                        guard let self = self else { return }
+                        if ok {
+                            self.table.reloadData()
+                        } else {
+                            debugPrint("Purch fail")
+                        }
                     }
-                }
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
             }
             
             dCell.onDownloadPress = { [weak self] link in
                 guard let self = self else { return }
+                
+                
                 let model = DownloadViewModel.Model(link: link,
                                                     downloadbleImage: self.header!.backgroundImageView.image!,
                                                     downloadbleName: self.header!.bottomTextBlockView.titleLabel.text!,
@@ -281,6 +293,7 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
                 let vc = DownloadViewController(model: model)
                 self.present(vc, animated: true, completion: nil)
                 FirebaseAPI.shared.incrementPostDownloadCounter(post: self.viewModel.cardView.viewModel?.id ?? "")
+                
             }
             
             padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)

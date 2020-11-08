@@ -17,6 +17,32 @@ class SubscriptionsViewModel: BaseViewModel {
     static var userSubscibed: Bool = false
     static var package: Purchases.Package? = nil
     
+    var model: [SubscriptionsCellTypes] = []
+    
+    init() {
+        model.append(contentsOf: [
+            .Title(SubscriptionsCellTextModel(text: localized(.subDescription))),
+            .Benefit(SubscriptionsCellTextModel(text: localized(.subone))),
+            .Benefit(SubscriptionsCellTextModel(text: localized(.subtwo))),
+            .Benefit(SubscriptionsCellTextModel(text: localized(.subthree))),
+            .Benefit(SubscriptionsCellTextModel(text: localized(.subfour))),
+            .Terms(SubscriptionsCellTermsModel(
+                    onTermspress: {
+                        self.router?.showTerms()
+                    },
+                    onPrivacypress: {
+                        self.router?.showPrivacy()
+                    })),
+            .Info(SubscriptionsCellTextModel(text: localized(.subinfoone))),
+            .Info(SubscriptionsCellTextModel(text: localized(.subinfotwo))),
+            .Info(SubscriptionsCellTextModel(text: localized(.subinfothree))),
+            .Info(SubscriptionsCellTextModel(text: localized(.subinfofour))),
+            .Info(SubscriptionsCellTextModel(text: localized(.subinfofive))),
+            .Info(SubscriptionsCellTextModel(text: localized(.subinfosix))),
+            .Info(SubscriptionsCellTextModel(text: localized(.subinfoseven)))
+        ])
+    }
+    
     static func checkIfUserSubscribed() {
         DispatchQueue.main.async {
             Purchases.shared.purchaserInfo { (purchaserInfo, error) in
