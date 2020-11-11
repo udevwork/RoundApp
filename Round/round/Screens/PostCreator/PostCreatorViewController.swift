@@ -16,22 +16,20 @@ class PostCreatorViewController: UIViewController {
     let createHeaderButton: UIButton = UIButton()
     let deleteButton: UIButton = UIButton()
     
-    private let posts = Firestore.firestore().collection("Test")
+    private let posts = Firestore.firestore().collection("Designs")
     private var createdPostRef: DocumentReference? = nil
     
-    let maintitle: String = "lol"
-    let maindescription: String = "kek"
-    let dowloadsCount: Int = 909
-    let mainPicURL: String = "https://github.com/udevwork/RoundData/raw/master/BLACK/poster.jpg"
+    let maintitle: String = "Acid Red"
+    let maindescription: String = "Shades of red"
+    let dowloadsCount: Int = 63
+    let mainPicURL: String = "https://github.com/udevwork/RoundData/raw/master/AcidRed/main.png"
     
-    let imagesUrl: [String] = ["https://github.com/udevwork/RoundData/raw/master/BLACK/ScreenShot.jpg",
-                               "https://github.com/udevwork/RoundData/raw/master/BLACK/ScreenShot.jpg",
-                               "https://github.com/udevwork/RoundData/raw/master/BLACK/ScreenShot.jpg"]
+    let imagesUrl: [String] = ["https://github.com/udevwork/RoundData/raw/master/AcidRed/screen.png"]
     
-    let text: String = "it wos added from phone"
-    let downloadLink: String = "http"
-    let fileSize: String = "234 kb"
-    let productID: String = "id"
+    let text: String = "the package contains 31 icons of social networks and standard applications"
+    let downloadLink: String = "https://github.com/udevwork/RoundData/raw/master/AcidRed/images.zip"
+    let fileSize: String = "1.7 MB"
+    let productID: String = "redAcidPack"
     
     override func viewDidLoad() {
         view.backgroundColor = .systemGray
@@ -53,7 +51,7 @@ class PostCreatorViewController: UIViewController {
     }
     
     @objc func createHeader(){
-        createdPostRef = posts.document(maintitle)
+        createdPostRef = posts.document(maintitle.removingWhitespaces())
         createdPostRef?.setData(["title" : maintitle,
                                      "description" : maindescription,
                                      "dowloadsCount" : dowloadsCount,
