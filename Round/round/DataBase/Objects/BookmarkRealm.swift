@@ -22,6 +22,25 @@ class userPurchase: Object {
     }
 }
 
+class iconsZipObject: Object {
+    @objc dynamic var archiveLocalPath: String = ""
+    @objc dynamic var imageLocalPath: String = ""
+    @objc dynamic var archiveName: String = ""
+    @objc dynamic var archiveDescription: String = ""
+
+    override static func primaryKey() -> String? {
+        return "archiveLocalPath"
+    }
+    
+    convenience init(archiveLocalPath: String, imageLocalPath: String, archiveName: String, archiveDescription: String) {
+        self.init()
+        self.archiveLocalPath = archiveLocalPath
+        self.imageLocalPath = imageLocalPath
+        self.archiveName = archiveName
+        self.archiveDescription = archiveDescription
+    }
+}
+
 extension userPurchase {
     static func ==(lhs: userPurchase, rhs: userPurchase) -> Bool {
         return (lhs.productID == rhs.productID)
@@ -29,5 +48,15 @@ extension userPurchase {
     
     static func !=(lhs: userPurchase, rhs: userPurchase) -> Bool {
         return (lhs.productID != rhs.productID)
+    }
+}
+
+extension iconsZipObject {
+    static func ==(lhs: iconsZipObject, rhs: iconsZipObject) -> Bool {
+        return (lhs.archiveLocalPath == rhs.archiveLocalPath)
+    }
+    
+    static func !=(lhs: iconsZipObject, rhs: iconsZipObject) -> Bool {
+        return (lhs.archiveLocalPath != rhs.archiveLocalPath)
     }
 }

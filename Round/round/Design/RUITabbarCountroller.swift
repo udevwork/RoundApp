@@ -27,7 +27,7 @@ class RUITabbarCountroller: UITabBarController {
         
         buttons = [MenuStackElement(icon: .house, onTap: { self.goTo(0) }),
                    MenuStackElement(icon: .iconCreator, onTap: { self.goTo(1) }),
-                   MenuStackElement(icon: .info, onTap: { self.goTo(2) }),
+                   MenuStackElement(icon: .folder, onTap: { self.goTo(2) }),
                    MenuStackElement(icon: .settingsGear, onTap: { self.goTo(3) })]
 
         buttons.forEach { customTabBar.append($0) }

@@ -120,6 +120,8 @@ enum Icons : String {
     case clock           = "clock"
     case cart            = "cart.fill"
     case crown           = "crown.fill"
+    case folder          = "folder.fill"
+    case archive         = "archivebox.fill"
     
     // editor
     case iconCreator     = "wand.and.rays"

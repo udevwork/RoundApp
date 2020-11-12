@@ -36,17 +36,15 @@ class IconsTutorialModel {
 }
 
 class IconsTutorial: BaseViewController<IconsTutorialModel>, UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    let header: TitleHeader = TitleHeader()
-    
+        
     let cellWidth =   UIScreen.main.bounds.width
-    let cellHeight =  UIScreen.main.bounds.height - 300
+    let cellHeight =  UIScreen.main.bounds.height - 400
     
     fileprivate lazy var collectionView : GeminiCollectionView = {
         let layout = PagingCollectionViewLayout()
-        layout.minimumLineSpacing = -50
+        layout.minimumLineSpacing = -20
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         
         let collection = GeminiCollectionView(frame: .zero, collectionViewLayout: layout)
@@ -64,7 +62,6 @@ class IconsTutorial: BaseViewController<IconsTutorialModel>, UICollectionViewDel
         view.insetsLayoutMarginsFromSafeArea = true
         
         view.addSubview(collectionView)
-        view.addSubview(header)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(howToCell.self, forCellWithReuseIdentifier: "cell")
@@ -76,9 +73,9 @@ class IconsTutorial: BaseViewController<IconsTutorialModel>, UICollectionViewDel
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        header.text = localized(.howto)
-        header.easy.layout(Top(Design.safeArea.top + 10),Leading(),Trailing(),Height(40))
-        collectionView.easy.layout(Trailing(), Leading(), CenterY(25), Height(cellHeight))
+      
+        title = localized(.howto)
+        collectionView.easy.layout(Trailing(), Leading(), Bottom(), Top())
     }
     
     required init?(coder: NSCoder) {

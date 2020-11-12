@@ -12,7 +12,7 @@ import RealmSwift
 class DBManager {
     public static var shared: DBManager = DBManager()
     public var realm: Realm!
-    private let schemaVersion: UInt64 = 1
+    private let schemaVersion: UInt64 = 2
     private var config: Realm.Configuration? = nil
     
     private init() {
@@ -27,6 +27,10 @@ class DBManager {
                 case 1 :
                     newSchemaVersion.enumerateObjects(ofType: "userPurchase") { (oldObj, newObj) in
                         newObj!["id"] = UUID().uuidString
+                    }
+                case 2 :
+                    newSchemaVersion.enumerateObjects(ofType: "userPurchase") { (oldObj, newObj) in
+                        newObj!["productID"] = oldObj?["productID"]
                     }
                 default:
                     debugPrint("DBManager: RealmSchemaVersion: old: \(oldSchemaVersion), current: \(newSchemaVersion)")
@@ -64,6 +68,27 @@ class ProductManager {
         } catch let error {
             debugPrint("BookmarksRealmManager: Save error", error)
         }
+    }
+    
+    public func save(archiveLocalPath: String, imageLocalPath: String, archiveName: String, archiveDescription: String){
+        do {
+            try DBManager.shared.realm.write({
+                DBManager.shared.realm.create(iconsZipObject.self,
+                                              value: ["archiveLocalPath": archiveLocalPath,
+                                                      "imageLocalPath" : imageLocalPath,
+                                                      "archiveName" : archiveName,
+                                                      "archiveDescription" : archiveDescription
+                                              ],
+                                              update: .all)
+            })
+        } catch let error {
+            debugPrint("BookmarksRealmManager: Save error", error)
+        }
+        
+    }
+    
+    public func getArchives(complition: @escaping ([iconsZipObject])->()){
+        complition(Array(DBManager.shared.realm.objects(iconsZipObject.self)))
     }
     
     public func get(productID : String) -> userPurchase? {

@@ -44,23 +44,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let model = MainViewModel()
         
         let contentView = MainViewController(viewModel: model)
-        let tutorial = IconsTutorialRouter.assembly()
-        let settings = SettingsRouter.assembly()
         let iconEditor = IconEditorRouter.assembly()
+        let manager = UserIconsManagerRouter.assembly(model: UserIconsManagerViewModel())
+        let settings = SettingsRouter.assembly()
         
         let tabbar = RUITabbarCountroller()
-        tabbar.viewControllers = [contentView,iconEditor,tutorial,settings]
+        tabbar.viewControllers = [contentView, iconEditor, manager, settings]
         // let contentView = RealmTest()
         // let uitest = UITest()
         let rootNavigationController: UINavigationController = UINavigationController(rootViewController: tabbar)
         
         let navBar = rootNavigationController.navigationBar
-
         navBar.isTranslucent = false
-
+        navBar.barTintColor = .systemGray6
+        navBar.tintColor = .systemGray
+        
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = tabbar
+            window.rootViewController = rootNavigationController
             
             self.window = window
             window.makeKeyAndVisible()

@@ -11,9 +11,7 @@ import UIKit
 import EasyPeasy
 
 class IconEditorViewController: BaseViewController<IconEditorViewModel> {
-    
-    let header: TitleHeader = TitleHeader()
-    
+        
     let instruments: IconEditorInstruments = IconEditorInstruments()
     let slider: IconEditorSlider = IconEditorSlider()
     
@@ -35,13 +33,11 @@ class IconEditorViewController: BaseViewController<IconEditorViewModel> {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        header.text = localized(.iconEditor)
-        header.easy.layout(Top(Design.safeArea.top + 10),Leading(),Trailing(),Height(40))
+        tabBarController?.title = localized(.iconEditor)
     }
     
     
     func setupView(){
-        view.addSubview(header)
         view.addSubview(editingIconContainer)
         
         editingIconContainer.addSubview(backgroundColor)
@@ -74,7 +70,7 @@ class IconEditorViewController: BaseViewController<IconEditorViewModel> {
         
         view.addSubview(slider)
         slider.easy.layout(Trailing(),Leading(),Bottom().to(instruments,.top), Height(30))
-        editingIconContainer.easy.layout(Top(20).to(header), Bottom(20).to(slider), Leading(40), Trailing(40))
+        editingIconContainer.easy.layout(Top(20), Bottom(20).to(slider), Leading(40), Trailing(40))
 
     }
 

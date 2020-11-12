@@ -20,7 +20,6 @@ class MainViewController: BaseViewController<MainViewModel> {
     let cellHeight =  UIScreen.main.bounds.height - 230
 
     // MARK: - UI Components
-    let header: TitleHeader = TitleHeader()
 
     fileprivate lazy var postCollectionView : GeminiCollectionView = {
         let layout = PagingCollectionViewLayout()
@@ -43,29 +42,23 @@ class MainViewController: BaseViewController<MainViewModel> {
     
     override init(viewModel: MainViewModel) {
         super.init(viewModel: viewModel)
-        header.text = localized(.icons)
         setupView()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        header.easy.layout(Top(Design.safeArea.top + 10),Leading(),Trailing(),Height(40))
-    }
-
+ 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+ 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tabBarController?.title =  localized(.icons)
     }
- 
-    fileprivate func setupView(){
-        view.addSubview(header)
+    
+    fileprivate func setupView() {
         view.addSubview(postCollectionView)
         let bottom = Design.safeArea.bottom + 150
-        let top = Design.safeArea.top + 100
-        postCollectionView.easy.layout(Trailing(),Leading(),Bottom(bottom),Top(top))
+        postCollectionView.easy.layout(Trailing(),Leading(),Bottom(bottom),Top(30))
         postCollectionView.register(IconPackCell.self, forCellWithReuseIdentifier: "cell")
         
         postCollectionView.delegate = self

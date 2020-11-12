@@ -12,6 +12,11 @@
 		92132E94246320EB00C58810 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92132E93246320EB00C58810 /* ErrorHandler.swift */; };
 		92132E96246335B100C58810 /* RNSimpleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92132E95246335B100C58810 /* RNSimpleView.swift */; };
 		92132E98246337AE00C58810 /* RNGestureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92132E97246337AE00C58810 /* RNGestureManager.swift */; };
+		9213D0D4255D3A57005B8735 /* UserIconsManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9213D0D3255D3A57005B8735 /* UserIconsManagerViewController.swift */; };
+		9213D0D7255D3A82005B8735 /* UserIconsManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9213D0D6255D3A82005B8735 /* UserIconsManagerViewModel.swift */; };
+		9213D0DA255D3ABA005B8735 /* UserIconsManagerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9213D0D9255D3ABA005B8735 /* UserIconsManagerRouter.swift */; };
+		9213D0DD255D3AC9005B8735 /* UserIconsManagerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9213D0DC255D3AC9005B8735 /* UserIconsManagerContract.swift */; };
+		9213D0E0255D9347005B8735 /* UserIconManagerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9213D0DF255D9347005B8735 /* UserIconManagerCell.swift */; };
 		9214322124D2D9AE005FCDC4 /* IconLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9214322024D2D9AE005FCDC4 /* IconLabelView.swift */; };
 		9214322324D2DFC3005FCDC4 /* UITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9214322224D2DFC3005FCDC4 /* UITest.swift */; };
 		9214322524D42132005FCDC4 /* PostBluredTitleDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9214322424D42132005FCDC4 /* PostBluredTitleDescriptionView.swift */; };
@@ -77,10 +82,8 @@
 		9298E24D23F1333A00952F28 /* AddFilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298E24C23F1333A00952F28 /* AddFilterButton.swift */; };
 		9298E24F23F1335500952F28 /* FilterTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298E24E23F1335500952F28 /* FilterTag.swift */; };
 		9298E25223F13A2600952F28 /* CardViewTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298E25123F13A2600952F28 /* CardViewTemplate.swift */; };
-		9298E25823F1479200952F28 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298E25723F1479200952F28 /* FilterViewModel.swift */; };
 		9298E25A23F19F3100952F28 /* BaseControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298E25923F19F3100952F28 /* BaseControllerViewModel.swift */; };
 		9298E25D23F1DA8900952F28 /* SearchInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298E25C23F1DA8900952F28 /* SearchInput.swift */; };
-		9298E25F23F28D1100952F28 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298E25E23F28D1100952F28 /* SearchViewController.swift */; };
 		929B70D32479A585009A2484 /* RealmTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929B70D22479A585009A2484 /* RealmTest.swift */; };
 		929B70D6247A8748009A2484 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929B70D5247A8748009A2484 /* DBManager.swift */; };
 		92AD4D332451F64600F26A62 /* PagingCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AD4D322451F64600F26A62 /* PagingCollectionViewLayout.swift */; };
@@ -163,6 +166,11 @@
 		92132E93246320EB00C58810 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		92132E95246335B100C58810 /* RNSimpleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNSimpleView.swift; sourceTree = "<group>"; };
 		92132E97246337AE00C58810 /* RNGestureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNGestureManager.swift; sourceTree = "<group>"; };
+		9213D0D3255D3A57005B8735 /* UserIconsManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconsManagerViewController.swift; sourceTree = "<group>"; };
+		9213D0D6255D3A82005B8735 /* UserIconsManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconsManagerViewModel.swift; sourceTree = "<group>"; };
+		9213D0D9255D3ABA005B8735 /* UserIconsManagerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconsManagerRouter.swift; sourceTree = "<group>"; };
+		9213D0DC255D3AC9005B8735 /* UserIconsManagerContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconsManagerContract.swift; sourceTree = "<group>"; };
+		9213D0DF255D9347005B8735 /* UserIconManagerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconManagerCell.swift; sourceTree = "<group>"; };
 		9214322024D2D9AE005FCDC4 /* IconLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconLabelView.swift; sourceTree = "<group>"; };
 		9214322224D2DFC3005FCDC4 /* UITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITest.swift; sourceTree = "<group>"; };
 		9214322424D42132005FCDC4 /* PostBluredTitleDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBluredTitleDescriptionView.swift; sourceTree = "<group>"; };
@@ -230,10 +238,8 @@
 		9298E24C23F1333A00952F28 /* AddFilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFilterButton.swift; sourceTree = "<group>"; };
 		9298E24E23F1335500952F28 /* FilterTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTag.swift; sourceTree = "<group>"; };
 		9298E25123F13A2600952F28 /* CardViewTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewTemplate.swift; sourceTree = "<group>"; };
-		9298E25723F1479200952F28 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		9298E25923F19F3100952F28 /* BaseControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseControllerViewModel.swift; sourceTree = "<group>"; };
 		9298E25C23F1DA8900952F28 /* SearchInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInput.swift; sourceTree = "<group>"; };
-		9298E25E23F28D1100952F28 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		929B70D22479A585009A2484 /* RealmTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTest.swift; sourceTree = "<group>"; };
 		929B70D5247A8748009A2484 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		92AD4D322451F64600F26A62 /* PagingCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewLayout.swift; sourceTree = "<group>"; };
@@ -336,6 +342,18 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		9213D0D1255D39E2005B8735 /* UserIconsManager */ = {
+			isa = PBXGroup;
+			children = (
+				9213D0D3255D3A57005B8735 /* UserIconsManagerViewController.swift */,
+				9213D0D6255D3A82005B8735 /* UserIconsManagerViewModel.swift */,
+				9213D0D9255D3ABA005B8735 /* UserIconsManagerRouter.swift */,
+				9213D0DC255D3AC9005B8735 /* UserIconsManagerContract.swift */,
+				9213D0DF255D9347005B8735 /* UserIconManagerCell.swift */,
+			);
+			path = UserIconsManager;
+			sourceTree = "<group>";
+		};
 		921EB1B0252F7A0700B6814D /* Documents */ = {
 			isa = PBXGroup;
 			children = (
@@ -396,15 +414,6 @@
 				925865F7248E12B50027C345 /* CardViewSimple.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		9260B84B23B1102000AB18A5 /* Filter */ = {
-			isa = PBXGroup;
-			children = (
-				9298E25E23F28D1100952F28 /* SearchViewController.swift */,
-				9298E25723F1479200952F28 /* FilterViewModel.swift */,
-			);
-			path = Filter;
 			sourceTree = "<group>";
 		};
 		9260B84C23B12C8500AB18A5 /* Post */ = {
@@ -741,13 +750,13 @@
 		92E62ACE239CEBC0009A2CD2 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				9213D0D1255D39E2005B8735 /* UserIconsManager */,
 				92DA8D14254D4ABC001F12AD /* IconEditor */,
 				9283A371252C95A4002F855E /* PDFViewer */,
 				9283A365252C826D002F855E /* Settings */,
 				9283A35A252B9FB9002F855E /* IconsHowToInstall */,
 				924DC8252527CDDC00836A7D /* GalleryViewer */,
 				92E53E502520FF630033D98B /* Download */,
-				9260B84B23B1102000AB18A5 /* Filter */,
 				92F46A24243B446400CCC386 /* Subscriptions */,
 				9260B84C23B12C8500AB18A5 /* Post */,
 				92E62AC5239CDBCE009A2CD2 /* Main */,
@@ -1005,6 +1014,7 @@
 				924DC8352527CDDC00836A7D /* PagerMediaCloseTransition.swift in Sources */,
 				9283A373252C95C2002F855E /* PDFViewer.swift in Sources */,
 				9260B86D23B6405D00AB18A5 /* PostViewModel.swift in Sources */,
+				9213D0D4255D3A57005B8735 /* UserIconsManagerViewController.swift in Sources */,
 				928275F923DD7515001B3965 /* Debug.swift in Sources */,
 				92F46A2C243B4AF600CCC386 /* SubscriptionsContract.swift in Sources */,
 				92CD63D524602B5400D8F77C /* PostResponse.swift in Sources */,
@@ -1020,10 +1030,10 @@
 				92E8C34F239BF681009F84EE /* AppDelegate.swift in Sources */,
 				92F9C4EB23DC7E0D00AB9823 /* API.swift in Sources */,
 				9242C4C7244F2C87009EA6AE /* Notifications.swift in Sources */,
+				9213D0E0255D9347005B8735 /* UserIconManagerCell.swift in Sources */,
 				92CD5CFD244AFE250025C600 /* StringExtansion.swift in Sources */,
 				9236CF722557113C00673860 /* SubscribeCellTitle.swift in Sources */,
 				9273364323F8456F008B4F43 /* CountriesList.swift in Sources */,
-				9298E25F23F28D1100952F28 /* SearchViewController.swift in Sources */,
 				9283A367252C82FE002F855E /* Settings.swift in Sources */,
 				9236CF7C255713E400673860 /* SubscribeCellInfo.swift in Sources */,
 				9260B85B23B5EDEC00AB18A5 /* TitlePostCellView.swift in Sources */,
@@ -1037,6 +1047,7 @@
 				9214322724D42E3A005FCDC4 /* IconLableBluredView.swift in Sources */,
 				926D209823E4703E00C8B492 /* ArticlePostResponse.swift in Sources */,
 				9260B85323B4C64700AB18A5 /* PostViewControllerHeader.swift in Sources */,
+				9213D0D7255D3A82005B8735 /* UserIconsManagerViewModel.swift in Sources */,
 				92E62AC2239BF83E009A2CD2 /* MainViewController.swift in Sources */,
 				92DA8D1D254D4B13001F12AD /* IconEditorRouter.swift in Sources */,
 				925A5A42244365DB009C7A42 /* Observer.swift in Sources */,
@@ -1049,6 +1060,7 @@
 				92E53E522520FF790033D98B /* DownloadViewController.swift in Sources */,
 				92E53E402520D8550033D98B /* GalleryPostCellViewModel.swift in Sources */,
 				924DC8382527CDDC00836A7D /* PagerMediaViewerRouter.swift in Sources */,
+				9213D0DD255D3AC9005B8735 /* UserIconsManagerContract.swift in Sources */,
 				9236CF79255713B300673860 /* SubscribeCellTerms.swift in Sources */,
 				92B8622C249612C00087676A /* FirebaseRequestProtocol.swift in Sources */,
 				9260B86423B605D300AB18A5 /* ArticlePostCellViewModel.swift in Sources */,
@@ -1060,6 +1072,7 @@
 				9236CF762557135F00673860 /* SubscribeCellBenefit.swift in Sources */,
 				92F90372248394A300B0A176 /* BookmarkRealm.swift in Sources */,
 				92132E94246320EB00C58810 /* ErrorHandler.swift in Sources */,
+				9213D0DA255D3ABA005B8735 /* UserIconsManagerRouter.swift in Sources */,
 				92DA8D1A254D4B02001F12AD /* IconEditorViewModel.swift in Sources */,
 				92F46A2E243B4B0000CCC386 /* SubscriptionsRouter.swift in Sources */,
 				924DC83B2527CDDC00836A7D /* PagerMediaItemProtocol.swift in Sources */,
@@ -1091,7 +1104,6 @@
 				92ED214823AD7DB600819997 /* Button.swift in Sources */,
 				92AD4D332451F64600F26A62 /* PagingCollectionViewLayout.swift in Sources */,
 				92E53E4B2520ED460033D98B /* DownloadPostCellViewModel.swift in Sources */,
-				9298E25823F1479200952F28 /* FilterViewModel.swift in Sources */,
 				92DA8D27254D6EEF001F12AD /* EditorIntsrument.swift in Sources */,
 				924DC83E2527CDDC00836A7D /* PagerMediaViewer.swift in Sources */,
 				9260B85F23B5F17300AB18A5 /* BasePostCell.swift in Sources */,
@@ -1253,7 +1265,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"round/Preview Content\"";
 				DEVELOPMENT_TEAM = 87XM268947;
 				ENABLE_PREVIEWS = YES;
@@ -1263,7 +1275,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.creatorsplatform.round;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1279,7 +1291,7 @@
 				CODE_SIGN_ENTITLEMENTS = round/roundRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"round/Preview Content\"";
 				DEVELOPMENT_TEAM = 87XM268947;
 				ENABLE_PREVIEWS = YES;
@@ -1289,7 +1301,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.creatorsplatform.round;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

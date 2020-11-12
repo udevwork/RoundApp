@@ -94,8 +94,19 @@ class DownloadViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    public func download(){
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.viewModel.download { images in
+                self.showSaveToFilesMenu(data: images)
+            }
+        }
+    }
+    
+    public func unzip(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.viewModel.unzip { images in
                 self.showSaveToFilesMenu(data: images)
             }
         }

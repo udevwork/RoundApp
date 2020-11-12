@@ -12,10 +12,6 @@ import EasyPeasy
 
 class BaseViewController<T> : UIViewController{
     
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
     var viewModel: T
     
     init(viewModel: T) {

@@ -33,7 +33,6 @@ class SettingsModel {
 
 class SettingsViewController: BaseViewController<SettingsModel>, UITableViewDelegate, UITableViewDataSource {
     
-    let header: TitleHeader = TitleHeader()
     fileprivate let table : UITableView = UITableView()
     
     
@@ -42,22 +41,21 @@ class SettingsViewController: BaseViewController<SettingsModel>, UITableViewDele
         setupModel()
         
         view.addSubview(table)
-        view.addSubview(header)
         
         table.delegate = self
         table.dataSource = self
-        table.easy.layout(Bottom(),Leading(), Trailing(), Top(20).to(header))
+        table.easy.layout(Bottom(),Leading(), Trailing(), Top())
         table.register(SettingCell.self, forCellReuseIdentifier: "cell")
         table.separatorStyle = .none
         table.backgroundColor = .clear
-        table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
-
+        table.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 40, right: 0)
+        
+     
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        header.text = localized(.settings)
-        header.easy.layout(Top(Design.safeArea.top + 10),Leading(),Trailing(),Height(40))
+        tabBarController?.title =  localized(.settings)
     }
     
     
@@ -69,6 +67,9 @@ class SettingsViewController: BaseViewController<SettingsModel>, UITableViewDele
                 } else {
                     self.present(SubscriptionsRouter.assembly(model: SubscriptionsViewModel()), animated: true, completion: nil)
                 }
+            }),
+            SettingCellModel(title: localized(.howto), icon: .tableEdit, onPress: {
+                self.navigationController?.pushViewController(IconsTutorialRouter.assembly(), animated: true)
             }),
             SettingCellModel(title: localized(.policy), icon: .doc, onPress: {
                 self.present(PDFViewer(file: .PRIVACYPOLICY), animated: true, completion: nil)

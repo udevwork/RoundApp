@@ -152,6 +152,10 @@ final class FirebaseAPI : API {
         posts.document(id).updateData(["dowloadsCount" : FieldValue.increment(Int64(1))])
     }
     
+    public func incrementViewsCounter(post id: String){
+        posts.document(id).updateData(["viewsCount" : FieldValue.increment(Int64(1))])
+        debugPrint("incrementPostDownloadCounter")
+    }
     
     public func getPosts(complition : @escaping (HTTPResult, [CardViewModel]?) -> ()){
      

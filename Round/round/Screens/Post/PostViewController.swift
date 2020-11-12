@@ -275,6 +275,7 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
                             self.table.reloadData()
                         } else {
                             debugPrint("Purch fail")
+                            
                         }
                     }
                 }))
@@ -292,6 +293,7 @@ extension PostViewController : UITableViewDelegate, UITableViewDataSource {
                                                     downloadbleDescription: self.header!.bottomTextBlockView.descriptionLabel.text!)
                 let vc = DownloadViewController(model: model)
                 self.present(vc, animated: true, completion: nil)
+                vc.download()
                 FirebaseAPI.shared.incrementPostDownloadCounter(post: self.viewModel.cardView.viewModel?.id ?? "")
                 
             }
