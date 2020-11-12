@@ -42,7 +42,7 @@ class DBManager {
             } catch let error {
                 debugPrint("DBManager: Realm: ", error)
             }
-            realm = try! Realm(configuration: config)
+            //realm = try! Realm(configuration: config)
         } else {
             debugPrint("DBManager: Realm: config error")
         }
